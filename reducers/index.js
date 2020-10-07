@@ -1,6 +1,6 @@
 import { persist } from "./services/reduxPersist";
 //import createFilter from 'redux-persist-transform-filter';
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import { settingsMigration } from "./migrations/Settings";
 import { authMigration } from "./migrations/Auth";
 import { createMigrate } from "redux-persist";
@@ -8,7 +8,6 @@ import Settings from "./Settings";
 import ChatData from "./Chat";
 import Contact from "./Contact";
 import Mail from "./Mail";
-import ToDo from "./ToDo";
 import Auth from "./Auth";
 
 const MIGRATION_DEBUG = false;
@@ -16,13 +15,15 @@ const MIGRATION_DEBUG = false;
 const settingsPersistConfig = {
   key: "settings",
   version: 1,
-  whitelist : ['locale',
-				'navigationStyle',
-				'horizontalNavPosition',
-				'isDirectionRTL',
-				'darkTheme',
-				'themeColor',
-				'drawerType'],
+  whitelist: [
+    "locale",
+    "navigationStyle",
+    "horizontalNavPosition",
+    "isDirectionRTL",
+    "darkTheme",
+    "themeColor",
+    "drawerType"
+  ],
   migrate: createMigrate(settingsMigration, { debug: MIGRATION_DEBUG })
 };
 
@@ -31,7 +32,20 @@ const settingsPersistConfig = {
 const authPersistConfig = {
   key: "auth",
   version: 1,
-  whitelist: ['tokenSent','passwordChanged','initURL','authUser','phone','country','name','birth','martial','stepFlag','gender','mpUploadFlag'],//
+  whitelist: [
+    "tokenSent",
+    "passwordChanged",
+    "initURL",
+    "authUser",
+    "phone",
+    "country",
+    "name",
+    "birth",
+    "martial",
+    "stepFlag",
+    "gender",
+    "mpUploadFlag"
+  ], //
   //transforms: [saveSubsetFilter],
   migrate: createMigrate(authMigration, { debug: MIGRATION_DEBUG })
 };
@@ -47,11 +61,5 @@ export default history =>
     chatData: ChatData,
     contacts: Contact,
     mail: Mail,
-    toDo: ToDo,
     auth: persist(authPersistConfig, Auth)
   });
-
-
-
-
-

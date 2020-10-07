@@ -1,5 +1,4 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
-import { database } from "../firebaseConfig/index";
 import { fetchMailsSuccess, showMailMessage } from "../actions/Mail";
 import { FETCH_ALL_MAIL } from "../constants/ActionTypes";
 

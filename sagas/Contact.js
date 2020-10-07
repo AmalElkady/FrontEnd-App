@@ -1,6 +1,5 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import { fetchContactsSuccess, showContactMessage } from "../actions/Contact";
-import { database } from "../firebaseConfig/index";
 import { FETCH_ALL_CONTACT } from "../constants/ActionTypes";
 
 const getContacts = async () =>

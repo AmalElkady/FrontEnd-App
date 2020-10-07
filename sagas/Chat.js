@@ -1,5 +1,4 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
-import { database } from "../firebaseConfig/index";
 import {
   FETCH_ALL_CHAT_USER,
   FETCH_ALL_CHAT_USER_CONVERSATION

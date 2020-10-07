@@ -4,7 +4,6 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import "../static/vendors/style";
-//import "../firebaseConfig/index"
 import { PersistGate } from "redux-persist/integration/react";
 
 import initStore from "../store/index";
