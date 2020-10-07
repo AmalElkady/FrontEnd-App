@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Link from "next/link"
-import {withRouter} from "next/router"
+import { withRouter } from "next/router";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
@@ -138,12 +137,9 @@ const mapStateToProps = ({ settings }) => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      changeNavigationStyle,
-      setDrawerType,
-      setHorizontalMenuPosition
-    }
-  )(Customizer)
+  connect(mapStateToProps, {
+    changeNavigationStyle,
+    setDrawerType,
+    setHorizontalMenuPosition
+  })(Customizer)
 );

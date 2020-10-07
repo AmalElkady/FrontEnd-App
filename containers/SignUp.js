@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -15,11 +14,8 @@ import Link from "next/link"
 import Router from "next/router"
 import IntlMessages from '../util/IntlMessages';
 import { styled } from '@material-ui/core/styles';
-
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 
 import {ARRAY_OF_YEARS ,ARRAY_OF_MONTHS, ARRAY_OF_DAYS, COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE, ARRAYS_OF_MARTIAL_STATUS, ARRAYS_OF_MARTIAL_STATUS_VALUES} from '../util/data';
@@ -122,12 +118,8 @@ class SignUp extends React.Component {
 
 
   const handleChange = (event) => {
-	  console.log(event.target.name);
-	  console.log(event.target.value);
     this.setState({[`${event.target.name}`] : `${event.target.value}`})
   };
-  
-    //const classes = useStyles();
     const {showMessage, loader, alertMessage} = this.props;
 	
     return (
@@ -145,10 +137,6 @@ class SignUp extends React.Component {
             <div className="app-login-header">
               <h2><IntlMessages id="appModule.createAccount"/></h2>
             </div>
-
-            {/*<div className="mb-4">
-              
-			</div>*/}
 
             <div className="app-login-form">
               <form method="post" action="/">

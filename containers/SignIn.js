@@ -3,18 +3,14 @@ import Link from "next/link";
 import { connect } from "react-redux";
 import Router from "next/router";
 import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import {
   NotificationContainer,
   NotificationManager
 } from "react-notifications";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import IntlMessages from "../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
-//https://www.npmjs.com/package/react-country-region-selector-material-ui-new
-
 import { hideMessage, showAuthLoader, userSignIn } from "../actions/Auth";
 
 import { toggleCollapsedNav } from "../actions/Setting";
@@ -38,20 +34,12 @@ class SignIn extends React.Component {
         this.props.hideMessage();
       }, 100);
     }
-
-    //	if(this.props.phone != '' && this.props.country != '' && this.props.authUser) {
-    //		this.setState({["phoneSign"] : this.props.phone});
-    //		this.setState({["countrySign"] : this.props.country});
-    //		this.setState({["viewPhone"] : `${this.props.country}${this.props.phone}`});
-    //	}
-
     if (this.props.authUser !== null) {
       Router.replace("/dashboard/crypto");
     }
   }
 
   componentDidMount() {
-    console.log(this.props);
     if (this.props.phone && this.props.country) {
       this.setState({ ["phoneSign"]: this.props.phone });
       this.setState({ ["countrySign"]: this.props.country });
@@ -109,7 +97,6 @@ class SignIn extends React.Component {
                     this.setState({
                       phoneSign: value.slice(country.dialCode.length)
                     });
-                    console.log(country.dialCode);
                   }}
                 />
               </Grid>
