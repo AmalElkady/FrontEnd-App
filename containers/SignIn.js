@@ -35,7 +35,7 @@ class SignIn extends React.Component {
       }, 100);
     }
     if (this.props.authUser !== null) {
-      Router.replace("/dashboard/crypto");
+      Router.replace("/home/content");
     }
   }
 
