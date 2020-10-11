@@ -32,8 +32,8 @@ export function setDarkTheme() {
 
 export function changeDirection(locale) {
   return {
-	  type: CHANGE_DIRECTION,
-	  payload: locale
+    type: CHANGE_DIRECTION,
+    payload: locale
   };
 }
 
@@ -52,6 +52,7 @@ export function setHorizontalMenuPosition(navigationPosition) {
 }
 
 export function switchLanguage(locale) {
+  console.log("from action ", locale);
   return {
     type: SWITCH_LANGUAGE,
     payload: locale

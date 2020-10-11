@@ -5,7 +5,11 @@ import IconButton from "@material-ui/core/IconButton";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import SideNavOption from "./SideNavOption";
-import { changeDirection, setDarkTheme, setThemeColor } from "../../actions/Setting";
+import {
+  changeDirection,
+  setDarkTheme,
+  setThemeColor
+} from "../../actions/Setting";
 import {
   AMBER,
   BLUE,
@@ -22,7 +26,8 @@ import {
   DEEP_PURPLE,
   GREEN,
   INDIGO,
-  PINK
+  PINK,
+  MAIN_THEME
 } from "../../constants/ThemeColors";
 
 class Customizer extends React.Component {
@@ -75,6 +80,16 @@ class Customizer extends React.Component {
             <div className="color-theme-body">
               <h3>Light Sidenav</h3>
               <ul className="color-option">
+                {/* /////// */}
+                <li>
+                  <span
+                    onClick={this.handleThemeColor.bind(this, MAIN_THEME)}
+                    className={`jr-link bg-indigo ${themeColor === MAIN_THEME &&
+                      "active"}`}
+                  />
+                </li>
+
+                {/* //////// */}
                 <li>
                   <span
                     onClick={this.handleThemeColor.bind(this, INDIGO)}
@@ -228,8 +243,7 @@ const mapStateToProps = ({ settings }) => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    { setThemeColor, setDarkTheme, changeDirection }
-  )(Customizer)
+  connect(mapStateToProps, { setThemeColor, setDarkTheme, changeDirection })(
+    Customizer
+  )
 );

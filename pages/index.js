@@ -1,3 +1,4 @@
-import SignIn from "./signin"
+import SignIn from "./signin";
+import FrontPage from "./frontPage";
 
-export default SignIn;
+export default FrontPage;

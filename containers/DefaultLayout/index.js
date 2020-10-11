@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { IntlProvider } from "react-intl";
 
 import RTL from "../../util/RTL";
@@ -17,6 +17,7 @@ import pinkTheme from "../themes/pinkTheme";
 import blueTheme from "../themes/blueTheme";
 import purpleTheme from "../themes/purpleTheme";
 import greenTheme from "../themes/greenTheme";
+import mainTheme from "../themes/mainTheme";
 import AppLocale from "../../lngProvider";
 import {
   AMBER,
@@ -34,13 +35,17 @@ import {
   DEEP_PURPLE,
   GREEN,
   INDIGO,
-  PINK
+  PINK,
+  MAIN_THEME
 } from "../../constants/ThemeColors";
 
 class App extends React.Component {
-
   getColorTheme(themeColor, applyTheme) {
     switch (themeColor) {
+      case MAIN_THEME: {
+        applyTheme = createMuiTheme(mainTheme);
+        break;
+      }
       case INDIGO: {
         applyTheme = createMuiTheme(indigoTheme);
         break;
@@ -112,7 +117,6 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (nextProps.isDarkTheme || nextProps.darkTheme) {
       document.body.classList.add("dark-theme");
     } else {
@@ -126,9 +130,14 @@ class App extends React.Component {
     }
   }
 
-
   render() {
-    const { locale, children, themeColor, isDirectionRTL, isDarkTheme } = this.props;
+    const {
+      locale,
+      children,
+      themeColor,
+      isDirectionRTL,
+      isDarkTheme
+    } = this.props;
 
     let applyTheme = createMuiTheme(indigoTheme);
     if (isDirectionRTL) {
@@ -142,9 +151,7 @@ class App extends React.Component {
       applyTheme = this.getColorTheme(themeColor, applyTheme);
     }
 
-
     const currentAppLocale = AppLocale[locale.locale];
-
 
     return (
       <ThemeProvider theme={applyTheme}>
@@ -153,13 +160,10 @@ class App extends React.Component {
             locale={currentAppLocale.locale}
             messages={currentAppLocale.messages}
           >
-            <RTL>
-              {children}
-            </RTL>
+            <RTL>{children}</RTL>
           </IntlProvider>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
-
     );
   }
 }

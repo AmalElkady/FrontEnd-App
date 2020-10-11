@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { IntlProvider } from "react-intl";
 
 import Footer from "../../components/Footer";
@@ -21,6 +21,7 @@ import pinkTheme from "../themes/pinkTheme";
 import blueTheme from "../themes/blueTheme";
 import purpleTheme from "../themes/purpleTheme";
 import greenTheme from "../themes/greenTheme";
+import mainTheme from "../themes/mainTheme";
 import {
   ABOVE_THE_HEADER,
   BELOW_THE_HEADER,
@@ -46,13 +47,17 @@ import {
   DEEP_PURPLE,
   GREEN,
   INDIGO,
-  PINK
+  PINK,
+  MAIN_THEME
 } from "../../constants/ThemeColors";
 
 class App extends React.Component {
-
   getColorTheme(themeColor, applyTheme) {
     switch (themeColor) {
+      case MAIN_THEME: {
+        applyTheme = createMuiTheme(mainTheme);
+        break;
+      }
       case INDIGO: {
         applyTheme = createMuiTheme(indigoTheme);
         break;
@@ -124,39 +129,45 @@ class App extends React.Component {
   }
 
   componentDidMount(nextProps, nextContext) {
-
- //   if (nextProps.isDarkTheme || nextProps.darkTheme) {
- //     document.body.classList.add("dark-theme");
- //   } else {
- //     document.body.classList.remove("dark-theme");
- //   }
- //
- //   if (nextProps.isDirectionRTL) {
- //     document.body.classList.add("rtl");
- //   } else {
- //     document.body.classList.remove("rtl");
- //   }
+    //   if (nextProps.isDarkTheme || nextProps.darkTheme) {
+    //     document.body.classList.add("dark-theme");
+    //   } else {
+    //     document.body.classList.remove("dark-theme");
+    //   }
+    //
+    //   if (nextProps.isDirectionRTL) {
+    //     document.body.classList.add("rtl");
+    //   } else {
+    //     document.body.classList.remove("rtl");
+    //   }
   }
 
-
   render() {
-    const { locale, children, themeColor, isDirectionRTL, drawerType, isDarkTheme, navigationStyle, horizontalNavPosition } = this.props;
+    const {
+      locale,
+      children,
+      themeColor,
+      isDirectionRTL,
+      drawerType,
+      isDarkTheme,
+      navigationStyle,
+      horizontalNavPosition
+    } = this.props;
 
     const drawerStyle = drawerType.includes(FIXED_DRAWER)
       ? "fixed-drawer"
       : drawerType.includes(COLLAPSED_DRAWER)
-        ? "collapsible-drawer"
-        : "mini-drawer";
-
+      ? "collapsible-drawer"
+      : "mini-drawer";
 
     let applyTheme = createMuiTheme(indigoTheme);
-	
-	    if (isDirectionRTL) {
+
+    if (isDirectionRTL) {
       document.body.classList.add("rtl");
     } else {
       document.body.classList.remove("rtl");
     }
-	
+
     if (isDirectionRTL) {
       applyTheme.direction = "rtl";
     } else {
@@ -168,62 +179,69 @@ class App extends React.Component {
       applyTheme = this.getColorTheme(themeColor, applyTheme);
     }
 
-
     const currentAppLocale = AppLocale[locale.locale];
 
-
     return (
-        <ThemeProvider theme={applyTheme}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <IntlProvider
-              locale={currentAppLocale.locale}
-              messages={currentAppLocale.messages}
-            >
-              <RTL>
-                <div className="app-main">
-                  <div className={`app-container ${drawerStyle}`}>
-                    <Sidebar/>
-                    <div className="app-main-container">
-                      <div
-                        className={`app-header ${
-                          navigationStyle === HORIZONTAL_NAVIGATION
-                            ? "app-header-horizontal"
-                            : ""
-                          }`}
-                      >
-                        {navigationStyle === HORIZONTAL_NAVIGATION &&
+      <ThemeProvider theme={applyTheme}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <IntlProvider
+            locale={currentAppLocale.locale}
+            messages={currentAppLocale.messages}
+          >
+            <RTL>
+              <div className="app-main">
+                <div className={`app-container ${drawerStyle}`}>
+                  <Sidebar />
+                  <div className="app-main-container">
+                    <div
+                      className={`app-header ${
+                        navigationStyle === HORIZONTAL_NAVIGATION
+                          ? "app-header-horizontal"
+                          : ""
+                      }`}
+                    >
+                      {navigationStyle === HORIZONTAL_NAVIGATION &&
                         horizontalNavPosition === ABOVE_THE_HEADER && (
-                          <TopNav styleName="app-top-header"/>
+                          <TopNav styleName="app-top-header" />
                         )}
-                        <Header/>
-                        {navigationStyle === HORIZONTAL_NAVIGATION &&
-                        horizontalNavPosition === BELOW_THE_HEADER && <TopNav/>}
-                      </div>
-                      <main className="app-main-content-wrapper ">
-                        <div className="app-main-content">
-                          {children}
-                        </div>
-                        <Footer>
-                          <div className="gx-layout-footer-content">
-                            demo
-                          </div>
-                        </Footer>
-                      </main>
+                      <Header />
+                      {navigationStyle === HORIZONTAL_NAVIGATION &&
+                        horizontalNavPosition === BELOW_THE_HEADER && (
+                          <TopNav />
+                        )}
                     </div>
-                    <Customizer/>
+                    <main className="app-main-content-wrapper ">
+                      <div className="app-main-content">{children}</div>
+                      <Footer>
+                        <div className="gx-layout-footer-content">demo</div>
+                      </Footer>
+                    </main>
                   </div>
+                  <Customizer />
                 </div>
-              </RTL>
-            </IntlProvider>
-          </MuiPickersUtilsProvider>
-        </ThemeProvider>
-
+              </div>
+            </RTL>
+          </IntlProvider>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
     );
   }
 }
 
-const mapStateToProps = ({settings}) => {
-  const { drawerType, darkTheme, isDirectionRTL, navigationStyle, horizontalNavPosition, width, themeType, themeColor, layoutType, navStyle, locale } = settings;
+const mapStateToProps = ({ settings }) => {
+  const {
+    drawerType,
+    darkTheme,
+    isDirectionRTL,
+    navigationStyle,
+    horizontalNavPosition,
+    width,
+    themeType,
+    themeColor,
+    layoutType,
+    navStyle,
+    locale
+  } = settings;
   return {
     isDarkTheme: darkTheme,
     isDirectionRTL,

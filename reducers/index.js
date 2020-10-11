@@ -54,7 +54,6 @@ const authPersistConfig = {
 
 ///////////////////////////////////////
 /////////////////////////////////////
-
 export default history =>
   combineReducers({
     settings: persist(settingsPersistConfig, Settings),

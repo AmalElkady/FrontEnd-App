@@ -24,7 +24,7 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-          <title>App</title>
+          <title>Love gila</title>
         </Head>
         <Container>
           <Provider store={store}>

@@ -1,12 +1,12 @@
 import React from "react";
-import Link from "next/link"
-import {withRouter} from "next/router"
-import {connect} from "react-redux";
+import Link from "next/link";
+import { withRouter } from "next/router";
+import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import {Dropdown, DropdownMenu, DropdownToggle} from "reactstrap";
+import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import {
   BELOW_THE_HEADER,
   COLLAPSED_DRAWER,
@@ -18,7 +18,7 @@ import SearchBox from "../../components/SearchBox";
 import MailNotification from "../MailNotification/index";
 import AppNotification from "../AppNotification/index";
 import CardHeader from "../../components/dashboard/Common/CardHeader/index";
-import {switchLanguage, toggleCollapsedNav} from "../../actions/Setting";
+import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
@@ -76,10 +76,10 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/app/calendar/basic">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-calendar zmdi-hc-fw"/>
+              <i className="zmdi zmdi-calendar zmdi-hc-fw" />
               <span className="jr-list-text">
-              <IntlMessages id="sidebar.calendar.basic"/>
-            </span>
+                <IntlMessages id="sidebar.calendar.basic" />
+              </span>
             </a>
           </Link>
         </li>
@@ -87,10 +87,10 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/app/to-do">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-check-square zmdi-hc-fw"/>
+              <i className="zmdi zmdi-check-square zmdi-hc-fw" />
               <span className="jr-list-text">
-              <IntlMessages id="sidebar.appModule.toDo"/>
-            </span>
+                <IntlMessages id="sidebar.appModule.toDo" />
+              </span>
             </a>
           </Link>
         </li>
@@ -98,10 +98,10 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/app/mail">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-email zmdi-hc-fw"/>
+              <i className="zmdi zmdi-email zmdi-hc-fw" />
               <span className="jr-list-text">
-              <IntlMessages id="sidebar.appModule.mail"/>
-            </span>
+                <IntlMessages id="sidebar.appModule.mail" />
+              </span>
             </a>
           </Link>
         </li>
@@ -109,10 +109,10 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/app/chat">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-comment zmdi-hc-fw"/>
+              <i className="zmdi zmdi-comment zmdi-hc-fw" />
               <span className="jr-list-text">
-              <IntlMessages id="sidebar.appModule.chat"/>
-            </span>
+                <IntlMessages id="sidebar.appModule.chat" />
+              </span>
             </a>
           </Link>
         </li>
@@ -120,10 +120,10 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/app/contact">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-account-box zmdi-hc-fw"/>
+              <i className="zmdi zmdi-account-box zmdi-hc-fw" />
               <span className="jr-list-text">
-              <IntlMessages id="sidebar.appModule.contact"/>
-            </span>
+                <IntlMessages id="sidebar.appModule.contact" />
+              </span>
             </a>
           </Link>
         </li>
@@ -131,7 +131,7 @@ class Header extends React.Component {
         <li className="jr-list-item">
           <Link href="/">
             <a className="jr-list-link">
-              <i className="zmdi zmdi-plus-circle-o zmdi-hc-fw"/>
+              <i className="zmdi zmdi-plus-circle-o zmdi-hc-fw" />
               <span className="jr-list-text">Add New</span>
             </a>
           </Link>
@@ -169,8 +169,8 @@ class Header extends React.Component {
     const drawerStyle = drawerType.includes(FIXED_DRAWER)
       ? "d-block d-xl-none"
       : drawerType.includes(COLLAPSED_DRAWER)
-        ? "d-block"
-        : "d-none";
+      ? "d-block"
+      : "d-none";
 
     return (
       <AppBar
@@ -179,7 +179,7 @@ class Header extends React.Component {
           horizontalNavPosition === BELOW_THE_HEADER
             ? "app-main-header-top"
             : ""
-          }`}
+        }`}
       >
         <Toolbar className="app-toolbar" disableGutters={false}>
           {navigationStyle === HORIZONTAL_NAVIGATION ? (
@@ -188,7 +188,7 @@ class Header extends React.Component {
               onClick={this.onToggleCollapsedNav}
             >
               <span className="jr-menu-icon">
-                <span className="menu-icon"/>
+                <span className="menu-icon" />
               </span>
             </div>
           ) : (
@@ -197,14 +197,15 @@ class Header extends React.Component {
               aria-label="Menu"
               onClick={this.onToggleCollapsedNav}
             >
-              <span className="menu-icon"/>
+              <span className="menu-icon" />
             </IconButton>
           )}
 
           <Link href="/">
             <a className="app-logo mr-2 d-none d-sm-block">
               <img
-                src="../../static/images/logo.png" alt="Jambo"
+                src="../../static/images/gila 6-1.png"
+                alt="Jambo"
                 title="Jambo"
               />
             </a>
@@ -217,7 +218,7 @@ class Header extends React.Component {
             value={this.state.searchText}
           />
           {navigationStyle === HORIZONTAL_NAVIGATION &&
-          horizontalNavPosition === INSIDE_THE_HEADER && <Menu/>}
+            horizontalNavPosition === INSIDE_THE_HEADER && <Menu />}
 
           <ul className="header-notifications list-inline ml-auto">
             <li className="list-inline-item">
@@ -232,7 +233,7 @@ class Header extends React.Component {
                   data-toggle="dropdown"
                 >
                   <span className="app-notification-menu">
-                    <i className="zmdi zmdi-apps zmdi-hc-fw zmdi-hc-lg"/>
+                    <i className="zmdi zmdi-apps zmdi-hc-fw zmdi-hc-lg" />
                     <span>Apps</span>
                   </span>
                 </DropdownToggle>
@@ -252,7 +253,7 @@ class Header extends React.Component {
                   data-toggle="dropdown"
                 >
                   <IconButton className="icon-btn">
-                    <i className="zmdi zmdi-search zmdi-hc-fw"/>
+                    <i className="zmdi zmdi-search zmdi-hc-fw" />
                   </IconButton>
                 </DropdownToggle>
 
@@ -278,7 +279,7 @@ class Header extends React.Component {
                   data-toggle="dropdown"
                 >
                   <IconButton className="icon-btn">
-                    <i className={`flag flag-24 flag-${locale.icon}`}/>
+                    <i className={`flag flag-24 flag-${locale.icon}`} />
                   </IconButton>
                 </DropdownToggle>
 
@@ -302,16 +303,16 @@ class Header extends React.Component {
                   data-toggle="dropdown"
                 >
                   <IconButton className="icon-btn">
-                    <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble"/>
+                    <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" />
                   </IconButton>
                 </DropdownToggle>
 
                 <DropdownMenu right>
                   <CardHeader
                     styleName="align-items-center"
-                    heading={<IntlMessages id="appNotification.title"/>}
+                    heading={<IntlMessages id="appNotification.title" />}
                   />
-                  <AppNotification/>
+                  <AppNotification />
                 </DropdownMenu>
               </Dropdown>
             </li>
@@ -327,16 +328,16 @@ class Header extends React.Component {
                   data-toggle="dropdown"
                 >
                   <IconButton className="icon-btn">
-                    <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw"/>
+                    <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" />
                   </IconButton>
                 </DropdownToggle>
 
                 <DropdownMenu right>
                   <CardHeader
                     styleName="align-items-center"
-                    heading={<IntlMessages id="mailNotification.title"/>}
+                    heading={<IntlMessages id="mailNotification.title" />}
                   />
-                  <MailNotification/>
+                  <MailNotification />
                 </DropdownMenu>
               </Dropdown>
             </li>
@@ -363,7 +364,7 @@ class Header extends React.Component {
                   </DropdownToggle>
 
                   <DropdownMenu right>
-                    <UserInfoPopup/>
+                    <UserInfoPopup />
                   </DropdownMenu>
                 </Dropdown>
               </li>
@@ -377,19 +378,16 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({settings}) => {
+const mapStateToProps = ({ settings }) => {
   const {
     drawerType,
     locale,
     navigationStyle,
     horizontalNavPosition
   } = settings;
-  return {drawerType, locale, navigationStyle, horizontalNavPosition};
+  return { drawerType, locale, navigationStyle, horizontalNavPosition };
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    {toggleCollapsedNav, switchLanguage}
-  )(Header)
+  connect(mapStateToProps, { toggleCollapsedNav, switchLanguage })(Header)
 );

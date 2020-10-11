@@ -58,7 +58,7 @@ class SignIn extends React.Component {
           <div className="app-logo-content d-flex align-items-center justify-content-center">
             <Link href="/">
               <a>
-                <img src="../static/images/logo.png" alt="App" title="App" />
+                <img src="../static/images/gila.png" alt="App" title="App" />
               </a>
             </Link>
           </div>
@@ -148,14 +148,14 @@ class SignIn extends React.Component {
                     </Button>
 
                     <Link href="/signup">
-                      <a>
+                      <a className="a-underLine">
                         <IntlMessages id="signIn.signUp" />
                       </a>
                     </Link>
                   </div>
 
                   <Link href="/forgotpassword">
-                    <a>
+                    <a className="a-underLine">
                       <IntlMessages id="appModule.forgotPassword" />
                     </a>
                   </Link>
@@ -167,11 +167,8 @@ class SignIn extends React.Component {
 
         {loader && (
           <div className="loader-view">
-            <div className="loader2">
-              <img src="C:/Users/elkady/Desktop/Hoot/New folder/logo.png"></img>
-            </div>
+            <div className="loader2"></div>
             {/* <CircularProgress /> */}
-            {/* <img src="C:/Users/elkady/Desktop/Hoot/New folder/LOOADING.mp4"></img> */}
           </div>
         )}
 

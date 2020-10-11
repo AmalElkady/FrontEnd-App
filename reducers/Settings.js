@@ -21,15 +21,15 @@ const initialSettings = {
   drawerType: COLLAPSED_DRAWER,
   themeColor: DARK_INDIGO,
   darkTheme: false,
-  width: 1366,//window.innerWidth
+  width: 1366, //window.innerWidth
   isDirectionRTL: false,
   navigationStyle: VERTICAL_NAVIGATION,
   horizontalNavPosition: INSIDE_THE_HEADER,
   locale: {
-    languageId: 'english',
-    locale: 'en',
-    name: 'English',
-    icon: 'us'
+    languageId: "english",
+    locale: "en",
+    name: "English",
+    icon: "us"
   }
 };
 

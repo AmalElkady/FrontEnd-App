@@ -1,0 +1,25 @@
+body {
+  overflow: hidden;
+}
+.intro-bg {
+  background-image: url("https://cdn.catholic.com/wp-content/uploads/AdobeStock_135906090-900x900.jpeg");
+  // background-image: url("../../static/images/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-layout {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+img {
+  width: 100%;
+}

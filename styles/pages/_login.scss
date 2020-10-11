@@ -91,15 +91,19 @@
 }
 
 .app-logo-content {
-  background-color: $app-primary;
+  background-color: $secondary;
   padding: 35px 35px 20px;
   width: 40%;
   order: 2;
+  background-image: linear-gradient(to bottom right, $light-pink, $secondary);
 
   @media screen and (max-width: 575px) {
     width: 100%;
     order: 1;
   }
+}
+.app-logo-content img {
+  width: 100%;
 }
 
 .app-social-block {

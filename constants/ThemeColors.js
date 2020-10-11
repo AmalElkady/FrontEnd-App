@@ -16,3 +16,5 @@ export const DARK_BLUE = "dark-blue";
 export const DARK_DEEP_PURPLE = "dark-deep-purple";
 export const DARK_GREEN = "dark-green";
 export const DARK_THEME_COLOR = "dark-theme";
+
+export const MAIN_THEME = "#d3316e";

@@ -1,13 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 const LanguageItem = ({ language, switchLanguage, handleRequestClose }) => {
   const { icon, name } = language;
+  const dispatch = useDispatch();
   return (
     <li
       className="pointer"
       onClick={() => {
+        console.log("language from component  ", language.name);
         handleRequestClose();
-        switchLanguage(language);
+        dispatch(switchLanguage(language));
       }}
     >
       <div className="d-flex align-items-center">

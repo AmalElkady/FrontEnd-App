@@ -128,7 +128,7 @@ class SignUp extends React.Component {
         <div className="app-login-main-content">
           <div className="app-logo-content d-flex align-items-center justify-content-center">
             <Link href="/">
-                    <a> <img src="../static/images/logo.png"
+                    <a> <img src="../static/images/gila.png"
                      alt="App" title="App"/> </a>
             </Link>
           </div>
@@ -381,7 +381,7 @@ class SignUp extends React.Component {
                       id="appModule.regsiter"/>
                   </Button>
                   <Link href="/signin">
-                    <a><IntlMessages id="signUp.alreadyMember"/></a>
+                    <a className="a-underLine"><IntlMessages id="signUp.alreadyMember"/></a>
                   </Link>
                 </div>
 				

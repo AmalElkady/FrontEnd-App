@@ -1,11 +1,15 @@
 .loader2 {
   /* border: 16px solid #f3f3f3; */
   /* content: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif"); */
+
   border-radius: 50%;
-  border-top: 16px solid #3498db;
+  border-top: 16px solid #d3316e;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
+}
+.loader2::before {
+  content: url("https://drive.google.com/file/d/1GBuO5ec-4YZMpkNVmcZShIvy0oHNR9g9/view?usp=sharing");
 }
 
 @keyframes spin {

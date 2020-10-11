@@ -70,17 +70,19 @@ $gray-500: #8a92a5;
 //                $colors
 //);
 
-$app-primary: #3f51b5 !default;
+$app-primary: black !default;
 $primary: $app-primary;
-$secondary: #e91e63;
+$secondary: #d3316e;
+$light-pink: #e878a2;
+$light-gray: #808080;
+$dark: $gray-800;
+$gray-default: #808080 !default;
+$light: #e8eaf6;
+
 $success: #4caf50;
 $info: #00bcd4;
 $warning: #ff9800;
 $danger: #f44336;
-$light: #e8eaf6;
-$light-gray: #808080;
-$dark: $gray-800;
-$gray-default: #808080 !default;
 $sepia: #7c3535;
 $geekblue: #030852;
 
@@ -176,9 +178,9 @@ $body-color: #575757;
 //
 // Style anchor elements.
 
-$link-color: $app-primary;
+$link-color: $secondary;
 //$link-decoration:                         none !default;
-$link-hover-color: darken($app-primary, 10%);
+$link-hover-color: darken($secondary, 10%);
 //$link-hover-decoration:                   underline !default;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
 //$emphasized-link-hover-darken-percentage: 15% !default;
