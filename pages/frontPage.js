@@ -57,8 +57,8 @@ const FrontPage = () => {
       <div className="intro-bg">
         <div className="bg-layout">
           <Grid container className={classes.gridSpace1}>
-            <Grid item xs={8}></Grid>
-            <Grid item xs={1} className={classes.posRight}>
+            <Grid item sm={8}></Grid>
+            <Grid item sm={1} className={classes.posRight}>
               <Button
                 onClick={() => {
                   Router.replace("/signin");
@@ -71,7 +71,7 @@ const FrontPage = () => {
                 {/* <IntlMessages id="appModule.signIn" /> */}
               </Button>
             </Grid>
-            <Grid item xs={1} className={classes.posRight}>
+            <Grid item sm={1} className={classes.posRight}>
               <Button
                 onClick={() => {
                   Router.replace("/signup");
@@ -84,7 +84,7 @@ const FrontPage = () => {
                 {/* <IntlMessages id="appModule.signIn" /> */}
               </Button>
             </Grid>
-            <Grid item xs={1} className={classes.posRight}>
+            <Grid item sm={1} className={classes.posRight}>
               <Dropdown
                 className="quick-menu"
                 isOpen={langSwitcher}
