@@ -204,7 +204,7 @@ class Header extends React.Component {
           <Link href="/">
             <a className="app-logo mr-2 d-none d-sm-block">
               <img
-                src="../../static/images/gila 6-1.png"
+                src="../../static/images/gila.png"
                 alt="Jambo"
                 title="Jambo"
               />

@@ -7,7 +7,7 @@ const Crypto = asyncComponent(() => import("../../app/dashboard/Crypto"));
 export default Page(() => (
   <>
     <Head>
-      <title>Crypto Dashborad</title>
+      <title>Home</title>
     </Head>
     <div className="app-wrapper">{/* {console.log(this)}
 		<Crypto/> */}</div>
