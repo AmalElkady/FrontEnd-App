@@ -14,7 +14,8 @@ import mainTheme from "../containers/themes/mainTheme";
 import { makeStyles } from "@material-ui/core/styles";
 import IntlMessages from "../util/IntlMessages";
 
-//import Page from '../hoc/defaultPage';
+import Page from "../hoc/defaultPage";
+
 const useStyles = makeStyles(theme => ({
   gridSpace1: {
     margin: "2rem 0"
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FrontPage = () => {
+export default Page(() => {
   const classes = useStyles();
   const locale = useSelector(state => state.settings.locale);
   const [langSwitcher, setLangSwitcher] = useState(false);
@@ -67,8 +68,7 @@ const FrontPage = () => {
                 color="primary"
                 className={classes.btnShadw}
               >
-                LOGIN
-                {/* <IntlMessages id="appModule.signIn" /> */}
+                <IntlMessages id="appModule.login" />
               </Button>
             </Grid>
             <Grid item sm={1} className={classes.posRight}>
@@ -80,8 +80,7 @@ const FrontPage = () => {
                 color="primary"
                 className={classes.btnShadw}
               >
-                Register
-                {/* <IntlMessages id="appModule.signIn" /> */}
+                <IntlMessages id="appModule.regsiter" />
               </Button>
             </Grid>
             <Grid item sm={1} className={classes.posRight}>
@@ -147,6 +146,4 @@ const FrontPage = () => {
       </div>
     </ThemeProvider>
   );
-};
-
-export default FrontPage;
+});

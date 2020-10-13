@@ -150,6 +150,7 @@
   "appModule.signInDiffAccount": "Sign in using different account",
   "appModule.rememberMe": "Remember me",
   "appModule.signIn": "Sign In",
+  "appModule.login": "Login",
   "appModule.next": "Next",
   "appModule.back": "Back",
   "appModule.allStepsCompleted": "All steps completed",
