@@ -13,7 +13,7 @@ import Card9 from "./Card9";
 import Gallery from "./List";
 import ContactCard from "./Contact";
 import WeatherCard from "./Weather";
-import CustomScrollbars from "util/CustomScrollbars";
+import CustomScrollbars from "../../util/CustomScrollbars";
 
 const Cards = () => (
   <div className="app-container">

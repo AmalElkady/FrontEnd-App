@@ -1,15 +1,16 @@
 import Head from "next/head";
 import Page from "../../hoc/securedPage/index";
-import asyncComponent from "../../util/asyncComponent";
-
-const Crypto = asyncComponent(() => import("../../app/dashboard/Crypto"));
+import Cards from "../../components/Cards";
+import UserCard from "../../components/Cards/UserCard";
 
 export default Page(() => (
   <>
     <Head>
       <title>Home</title>
     </Head>
-    <div className="app-wrapper">{/* {console.log(this)}
-		<Crypto/> */}</div>
+    <div className="app-wrapper">
+      {/* <Cards /> */}
+      <UserCard />
+    </div>
   </>
 ));
