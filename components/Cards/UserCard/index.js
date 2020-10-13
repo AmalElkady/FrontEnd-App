@@ -17,6 +17,16 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
+///Modal
+import PropTypes from "prop-types";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import { useSpring, animated } from "react-spring/web.cjs";
+/////
+import TextField from "@material-ui/core/TextField";
+import IntlMessages from "../../../util/IntlMessages";
+import Button from "@material-ui/core/Button";
+
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "20%"
@@ -37,21 +47,91 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  ///modal
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: "px",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
+  displayB: {
+    display: "block"
+  },
+  positionR: {
+    position: "relative",
+    padding: "1rem .5rem 2rem .5rem"
+  },
+  positionA: {
+    position: "absolute",
+    right: ".5rem",
+    bottom: "-1rem"
   }
+  ////
 }));
+
+////// modal
+const Fade = React.forwardRef(function Fade(props, ref) {
+  const { in: open, children, onEnter, onExited, ...other } = props;
+  const style = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: open ? 1 : 0 },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter();
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited();
+      }
+    }
+  });
+
+  return (
+    <animated.div ref={ref} style={style} {...other}>
+      {children}
+    </animated.div>
+  );
+});
+
+Fade.propTypes = {
+  children: PropTypes.element,
+  in: PropTypes.bool.isRequired,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func
+};
 
 export default function UserCard() {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const imgURL = "../../../static/images/avatar.png";
 
+  ////// modal
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  //////
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Card className={classes.root}>
-      {/* <CardHeader
+    <>
+      <Card className={classes.root}>
+        {/* <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             R
@@ -65,46 +145,83 @@ export default function UserCard() {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       /> */}
-      <CardMedia className={classes.media} image={imgURL} title="userPhoto" />
-      <CardContent>
-        <Typography variant="h6" color="textSecondary" component="p">
-          User Name
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Address
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Age
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Like">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="Send Message">
-          <ChatBubbleIcon />
-        </IconButton>
-        <IconButton aria-label="View Profile">
-          <VisibilityIcon />
-        </IconButton>
-
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardMedia className={classes.media} image={imgURL} title="userPhoto" />
         <CardContent>
-          <Typography paragraph>Details</Typography>
-          <Typography paragraph>more informations</Typography>
+          <Typography variant="h6" color="textSecondary" component="p">
+            User Name
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Address
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Age
+          </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <IconButton aria-label="Love">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="Send Message" onClick={handleOpen}>
+            <ChatBubbleIcon />
+          </IconButton>
+          <IconButton aria-label="View Profile">
+            <VisibilityIcon />
+          </IconButton>
+
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>Details</Typography>
+            <Typography paragraph>more informations</Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+
+      {/*  */}
+      <Modal
+        aria-labelledby="spring-modal-title"
+        aria-describedby="spring-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <form className={classes.positionR} noValidate autoComplete="off">
+              <TextField
+                id="outlined-basic"
+                label={<IntlMessages id="appModule.yourMessage" />}
+                variant="outlined"
+                className={classes.displayB}
+              />
+              <Button
+                className={classes.positionA}
+                onClick={() => {}}
+                variant="contained"
+                color="primary"
+              >
+                <IntlMessages id="appModule.sendMessage" />
+              </Button>
+            </form>
+          </div>
+        </Fade>
+      </Modal>
+      {/*  */}
+    </>
   );
 }

@@ -174,10 +174,12 @@
   "appModule.resendResetToken": "Resend Code",
   "appModule.verifyPhone": "Verify Your Phone",
   "appModule.verificationCode": "Verification Code",
-  "appModule.resendVerificationCode" : "Send Code To My Phone",
+  "appModule.resendVerificationCode": "Send Code To My Phone",
   "appModule.signOut": "Signout",
   "appModule.uploadMP": "Upload your profile picture",
   "appModule.profileL2Add": "Complete profile information",
+  "appModule.sendMessage": "Send",
+  "appModule.yourMessage": "Your Message",
 
   "chart.area": "Area Graph",
   "chart.bar": "Bar Graph",
@@ -577,15 +579,15 @@
   "sidebar.classic": "Classic",
   "sidebar.modern": "Modern",
   "dashboard.viewAll": "View All",
-  "dashboard.onlineSignups":"Online Signups",
-  "dashboard.totalEmail":"Total Email Sent",
- "dashboard.yearlyProfit":"Yearly Profit",
-  "dashboard.cartItems":"Cart Items",
-  "dashboard.traffic":"Traffic",
-  "dashboard.browser":"Browser",
-  "dashboard.application":"Application",
-  "dashboard.weekly":"Weekly",
-  
+  "dashboard.onlineSignups": "Online Signups",
+  "dashboard.totalEmail": "Total Email Sent",
+  "dashboard.yearlyProfit": "Yearly Profit",
+  "dashboard.cartItems": "Cart Items",
+  "dashboard.traffic": "Traffic",
+  "dashboard.browser": "Browser",
+  "dashboard.application": "Application",
+  "dashboard.weekly": "Weekly",
+
   "inputLabel.birthday": "Birthday",
   "inputLabel.city": "City",
   "inputLabel.martial": "Martial status",
@@ -600,7 +602,7 @@
   "inputLabel.password": "Password",
   "inputLabel.nationality": "Nationality",
   "inputLabel.tpercent": "Polygamy acceptance",
-  "inputLabel.education": "Education",	 
+  "inputLabel.education": "Education",
   "inputLabel.workd": "Your work domain",
   "inputLabel.title": "Your work title",
   "inputLabel.bio": "Write about yourself",
@@ -608,11 +610,10 @@
   "inputGender.female": "Female",
   "inputGender.male": "Male",
 
-
   "month.january": "January",
   "month.february": "February",
   "month.march": "March",
-  "month.april":"April",
+  "month.april": "April",
   "month.may": "May",
   "month.june": "June",
   "month.july": "July",
@@ -625,17 +626,15 @@
   "martialF.1": "Never Married",
   "martialF.2": "Divorced",
   "martialF.3": "Widowed",
-  
+
   "martialM.1": "Never Married",
   "martialM.2": "Divorced",
   "martialM.3": "Widowed",
   "martialM.4": "Married",
-  
-  "education.1":"No formal education",
-  "education.2":"High School",
-  "education.3":"Bachelor",	
 
-
+  "education.1": "No formal education",
+  "education.2": "High School",
+  "education.3": "Bachelor",
 
   "workd.0": "Architecture and Civil Engineering",
   "workd.1": "Arts and Communications",
@@ -648,13 +647,13 @@
   "workd.8": "Police",
   "workd.9": "Transportation",
   "workd.10": "Science",
-  "workd.100" : "other",
+  "workd.100": "other",
 
   "gb.1": "London",
   "gb.2": "Cambridge",
-  
+
   "eg.1": "Cairo",
-  "eg.2": "Giza",  
+  "eg.2": "Giza",
   "eg.3": "Alexandria",
   "eg.4": "Aswan",
   "eg.5": "Asyut",
@@ -680,10 +679,4 @@
   "eg.25": "Sohag",
   "eg.26": "South Sinai",
   "eg.27": "Suez"
-  
-
 }
-
-
-
-

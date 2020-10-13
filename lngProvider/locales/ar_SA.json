@@ -169,10 +169,12 @@
   "appModule.resetPasswordAgain": "إعادة تحديث كلمةالسر",
   "appModule.verifyPhone": "التحقق من رقم الهاتف",
   "appModule.verificationCode": "رمز التحقق",
-  "appModule.resendVerificationCode" : "إعادة إرسال الرمز للهاتف",
+  "appModule.resendVerificationCode": "إعادة إرسال الرمز للهاتف",
   "appModule.signOut": "تسجيل الخروج",
   "appModule.uploadMP": "أضف صورتك",
   "appModule.profileL2Add": "أكمل بيانات الحساب",
+  "appModule.sendMessage": "ارسال",
+  "appModule.yourMessage": "رسالتك",
 
   "chart.area": "منطقة الرسم البياني",
   "chart.bar": "شريط الرسم البياني",
@@ -588,7 +590,7 @@
   "inputLabel.password": "كلمة السر",
   "inputLabel.nationality": "الجنسية",
   "inputLabel.tpercent": "نسبة تقبل التعدد %",
-  "inputLabel.education": "مستوى التعليم",	 
+  "inputLabel.education": "مستوى التعليم",
   "inputLabel.workd": "مجال العمل",
   "inputLabel.title": "المسمى الوظيفي",
   "inputLabel.bio": "إكتب عن نفسك",
@@ -598,7 +600,7 @@
   "month.january": "يناير",
   "month.february": "فبراير",
   "month.march": "مارس",
-  "month.april":"أبريل",
+  "month.april": "أبريل",
   "month.may": "مايو",
   "month.june": "يونيو",
   "month.july": "يوليو",
@@ -611,15 +613,15 @@
   "martialF.1": "اّنسة",
   "martialF.2": "مطلقة",
   "martialF.3": "أرملة",
-  
+
   "martialM.1": "أعزب",
   "martialM.2": "مطلق",
   "martialM.3": "أرمل",
   "martialM.4": "متزوج",
 
-  "education.1":"No formal education",
-  "education.2":"High School",
-  "education.3":"Bachelor",
+  "education.1": "No formal education",
+  "education.2": "High School",
+  "education.3": "Bachelor",
 
   "workd.0": "Architecture and Civil Engineering",
   "workd.1": "Arts and Communications",
@@ -632,13 +634,13 @@
   "workd.8": "Police",
   "workd.9": "Transportation",
   "workd.10": "Science",
-  "workd.100" : "other",
-  
+  "workd.100": "other",
+
   "gb.1": "London",
   "gb.2": "Cambridge",
-  
+
   "eg.1": "Cairo",
-  "eg.2": "Giza",  
+  "eg.2": "Giza",
   "eg.3": "Alexandria",
   "eg.4": "Aswan",
   "eg.5": "Asyut",
@@ -664,6 +666,4 @@
   "eg.25": "Sohag",
   "eg.26": "South Sinai",
   "eg.27": "Suez"
-  
-
 }
