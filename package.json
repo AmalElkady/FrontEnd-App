@@ -74,6 +74,8 @@
     "react-google-maps": "^9.4.5",
     "react-hot-loader": "^4.9.0",
     "react-icons": "^3.7.0",
+    "react-image-crop": "^8.6.6",
+    "react-image-file-resizer": "^0.3.8",
     "react-images-upload": "^1.2.8",
     "react-intl": "^2.9.0",
     "react-joyride": "^2.0.5",
