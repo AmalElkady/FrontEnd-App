@@ -180,12 +180,13 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 }
 
 
-auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country, gender, year, month, day, city, martial) {
+auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country,cIso, gender, year, month, day, city, martial) {
 
 			let newUser = {
 								"name" : firstName + " " + lastName,
 								"phone" : username,
 								"phonecountrycode": country,
+								"countryiso2":cIso,
 								 gender,
 								 password,
 								 year,
@@ -520,12 +521,12 @@ auth.resendVerificationToUserPhone = function () {
 }
 
 
-auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode) {
+auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,countryiso2) {
 	
 	
 			      return new Promise( async (resolve, reject) => {				
 								
-								if(username && phonecountrycode) {
+								if(username && phonecountrycode&&countryiso2) {
 								try {
 
 												const options = {
@@ -536,7 +537,8 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode) {
 																'Content-Type': 'application/json;charset=UTF-8'
 															  },
 															  data: { 
-															    phonecountrycode,
+																phonecountrycode,
+																countryiso2,
 																phone : username,
 															  }
 															};
