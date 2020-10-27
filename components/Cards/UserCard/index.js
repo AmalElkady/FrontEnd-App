@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-
+import ChatIcon from "../../Icons/ChatIcon";
+import LoveIcon from "../../Icons/LoveIcon";
+import ViewProIcon from "../../Icons/ViewProIcon";
 ///Modal
 import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
@@ -47,6 +43,10 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  iconBtn: {
+    width: "30%",
+    padding: 0
   },
   ///modal
   modal: {
@@ -109,7 +109,7 @@ Fade.propTypes = {
 
 export default function UserCard() {
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
+  const [clickLove, setClickLove] = useState(false);
   const imgURL = "../../../static/images/avatar.png";
 
   ////// modal
@@ -122,29 +122,15 @@ export default function UserCard() {
   const handleClose = () => {
     setOpen(false);
   };
-  //////
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleClickLove = () => {
+    console.log("love");
+    setlickLove(!clickLove);
   };
 
   return (
     <>
       <Card className={classes.root}>
-        {/* <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      /> */}
         <CardMedia className={classes.media} image={imgURL} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
@@ -158,33 +144,27 @@ export default function UserCard() {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="Love">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="Send Message" onClick={handleOpen}>
-            <ChatBubbleIcon />
-          </IconButton>
-          <IconButton aria-label="View Profile">
-            <VisibilityIcon />
-          </IconButton>
-
           <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
+            className={classes.iconBtn}
+            aria-label="Love"
+           // onClick={handleClickLove}
           >
-            <ExpandMoreIcon />
+            {/* <FavoriteIcon /> */}
+            <LoveIcon />
+          </IconButton>
+          <IconButton
+            className={classes.iconBtn}
+            aria-label="Send Message"
+            onClick={handleOpen}
+          >
+            {/* <ChatBubbleIcon /> */}
+            <ChatIcon />
+          </IconButton>
+          <IconButton className={classes.iconBtn} aria-label="View Profile">
+            {/* <VisibilityIcon /> */}
+            <ViewProIcon />
           </IconButton>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Details</Typography>
-            <Typography paragraph>more informations</Typography>
-          </CardContent>
-        </Collapse>
       </Card>
 
       {/*  */}
