@@ -42,6 +42,7 @@ class SignUp extends React.Component {
 	  gender: '0',
 	  martial: '',
 	  country: '20',
+	  countryiso2: 'eg',
       phone: '',
 	  city: '',
 	  day: '',
@@ -78,6 +79,7 @@ class SignUp extends React.Component {
 	  gender,
 	  martial,
 	  country,
+	  countryiso2,
       phone,
 	  city,
 	  day,
@@ -92,6 +94,7 @@ class SignUp extends React.Component {
 //	"name" : "Karem Mohammed",
 //	"phone" : "01155778899",
 //	"phonecountrycode": "20",
+//  "countryiso2" : "eg" //countryCode
 //	"gender": "1",
 //	"password" : "Password#123",
 //	"year" : "1997",
@@ -176,7 +179,7 @@ class SignUp extends React.Component {
 						  value={this.state.country}
 						  placeholder={''}
 						  readonly={'readonly'}
-						  onChange={(value, country, e, formattedValue) => {this.setState({ country: country.dialCode }); this.setState({ phone: value.slice(country.dialCode.length) });console.log(country.dialCode);}}
+						  onChange={(value, country, e, formattedValue) => {this.setState({ country: country.dialCode, countryiso2: country.countryCode }); this.setState({ phone: value.slice(country.dialCode.length) });}}
 						/>	
 					</Grid>
 					
@@ -294,10 +297,10 @@ class SignUp extends React.Component {
 												  name="city"
 												>
 												
-														{COUNTRY_CITY_MAP[this.state.country].map((value,i) => (
+														{COUNTRY_CITY_MAP[this.state.countryiso2].map((value,i) => (
 																  <MenuItem
-																	key={COUNTRY_CITY_MAP_VALUE[this.state.country][i]}
-																	value={COUNTRY_CITY_MAP_VALUE[this.state.country][i]}
+																	key={COUNTRY_CITY_MAP_VALUE[this.state.countryiso2][i]}
+																	value={COUNTRY_CITY_MAP_VALUE[this.state.countryiso2][i]}
 																	control={<Radio />}
 																	label={value}>
 																		{value}
@@ -373,9 +376,10 @@ class SignUp extends React.Component {
 			
                 <div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
+					  console.log("iso ",countryiso2);
 					  if(password != password_confirm){ NotificationManager.error("Password Mismatch")}
                       else { this.props.showAuthLoader();
-                      this.props.userSignUp({phone, password, firstname, lastname, country, gender, year, month, day, city, martial}); }
+                      this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }
                   }} color="primary">
                     <IntlMessages
                       id="appModule.regsiter"/>

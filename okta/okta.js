@@ -180,13 +180,13 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 }
 
 
-auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country,cIso, gender, year, month, day, city, martial) {
+auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country,countryiso2, gender, year, month, day, city, martial) {
 
 			let newUser = {
 								"name" : firstName + " " + lastName,
 								"phone" : username,
 								"phonecountrycode": country,
-								"countryiso2":cIso,
+								"countryiso2":countryiso2,
 								 gender,
 								 password,
 								 year,
@@ -195,12 +195,11 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								 city,
 								 martial
 							}
-	
-	
+
 			      return new Promise(  async (resolve, reject) => {				
 						
 						
-						console.log(newUser);
+						console.log("newUser", newUser);
 						
 						if( (`${username}`.trim() !== '') && (`${password}`.trim() !== '') && (`${firstName}`.trim() !== '') && (`${lastName}`.trim() !== '') && (parseInt(gender) == 0 || parseInt(gender) == 1) ) {
 

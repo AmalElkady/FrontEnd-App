@@ -17,8 +17,93 @@ const useStyles = makeStyles(theme => ({
 export default function UploadImage() {
   const classes = useStyles();
   const [file, setFile] = useState(null);
-  const [imgPreview, setImgPreview] = useState(null);
-  const [crop, setCrop] = useState({ aspect: 16 / 9 });
+
+/////////
+
+  const [crop, setCrop] = useState({ unit: '%',
+      width: 30,
+      height: 60,
+    //  minWidth : 30,
+    //  minHeight: 30,
+     //aspect: 16 / 9 
+      });
+  const [fileSrc, setFileSrc] = useState(null);
+  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+  const [imageRef, setImageRef] = useState(null);
+
+ const onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+
+      reader.addEventListener('load', () =>
+        setFileSrc(reader.result)
+    );
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+ const onImageLoaded = image => {
+    setImageRef(image)
+  };
+
+  const onCropComplete = crop => {
+    makeClientCrop(crop);
+  };
+
+  const onCropChange = (crop, percentCrop) => {
+    setCrop(crop);
+  };
+
+
+ 
+  const makeClientCrop = async (crop)=> {
+    if (imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await getCroppedImg(
+        imageRef,
+        crop,
+        'newFile.jpeg'
+      );
+      setCroppedImageUrl(croppedImageUrl);
+    }
+  }
+
+ const getCroppedImg=(image, crop, fileName) =>{
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          console.error('Canvas is empty');
+          return;
+        }
+        blob.name = fileName;
+        //window.URL.revokeObjectURL(fileUrl);
+       // fileUrl = window.URL.createObjectURL(blob);
+        resolve(window.URL.createObjectURL(blob));
+      }, 'image/jpeg');
+    });
+}
+
+
+
+
 
   const uploadSingleFile = e => {
     setFile({
@@ -52,6 +137,10 @@ export default function UploadImage() {
       );
     });
 
+  
+  
+  
+  
   const onChange = e => {
     setFile({
       file: URL.createObjectURL(e.target.files[0])
@@ -64,12 +153,19 @@ export default function UploadImage() {
 
   return (
     <>
-      <div>{imgPreview}</div>
-      <ReactCrop
-        src="../static/images/avatar.png"
-        crop={crop}
-        onChange={newCrop => setCrop(newCrop)}
-      />
+        {croppedImageUrl && (
+         <div style={{ width: '30%' }}> <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
+         </div>
+        )}
+ <br />
+      {fileSrc && (<ReactCrop
+            src={fileSrc}
+            crop={crop}
+            ruleOfThirds
+            onImageLoaded={onImageLoaded}
+            onComplete={onCropComplete}
+            onChange={onCropChange}
+      />)}
       <br />
       <label htmlFor="upload-photo">
         <input
@@ -77,9 +173,9 @@ export default function UploadImage() {
           id="upload-photo"
           name="upload-photo"
           type="file"
-          onChange={onChange}
+          accept="image/*" 
+          onChange={onSelectFile}
         />
-
         <Button color="primary" variant="contained" component="span">
           Upload Image
         </Button>

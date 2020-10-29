@@ -37,6 +37,7 @@ const INIT_STATE = {
 	gender: '',
 	phone: '',
 	country: '',
+  countryiso2:'',
 	name: '',
 	birth: '',
 	martial: ''
@@ -51,6 +52,7 @@ export default (state = INIT_STATE, action) => {
         authUser: action.payload.authUser,
 		phone: action.payload.phone,
 		country: action.payload.country,
+    countryiso2:action.payload.countryiso2,
 		name: action.payload.name,
 		birth: action.payload.birth,
 		martial: action.payload.martial,

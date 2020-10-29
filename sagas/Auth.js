@@ -43,8 +43,8 @@ import {
     userTwitterSignInSuccess
 } from "../actions/Auth";
 
-const createUserWithPhonePasswordRequest = async (phone, password, firstName, lastName, country, gender, year, month, day, city, martial) =>
-    await  auth.createUserWithPhoneAndPassword(phone, password, firstName, lastName, country, gender, year, month, day, city, martial)
+const createUserWithPhonePasswordRequest = async (phone, password, firstName, lastName, country,countryiso2, gender, year, month, day, city, martial) =>
+    await  auth.createUserWithPhoneAndPassword(phone, password, firstName, lastName, country,countryiso2, gender, year, month, day, city, martial)
         .then(authUser => authUser)
         .catch(error => error);
 		
@@ -114,17 +114,17 @@ const changePasswordWithTokenForUserPhoneRequest = async (token, newpassword, hw
 //        .catch(error => error);
 
 function* createUserWithPhonePassword({payload}) {
-    const {phone, password, firstname, lastname, country, gender, year, month, day, city, martial} = payload;
+    const {phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial} = payload;
 	
     try {
-        const signUpUser = yield call(createUserWithPhonePasswordRequest, phone, password, firstname, lastname, country, gender, year, month, day, city, martial);
+        const signUpUser = yield call(createUserWithPhonePasswordRequest, phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial);
 		
         if (signUpUser.message) {
             yield put(showAuthMessage(signUpUser.message));
         } else {
 			//localStorage.setItem('access_token','access_token')
 			console.log("123456789");
-			console.log(signUpUser);
+			console.log("signup user",signUpUser);
 			console.log("123456789");			
             yield put(userSignUpSuccess({authUser:'access_token', phone,country:`${country}`, name: signUpUser.n, birth: signUpUser.b, martial: signUpUser.m, gender: signUpUser.gender}));
         }

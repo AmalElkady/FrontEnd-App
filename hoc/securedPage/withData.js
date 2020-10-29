@@ -86,7 +86,9 @@ export default ComposedComponent =>
 				return <ComponentMPUpload {...this.props} />
 			}
 		 
-	 }else{
+	 }
+	 //if (sub===0)
+	 else{
 	 return <ComposedComponent {...this.props} />;
      }
 	 

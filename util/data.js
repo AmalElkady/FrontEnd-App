@@ -140,7 +140,7 @@ export const ARRAY_OF_YEARS = [
 //COUNTRY_CITY_MAP['EG'] = [<IntlMessages id="eg.1" />,<IntlMessages id="eg.2" />];
 
 export const COUNTRY_CITY_MAP = new Map();
-COUNTRY_CITY_MAP['20'] = [				<IntlMessages id="eg.1" />,
+COUNTRY_CITY_MAP['eg'] = [				<IntlMessages id="eg.1" />,
 							<IntlMessages id="eg.2" />,
 							<IntlMessages id="eg.3" />,
 							<IntlMessages id="eg.4" />,
@@ -168,11 +168,11 @@ COUNTRY_CITY_MAP['20'] = [				<IntlMessages id="eg.1" />,
 							<IntlMessages id="eg.26" />,
 							<IntlMessages id="eg.27" /> ];
 
-COUNTRY_CITY_MAP['44'] = [<IntlMessages id="gb.1" />,<IntlMessages id="gb.2" />];
+COUNTRY_CITY_MAP['gb'] = [<IntlMessages id="gb.1" />,<IntlMessages id="gb.2" />];
 
 export const COUNTRY_CITY_MAP_VALUE = new Map();
-COUNTRY_CITY_MAP_VALUE['20'] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27];
-COUNTRY_CITY_MAP_VALUE['44'] = [1,2];
+COUNTRY_CITY_MAP_VALUE['eg'] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27];
+COUNTRY_CITY_MAP_VALUE['gb'] = [1,2];
 
 
 export const COUNTRY_CODE_TO_NAME_MAP = new Map();
