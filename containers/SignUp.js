@@ -376,7 +376,6 @@ class SignUp extends React.Component {
 			
                 <div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
-					  console.log("iso ",countryiso2);
 					  if(password != password_confirm){ NotificationManager.error("Password Mismatch")}
                       else { this.props.showAuthLoader();
                       this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }

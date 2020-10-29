@@ -186,7 +186,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								"name" : firstName + " " + lastName,
 								"phone" : username,
 								"phonecountrycode": country,
-								"countryiso2":countryiso2,
+								"countryiso2":countryiso2.toUpperCase(),
 								 gender,
 								 password,
 								 year,
@@ -195,6 +195,8 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								 city,
 								 martial
 							}
+
+
 
 			      return new Promise(  async (resolve, reject) => {				
 						

@@ -146,7 +146,7 @@ componentDidMount () {
 							  value={this.state.nationality}
 							  placeholder={'Choose Country'}
 							  readonly={'readonly'}
-							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.dialCode });}}
+							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.countryiso2 });}}
 							/>
 						</Grid>
 				</Grid>
