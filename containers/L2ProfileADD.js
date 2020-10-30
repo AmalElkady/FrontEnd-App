@@ -121,7 +121,7 @@ componentDidMount () {
         <div className="app-login-main-content">
           <div className="app-logo-content d-flex align-items-center justify-content-center">
             <Link href="/">
-                    <a> <img src="../static/images/logo.png"
+                    <a> <img src="../static/images/gila.png"
                      alt="App" title="App"/> </a>
             </Link>
           </div>

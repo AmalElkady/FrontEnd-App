@@ -81,7 +81,7 @@ class VerifyEmail extends React.Component {
                 <a>
                   {" "}
                   <img
-                    src="../static/images/logo.png"
+                    src="../static/images/gila.png"
                     alt="App"
                     title="App"
                   />{" "}
