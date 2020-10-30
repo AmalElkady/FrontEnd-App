@@ -8,6 +8,7 @@ const MPUpload = asyncComponent(() => import('../../containers/MPUpload'));
 const L2ProfileADD = asyncComponent(() => import('../../containers/L2ProfileADD'));
 const AutoLogout = asyncComponent(() => import('../../containers/AutoLogout'));
 const AutoSignIn = asyncComponent(() => import('../../containers/SignIn'));
+const Subscribe = asyncComponent(() => import('../../containers/Subscribe'));
 import Page from '../../hoc/defaultPage';
 
 let ComponentVerify = Page(() => <VerifyEmail />);
@@ -15,7 +16,7 @@ let ComponentMPUpload = Page(() => <MPUpload />);
 let ComponentL2ProfileADD = Page(() => <L2ProfileADD />);
 let ComponentAutoLogout = Page(() => <AutoLogout />);
 let ComponentAutoSignIn = Page(() => <AutoSignIn />);
-
+let ComponentSubscribe = Page(() => <Subscribe />);
 //	  let gender = tokenUserData.gd == "1" ? "0" : "1";
 	  
 
@@ -52,18 +53,17 @@ export default ComposedComponent =>
 	  }
 	  console.log("----------------------------------");
 	  let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
-	  console.log(tokenUserData);
-	  
+	  console.log("token  ",tokenUserData);
 	  //check tokenUserData.profile (L2|MP|MPA)
 	  //MPA ===> Call api/checkMPUpload
 	  //check tokenUserData.pv != 1
 	  
 	  
-      return {isLoggedIn,"path":context.pathname,"pv":tokenUserData.pv,"profile":tokenUserData.profile, "login":false};
+      return {isLoggedIn,"path":context.pathname,"pv":tokenUserData.pv,"sub":tokenUserData.sub,"profile":tokenUserData.profile, "login":false};
     }
 
     render() {
-		console.log({...this.props});
+		console.log("props ",{...this.props});
       
 	 if(this.props.isLoggedIn == false && !this.props.login){
 //	 return <div><script>setTimeout(function() {window.location = "http://localhost:3000/"}, 1500)</script></div>
@@ -87,7 +87,9 @@ export default ComposedComponent =>
 			}
 		 
 	 }
-	 //if (sub===0)
+	 else if(this.props.sub == 0){
+     return <ComponentSubscribe {...this.props} />
+	 }
 	 else{
 	 return <ComposedComponent {...this.props} />;
      }

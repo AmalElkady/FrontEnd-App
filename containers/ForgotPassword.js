@@ -35,13 +35,14 @@ class ForgotPassword extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log("forgot")
     if (this.props.showMessage) {
       setTimeout(() => {
         this.props.hideMessage();
       }, 3000);
     }
     if (this.props.authUser !== null) {
-      Router.replace("/dashboard/crypto");
+      Router.replace("/home/content");
     }
   }
 

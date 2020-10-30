@@ -59,7 +59,7 @@ class SignUp extends React.Component {
 		
 		setTimeout(() => {
 		   this.props.stepFlagClear();
-		   Router.replace('/dashboard/crypto');
+		   Router.replace('/home/content');
      }, 300);
     }
   }
@@ -146,7 +146,7 @@ componentDidMount () {
 							  value={this.state.nationality}
 							  placeholder={'Choose Country'}
 							  readonly={'readonly'}
-							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.countryiso2 });}}
+							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.countryCode });}}
 							/>
 						</Grid>
 				</Grid>
