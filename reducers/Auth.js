@@ -4,10 +4,10 @@ import {
   ON_HIDE_LOADER,
   ON_SHOW_LOADER,
   SHOW_MESSAGE,
-//  SIGNIN_FACEBOOK_USER_SUCCESS,
-//  SIGNIN_GITHUB_USER_SUCCESS,
-//  SIGNIN_GOOGLE_USER_SUCCESS,
-//  SIGNIN_TWITTER_USER_SUCCESS,
+  //  SIGNIN_FACEBOOK_USER_SUCCESS,
+  //  SIGNIN_GITHUB_USER_SUCCESS,
+  //  SIGNIN_GOOGLE_USER_SUCCESS,
+  //  SIGNIN_TWITTER_USER_SUCCESS,
   CREATE_USER_CLEAR,
   STEP_FLAG_CLEAR,
   MP_UPLOAD_SUCCESS,
@@ -23,24 +23,24 @@ import {
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
-    loader: false,
-    alertMessage: '',
-    showMessage: false,
-	tokenSent: false,
-	passwordChanged: false,
-    initURL: '',
-    authUser: null,
-	authStateCleared : false,
-	phoneVerified: false,
-	stepFlag: false,
-	mpUploadFlag: false,
-	gender: '',
-	phone: '',
-	country: '',
-  countryiso2:'',
-	name: '',
-	birth: '',
-	martial: ''
+  loader: false,
+  alertMessage: "",
+  showMessage: false,
+  tokenSent: false,
+  passwordChanged: false,
+  initURL: "",
+  authUser: null,
+  authStateCleared: false,
+  phoneVerified: false,
+  stepFlag: false,
+  mpUploadFlag: false,
+  gender: "",
+  phone: "",
+  country: "",
+  countryiso2: "",
+  name: "",
+  birth: "",
+  martial: ""
 };
 
 export default (state = INIT_STATE, action) => {
@@ -50,49 +50,49 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loader: false,
         authUser: action.payload.authUser,
-		phone: action.payload.phone,
-		country: action.payload.country,
-    countryiso2:action.payload.countryiso2,
-		name: action.payload.name,
-		birth: action.payload.birth,
-		martial: action.payload.martial,
-		gender: action.payload.gender
+        phone: action.payload.phone,
+        country: action.payload.country,
+        countryiso2: action.payload.countryiso2,
+        name: action.payload.name,
+        birth: action.payload.birth,
+        martial: action.payload.martial,
+        gender: action.payload.gender
       };
-    }    
-	    
-	case ADD_PROFILEL2_SUCCESS: {
+    }
+
+    case ADD_PROFILEL2_SUCCESS: {
       return {
         ...state,
         loader: false,
-		stepFlag: true
+        stepFlag: true
       };
-    }    
-		    
-	case MP_UPLOAD_SUCCESS: {
+    }
+
+    case MP_UPLOAD_SUCCESS: {
       return {
         ...state,
         loader: false,
-		mpUploadFlag: true
+        mpUploadFlag: true
       };
-    }    
-	
-	case CREATE_USER_CLEAR: {
+    }
+
+    case CREATE_USER_CLEAR: {
       return {
         ...state,
         loader: false,
         authUser: null
       };
     }
-	
-	case STEP_FLAG_CLEAR: {
+
+    case STEP_FLAG_CLEAR: {
       return {
         ...state,
         loader: false,
         stepFlag: false
       };
     }
-	
-	case MP_UPLOAD_CLEAR: {
+
+    case MP_UPLOAD_CLEAR: {
       return {
         ...state,
         loader: false,
@@ -101,49 +101,48 @@ export default (state = INIT_STATE, action) => {
     }
 
     case RESET_TOKEN_SUCCESS: {
-        return {
-            ...state,
-            loader: false,
-            tokenSent: action.payload
-        }
-    }	
-	
+      return {
+        ...state,
+        loader: false,
+        tokenSent: action.payload
+      };
+    }
+
     case VERIFICATION_CODE_SUCCESS: {
-        return {
-            ...state,
-            loader: false,
-            phoneVerified: action.payload
-        }
-    }	
-	
-	
+      return {
+        ...state,
+        loader: false,
+        phoneVerified: action.payload
+      };
+    }
+
     case PASSWORD_CHANGE_SUCCESS: {
-        return {
-            ...state,
-            loader: false,
-            passwordChanged: action.payload
-        }
-    }	
+      return {
+        ...state,
+        loader: false,
+        passwordChanged: action.payload
+      };
+    }
     case CLEAR_AUTH_STATE: {
-        return {
-            ...state,
-            loader: false,
-            passwordChanged: false,
-			tokenSent: false,
-			authStateCleared: true
-        }
+      return {
+        ...state,
+        loader: false,
+        passwordChanged: false,
+        tokenSent: false,
+        authStateCleared: true
+      };
     }
     case SIGNIN_USER_SUCCESS: {
       return {
         ...state,
         loader: false,
         authUser: action.payload.authUser,
-		phone: action.payload.phone,
-		country: action.payload.country,
-		name: action.payload.name,
-		birth: action.payload.birth,
-		martial: action.payload.martial,
-		gender: action.payload.gender
+        phone: action.payload.phone,
+        country: action.payload.country,
+        name: action.payload.name,
+        birth: action.payload.birth,
+        martial: action.payload.martial,
+        gender: action.payload.gender
       };
     }
     case INIT_URL: {
@@ -158,12 +157,12 @@ export default (state = INIT_STATE, action) => {
         authUser: null,
         initURL: "/app/dashboard/crypto",
         loader: false,
-		phone: '',
-		country: '',
-		name: '',
-		birth: '',
-		martial: '',
-		gender: ''
+        phone: "",
+        country: "",
+        name: "",
+        birth: "",
+        martial: "",
+        gender: ""
       };
     }
 
@@ -184,34 +183,34 @@ export default (state = INIT_STATE, action) => {
       };
     }
 
-//    case SIGNIN_GOOGLE_USER_SUCCESS: {
-//      return {
-//        ...state,
-//        loader: false,
-//        authUser: action.payload
-//      };
-//    }
-//    case SIGNIN_FACEBOOK_USER_SUCCESS: {
-//      return {
-//        ...state,
-//        loader: false,
-//        authUser: action.payload
-//      };
-//    }
-//    case SIGNIN_TWITTER_USER_SUCCESS: {
-//      return {
-//        ...state,
-//        loader: false,
-//        authUser: action.payload
-//      };
-//    }
-//    case SIGNIN_GITHUB_USER_SUCCESS: {
-//      return {
-//        ...state,
-//        loader: false,
-//        authUser: action.payload
-//      };
-//    }
+    //    case SIGNIN_GOOGLE_USER_SUCCESS: {
+    //      return {
+    //        ...state,
+    //        loader: false,
+    //        authUser: action.payload
+    //      };
+    //    }
+    //    case SIGNIN_FACEBOOK_USER_SUCCESS: {
+    //      return {
+    //        ...state,
+    //        loader: false,
+    //        authUser: action.payload
+    //      };
+    //    }
+    //    case SIGNIN_TWITTER_USER_SUCCESS: {
+    //      return {
+    //        ...state,
+    //        loader: false,
+    //        authUser: action.payload
+    //      };
+    //    }
+    //    case SIGNIN_GITHUB_USER_SUCCESS: {
+    //      return {
+    //        ...state,
+    //        loader: false,
+    //        authUser: action.payload
+    //      };
+    //    }
     case ON_SHOW_LOADER: {
       return {
         ...state,

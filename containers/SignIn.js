@@ -22,8 +22,8 @@ class SignIn extends React.Component {
     super();
     this.state = {
       phoneSign: "",
-      password: "Password#123",
-      countrySign: "", //+201144778899
+      password: "",
+      countrySign: "",
       viewPhone: ""
     };
   }

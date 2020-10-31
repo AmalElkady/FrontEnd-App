@@ -30,12 +30,13 @@ class ForgotPassword extends React.Component {
       phoneRes: "",
       newpassword: "",
       countryRes: "",
+      countryisoRes: "",
       viewPhone: ""
     };
   }
 
   componentDidUpdate() {
-    console.log("forgot")
+    console.log("forgot");
     if (this.props.showMessage) {
       setTimeout(() => {
         this.props.hideMessage();
@@ -47,9 +48,11 @@ class ForgotPassword extends React.Component {
   }
 
   componentDidMount() {
+    console.log("props from restpassword ", this.props);
     if (this.props.phone && this.props.country) {
       this.setState({ ["phoneRes"]: this.props.phone });
       this.setState({ ["countryRes"]: this.props.country });
+      // this.setState({ ["countryisoRes"]: this.props.country });
       this.setState({
         ["viewPhone"]: `${this.props.country}${this.props.phone}`
       });
@@ -57,7 +60,14 @@ class ForgotPassword extends React.Component {
   }
 
   render() {
-    const { token, phoneRes, newpassword, countryRes, viewPhone } = this.state;
+    const {
+      token,
+      phoneRes,
+      newpassword,
+      countryRes,
+      countryisoRes,
+      viewPhone
+    } = this.state;
     const {
       showMessage,
       loader,
@@ -140,7 +150,9 @@ class ForgotPassword extends React.Component {
                     this.setState({
                       phoneRes: value.slice(country.dialCode.length)
                     });
-                    console.log(country.dialCode);
+                    this.setState({
+                      countryisoRes: country.countryCode
+                    });
                   }}
                 />
               )}
@@ -184,7 +196,8 @@ class ForgotPassword extends React.Component {
                         this.props.showAuthLoader();
                         this.props.sendResetToken({
                           phone: phoneRes,
-                          country: countryRes
+                          country: countryRes,
+                          countryiso2: countryisoRes
                         });
                         //add resendResetToken To Link To Change State
                       }}
@@ -214,7 +227,8 @@ class ForgotPassword extends React.Component {
                         this.props.showAuthLoader();
                         this.props.sendResetToken({
                           phone: phoneRes,
-                          country: countryRes
+                          country: countryRes,
+                          countryiso2: countryisoRes
                         });
                       }}
                       color="primary"

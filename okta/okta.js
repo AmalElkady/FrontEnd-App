@@ -144,11 +144,10 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 													
 													let res = resX.data;
 													
-													console.log(res);
+													console.log("RES FROM LOGIN ",res);
 											
 													if(res.response && res.status == "ACTIVE" && res.token){
-													
-															 console.log(res.token);	
+											
 															 let tokenUserData = JSON.parse(base64url.decode(`${res.token}`.split(".")[1]));															 
 						
 															 
@@ -524,6 +523,8 @@ auth.resendVerificationToUserPhone = function () {
 
 auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,countryiso2) {
 	
+	console.log("countryiso from okta ",countryiso2);
+	console.log("countryiso from okta ",countryiso2.toUpperCase());
 	
 			      return new Promise( async (resolve, reject) => {				
 								
@@ -539,15 +540,15 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,co
 															  },
 															  data: { 
 																phonecountrycode,
-																countryiso2,
 																phone : username,
+																countryiso2:countryiso2.toUpperCase(),
 															  }
 															};
 
 													let responseX = await callAxios(options);
 													let response = responseX.data;
 													//{"response" : "ok", "uid" : hw}
-											       console.log(response);
+											       console.log("resp password ",response);
 												   if(response){
 														
 														 if(response.response == "ok"){
@@ -563,7 +564,6 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,co
 										
 											
 								} catch(err) {
-									//console.log(err.statusCode + ' error', err)
 									resolve({"message": err.message});		
 								}
 													
