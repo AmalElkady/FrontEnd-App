@@ -59,11 +59,10 @@
   }
 }
 
-.app-logo img {
-  height: 40px;
-
+.app-logo {
+  width: 40px;
   @media screen and (max-width: 575px) {
-    height: 28px;
+    display: block !important;
   }
 }
 

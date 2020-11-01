@@ -203,20 +203,16 @@ class Header extends React.Component {
 
           <Link href="/">
             <a className="app-logo mr-2 d-none d-sm-block">
-              <img
-                src="../../static/images/gila.png"
-                alt="Jambo"
-                title="Jambo"
-              />
+              <img src="../../static/images/gila.png" alt="Gila" title="Gila" />
             </a>
           </Link>
 
-          <SearchBox
+          {/* <SearchBox
             styleName="d-none d-lg-block"
             placeholder=""
             onChange={this.updateSearchText.bind(this)}
             value={this.state.searchText}
-          />
+          /> */}
           {navigationStyle === HORIZONTAL_NAVIGATION &&
             horizontalNavPosition === INSIDE_THE_HEADER && <Menu />}
 
@@ -241,7 +237,7 @@ class Header extends React.Component {
                 <DropdownMenu>{this.Apps()}</DropdownMenu>
               </Dropdown>
             </li>
-            <li className="d-inline-block d-lg-none list-inline-item">
+            {/* <li className="d-inline-block d-lg-none list-inline-item">
               <Dropdown
                 className="quick-menu nav-searchbox"
                 isOpen={this.state.searchBox}
@@ -266,7 +262,7 @@ class Header extends React.Component {
                   />
                 </DropdownMenu>
               </Dropdown>
-            </li>
+            </li> */}
             <li className="list-inline-item">
               <Dropdown
                 className="quick-menu"

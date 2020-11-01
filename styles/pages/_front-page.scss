@@ -3,7 +3,6 @@ body {
 }
 .intro-bg {
   background-image: url("https://cdn.catholic.com/wp-content/uploads/AdobeStock_135906090-900x900.jpeg");
-  // background-image: url("../../static/images/background.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -26,26 +25,26 @@ img {
 
 ///message icon
 .line-message-border {
-  fill: rgba(211,49,110,1);
-  stroke: rgba(255,255,255,1);
+  fill: rgba(211, 49, 110, 1);
+  stroke: rgba(255, 255, 255, 1);
 }
 .line-message3-line1 {
   animation: line-message3-line 2s 600ms 2;
   stroke-dasharray: 150;
   stroke-dashoffset: 160;
-  stroke: rgba(255,255,255,1);
+  stroke: rgba(255, 255, 255, 1);
 }
 .line-message3-line2 {
   animation: line-message3-line 2s 300ms 2;
   stroke-dasharray: 150;
   stroke-dashoffset: 160;
-  stroke: rgba(255,255,255,1);
+  stroke: rgba(255, 255, 255, 1);
 }
 .line-message3-line3 {
   animation: line-message3-line 2s 2;
   stroke-dasharray: 150;
   stroke-dashoffset: 160;
-  stroke: rgba(255,255,255,1);
+  stroke: rgba(255, 255, 255, 1);
 }
 @keyframes line-message3-line {
   0% {
@@ -77,8 +76,8 @@ img {
 
 /// Love icon
 .line-heart1 {
-  fill:rgba(255,255,255,1);
-  stroke:rgba(232,120,162,1);
+  fill: rgba(255, 255, 255, 1);
+  stroke: rgba(232, 120, 162, 1);
   animation: line-heart1-pulse 2s 2;
   transform-origin: 50px 50px;
 }
