@@ -19,6 +19,9 @@ class UserInfo extends React.Component {
   handleRequestClose = () => {
     this.setState({ open: false });
   };
+  componentDidMount = () => {
+    console.log("props in userInfo component ", this.props);
+  };
 
   render() {
     return (
@@ -30,7 +33,7 @@ class UserInfo extends React.Component {
         />
         <div className="user-detail">
           <h4 className="user-name" onClick={this.handleClick}>
-            Robert Johnson{" "}
+            {this.props.auth.name}
             <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
           </h4>
         </div>
@@ -72,11 +75,8 @@ class UserInfo extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = ({ settings, auth }) => {
   const { locale } = settings;
-  return { locale };
+  return { locale, auth };
 };
-export default connect(
-  mapStateToProps,
-  { userSignOut }
-)(UserInfo);
+export default connect(mapStateToProps, { userSignOut })(UserInfo);
