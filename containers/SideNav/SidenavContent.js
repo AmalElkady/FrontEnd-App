@@ -7,7 +7,6 @@ import IntlMessages from "../../util/IntlMessages";
 import CustomScrollbars from "../../util/CustomScrollbars";
 
 class SidenavContent extends Component {
-
   componentDidMount() {
     const { router } = this.props;
     const that = this;
@@ -45,7 +44,7 @@ class SidenavContent extends Component {
       };
     }
 
-    const activeLi = document.querySelector("a[href=\"" + pathname + "\"]"); // select current a element
+    const activeLi = document.querySelector('a[href="' + pathname + '"]'); // select current a element
     try {
       const activeNav = this.closest(activeLi, "ul"); // select closest ul
       if (activeNav.classList.contains("sub-menu")) {
@@ -53,14 +52,13 @@ class SidenavContent extends Component {
       } else {
         this.closest(activeLi, "li").classList.add("open");
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   componentWillReceiveProps(nextProps) {
     const pathname = nextProps.router.pathname; // get current path
 
-    const activeLi = document.querySelector("a[href=\"" + pathname + "\"]"); // select current a element
+    const activeLi = document.querySelector('a[href="' + pathname + '"]'); // select current a element
     try {
       const activeNav = this.closest(activeLi, "ul"); // select closest ul
       if (activeNav.classList.contains("sub-menu")) {
@@ -68,8 +66,7 @@ class SidenavContent extends Component {
       } else {
         this.closest(activeLi, "li").classList.add("open");
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   closest(el, selector) {
@@ -100,8 +97,7 @@ class SidenavContent extends Component {
         }
         el = parent;
       }
-    } catch (e) {
-    }
+    } catch (e) {}
 
     return null;
   }
@@ -110,12 +106,11 @@ class SidenavContent extends Component {
     return (
       <CustomScrollbars className=" scrollbar">
         <ul className="nav-menu">
-
           <li className="nav-header">
-            <IntlMessages id="sidebar.main"/>
+            <IntlMessages id="sidebar.main" />
           </li>
 
-          <li className="menu collapse-box">
+          {/* <li className="menu collapse-box">
             <Button>
               <i className="zmdi zmdi-view-dashboard zmdi-hc-fw"/>
               <span className="nav-text">
@@ -174,268 +169,331 @@ class SidenavContent extends Component {
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
 
           <li className="ui_tooltip menu">
             <Button className="void">
-              <i className="zmdi zmdi-folder zmdi-hc-fw"/>
-              <span className="nav-text"><IntlMessages id="sidebar.components"/></span>
+              <i className="zmdi zmdi-folder zmdi-hc-fw" />
+              <span className="nav-text">
+                <IntlMessages id="sidebar.components" />
+              </span>
             </Button>
 
             <ul className="sub-menu">
               <li>
                 <Link href="/components/alerts">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.alerts"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.alerts" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/appbar">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.appbar"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.appbar" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/auto-complete">
                   <a className="prepend-icon">
-                                    <span className="nav-text"><IntlMessages
-                                      id="sidebar.components.autocomplete"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.autocomplete" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/avatars">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.avatars"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.avatars" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/badges">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.badge"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.badge" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/bottom-navigation">
                   <a className="prepend-icon">
-                                <span className="nav-text"><IntlMessages
-                                  id="sidebar.components.bottomNavigation"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.bottomNavigation" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/breadcrumbs">
                   <a className="prepend-icon">
-                                    <span className="nav-text"><IntlMessages
-                                      id="sidebar.components.breadcrumbs"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.breadcrumbs" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/buttons">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.buttons"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.buttons" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/button-group">
                   <a className="prepend-icon">
-                                    <span className="nav-text"><IntlMessages
-                                      id="sidebar.components.buttonGroup"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.buttonGroup" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/cards">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.cards"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.cards" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/carousel">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.carousel"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.carousel" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/chips">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.chips"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.chips" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/color-picker">
                   <a className="prepend-icon">
-                                    <span className="nav-text"><IntlMessages
-                                      id="sidebar.components.colorPicker"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.colorPicker" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/dialogs">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.dialogs"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.dialogs" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/dividers">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.dividers"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.dividers" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/expansion-panel">
                   <a className="prepend-icon">
-                                    <span className="nav-text"><IntlMessages
-                                      id="sidebar.components.expansionPanel"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.expansionPanel" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/drawer">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.drawer"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.drawer" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/grid-list">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.gridList"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.gridList" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/list">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.lists"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.lists" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/menu-paper">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.menusPaper"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.menusPaper" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/pickers">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.pickers"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.pickers" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/popovers">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.popovers"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.popovers" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/progressbar">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.progress"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.progress" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/selects">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.selects"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.selects" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/selection">
                   <a className="prepend-icon">
-                                <span className="nav-text"><IntlMessages
-                                  id="sidebar.components.selectionControl"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.selectionControl" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/snackbar">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.snackbars"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.snackbars" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/stepper">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.stepper"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.stepper" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/tables">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.tables"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.tables" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/tabs">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.tabs"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.tabs" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/text-fields">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.textFields"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.textFields" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/tooltips">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.tooltips"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.tooltips" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/components/typography">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.components.typography"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.components.typography" />
+                    </span>
                   </a>
                 </Link>
               </li>
             </ul>
           </li>
 
-          <li className="menu collapse-box">
+          {/* <li className="menu collapse-box">
             <Button>
-              <i className="zmdi zmdi-widgets zmdi-hc-fw"/>
+              <i className="zmdi zmdi-widgets zmdi-hc-fw" />
               <span className="nav-text">
-                            <IntlMessages id="sidebar.widgets"/>
-                        </span>
+                <IntlMessages id="sidebar.widgets" />
+              </span>
             </Button>
             <ul className="sub-menu">
               <li>
                 <Link href="/widgets/classic">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.classic"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.classic" />
+                    </span>
                   </a>
                 </Link>
               </li>
               <li>
                 <Link href="/widgets/modern">
                   <a className="prepend-icon">
-                    <span className="nav-text"><IntlMessages id="sidebar.modern"/></span>
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.modern" />
+                    </span>
                   </a>
                 </Link>
               </li>
@@ -465,15 +523,18 @@ class SidenavContent extends Component {
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
+
           <li className="nav-header">
-            <IntlMessages id="sidebar.inBuiltApp"/>
+            <IntlMessages id="sidebar.inBuiltApp" />
           </li>
           <li className="menu no-arrow">
             <Link href="/app/mail">
               <a className="prepend-icon">
-                <i className="zmdi zmdi-email zmdi-hc-fw"/>
-                <span className="nav-text"><IntlMessages id="sidebar.appModule.mail"/></span>
+                <i className="zmdi zmdi-email zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.appModule.mail" />
+                </span>
               </a>
             </Link>
           </li>
@@ -481,8 +542,10 @@ class SidenavContent extends Component {
           <li className="menu no-arrow">
             <Link href="/app/to-do">
               <a className="prepend-icon">
-                <i className="zmdi zmdi-check-square zmdi-hc-fw"/>
-                <span className="nav-text"><IntlMessages id="sidebar.appModule.toDo"/></span>
+                <i className="zmdi zmdi-check-square zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.appModule.toDo" />
+                </span>
               </a>
             </Link>
           </li>
@@ -490,8 +553,10 @@ class SidenavContent extends Component {
           <li className="menu no-arrow">
             <Link href="/app/contact">
               <a className="prepend-icon">
-                <i className="zmdi zmdi-account-box zmdi-hc-fw"/>
-                <span className="nav-text"><IntlMessages id="sidebar.appModule.contact"/></span>
+                <i className="zmdi zmdi-account-box zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.appModule.contact" />
+                </span>
               </a>
             </Link>
           </li>
@@ -499,13 +564,15 @@ class SidenavContent extends Component {
           <li className="menu no-arrow">
             <Link href="/app/chat">
               <a className="prepend-icon">
-                <i className="zmdi zmdi-comment zmdi-hc-fw"/>
-                <span className="nav-text"><IntlMessages id="sidebar.appModule.chat"/></span>
+                <i className="zmdi zmdi-comment zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.appModule.chat" />
+                </span>
               </a>
             </Link>
           </li>
 
-          <li className="nav-header">
+          {/* <li className="nav-header">
             <IntlMessages id="sidebar.inBuiltReduxApp"/>
           </li>
           <li className="menu no-arrow">
@@ -626,7 +693,7 @@ class SidenavContent extends Component {
                                 <span className="nav-text"><IntlMessages id="sidebar.timeLine.zigzag"/></span>
                   </a>
                 </Link>
-                        </li>*/}
+                        </li>
             </ul>
           </li>
 
@@ -1232,9 +1299,7 @@ class SidenavContent extends Component {
                 </Link>
               </li>
             </ul>
-          </li>
-
-
+          </li> */}
         </ul>
       </CustomScrollbars>
     );
