@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Router from "next/router";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import Timer from "../components/Timer";
 import {
   NotificationContainer,
   NotificationManager
@@ -54,10 +55,14 @@ class VerifyEmail extends React.Component {
       showMessage,
       loader,
       alertMessage,
+      timeReturned,
       phoneVerified,
       phone,
       country
     } = this.props; //phoneVerified
+
+    console.log("timeReturned ", timeReturned);
+
     return (
       <>
         <Button
@@ -70,6 +75,8 @@ class VerifyEmail extends React.Component {
         >
           <IntlMessages id="appModule.signOut" />
         </Button>
+
+        {timeReturned && <Timer />}
 
         <div
           style={{ minHeight: "705px" }}
@@ -133,6 +140,7 @@ class VerifyEmail extends React.Component {
                         this.props.resendVerificationToPhone();
                       }}
                       color="primary"
+                      disabled={timeReturned ? disabled : ""}
                     >
                       <IntlMessages id="appModule.resendVerificationCode" />
                     </Button>
@@ -162,6 +170,7 @@ const mapStateToProps = ({ auth }) => {
     alertMessage,
     showMessage,
     authUser,
+    timeReturned,
     phoneVerified,
     phone,
     country
@@ -171,6 +180,7 @@ const mapStateToProps = ({ auth }) => {
     alertMessage,
     showMessage,
     authUser,
+    timeReturned,
     phoneVerified,
     phone,
     country

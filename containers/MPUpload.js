@@ -46,8 +46,8 @@ class VerifyEmail extends React.Component {
   }
 
   componentDidMount() {
-    let x = document.getElementsByClassName("MuiDropzoneArea-root");
-    x[0].style.minHeight = "20px";
+    // let x = document.getElementsByClassName("MuiDropzoneArea-root");
+    // x[0].style.minHeight = "20px";
   }
 
   componentDidUpdate() {
@@ -57,9 +57,9 @@ class VerifyEmail extends React.Component {
       }, 3000);
     }
     if (this.props.authUser !== null && this.props.mpUploadFlag == true) {
+      console.log("img uploaded");
       this.props.mpUploadClear();
-      Router.replace("/dashboard/crypto");
-      window.location.reload(false);
+      Router.replace("/home/content");
     }
   }
 
@@ -120,11 +120,11 @@ class VerifyEmail extends React.Component {
                     showPreviews={true}
                     showPreviewsInDropzone={false}
                     getFileRemovedMessage={removedFile => {
-                      return `File ${removedFile} was removed ya hamada`;
+                      return `File ${removedFile} was removed`;
                     }}
                     //getDropRejectMessage={}
                     getFileAddedMessage={addedFile => {
-                      return `File ${addedFile} was added ya hamada`;
+                      return `File ${addedFile} was added`;
                     }}
                     onChange={files => {
                       if (files[0]) {

@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Router from "next/router";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import Timer from "../components/Timer";
 import {
   NotificationContainer,
   NotificationManager
@@ -73,192 +74,206 @@ class ForgotPassword extends React.Component {
       loader,
       alertMessage,
       tokenSent,
+      timeReturned,
       passwordChanged,
       authStateCleared,
       phone,
       country
     } = this.props;
+
+    console.log("showMessage ", showMessage);
+    console.log("alertMessage ", alertMessage);
+    console.log("timeReturned ", timeReturned);
     return (
-      <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-        <div className="app-login-main-content">
-          <div className="app-logo-content d-flex align-items-center justify-content-center">
-            <Link href="/">
-              <a>
-                {" "}
-                <img
-                  src="../static/images/gila.png"
-                  alt="App"
-                  title="App"
-                />{" "}
-              </a>
-            </Link>
-          </div>
+      <>
+        {/* timer */}
+        {timeReturned && <Timer />}
 
-          <div className="app-login-content">
-            <div className="app-login-header">
-              <h1>
-                {" "}
-                <IntlMessages id="appModule.forgotPasswordHeader" />{" "}
-              </h1>
+        <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
+          <div className="app-login-main-content">
+            <div className="app-logo-content d-flex align-items-center justify-content-center">
+              <Link href="/">
+                <a>
+                  {" "}
+                  <img
+                    src="../static/images/gila.png"
+                    alt="App"
+                    title="App"
+                  />{" "}
+                </a>
+              </Link>
             </div>
 
-            <div className="mb-4">
-              {!authStateCleared && !tokenSent && (
-                <h2>
-                  <IntlMessages id="appModule.resetPasswordPageHeader" />
-                </h2>
-              )}
-              {authStateCleared && (
-                <h2>
-                  <IntlMessages id="appModule.resetPasswordSuccess" />
-                </h2>
-              )}
-              {!passwordChanged && tokenSent && (
-                <h2>
-                  <IntlMessages id="appModule.tokenSent" />
-                </h2>
-              )}
-            </div>
+            <div className="app-login-content">
+              <div className="app-login-header">
+                <h1>
+                  {" "}
+                  <IntlMessages id="appModule.forgotPasswordHeader" />{" "}
+                </h1>
+              </div>
 
-            <div className="mb-4">
-              {!authStateCleared && !tokenSent && (
-                <PhoneInput
-                  onlyCountries={[
-                    "gb",
-                    "us",
-                    "fr",
-                    "de",
-                    "eg",
-                    "ma",
-                    "sa",
-                    "dz",
-                    "bh",
-                    "kw",
-                    "tn",
-                    "ae",
-                    "my",
-                    "mr",
-                    "af"
-                  ]}
-                  countryCodeEditable={false}
-                  country={COUNTRY_CODE_TO_NAME_MAP[this.props.country] || "eg"}
-                  value={this.state.viewPhone}
-                  placeholder={""}
-                  readonly={"readonly"}
-                  onChange={(value, country, e, formattedValue) => {
-                    this.setState({ countryRes: country.dialCode });
-                    this.setState({
-                      phoneRes: value.slice(country.dialCode.length)
-                    });
-                    this.setState({
-                      countryisoRes: country.countryCode
-                    });
-                  }}
-                />
-              )}
-            </div>
-
-            <div className="app-login-form">
-              <form>
-                {!passwordChanged && tokenSent && (
-                  <div>
-                    <TextField
-                      type="text"
-                      onChange={event =>
-                        this.setState({ token: event.target.value })
-                      }
-                      label={<IntlMessages id="appModule.token" />}
-                      fullWidth
-                      defaultValue={token}
-                      margin="normal"
-                      className="mt-0 mb-2"
-                    />
-
-                    <TextField
-                      type="password"
-                      label={<IntlMessages id="appModule.password" />}
-                      fullWidth
-                      onChange={event =>
-                        this.setState({ newpassword: event.target.value })
-                      }
-                      defaultValue={newpassword}
-                      margin="normal"
-                      className="mt-1 my-sm-3"
-                    />
-                  </div>
+              <div className="mb-4">
+                {!authStateCleared && !tokenSent && (
+                  <h2>
+                    <IntlMessages id="appModule.resetPasswordPageHeader" />
+                  </h2>
                 )}
+                {authStateCleared && (
+                  <h2>
+                    <IntlMessages id="appModule.resetPasswordSuccess" />
+                  </h2>
+                )}
+                {!passwordChanged && tokenSent && (
+                  <h2>
+                    <IntlMessages id="appModule.tokenSent" />
+                  </h2>
+                )}
+              </div>
 
-                <div className="mb-3 d-flex align-items-center justify-content-between">
-                  {!authStateCleared && !tokenSent && (
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        this.props.showAuthLoader();
-                        this.props.sendResetToken({
-                          phone: phoneRes,
-                          country: countryRes,
-                          countryiso2: countryisoRes
-                        });
-                        //add resendResetToken To Link To Change State
-                      }}
-                      color="primary"
-                    >
-                      <IntlMessages id="appModule.resetPassword" />
-                    </Button>
-                  )}
+              <div className="mb-4">
+                {!authStateCleared && !tokenSent && (
+                  <PhoneInput
+                    onlyCountries={[
+                      "gb",
+                      "us",
+                      "fr",
+                      "de",
+                      "eg",
+                      "ma",
+                      "sa",
+                      "dz",
+                      "bh",
+                      "kw",
+                      "tn",
+                      "ae",
+                      "my",
+                      "mr",
+                      "af"
+                    ]}
+                    countryCodeEditable={false}
+                    country={
+                      COUNTRY_CODE_TO_NAME_MAP[this.props.country] || "eg"
+                    }
+                    value={this.state.viewPhone}
+                    placeholder={""}
+                    readonly={"readonly"}
+                    onChange={(value, country, e, formattedValue) => {
+                      this.setState({ countryRes: country.dialCode });
+                      this.setState({
+                        phoneRes: value.slice(country.dialCode.length)
+                      });
+                      this.setState({
+                        countryisoRes: country.countryCode
+                      });
+                    }}
+                  />
+                )}
+              </div>
 
+              <div className="app-login-form">
+                <form>
                   {!passwordChanged && tokenSent && (
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        this.props.showAuthLoader();
-                        this.props.changePassword({ token, newpassword });
-                      }}
-                      color="primary"
-                    >
-                      <IntlMessages id="appModule.submit" />
-                    </Button>
+                    <div>
+                      <TextField
+                        type="text"
+                        onChange={event =>
+                          this.setState({ token: event.target.value })
+                        }
+                        label={<IntlMessages id="appModule.token" />}
+                        fullWidth
+                        defaultValue={token}
+                        margin="normal"
+                        className="mt-0 mb-2"
+                      />
+
+                      <TextField
+                        type="password"
+                        label={<IntlMessages id="appModule.password" />}
+                        fullWidth
+                        onChange={event =>
+                          this.setState({ newpassword: event.target.value })
+                        }
+                        defaultValue={newpassword}
+                        margin="normal"
+                        className="mt-1 my-sm-3"
+                      />
+                    </div>
                   )}
 
-                  {!passwordChanged && tokenSent && (
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        this.props.showAuthLoader();
-                        this.props.sendResetToken({
-                          phone: phoneRes,
-                          country: countryRes,
-                          countryiso2: countryisoRes
-                        });
-                      }}
-                      color="primary"
-                    >
-                      <IntlMessages id="appModule.resendResetToken" />
-                    </Button>
-                  )}
+                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                    {!authStateCleared && !tokenSent && (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.props.showAuthLoader();
+                          this.props.sendResetToken({
+                            phone: phoneRes,
+                            country: countryRes,
+                            countryiso2: countryisoRes
+                          });
+                          //add resendResetToken To Link To Change State
+                        }}
+                        color="primary"
+                        disabled={{ timeReturned }}
+                      >
+                        <IntlMessages id="appModule.resetPassword" />
+                      </Button>
+                    )}
 
-                  {authStateCleared && (
-                    <Link href="/signin">
-                      <a>
-                        {" "}
-                        <IntlMessages id="appModule.signin" />{" "}
-                      </a>
-                    </Link>
-                  )}
-                </div>
-              </form>
+                    {!passwordChanged && tokenSent && (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.props.showAuthLoader();
+                          this.props.changePassword({ token, newpassword });
+                        }}
+                        color="primary"
+                      >
+                        <IntlMessages id="appModule.submit" />
+                      </Button>
+                    )}
+
+                    {!passwordChanged && tokenSent && (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.props.showAuthLoader();
+                          this.props.sendResetToken({
+                            phone: phoneRes,
+                            country: countryRes,
+                            countryiso2: countryisoRes
+                          });
+                        }}
+                        color="primary"
+                        disabled={{ timeReturned }}
+                      >
+                        <IntlMessages id="appModule.resendResetToken" />
+                      </Button>
+                    )}
+
+                    {authStateCleared && (
+                      <Link href="/signin">
+                        <a>
+                          {" "}
+                          <IntlMessages id="appModule.signin" />{" "}
+                        </a>
+                      </Link>
+                    )}
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
 
-        {loader && (
-          <div className="loader-view">
-            <CircularProgress />
-          </div>
-        )}
-        {showMessage && NotificationManager.error(alertMessage)}
-        <NotificationContainer />
-      </div>
+          {loader && (
+            <div className="loader-view">
+              <CircularProgress />
+            </div>
+          )}
+          {showMessage && NotificationManager.error(alertMessage)}
+          <NotificationContainer />
+        </div>
+      </>
     );
   }
 }

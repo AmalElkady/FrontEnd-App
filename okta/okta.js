@@ -460,7 +460,7 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 													let responseX = await callAxios(options);
 													let response = responseX.data;
 										 
-											       console.log(response);
+											       console.log("verify respons ",response);
 												   if(response){
 														
 														 if(response.response == "ok"){
@@ -554,7 +554,8 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,co
 														 if(response.response == "ok"){
 															resolve({"tokenReturned": "ok","hw": response.uid});
 														 } else {
-															resolve({"message": response.code});
+															//resolve({"message": response.code});
+															resolve({"message": response.message,"code":response.code,"time":response.time});
 														 }
 
 														

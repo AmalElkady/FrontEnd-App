@@ -4,6 +4,8 @@ import {
   ON_HIDE_LOADER,
   ON_SHOW_LOADER,
   SHOW_MESSAGE,
+  HIDE_TIMER,
+  SHOW_TIMER,
   //  SIGNIN_FACEBOOK_USER_SUCCESS,
   //  SIGNIN_GITHUB_USER_SUCCESS,
   //  SIGNIN_GOOGLE_USER_SUCCESS,
@@ -26,6 +28,8 @@ const INIT_STATE = {
   loader: false,
   alertMessage: "",
   showMessage: false,
+  timeReturned: false,
+  timeReturnedVal: 0,
   tokenSent: false,
   passwordChanged: false,
   initURL: "",
@@ -223,6 +227,23 @@ export default (state = INIT_STATE, action) => {
         loader: false
       };
     }
+    case SHOW_TIMER: {
+      return {
+        ...state,
+        timeReturnedVal: action.payload,
+        timeReturned: true,
+        loader: false
+      };
+    }
+    case HIDE_TIMER: {
+      return {
+        ...state,
+        timeReturnedVal: 0,
+        timeReturned: false,
+        loader: false
+      };
+    }
+
     default:
       return state;
   }

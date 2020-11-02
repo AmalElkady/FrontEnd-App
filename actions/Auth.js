@@ -5,6 +5,8 @@ import {
   ON_HIDE_LOADER,
   ON_SHOW_LOADER,
   SHOW_MESSAGE,
+  SHOW_TIMER,
+  HIDE_TIMER,
   SIGNIN_USER,
   SIGNIN_USER_SUCCESS,
   SIGNOUT_USER,
@@ -169,6 +171,18 @@ export const showAuthMessage = message => {
   return {
     type: SHOW_MESSAGE,
     payload: message
+  };
+};
+
+export const showTimer = time => {
+  return {
+    type: SHOW_TIMER,
+    payload: time
+  };
+};
+export const hideTimer = () => {
+  return {
+    type: HIDE_TIMER
   };
 };
 export const setInitUrl = url => {

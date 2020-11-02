@@ -46,21 +46,21 @@ export const HIDE_CONTACT_LOADER = "hide_contact_loader";
 //Auth const
 export const CREATE_USER_CLEAR = "create_user_clear";
 export const STEP_FLAG_CLEAR = "step_flag_clear";
-export const  ADD_PROFILEL2 = "add_profilel2";
-export const  ADD_PROFILEL2_SUCCESS = "add_profilel2_success";
+export const ADD_PROFILEL2 = "add_profilel2";
+export const ADD_PROFILEL2_SUCCESS = "add_profilel2_success";
 export const SIGNUP_USER = "signup_user";
 export const SIGNUP_USER_SUCCESS = "signup_user_success";
 export const MP_UPLOAD = "mp_upload";
 export const MP_UPLOAD_CLEAR = "mp_upload_clear";
 export const MP_UPLOAD_SUCCESS = "mp_upload_success";
 export const RESEND_VERIFICATION_TO_PHONE = "resend_verification_to_phone";
-export const SEND_VERIFICATION_CODE = 'send_verification_code';
-export const SEND_RESET_TOKEN = 'send_reset_token';
-export const CLEAR_AUTH_STATE = 'clear_auth_state';
-export const CHANGE_PASSWORD = 'change_password';
-export const RESET_TOKEN_SUCCESS = 'reset_token_success';
-export const VERIFICATION_CODE_SUCCESS = 'verification_code_success';
-export const PASSWORD_CHANGE_SUCCESS = 'password_change_success';
+export const SEND_VERIFICATION_CODE = "send_verification_code";
+export const SEND_RESET_TOKEN = "send_reset_token";
+export const CLEAR_AUTH_STATE = "clear_auth_state";
+export const CHANGE_PASSWORD = "change_password";
+export const RESET_TOKEN_SUCCESS = "reset_token_success";
+export const VERIFICATION_CODE_SUCCESS = "verification_code_success";
+export const PASSWORD_CHANGE_SUCCESS = "password_change_success";
 export const SIGNIN_GOOGLE_USER = "signin_google_user";
 export const SIGNIN_GOOGLE_USER_SUCCESS = "signin_google_user_success";
 export const SIGNIN_FACEBOOK_USER = "signin_facebook_user";
@@ -78,9 +78,11 @@ export const INIT_URL = "init_url";
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";
-export const FETCH_ALL_CHAT_USER_CONVERSATION = "fetch_all_chat_user_conversation";
+export const FETCH_ALL_CHAT_USER_CONVERSATION =
+  "fetch_all_chat_user_conversation";
 export const FETCH_ALL_CHAT_USER_SUCCESS = "fetch_all_chat_user_success";
-export const FETCH_ALL_CHAT_USER_CONVERSATION_SUCCESS = "fetch_all_chat_user_conversation_success";
+export const FETCH_ALL_CHAT_USER_CONVERSATION_SUCCESS =
+  "fetch_all_chat_user_conversation_success";
 export const FILTER_USERS = "filter_users";
 export const ON_SELECT_USER = "on_select_user";
 export const ON_SHOW_LOADER = "on_show_loader";
@@ -89,7 +91,6 @@ export const USER_INFO_STATE = "user_info_state";
 export const SUBMIT_COMMENT = "submit_comment";
 export const UPDATE_MESSAGE_VALUE = "update_message_value";
 export const UPDATE_SEARCH_CHAT_USER = "update_search_chat_user";
-
 
 //// Mail Module const
 
@@ -125,17 +126,14 @@ export const ON_DELETE_MAIL = "on_delete_mail";
 export const SET_CURRENT_MAIL_NULL = "set_current_mail_null";
 export const ON_COMPOSE_MAIL = "on_compose_mail";
 
-
-
-
-
 //// TO-DO Module const
 
 export const ON_SORTEND = "on_sortend";
 export const FETCH_ALL_TODO = "fetch_all_todo";
 export const FETCH_ALL_TODO_SUCCESS = "fetch_all_todo-success";
 export const FETCH_ALL_TODO_CONVERSATION = "fetch_all_todo_conversation";
-export const FETCH_ALL_TODO_CONVERSATION_SUCCESS ="fetch_all_todo_conversation_success";
+export const FETCH_ALL_TODO_CONVERSATION_SUCCESS =
+  "fetch_all_todo_conversation_success";
 export const SELECT_ALL_TODO = "select_all_todo";
 export const GET_ALL_TODO = "get_all_todo";
 export const GET_UNSELECTED_ALL_TODO = "get_unselected_all_todo";
@@ -155,3 +153,7 @@ export const ON_TODO_SELECT = "on_todo_select";
 export const SET_CURRENT_TODO_NULL = "set_current_todo_null";
 export const REMOVE_LABEL = "remove_label";
 export const UPDATE_SEARCH = "update_search";
+
+// TIMER
+export const SHOW_TIMER = "show_timer";
+export const HIDE_TIMER = "hide_timer";

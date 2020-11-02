@@ -35,8 +35,9 @@ import {
   userSendResetTokenSuccess,
   userPasswordChangeSuccess,
   userSendVerificationCodeSuccess,
-  clearPersistedAuthState
-} from "../actions/Auth"; //
+  clearPersistedAuthState,
+  showTimer
+} from "../actions/Auth";
 
 import {
   userFacebookSignInSuccess,
@@ -281,7 +282,8 @@ function* sendResetPasswordTokenForUserPhone({ payload }) {
       country,
       countryiso2
     );
-    if (resetUser.message) {
+    if (resetUser.message && resetUser.time) {
+      yield put(showTimer(resetUser.time));
       yield put(showAuthMessage(resetUser.message));
     } else {
       yield put(userSendResetTokenSuccess(true));
