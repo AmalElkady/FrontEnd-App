@@ -325,6 +325,7 @@ function* sendVerificationCodeForUserPhone({ payload }) {
       verificationCode
     );
     if (verifyUser.message) {
+      yield put(showTimer(resetUser.time));
       yield put(showAuthMessage(verifyUser.message));
     } else {
       yield put(userSendVerificationCodeSuccess(true));

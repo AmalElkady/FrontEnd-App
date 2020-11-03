@@ -73,7 +73,7 @@ class VerifyEmail extends React.Component {
       this.setState({ [`${event.target.name}`]: `${event.target.value}` });
     };
 
-    const { showMessage, loader, alertMessage, mpUploadFlag } = this.props;
+    const { showMessage, loader, alertMessage } = this.props;
     return (
       <>
         <Button
@@ -169,8 +169,22 @@ class VerifyEmail extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  const { loader, alertMessage, showMessage, authUser, mpUpload } = auth;
-  return { loader, alertMessage, showMessage, authUser, mpUpload };
+  const {
+    loader,
+    alertMessage,
+    showMessage,
+    authUser,
+    mpUpload,
+    mpUploadFlag
+  } = auth;
+  return {
+    loader,
+    alertMessage,
+    showMessage,
+    authUser,
+    mpUpload,
+    mpUploadFlag
+  };
 };
 
 export default connect(mapStateToProps, {

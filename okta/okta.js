@@ -466,7 +466,7 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 														 if(response.response == "ok"){
 															resolve({...response});
 														 } else if(response.code) {
-															resolve({"message": response.code});
+															resolve({"message": response.message,"code":response.code,"time":response.time});
 														 } else {
 															 resolve({"message": "error call"});
 														 }
@@ -552,7 +552,7 @@ auth.resendVerificationToUserPhone = function () {
 														 if(response.response == "ok"){
 															resolve({...response});
 														 } else if(response.code) {
-															resolve({"message": response.code});
+															resolve({"message": response.message,"code":response.code,"time":response.time});
 														 } else {
 															 resolve({"message": "error call"});
 														 }

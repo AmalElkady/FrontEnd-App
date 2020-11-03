@@ -61,7 +61,7 @@ class VerifyEmail extends React.Component {
       country
     } = this.props; //phoneVerified
 
-    console.log("timeReturned ", timeReturned);
+    console.log("timeReturned verify ", timeReturned);
 
     return (
       <>

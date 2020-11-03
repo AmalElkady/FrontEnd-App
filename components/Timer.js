@@ -40,7 +40,7 @@ export default function Timer() {
 
   useEffect(() => {
     let interval = null;
-    console.log("isActive", isActive);
+    console.log("timeflag ", timeflag);
     if (timeflag) {
       interval = setInterval(() => {
         setSeconds(seconds => seconds + 1);
