@@ -103,7 +103,7 @@ export default ComposedComponent =>
         ) {
           return <ComponentMPUpload {...this.props} />;
         }
-      } else if (this.props.sub == 0) {
+      } else if (this.props.sub === 0) {
         return <ComponentSubscribe {...this.props} />;
       } else {
         return <ComposedComponent {...this.props} />;

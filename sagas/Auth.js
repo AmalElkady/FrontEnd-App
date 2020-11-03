@@ -19,6 +19,7 @@ import {
   SIGNUP_USER,
   MP_UPLOAD,
   ADD_PROFILEL2,
+  SUBSCRIBE,
   SEND_RESET_TOKEN,
   SEND_VERIFICATION_CODE,
   RESEND_VERIFICATION_TO_PHONE,
@@ -32,6 +33,7 @@ import {
   userSignUpSuccess,
   mpUploadSuccess,
   userProfileL2AddSuccess,
+  userAddSubscribeSuccess,
   userSendResetTokenSuccess,
   userPasswordChangeSuccess,
   userSendVerificationCodeSuccess,
@@ -104,6 +106,13 @@ const addProfileLayer2Request = async (
     )
     .then(authUser => authUser)
     .catch(error => error);
+
+const addSubRequest = async subscribePack => {
+  await auth
+    .subscribe(subscribePack)
+    .then(authUser => authUser)
+    .catch(error => error);
+};
 
 const signInUserWithPhonePasswordRequest = async (phone, password, country) =>
   await auth
@@ -267,6 +276,19 @@ function* addProfileLayer2({ payload }) {
       yield put(showAuthMessage(profileL2Added.message));
     } else {
       yield put(userProfileL2AddSuccess());
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
+function* addSubscribe({ payload }) {
+  try {
+    const subAdded = yield call(addSubRequest, payload);
+    if (subAdded.message) {
+      yield put(showAuthMessage(subAdded.message));
+    } else {
+      yield put(userAddSubscribeSuccess());
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -472,6 +494,10 @@ export function* addUserProfileL2() {
   yield takeEvery(ADD_PROFILEL2, addProfileLayer2);
 }
 
+export function* addUserSubscribe() {
+  yield takeEvery(SUBSCRIBE, addSubscribe);
+}
+
 export function* sendUserResetToken() {
   yield takeEvery(SEND_RESET_TOKEN, sendResetPasswordTokenForUserPhone);
 }
@@ -518,6 +544,7 @@ export default function* rootSaga() {
     fork(createUserAccount),
     fork(uploadMPPhoto),
     fork(addUserProfileL2),
+    fork(addUserSubscribe),
     fork(sendUserResetToken),
     fork(sendVerificationCode),
     fork(resendVerificationToPhone),

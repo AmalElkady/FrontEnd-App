@@ -13,6 +13,7 @@ import {
   CREATE_USER_CLEAR,
   MP_UPLOAD_CLEAR,
   STEP_FLAG_CLEAR,
+  SUB_CLEAR,
   SIGNOUT_USER_SUCCESS,
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
@@ -20,6 +21,8 @@ import {
   MP_UPLOAD,
   ADD_PROFILEL2,
   ADD_PROFILEL2_SUCCESS,
+  SUBSCRIBE,
+  SUBSCRIBE_SUCCESS,
   RESET_TOKEN_SUCCESS,
   VERIFICATION_CODE_SUCCESS,
   PASSWORD_CHANGE_SUCCESS,
@@ -104,6 +107,13 @@ export const userAddProfileL2 = data => {
     payload: data
   };
 };
+export const userAddSubscribe = data => {
+  console.log("sub from action ", data);
+  return {
+    type: SUBSCRIBE,
+    payload: data
+  };
+};
 
 export const userSignIn = user => {
   return {
@@ -129,6 +139,12 @@ export const stepFlagClear = () => {
   };
 };
 
+export const subFlagClear = () => {
+  return {
+    type: SUB_CLEAR
+  };
+};
+
 export const mpUploadClear = () => {
   return {
     type: MP_UPLOAD_CLEAR
@@ -151,6 +167,12 @@ export const mpUploadSuccess = () => {
 export const userProfileL2AddSuccess = () => {
   return {
     type: ADD_PROFILEL2_SUCCESS
+  };
+};
+
+export const userAddSubscribeSuccess = () => {
+  return {
+    type: SUBSCRIBE_SUCCESS
   };
 };
 

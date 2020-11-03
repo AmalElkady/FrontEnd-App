@@ -44,7 +44,7 @@ class VerifyEmail extends React.Component {
       }, 3000);
     }
     if (this.props.authUser !== null && this.props.phoneVerified) {
-      //Router.replace('/dashboard/crypto');
+      Router.replace("/home/content");
     }
   }
 

@@ -56,10 +56,13 @@ class VerifyEmail extends React.Component {
         this.props.hideMessage();
       }, 3000);
     }
-    if (this.props.authUser !== null && this.props.mpUploadFlag == true) {
-      console.log("img uploaded");
-      this.props.mpUploadClear();
-      Router.replace("/home/content");
+    if (this.props.mpUploadFlag == true) {
+      this.props.showAuthLoader();
+
+      setTimeout(() => {
+        this.props.mpUploadClear();
+        Router.replace("/home/content");
+      }, 300);
     }
   }
 

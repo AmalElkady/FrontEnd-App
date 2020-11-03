@@ -482,6 +482,51 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 }
 
 
+
+auth.subscribe = function (subscribePack) {
+			      
+	return new Promise(  async (resolve, reject) => {				
+	
+				  const tokenValue = getCookie("access_token",false);
+				  const options = {
+									url: '/subscribe',
+									method: 'POST',
+									headers: {
+									  'Accept': 'application/json',
+									  'Content-Type': 'application/json;charset=UTF-8',
+									   'Authorization': "Bearer " + tokenValue
+									},
+									data : {
+										  "subscribePack" : subscribePack
+									  }
+								  };
+				  
+									  let responseX = await callAxios(options);
+									  let response = responseX.data;
+						   
+									 console.log("subscribe token respons from okta ",response.token);
+									 if(response){
+										  
+										   if(response.token){
+											  resolve(true);
+										   } else if(response.code) {
+											  resolve({"message": response.code});
+										   } else {
+											   resolve({"message": "error call"});
+										   }
+
+										  
+									 } else {
+										 resolve({"message": "Something Went Wrong !"});
+									 }
+				  
+								  
+					  
+}).catch((err) => {console.log(err)});		
+}
+
+
+
 auth.resendVerificationToUserPhone = function () {
 			      
 				  return new Promise(  async (resolve, reject) => {				
@@ -522,10 +567,7 @@ auth.resendVerificationToUserPhone = function () {
 
 
 auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,countryiso2) {
-	
-	console.log("countryiso from okta ",countryiso2);
-	console.log("countryiso from okta ",countryiso2.toUpperCase());
-	
+
 			      return new Promise( async (resolve, reject) => {				
 								
 								if(username && phonecountrycode&&countryiso2) {

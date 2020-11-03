@@ -12,12 +12,14 @@ import {
   //  SIGNIN_TWITTER_USER_SUCCESS,
   CREATE_USER_CLEAR,
   STEP_FLAG_CLEAR,
+  SUB_CLEAR,
   MP_UPLOAD_SUCCESS,
   MP_UPLOAD_CLEAR,
   SIGNIN_USER_SUCCESS,
   SIGNOUT_USER_SUCCESS,
   SIGNUP_USER_SUCCESS,
   ADD_PROFILEL2_SUCCESS,
+  SUBSCRIBE_SUCCESS,
   RESET_TOKEN_SUCCESS,
   VERIFICATION_CODE_SUCCESS,
   PASSWORD_CHANGE_SUCCESS,
@@ -38,6 +40,7 @@ const INIT_STATE = {
   phoneVerified: false,
   stepFlag: false,
   mpUploadFlag: false,
+  subFlag: false,
   gender: "",
   phone: "",
   country: "",
@@ -80,6 +83,14 @@ export default (state = INIT_STATE, action) => {
       };
     }
 
+    case SUBSCRIBE_SUCCESS: {
+      return {
+        ...state,
+        loader: false,
+        subFlag: true
+      };
+    }
+
     case CREATE_USER_CLEAR: {
       return {
         ...state,
@@ -93,6 +104,13 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loader: false,
         stepFlag: false
+      };
+    }
+    case SUB_CLEAR: {
+      return {
+        ...state,
+        loader: false,
+        subFlag: false
       };
     }
 
