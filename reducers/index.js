@@ -9,6 +9,7 @@ import ChatData from "./Chat";
 import Contact from "./Contact";
 import Mail from "./Mail";
 import Auth from "./Auth";
+import Home from "./Home";
 
 const MIGRATION_DEBUG = false;
 
@@ -60,5 +61,6 @@ export default history =>
     chatData: ChatData,
     contacts: Contact,
     mail: Mail,
+    home: Home,
     auth: persist(authPersistConfig, Auth)
   });

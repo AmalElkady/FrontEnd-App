@@ -4,6 +4,7 @@ import base64url from 'base64url';
 import imageCompression from 'browser-image-compression';
 
 const auth = {};
+const home={};
 const tokenManagerOperations = {};
 let tokenForAccess = {}
 //setCookie(key, value)
@@ -699,7 +700,58 @@ auth.signOut = function () {
 									
       }).catch((err) => {console.log(err)});		
 }
+////////////////////////////// Home ////////////
+home.getAllCountriesOnline = function () {
 
+	// "allcountriesflag": true,
+    // "searchlistid" : "all_countries_online",
+    // "country" : "",
+    // "city" : "",
+    // "agerange" : "",
+    // "key":"",
+    // "scoreH":"",
+    // "offset":""
+
+					  return new Promise(  async (resolve, reject) => {				
+											try {
+												
+												const tokenValue = getCookie("access_token",false);
+												const options = {
+																  url: '/availablesearch',
+																  method: 'POST',
+																  headers: {
+																	'Accept': 'application/json',
+																	'Content-Type': 'application/json;charset=UTF-8',
+																	'Authorization': "Bearer " + tokenValue
+																  },
+																  data: {
+																	allcountriesflag: true,
+																     searchlistid : "all_countries_online",
+
+																  }
+																};
+	
+												let responseX = await callAxios(options);
+												let response = responseX.data;
+
+												console.log("respo data from okta : ",response);
+												
+												   if(response){
+																	resolve(response);					 
+												   } else {
+													   
+													   resolve({"message": "no response !"})
+												   }
+									
+											} catch(err) {
+												resolve({"message": err.message});
+											}		
+	
+					  		
+											
+		  }).catch((err) => {console.log(err)});			
+		
+	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -728,4 +780,4 @@ tokenManagerOperations.setTokenAndValidate = function (key,value) {
 
 
 
-export {auth,tokenManagerOperations}
+export {auth,tokenManagerOperations,home}

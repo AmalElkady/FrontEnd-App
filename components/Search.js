@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { allCountriesOnline } from "../actions/Home";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -96,14 +98,14 @@ const AgeOptions = [
   "74 - 81",
   "82 - 89"
 ];
-const CountriesOptionsOnline = [
-  "Egypt  30",
-  "Morcoo 20",
-  "Kuwait 10",
-  "France 10",
-  "Turkey 5",
-  "India  5"
-];
+// const CountriesOptionsOnline = [
+//   "Egypt  30",
+//   "Morcoo 20",
+//   "Kuwait 10",
+//   "France 10",
+//   "Turkey 5",
+//   "India  5"
+// ];
 
 const CountriesOptionsOfline = [
   "canada  30",
@@ -120,6 +122,11 @@ export default function Search() {
   const [anchorElC, setAnchorElC] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexC, setSelectedIndexC] = useState(0);
+
+  const CountriesOptionsOnline = useSelector(
+    state => state.home.allCountriesOnline
+  );
+  const dispatch = useDispatch();
 
   const handleClickListItem = event => {
     setAnchorEl(event.currentTarget);
@@ -148,6 +155,10 @@ export default function Search() {
   const handleCloseC = () => {
     setAnchorElC(null);
   };
+
+  useEffect(() => {
+    dispatch(allCountriesOnline());
+  }, []);
 
   return (
     <>
@@ -195,61 +206,68 @@ export default function Search() {
           </div>
 
           {/* contries list */}
-          <div className={classes.menu}>
-            <List component="nav" aria-label="Countries">
-              <ListItem
-                button
-                aria-haspopup="true"
-                aria-controls="lock-menu2"
-                aria-label="Countries"
-                onClick={handleClickListItemC}
+          {CountriesOptionsOnline.list_of_results && (
+            <div className={classes.menu}>
+              <List component="nav" aria-label="Countries">
+                <ListItem
+                  button
+                  aria-haspopup="true"
+                  aria-controls="lock-menu2"
+                  aria-label="Countries"
+                  onClick={handleClickListItemC}
+                >
+                  <ListItemText
+                    primary="Countries"
+                    secondary={
+                      CountriesOptionsOnline.list_of_results[selectedIndexC]
+                    }
+                  />
+                </ListItem>
+              </List>
+              <Menu
+                id="lock-menu2"
+                anchorEl={anchorElC}
+                keepMounted
+                open={Boolean(anchorElC)}
+                onClose={handleCloseC}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "30ch"
+                  }
+                }}
               >
-                <ListItemText
-                  primary="Countries"
-                  secondary={CountriesOptionsOnline[selectedIndexC]}
-                />
-              </ListItem>
-            </List>
-            <Menu
-              id="lock-menu2"
-              anchorEl={anchorElC}
-              keepMounted
-              open={Boolean(anchorElC)}
-              onClose={handleCloseC}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: "30ch"
-                }
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                ONLINE
-              </Typography>
-              {CountriesOptionsOnline.map((option, index) => (
-                <MenuItem
-                  key={option}
-                  selected={index === selectedIndexC}
-                  onClick={event => handleMenuItemClickC(event, index)}
-                >
-                  {option}
-                </MenuItem>
-              ))}
+                <Typography variant="h6" gutterBottom>
+                  ONLINE
+                </Typography>
+                {CountriesOptionsOnline.list_of_results?.map(
+                  (option, index) =>
+                    index % 2 === 0 && (
+                      <MenuItem
+                        key={option}
+                        selected={index === selectedIndexC}
+                        onClick={event => handleMenuItemClickC(event, index)}
+                      >
+                        {option}
+                      </MenuItem>
+                    )
+                )}
 
-              <Typography variant="h6" gutterBottom>
-                MOST RECENT
-              </Typography>
-              {CountriesOptionsOfline.map((option, index) => (
-                <MenuItem
-                  key={option}
-                  selected={index === selectedIndexC}
-                  onClick={event => handleMenuItemClickC(event, index)}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
-          </div>
+                {/* <Typography variant="h6" gutterBottom>
+                  MOST RECENT
+                </Typography>
+                {CountriesOptionsOfline.map((option, index) => (
+                  <MenuItem
+                    key={option}
+                    selected={index === selectedIndexC}
+                    onClick={event => handleMenuItemClickC(event, index)}
+                  >
+                    {option}
+                  </MenuItem>
+                ))} */}
+              </Menu>
+            </div>
+          )}
           <div className={classes.margintop}>
             <Button
               onClick={() => {

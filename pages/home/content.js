@@ -12,11 +12,10 @@ export default Page(() => (
     </Head>
     <div className="app-wrapper">
       {/* <Cards /> */}
-       {/* <UploadImage /> */}
-      <br/>
-      {/* <Subscribe/> */}
-      <br/>
-      {/* <Search /> */}
+      {/* <UploadImage /> */}
+      <br />
+      <Search />
+      <br />
       <UserCard />
     </div>
   </>

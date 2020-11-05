@@ -160,3 +160,8 @@ export const UPDATE_SEARCH = "update_search";
 // TIMER
 export const SHOW_TIMER = "show_timer";
 export const HIDE_TIMER = "hide_timer";
+
+//SEARCH
+export const GET_ALL_COUNTRIES_ONLINE = "all_countries_online";
+export const FETCH_ALL_COUNTRIES_ONLINE_SUCCESS =
+  "fetch_all_countries_online_success";
