@@ -165,3 +165,6 @@ export const HIDE_TIMER = "hide_timer";
 export const GET_ALL_COUNTRIES_ONLINE = "all_countries_online";
 export const FETCH_ALL_COUNTRIES_ONLINE_SUCCESS =
   "fetch_all_countries_online_success";
+
+export const COUNTRY_CITIES_ONLINE = "country_cities_online";
+export const COUNTRY_CITIES_ONLINE_SUCCESS = "country_cities_online_success";

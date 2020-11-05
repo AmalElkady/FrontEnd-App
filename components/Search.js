@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { allCountriesOnline } from "../actions/Home";
+import { allCountriesOnline, countryCitiesOnline } from "../actions/Home";
+import { COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -120,11 +121,17 @@ export default function Search() {
   // const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElC, setAnchorElC] = useState(null);
+  const [anchorElCit, setAnchorElCit] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedIndexC, setSelectedIndexC] = useState(0);
+  const [selectedIndexC, setSelectedIndexC] = useState(-1);
+  const [selectedIndexCit, setSelectedIndexCit] = useState(-1);
 
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
+  );
+
+  const CountryCitiesOptionsOnline = useSelector(
+    state => state.home.countryCitiesOnline
   );
   const dispatch = useDispatch();
 
@@ -134,6 +141,11 @@ export default function Search() {
   //for Countries
   const handleClickListItemC = event => {
     setAnchorElC(event.currentTarget);
+  };
+
+  //for Cities
+  const handleClickListItemCit = event => {
+    setAnchorElCit(event.currentTarget);
   };
 
   const handleMenuItemClick = (event, index) => {
@@ -147,6 +159,12 @@ export default function Search() {
     setAnchorElC(null);
   };
 
+  //for Cities
+  const handleMenuItemClickCit = (event, index) => {
+    setSelectedIndexCit(index);
+    setAnchorElCit(null);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -156,12 +174,38 @@ export default function Search() {
     setAnchorElC(null);
   };
 
+  //for Cities
+  const handleCloseCit = () => {
+    setAnchorElCit(null);
+  };
+
   useEffect(() => {
     dispatch(allCountriesOnline());
   }, []);
 
+  // get country_cities_online
+  useEffect(() => {
+    // dispatch(countryCitiesOnline());
+    if (CountriesOptionsOnline.list_of_results != null) {
+      console.log(
+        "country selected :",
+        CountriesOptionsOnline.list_of_results[selectedIndexC]
+      );
+      dispatch(
+        countryCitiesOnline(
+          CountriesOptionsOnline.list_of_results[selectedIndexC]
+        )
+      );
+    }
+  }, [selectedIndexC]);
+
   return (
     <>
+      {console.log(
+        "countryCitiesOnline.list_of_results ",
+        CountryCitiesOptionsOnline.list_of_results
+      )}
+      {console.log("countryCitiesOnline ", CountryCitiesOptionsOnline)}
       <Card className={classes.root}>
         <form
           className={classes.displayFlex}
@@ -219,7 +263,11 @@ export default function Search() {
                   <ListItemText
                     primary="Countries"
                     secondary={
-                      CountriesOptionsOnline.list_of_results[selectedIndexC]
+                      selectedIndexC == -1
+                        ? CountriesOptionsOnline.list_of_results[
+                            selectedIndexC + 1
+                          ]
+                        : CountriesOptionsOnline.list_of_results[selectedIndexC]
                     }
                   />
                 </ListItem>
@@ -268,6 +316,88 @@ export default function Search() {
               </Menu>
             </div>
           )}
+
+          {/* Cities list */}
+          {selectedIndexC >= 0 &&
+            CountryCitiesOptionsOnline.list_of_results != null && (
+              <div className={classes.menu}>
+                <List component="nav" aria-label="Countries">
+                  <ListItem
+                    button
+                    aria-haspopup="true"
+                    aria-controls="lock-menu2"
+                    aria-label="Countries"
+                    onClick={handleClickListItemCit}
+                  >
+                    <ListItemText
+                      primary="Cities"
+                      secondary={
+                        selectedIndexCit == -1 &&
+                        CountryCitiesOptionsOnline.list_of_results
+                          ? COUNTRY_CITY_MAP[
+                              CountriesOptionsOnline.list_of_results[
+                                selectedIndexC
+                              ].toLowerCase()
+                            ][
+                              CountryCitiesOptionsOnline.list_of_results[
+                                selectedIndexCit + 1
+                              ] - 1
+                            ]
+                          : COUNTRY_CITY_MAP[
+                              CountriesOptionsOnline.list_of_results[
+                                selectedIndexC
+                              ].toLowerCase()
+                            ][
+                              CountryCitiesOptionsOnline.list_of_results[
+                                selectedIndexCit
+                              ] - 1
+                            ]
+                      }
+                    />
+                  </ListItem>
+                </List>
+                <Menu
+                  id="lock-menu2"
+                  anchorEl={anchorElCit}
+                  keepMounted
+                  open={Boolean(anchorElCit)}
+                  onClose={handleCloseCit}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT * 4.5,
+                      width: "30ch"
+                    }
+                  }}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    ONLINE
+                  </Typography>
+                  {CountryCitiesOptionsOnline.list_of_results?.map(
+                    (option, index) =>
+                      index % 2 === 0 && (
+                        <MenuItem
+                          key={option}
+                          value={option}
+                          //label={value}
+                          selected={index === selectedIndexCit}
+                          onClick={event =>
+                            handleMenuItemClickCit(event, index)
+                          }
+                        >
+                          {
+                            COUNTRY_CITY_MAP[
+                              CountriesOptionsOnline.list_of_results[
+                                selectedIndexC
+                              ].toLowerCase()
+                            ][option - 1]
+                          }
+                        </MenuItem>
+                      )
+                  )}
+                </Menu>
+              </div>
+            )}
+
           <div className={classes.margintop}>
             <Button
               onClick={() => {

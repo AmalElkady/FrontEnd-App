@@ -753,6 +753,58 @@ home.getAllCountriesOnline = function () {
 		
 	}
 
+home.getCountryCitiesOnline = function (country) {
+
+	// "allcountriesflag": false,
+    // "searchlistid" : "EG_country_cities_online",
+    // "country" : "",
+    // "city" : "",
+    // "agerange" : "",
+    // "key":"",
+    // "scoreH":"",
+	// "offset":""
+	console.log("country selected from okta ",country);
+						  return new Promise(  async (resolve, reject) => {				
+												try {
+													
+													const tokenValue = getCookie("access_token",false);
+													const options = {
+																	  url: '/availablesearch',
+																	  method: 'POST',
+																	  headers: {
+																		'Accept': 'application/json',
+																		'Content-Type': 'application/json;charset=UTF-8',
+																		'Authorization': "Bearer " + tokenValue
+																	  },
+																	  data: {
+																		allcountriesflag: false,
+																		 searchlistid : `${country}_country_cities_online`,
+	
+																	  }
+																	};
+		
+													let responseX = await callAxios(options);
+													let response = responseX.data;
+	
+													console.log("respo data of cities from okta : ",response);
+													
+													   if(response){
+																		resolve(response);					 
+													   } else {
+														   
+														   resolve({"message": "no response !"})
+													   }
+										
+												} catch(err) {
+													resolve({"message": err.message});
+												}		
+		
+								  
+												
+			  }).catch((err) => {console.log(err)});			
+			
+		}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
