@@ -27,6 +27,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
+//import convertArrayToArrayOfObjects from "../helpers/convertArrayToArrayOfObjects";
+
 import IntlMessages from "../util/IntlMessages";
 
 const useStyles = makeStyles(theme => ({
@@ -79,12 +81,19 @@ const useStyles = makeStyles(theme => ({
   menu: {
     backgroundColor: theme.palette.background.paper
   },
-  displayFlex: {
+  displayFlexSA: {
     display: "flex",
     justifyContent: "space-around"
   },
+  displayFlexSB: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
   margintop: {
     marginTop: "1.5rem"
+  },
+  padding: {
+    padding: ".5rem"
   }
 }));
 
@@ -99,14 +108,6 @@ const AgeOptions = [
   "74 - 81",
   "82 - 89"
 ];
-// const CountriesOptionsOnline = [
-//   "Egypt  30",
-//   "Morcoo 20",
-//   "Kuwait 10",
-//   "France 10",
-//   "Turkey 5",
-//   "India  5"
-// ];
 
 const CountriesOptionsOfline = [
   "canada  30",
@@ -118,7 +119,7 @@ const ITEM_HEIGHT = 48;
 
 export default function Search() {
   const classes = useStyles();
-  // const [expanded, setExpanded] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElC, setAnchorElC] = useState(null);
   const [anchorElCit, setAnchorElCit] = useState(null);
@@ -182,15 +183,8 @@ export default function Search() {
   useEffect(() => {
     dispatch(allCountriesOnline());
   }, []);
-
-  // get country_cities_online
   useEffect(() => {
-    // dispatch(countryCitiesOnline());
     if (CountriesOptionsOnline.list_of_results != null) {
-      console.log(
-        "country selected :",
-        CountriesOptionsOnline.list_of_results[selectedIndexC]
-      );
       dispatch(
         countryCitiesOnline(
           CountriesOptionsOnline.list_of_results[selectedIndexC]
@@ -201,14 +195,9 @@ export default function Search() {
 
   return (
     <>
-      {console.log(
-        "countryCitiesOnline.list_of_results ",
-        CountryCitiesOptionsOnline.list_of_results
-      )}
-      {console.log("countryCitiesOnline ", CountryCitiesOptionsOnline)}
       <Card className={classes.root}>
         <form
-          className={classes.displayFlex}
+          className={classes.displayFlexSA}
           onKeyPress={event => {
             if (event.key === "Enter") {
             }
@@ -239,6 +228,7 @@ export default function Search() {
             >
               {AgeOptions.map((option, index) => (
                 <MenuItem
+                  className={classes.displayFlexSB}
                   key={option}
                   selected={index === selectedIndex}
                   onClick={event => handleMenuItemClick(event, index)}
@@ -285,7 +275,11 @@ export default function Search() {
                   }
                 }}
               >
-                <Typography variant="h6" gutterBottom>
+                <Typography
+                  variant="h6"
+                  className={classes.padding}
+                  gutterBottom
+                >
                   ONLINE
                 </Typography>
                 {CountriesOptionsOnline.list_of_results?.map(
@@ -295,8 +289,18 @@ export default function Search() {
                         key={option}
                         selected={index === selectedIndexC}
                         onClick={event => handleMenuItemClickC(event, index)}
+                        className={classes.displayFlexSB}
                       >
-                        {option}
+                        <Typography variant="button" gutterBottom>
+                          {option}
+                        </Typography>
+                        <Typography
+                          variant="button"
+                          color="primary"
+                          gutterBottom
+                        >
+                          {CountriesOptionsOnline.list_of_results[index + 1]}
+                        </Typography>
                       </MenuItem>
                     )
                 )}
@@ -369,7 +373,11 @@ export default function Search() {
                     }
                   }}
                 >
-                  <Typography variant="h6" gutterBottom>
+                  <Typography
+                    variant="h6"
+                    className={classes.padding}
+                    gutterBottom
+                  >
                     ONLINE
                   </Typography>
                   {CountryCitiesOptionsOnline.list_of_results?.map(
@@ -383,14 +391,28 @@ export default function Search() {
                           onClick={event =>
                             handleMenuItemClickCit(event, index)
                           }
+                          className={classes.displayFlexSB}
                         >
-                          {
-                            COUNTRY_CITY_MAP[
-                              CountriesOptionsOnline.list_of_results[
-                                selectedIndexC
-                              ].toLowerCase()
-                            ][option - 1]
-                          }
+                          <Typography variant="button" gutterBottom>
+                            {
+                              COUNTRY_CITY_MAP[
+                                CountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][option - 1]
+                            }
+                          </Typography>
+                          <Typography
+                            variant="button"
+                            color="primary"
+                            gutterBottom
+                          >
+                            {
+                              CountryCitiesOptionsOnline.list_of_results[
+                                index + 1
+                              ]
+                            }
+                          </Typography>
                         </MenuItem>
                       )
                   )}

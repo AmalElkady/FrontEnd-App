@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -68,40 +68,26 @@ const useStyles = makeStyles(theme => ({
 export default function Subscribe() {
   const subFlag = useSelector(state => state.auth.subFlag);
   const showMessage = useSelector(state => state.auth.showMessage);
-  // const timeflag = useSelector(state => state.auth.timeReturned);
   const dispatch = useDispatch();
 
-  const mounted = useRef();
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else {
-      if (showMessage) {
-        setTimeout(() => {
-          hideMessage();
-        }, 3000);
-      }
-      // if (subFlag) {
-      //   setTimeout(() => {
-      //     console.log("sub donnnnne");
-      //     showAuthLoader();
-      //     subFlagClear();
-      //     Router.replace("/home/content");
-      //     window.location.reload(false);
-      //   }, 300);
-      // }
+    if (showMessage) {
+      setTimeout(() => {
+        hideMessage();
+      }, 3000);
+    }
+    if (subFlag == true) {
+      showAuthLoader();
+      setTimeout(() => {
+        subFlagClear();
+        Router.replace("/home/content");
+      }, 300);
     }
   });
 
   const onSubmit = () => {
     showAuthLoader();
     dispatch(userAddSubscribe(selectedValue));
-    setTimeout(() => {
-      showAuthLoader();
-      subFlagClear();
-      Router.replace("/home/content");
-      window.location.reload(false);
-    }, 300);
   };
 
   const classes = useStyles();
@@ -128,7 +114,7 @@ export default function Subscribe() {
         variant="contained"
         onClick={() => {
           showAuthLoader();
-          userSignOut();
+          dispatch(userSignOut());
         }}
         color="primary"
       >

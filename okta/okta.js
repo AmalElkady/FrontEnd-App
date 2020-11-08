@@ -343,6 +343,7 @@ auth.uploadMainProfilePhoto = function (file) {
 													if(imageUploadResult.data.message){
 												    resolve({"message": imageUploadResult.data.message});
 												    }else{
+														optionsCheck.url = "/checkmpupload";
 														await callAxios(optionsCheck);
 														resolve(true);
 													}
@@ -485,7 +486,6 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 
 
 auth.subscribe = function (subscribePack) {
-			      
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);
@@ -504,8 +504,6 @@ auth.subscribe = function (subscribePack) {
 				  
 									  let responseX = await callAxios(options);
 									  let response = responseX.data;
-						   
-									 console.log("subscribe token respons from okta ",response.token);
 									 if(response){
 										  
 										   if(response.token){

@@ -108,7 +108,6 @@ export const userAddProfileL2 = data => {
   };
 };
 export const userAddSubscribe = data => {
-  console.log("sub from action ", data);
   return {
     type: SUBSCRIBE,
     payload: data

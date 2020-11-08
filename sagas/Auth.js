@@ -107,12 +107,11 @@ const addProfileLayer2Request = async (
     .then(authUser => authUser)
     .catch(error => error);
 
-const addSubRequest = async subscribePack => {
+const addSubRequest = async subscribePack =>
   await auth
     .subscribe(subscribePack)
     .then(authUser => authUser)
     .catch(error => error);
-};
 
 const signInUserWithPhonePasswordRequest = async (phone, password, country) =>
   await auth
@@ -216,10 +215,6 @@ function* createUserWithPhonePassword({ payload }) {
     if (signUpUser.message) {
       yield put(showAuthMessage(signUpUser.message));
     } else {
-      //localStorage.setItem('access_token','access_token')
-      console.log("123456789");
-      console.log("signup user", signUpUser);
-      console.log("123456789");
       yield put(
         userSignUpSuccess({
           authUser: "access_token",
@@ -246,11 +241,6 @@ function* uploadMainProfilePhoto({ payload }) {
     if (photoUploadS3.message) {
       yield put(showAuthMessage(photoUploadS3.message));
     } else {
-      //localStorage.setItem('access_token','access_token')
-      console.log("*******MPUPLOAD********");
-      console.log(photoUploadS3);
-      console.log("*******MPUPLOAD********");
-
       yield put(mpUploadSuccess());
     }
   } catch (error) {
@@ -271,7 +261,6 @@ function* addProfileLayer2({ payload }) {
       education,
       bio
     );
-
     if (profileL2Added.message) {
       yield put(showAuthMessage(profileL2Added.message));
     } else {
