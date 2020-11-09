@@ -962,7 +962,60 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 																		
 									  }).catch((err) => {console.log(err)});			
 									
-								}							
+								}	
+								
+								
+home.getCountryCityAgerangesOnline = function (country,city) {
+
+									// "allcountriesflag": false,
+									// "searchlistid" : "${co}_${ci}_country_city_ageranges_online",
+									// "country" : "",
+									// "city" : "",
+									// "agerange" : "",
+									// "key":"",
+									// "scoreH":"",
+									// "offset":""
+									console.log("city and country from okta ",city,country);
+														  return new Promise(  async (resolve, reject) => {				
+																				try {
+																					
+																					const tokenValue = getCookie("access_token",false);
+																					const options = {
+																									  url: '/availablesearch',
+																									  method: 'POST',
+																									  headers: {
+																										'Accept': 'application/json',
+																										'Content-Type': 'application/json;charset=UTF-8',
+																										'Authorization': "Bearer " + tokenValue
+																									  },
+																									  data: {
+																										allcountriesflag: false,
+																										 searchlistid : `${country}_${city}_country_city_ageranges_online`,
+									
+																									  }
+																									};
+										
+																					let responseX = await callAxios(options);
+																					let response = responseX.data;
+									
+																					console.log("respo data of ageranges from okta city and country : ",response);
+																					
+																					   if(response){
+																										resolve(response);					 
+																					   } else {
+																						   
+																						   resolve({"message": "no response !"})
+																					   }
+																		
+																				} catch(err) {
+																					resolve({"message": err.message});
+																				}		
+										
+																  
+																				
+											  }).catch((err) => {console.log(err)});			
+											
+										}									
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 

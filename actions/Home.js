@@ -8,7 +8,9 @@ import {
   COUNTRY_CITIES_ONLINE,
   COUNTRY_CITIES_ONLINE_SUCCESS,
   COUNTRY_CITIES_AGERANGE_ONLINE,
-  COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS
+  COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS,
+  COUNTRY_CITY_AGERANGES_ONLINE,
+  COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -25,6 +27,23 @@ export const countryAgerangesOnlineSuccess = data => {
     payload: data
   };
 };
+
+export const countryCityAgerangesOnline = (country, city) => {
+  console.log("country and city selected from action ", country, city);
+  return {
+    type: COUNTRY_CITY_AGERANGES_ONLINE,
+    payload: { country, city }
+  };
+};
+
+export const fetchCountryCityAgerangesOnlineSuccess = data => {
+  console.log("returned ageranges of country and city from action ", data);
+  return {
+    type: COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
+    payload: data
+  };
+};
+
 // Countries
 export const allCountriesOnline = () => {
   return {

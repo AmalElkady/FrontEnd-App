@@ -4,14 +4,16 @@ import {
   COUNTRY_CITIES_ONLINE,
   COUNTRY_AGERANGES_ONLONE,
   AGERANGE_COUNTRIES_ONLINE,
-  COUNTRY_CITIES_AGERANGE_ONLINE
+  COUNTRY_CITIES_AGERANGE_ONLINE,
+  COUNTRY_CITY_AGERANGES_ONLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
   fetchCountryCitiesOnlineSuccess,
   countryAgerangesOnlineSuccess,
   agerangeCountriesOnlineSuccess,
-  fetchCountryCitiesAgerangeOnlineSuccess
+  fetchCountryCitiesAgerangeOnlineSuccess,
+  fetchCountryCityAgerangesOnlineSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -19,6 +21,12 @@ import { home } from "../okta/okta";
 const getCountryAgerangesOnline = async country =>
   await home
     .getCountryAgerangesOnline(country)
+    .then(returnAgeranges => returnAgeranges)
+    .catch(error => error);
+
+const getCountryCityAgerangesOnline = async (country, city) =>
+  await home
+    .getCountryCityAgerangesOnline(country, city)
     .then(returnAgeranges => returnAgeranges)
     .catch(error => error);
 //Countries
@@ -60,6 +68,27 @@ function* countryAgerangesOnlineRequest({ payload }) {
     //   fetchedCountryAgerangesOnline
     // );
     yield put(countryAgerangesOnlineSuccess(fetchedCountryAgerangesOnline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
+function* countryCityAgerangesOnlineRequest({ payload }) {
+  const { country, city } = payload;
+  console.log("country and city from saga ", country, city);
+  try {
+    const fetchedCountryCityAgerangesOnline = yield call(
+      getCountryCityAgerangesOnline,
+      country,
+      city
+    );
+    console.log(
+      "returned ageranges from saga based on country and city",
+      fetchedCountryCityAgerangesOnline
+    );
+    yield put(
+      fetchCountryCityAgerangesOnlineSuccess(fetchedCountryCityAgerangesOnline)
+    );
   } catch (error) {
     yield put(showHomeMessage(error));
   }
@@ -134,6 +163,14 @@ function* countryCitiesAgerangeOnlineRequest({ payload }) {
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
 }
+
+export function* fetchCountryCityAgerangesOnline() {
+  yield takeEvery(
+    COUNTRY_CITY_AGERANGES_ONLINE,
+    countryCityAgerangesOnlineRequest
+  );
+}
+
 //Countries
 export function* fetchAllCountriesOnline() {
   yield takeEvery(GET_ALL_COUNTRIES_ONLINE, fetchAllCountriesOnlineRequest);
@@ -160,6 +197,7 @@ export default function* rootSaga() {
     fork(fetchCountryCitiesOnline),
     fork(fetchCountryAgerangesOnline),
     fork(fetchAgerangeCountriesOnline),
-    fork(fetchCountryCitiesAgerangeOnline)
+    fork(fetchCountryCitiesAgerangeOnline),
+    fork(fetchCountryCityAgerangesOnline)
   ]);
 }

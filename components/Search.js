@@ -6,7 +6,8 @@ import {
   countryCitiesOnline,
   countryAgerangesOnline,
   agerangeCountriesOnline,
-  countryCitiesAgerangeOnline
+  countryCitiesAgerangeOnline,
+  countryCityAgerangesOnline
 } from "../actions/Home";
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
@@ -129,6 +130,10 @@ export default function Search() {
     state => state.home.countryAgerangesOnline
   );
 
+  const CountryCityAgerangesOptionsOnline = useSelector(
+    state => state.home.countryCityAgerangesOnline
+  );
+
   // Countries
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
@@ -228,13 +233,39 @@ export default function Search() {
         )
       );
     }
+    //  else if (
+    //   selectedIndexC != -1 &&
+    //   selectedIndexCit != -1 &&
+    //   selectedIndex == -1
+    // ) {
+    //   console.log("city country");
+
+    //   //dispatch()
+    // }
   }, [selectedIndex]);
+
+  useEffect(() => {
+    // Get AgeRanges based on Country and city
+    if (selectedIndexC != -1 && selectedIndexCit != -1 && selectedIndex == -1) {
+      console.log("country city");
+      // console.log(
+      //   CountriesOptionsOnline.list_of_results[selectedIndexC],
+      //   CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
+      // );
+      dispatch(
+        countryCityAgerangesOnline(
+          CountriesOptionsOnline.list_of_results[selectedIndexC],
+          CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
+        )
+      );
+    }
+  }, [selectedIndexCit]);
 
   return (
     <>
       {console.log(
-        "CountryCitiesAgerangeOptionsOnline get cities search component ",
-        CountryCitiesAgerangeOptionsOnline
+        "CountryCityAgerangesOptionsOnline search component ",
+        CountryCityAgerangesOptionsOnline
       )}
       <Card className={classes.root}>
         <form

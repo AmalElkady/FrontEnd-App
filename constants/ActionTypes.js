@@ -167,6 +167,10 @@ export const COUNTRY_AGERANGES_ONLONE = "country_ageranges_online";
 export const COUNTRY_AGERANGES_ONLONE_SUCCESS =
   "country_ageranges_online_success";
 
+export const COUNTRY_CITY_AGERANGES_ONLINE = "country_city_ageranges_online";
+export const COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS =
+  "country_city_ageranges_online_succes";
+
 //Countries
 export const GET_ALL_COUNTRIES_ONLINE = "all_countries_online";
 export const FETCH_ALL_COUNTRIES_ONLINE_SUCCESS =
