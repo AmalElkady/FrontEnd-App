@@ -162,9 +162,16 @@ export const SHOW_TIMER = "show_timer";
 export const HIDE_TIMER = "hide_timer";
 
 //SEARCH
+// Age Range
+export const COUNTRY_AGERANGES_ONLONE = "country_ageranges_online";
+export const COUNTRY_AGERANGES_ONLONE_SUCCESS =
+  "country_ageranges_online_success";
+
+//Countries
 export const GET_ALL_COUNTRIES_ONLINE = "all_countries_online";
 export const FETCH_ALL_COUNTRIES_ONLINE_SUCCESS =
   "fetch_all_countries_online_success";
 
+//Cities
 export const COUNTRY_CITIES_ONLINE = "country_cities_online";
 export const COUNTRY_CITIES_ONLINE_SUCCESS = "country_cities_online_success";

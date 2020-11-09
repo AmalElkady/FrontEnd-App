@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { allCountriesOnline, countryCitiesOnline } from "../actions/Home";
-import { COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE } from "../util/data";
+import {
+  allCountriesOnline,
+  countryCitiesOnline,
+  countryAgerangesOnline
+} from "../actions/Home";
+import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -94,20 +98,11 @@ const useStyles = makeStyles(theme => ({
   },
   padding: {
     padding: ".5rem"
+  },
+  width: {
+    width: "10rem"
   }
 }));
-
-const AgeOptions = [
-  "18 - 25",
-  "26 - 33",
-  "34 - 41",
-  "42 - 49",
-  "50 - 57",
-  "58 - 65",
-  "66 - 73",
-  "74 - 81",
-  "82 - 89"
-];
 
 const CountriesOptionsOfline = [
   "canada  30",
@@ -127,13 +122,21 @@ export default function Search() {
   const [selectedIndexC, setSelectedIndexC] = useState(-1);
   const [selectedIndexCit, setSelectedIndexCit] = useState(-1);
 
+  //AgeRanges
+  const CountryAgerangesOptionsOnline = useSelector(
+    state => state.home.countryAgerangesOnline
+  );
+
+  // Countries
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
   );
 
+  // Cities
   const CountryCitiesOptionsOnline = useSelector(
     state => state.home.countryCitiesOnline
   );
+
   const dispatch = useDispatch();
 
   const handleClickListItem = event => {
@@ -185,8 +188,15 @@ export default function Search() {
   }, []);
   useEffect(() => {
     if (CountriesOptionsOnline.list_of_results != null) {
+      // Get Cities based on Country
       dispatch(
         countryCitiesOnline(
+          CountriesOptionsOnline.list_of_results[selectedIndexC]
+        )
+      );
+      // Get AgeRanges based on Country
+      dispatch(
+        countryAgerangesOnline(
           CountriesOptionsOnline.list_of_results[selectedIndexC]
         )
       );
@@ -195,6 +205,10 @@ export default function Search() {
 
   return (
     <>
+      {console.log(
+        "CountryAgerangesOptionsOnline get age ranges search component ",
+        CountryAgerangesOptionsOnline
+      )}
       <Card className={classes.root}>
         <form
           className={classes.displayFlexSA}
@@ -215,7 +229,15 @@ export default function Search() {
               >
                 <ListItemText
                   primary="Age Range"
-                  secondary={AgeOptions[selectedIndex]}
+                  secondary={
+                    selectedIndexC == -1
+                      ? ARRAY_OF_AGE_RANGE[selectedIndex]
+                      : CountryAgerangesOptionsOnline.list_of_results
+                      ? CountryAgerangesOptionsOnline.list_of_results[
+                          selectedIndex
+                        ]
+                      : ""
+                  }
                 />
               </ListItem>
             </List>
@@ -226,16 +248,57 @@ export default function Search() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              {AgeOptions.map((option, index) => (
-                <MenuItem
-                  className={classes.displayFlexSB}
-                  key={option}
-                  selected={index === selectedIndex}
-                  onClick={event => handleMenuItemClick(event, index)}
-                >
-                  {option}
-                </MenuItem>
-              ))}
+              {selectedIndexC == -1 &&
+                ARRAY_OF_AGE_RANGE.map((option, index) => (
+                  <MenuItem
+                    className={classes.displayFlexSB}
+                    key={option}
+                    selected={index === selectedIndex}
+                    onClick={event => handleMenuItemClick(event, index)}
+                  >
+                    <Typography variant="button" gutterBottom>
+                      {option}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              {selectedIndexC != -1 && (
+                <div>
+                  {" "}
+                  <Typography
+                    variant="h6"
+                    className={classes.padding}
+                    gutterBottom
+                  >
+                    ONLINE
+                  </Typography>
+                  {CountryAgerangesOptionsOnline.list_of_results?.map(
+                    (option, index) =>
+                      index % 2 == 0 && (
+                        <MenuItem
+                          className={`${classes.displayFlexSB} ${classes.width}`}
+                          key={option}
+                          selected={index === selectedIndex}
+                          onClick={event => handleMenuItemClick(event, index)}
+                        >
+                          <Typography variant="button" gutterBottom>
+                            {option}
+                          </Typography>
+                          <Typography
+                            variant="button"
+                            color="primary"
+                            gutterBottom
+                          >
+                            {
+                              CountryAgerangesOptionsOnline.list_of_results[
+                                index + 1
+                              ]
+                            }
+                          </Typography>
+                        </MenuItem>
+                      )
+                  )}
+                </div>
+              )}
             </Menu>
           </div>
 
