@@ -3,13 +3,14 @@ import {
   COUNTRY_AGERANGES_ONLONE_SUCCESS,
   GET_ALL_COUNTRIES_ONLINE,
   FETCH_ALL_COUNTRIES_ONLINE_SUCCESS,
+  AGERANGE_COUNTRIES_ONLINE,
+  AGERANGE_COUNTRIES_ONLINE_SUCCESS,
   COUNTRY_CITIES_ONLINE,
   COUNTRY_CITIES_ONLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
 export const countryAgerangesOnline = country => {
-  console.log("country selected for ageRange from action ", country);
   return {
     type: COUNTRY_AGERANGES_ONLONE,
     payload: country
@@ -17,7 +18,6 @@ export const countryAgerangesOnline = country => {
 };
 
 export const countryAgerangesOnlineSuccess = data => {
-  console.log("returned age range from action ", data);
   return {
     type: COUNTRY_AGERANGES_ONLONE_SUCCESS,
     payload: data
@@ -33,6 +33,21 @@ export const allCountriesOnline = () => {
 export const fetchCountriesOnlineSuccess = data => {
   return {
     type: FETCH_ALL_COUNTRIES_ONLINE_SUCCESS,
+    payload: data
+  };
+};
+export const agerangeCountriesOnline = agerange => {
+  console.log("ageRange selected for countries from action ", agerange);
+  return {
+    type: AGERANGE_COUNTRIES_ONLINE,
+    payload: agerange
+  };
+};
+
+export const agerangeCountriesOnlineSuccess = data => {
+  console.log("countries returned from agerange action again", data);
+  return {
+    type: AGERANGE_COUNTRIES_ONLINE_SUCCESS,
     payload: data
   };
 };

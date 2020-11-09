@@ -857,6 +857,59 @@ home.getCountryAgerangesOnline = function (country) {
 					
 				}
 
+
+
+home.getAgerangeCountriesOnline = function (agerange) {
+
+					// "allcountriesflag": true,
+					// "searchlistid" : "${ageRange}_agerange_countries_online",
+					// "country" : "",
+					// "city" : "",
+					// "agerange" : "",
+					// "key":"",
+					// "scoreH":"",
+					// "offset":""
+					console.log("ageRange from okta ",agerange);
+										  return new Promise(  async (resolve, reject) => {				
+																try {
+																	
+																	const tokenValue = getCookie("access_token",false);
+																	const options = {
+																					  url: '/availablesearch',
+																					  method: 'POST',
+																					  headers: {
+																						'Accept': 'application/json',
+																						'Content-Type': 'application/json;charset=UTF-8',
+																						'Authorization': "Bearer " + tokenValue
+																					  },
+																					  data: {
+																						allcountriesflag: true,
+																						 searchlistid : `${agerange}_agerange_countries_online`,
+					
+																					  }
+																					};
+						
+																	let responseX = await callAxios(options);
+																	let response = responseX.data;
+					
+																	console.log("respo data of countries from okta agerange : ",response);
+																	
+																	   if(response){
+																						resolve(response);					 
+																	   } else {
+																		   
+																		   resolve({"message": "no response !"})
+																	   }
+														
+																} catch(err) {
+																	resolve({"message": err.message});
+																}		
+						
+												  
+																
+							  }).catch((err) => {console.log(err)});			
+							
+						}				
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 

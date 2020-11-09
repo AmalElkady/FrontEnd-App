@@ -2,12 +2,14 @@ import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   GET_ALL_COUNTRIES_ONLINE,
   COUNTRY_CITIES_ONLINE,
-  COUNTRY_AGERANGES_ONLONE
+  COUNTRY_AGERANGES_ONLONE,
+  AGERANGE_COUNTRIES_ONLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
   fetchCountryCitiesOnlineSuccess,
-  countryAgerangesOnlineSuccess
+  countryAgerangesOnlineSuccess,
+  agerangeCountriesOnlineSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -24,6 +26,12 @@ const getOnlineCountries = async () =>
     .then(returnCountries => returnCountries)
     .catch(error => error);
 
+const getAgerangeCountriesOnline = async agerange =>
+  await home
+    .getAgerangeCountriesOnline(agerange)
+    .then(returnCountries => returnCountries)
+    .catch(error => error);
+
 // Cities
 const getCountryCitiesOnline = async country =>
   await home
@@ -33,16 +41,16 @@ const getCountryCitiesOnline = async country =>
 
 // Age-Range
 function* countryAgerangesOnlineRequest({ payload }) {
-  console.log("country for agerange from saga ", payload);
+  //console.log("country for agerange from saga ", payload);
   try {
     const fetchedCountryAgerangesOnline = yield call(
       getCountryAgerangesOnline,
       payload
     );
-    console.log(
-      "returned age ranges from saga ",
-      fetchedCountryAgerangesOnline
-    );
+    // console.log(
+    //   "returned age ranges from saga ",
+    //   fetchedCountryAgerangesOnline
+    // );
     yield put(countryAgerangesOnlineSuccess(fetchedCountryAgerangesOnline));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -58,6 +66,24 @@ function* fetchAllCountriesOnlineRequest() {
     yield put(showHomeMessage(error));
   }
 }
+
+function* AgerangeCountriesOnlineRequest({ payload }) {
+  console.log("agerange for countries from saga ", payload);
+  try {
+    const fetchedAgerangeCountriesOnline = yield call(
+      getAgerangeCountriesOnline,
+      payload
+    );
+    console.log(
+      "returned countries of age from saga ",
+      fetchedAgerangeCountriesOnline
+    );
+    yield put(agerangeCountriesOnlineSuccess(fetchedAgerangeCountriesOnline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Cities
 function* countryCitiesOnlineRequest({ payload }) {
   console.log("country from saga ", payload);
@@ -81,6 +107,9 @@ export function* fetchCountryAgerangesOnline() {
 export function* fetchAllCountriesOnline() {
   yield takeEvery(GET_ALL_COUNTRIES_ONLINE, fetchAllCountriesOnlineRequest);
 }
+export function* fetchAgerangeCountriesOnline() {
+  yield takeEvery(AGERANGE_COUNTRIES_ONLINE, AgerangeCountriesOnlineRequest);
+}
 
 // Cities
 export function* fetchCountryCitiesOnline() {
@@ -91,6 +120,7 @@ export default function* rootSaga() {
   yield all([
     fork(fetchAllCountriesOnline),
     fork(fetchCountryCitiesOnline),
-    fork(fetchCountryAgerangesOnline)
+    fork(fetchCountryAgerangesOnline),
+    fork(fetchAgerangeCountriesOnline)
   ]);
 }
