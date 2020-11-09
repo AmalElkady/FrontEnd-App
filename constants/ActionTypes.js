@@ -178,3 +178,6 @@ export const AGERANGE_COUNTRIES_ONLINE_SUCCESS =
 //Cities
 export const COUNTRY_CITIES_ONLINE = "country_cities_online";
 export const COUNTRY_CITIES_ONLINE_SUCCESS = "country_cities_online_success";
+export const COUNTRY_CITIES_AGERANGE_ONLINE = "country_cities_agerange_online";
+export const COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS =
+  "country_cities_agerange_online_succes";

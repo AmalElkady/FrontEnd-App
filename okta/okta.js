@@ -909,7 +909,60 @@ home.getAgerangeCountriesOnline = function (agerange) {
 																
 							  }).catch((err) => {console.log(err)});			
 							
-						}				
+						}	
+						
+						
+home.getCountryCitiesAgerangeOnline = function (country,agerange) {
+
+							// "allcountriesflag": false,
+							// "searchlistid" : "${co}_${ageRange}_country_cities_agerange_online",
+							// "country" : "",
+							// "city" : "",
+							// "agerange" : "",
+							// "key":"",
+							// "scoreH":"",
+							// "offset":""
+							console.log("ageRange and country from okta ",agerange,country);
+												  return new Promise(  async (resolve, reject) => {				
+																		try {
+																			
+																			const tokenValue = getCookie("access_token",false);
+																			const options = {
+																							  url: '/availablesearch',
+																							  method: 'POST',
+																							  headers: {
+																								'Accept': 'application/json',
+																								'Content-Type': 'application/json;charset=UTF-8',
+																								'Authorization': "Bearer " + tokenValue
+																							  },
+																							  data: {
+																								allcountriesflag: false,
+																								 searchlistid : `${country}_${agerange}_country_cities_agerange_online`,
+							
+																							  }
+																							};
+								
+																			let responseX = await callAxios(options);
+																			let response = responseX.data;
+							
+																			console.log("respo data of cities from okta agerange and country : ",response);
+																			
+																			   if(response){
+																								resolve(response);					 
+																			   } else {
+																				   
+																				   resolve({"message": "no response !"})
+																			   }
+																
+																		} catch(err) {
+																			resolve({"message": err.message});
+																		}		
+								
+														  
+																		
+									  }).catch((err) => {console.log(err)});			
+									
+								}							
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 

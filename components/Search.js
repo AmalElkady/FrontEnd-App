@@ -5,7 +5,8 @@ import {
   allCountriesOnline,
   countryCitiesOnline,
   countryAgerangesOnline,
-  agerangeCountriesOnline
+  agerangeCountriesOnline,
+  countryCitiesAgerangeOnline
 } from "../actions/Home";
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
@@ -141,6 +142,10 @@ export default function Search() {
     state => state.home.countryCitiesOnline
   );
 
+  const CountryCitiesAgerangeOptionsOnline = useSelector(
+    state => state.home.countryCitiesAgerangeOnline
+  );
+
   const dispatch = useDispatch();
 
   const handleClickListItem = event => {
@@ -201,6 +206,7 @@ export default function Search() {
     }
     // Get Cities based on Country and ageRange
     else if (selectedIndexC != -1 && selectedIndex != -1) {
+      //dispatch(countryCitiesAgerangeOnline("EG", "18-25"));
     }
 
     if (CountriesOptionsOnline.list_of_results != null && selectedIndex == -1) {
@@ -227,8 +233,8 @@ export default function Search() {
   return (
     <>
       {console.log(
-        "AgerangeCountriesOptionsOnline get countries age search component ",
-        AgerangeCountriesOptionsOnline
+        "CountryCitiesAgerangeOptionsOnline get cities search component ",
+        CountryCitiesAgerangeOptionsOnline
       )}
       <Card className={classes.root}>
         <form
