@@ -802,9 +802,6 @@ home.getCountryCitiesOnline = function (country) {
 			  }).catch((err) => {console.log(err)});			
 			
 		}
-
-
-
 home.getCountryAgerangesOnline = function (country) {
 
 			// "allcountriesflag": false,
@@ -856,9 +853,6 @@ home.getCountryAgerangesOnline = function (country) {
 					  }).catch((err) => {console.log(err)});			
 					
 				}
-
-
-
 home.getAgerangeCountriesOnline = function (agerange) {
 
 					// "allcountriesflag": true,
@@ -909,9 +903,7 @@ home.getAgerangeCountriesOnline = function (agerange) {
 																
 							  }).catch((err) => {console.log(err)});			
 							
-						}	
-						
-						
+						}							
 home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 
 							// "allcountriesflag": false,
@@ -963,8 +955,7 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 									  }).catch((err) => {console.log(err)});			
 									
 								}	
-								
-								
+																
 home.getCountryCityAgerangesOnline = function (country,city) {
 
 									// "allcountriesflag": false,

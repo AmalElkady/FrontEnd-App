@@ -201,26 +201,47 @@ export default function Search() {
     dispatch(allCountriesOnline());
   }, []);
   useEffect(() => {
-    // Get Cities based on Country without ageRange
     if (selectedIndexC != -1 && selectedIndex == -1) {
+      // Get Cities based on Country only
       dispatch(
         countryCitiesOnline(
           CountriesOptionsOnline.list_of_results[selectedIndexC]
         )
       );
-    }
-    // Get Cities based on Country and ageRange
-    else if (selectedIndexC != -1 && selectedIndex != -1) {
-      //dispatch(countryCitiesAgerangeOnline("EG", "18-25"));
-    }
 
-    if (CountriesOptionsOnline.list_of_results != null && selectedIndex == -1) {
-      // Get AgeRanges based on Country
-      dispatch(
-        countryAgerangesOnline(
-          CountriesOptionsOnline.list_of_results[selectedIndexC]
-        )
-      );
+      // Get Ageranges based on Country only
+      if (CountriesOptionsOnline.list_of_results != null) {
+        dispatch(
+          countryAgerangesOnline(
+            CountriesOptionsOnline.list_of_results[selectedIndexC]
+          )
+        );
+      }
+    }
+    // Get cities based on agerange and country
+    else if (
+      selectedIndex != -1 &&
+      selectedIndexC != -1 &&
+      selectedIndexCit == -1
+    ) {
+      if (
+        CountryAgerangesOptionsOnline.list_of_results &&
+        !AgerangeCountriesOptionsOnline.list_of_results
+      ) {
+        dispatch(
+          countryCitiesAgerangeOnline(
+            allCountriesOnline.list_of_results[selectedIndexC],
+            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+          )
+        );
+      } else {
+        dispatch(
+          countryCitiesAgerangeOnline(
+            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+          )
+        );
+      }
     }
   }, [selectedIndexC]);
 
@@ -233,25 +254,40 @@ export default function Search() {
         )
       );
     }
-    //  else if (
-    //   selectedIndexC != -1 &&
-    //   selectedIndexCit != -1 &&
-    //   selectedIndex == -1
-    // ) {
-    //   console.log("city country");
 
-    //   //dispatch()
-    // }
+    // Get cities based on agerange and country
+    else if (selectedIndexC != -1) {
+      if (
+        CountryAgerangesOptionsOnline.list_of_results &&
+        !AgerangeCountriesOptionsOnline.list_of_results
+      ) {
+        dispatch(
+          countryCitiesAgerangeOnline(
+            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+          )
+        );
+      } else {
+        //Get countries based on agerange
+        dispatch(
+          agerangeCountriesOnline(
+            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+          )
+        );
+        dispatch(
+          countryCitiesAgerangeOnline(
+            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+          )
+        );
+      }
+    }
   }, [selectedIndex]);
 
   useEffect(() => {
     // Get AgeRanges based on Country and city
     if (selectedIndexC != -1 && selectedIndexCit != -1 && selectedIndex == -1) {
       console.log("country city");
-      // console.log(
-      //   CountriesOptionsOnline.list_of_results[selectedIndexC],
-      //   CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
-      // );
       dispatch(
         countryCityAgerangesOnline(
           CountriesOptionsOnline.list_of_results[selectedIndexC],
@@ -263,10 +299,6 @@ export default function Search() {
 
   return (
     <>
-      {console.log(
-        "CountryCityAgerangesOptionsOnline search component ",
-        CountryCityAgerangesOptionsOnline
-      )}
       <Card className={classes.root}>
         <form
           className={classes.displayFlexSA}
@@ -292,15 +324,25 @@ export default function Search() {
                       ? selectedIndex == -1
                         ? ARRAY_OF_AGE_RANGE[selectedIndex + 1]
                         : ARRAY_OF_AGE_RANGE[selectedIndex]
-                      : CountryAgerangesOptionsOnline.list_of_results
+                      : selectedIndexCit == -1
+                      ? CountryAgerangesOptionsOnline.list_of_results
+                        ? selectedIndex == -1
+                          ? CountryAgerangesOptionsOnline.list_of_results[
+                              selectedIndex + 1
+                            ]
+                          : CountryAgerangesOptionsOnline.list_of_results[
+                              selectedIndex
+                            ]
+                        : ARRAY_OF_AGE_RANGE[selectedIndex]
+                      : CountryCityAgerangesOptionsOnline.list_of_results
                       ? selectedIndex == -1
-                        ? CountryAgerangesOptionsOnline.list_of_results[
+                        ? CountryCityAgerangesOptionsOnline.list_of_results[
                             selectedIndex + 1
                           ]
-                        : CountryAgerangesOptionsOnline.list_of_results[
+                        : CountryCityAgerangesOptionsOnline.list_of_results[
                             selectedIndex
                           ]
-                      : ""
+                      : ARRAY_OF_AGE_RANGE[selectedIndex]
                   }
                 />
               </ListItem>
@@ -325,7 +367,65 @@ export default function Search() {
                     </Typography>
                   </MenuItem>
                 ))}
-              {selectedIndexC != -1 && selectedIndex == -1 && (
+              {selectedIndexC != -1 && selectedIndexCit == -1 && (
+                <div>
+                  {" "}
+                  {CountryAgerangesOptionsOnline.list_of_results ? (
+                    <div>
+                      <Typography
+                        variant="h6"
+                        className={classes.padding}
+                        gutterBottom
+                      >
+                        ONLINE
+                      </Typography>
+                      {CountryAgerangesOptionsOnline.list_of_results?.map(
+                        (option, index) =>
+                          index % 2 == 0 && (
+                            <MenuItem
+                              className={`${classes.displayFlexSB} ${classes.width}`}
+                              key={option}
+                              selected={index === selectedIndex}
+                              onClick={event =>
+                                handleMenuItemClick(event, index)
+                              }
+                            >
+                              <Typography variant="button" gutterBottom>
+                                {option}
+                              </Typography>
+                              <Typography
+                                variant="button"
+                                color="primary"
+                                gutterBottom
+                              >
+                                {
+                                  CountryAgerangesOptionsOnline.list_of_results[
+                                    index + 1
+                                  ]
+                                }
+                              </Typography>
+                            </MenuItem>
+                          )
+                      )}
+                    </div>
+                  ) : (
+                    ARRAY_OF_AGE_RANGE.map((option, index) => (
+                      <MenuItem
+                        className={classes.displayFlexSB}
+                        key={option}
+                        selected={index === selectedIndex}
+                        onClick={event => handleMenuItemClick(event, index)}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          {option}
+                        </Typography>
+                      </MenuItem>
+                    ))
+                  )}
+                </div>
+              )}
+
+              {selectedIndexC != -1 && selectedIndexCit != -1 && (
                 <div>
                   {" "}
                   <Typography
@@ -335,7 +435,7 @@ export default function Search() {
                   >
                     ONLINE
                   </Typography>
-                  {CountryAgerangesOptionsOnline.list_of_results?.map(
+                  {CountryCityAgerangesOptionsOnline.list_of_results?.map(
                     (option, index) =>
                       index % 2 == 0 && (
                         <MenuItem
@@ -353,7 +453,7 @@ export default function Search() {
                             gutterBottom
                           >
                             {
-                              CountryAgerangesOptionsOnline.list_of_results[
+                              CountryCityAgerangesOptionsOnline.list_of_results[
                                 index + 1
                               ]
                             }
@@ -420,6 +520,7 @@ export default function Search() {
                   ONLINE
                 </Typography>
                 {selectedIndex != -1 &&
+                  selectedIndexC == -1 &&
                   AgerangeCountriesOptionsOnline.list_of_results?.map(
                     (option, index) =>
                       index % 2 === 0 && (
@@ -446,7 +547,11 @@ export default function Search() {
                         </MenuItem>
                       )
                   )}
-                {selectedIndex == -1 &&
+                {((selectedIndex == -1 && selectedIndexC == -1) ||
+                  (selectedIndex != -1 &&
+                    selectedIndexC != -1 &&
+                    AgerangeCountriesOptionsOnline.list_of_results == null) ||
+                  (selectedIndex == -1 && selectedIndexC != -1)) &&
                   CountriesOptionsOnline.list_of_results?.map(
                     (option, index) =>
                       index % 2 === 0 && (
@@ -470,6 +575,36 @@ export default function Search() {
                       )
                   )}
 
+                {selectedIndex != -1 &&
+                  selectedIndexC != -1 &&
+                  AgerangeCountriesOptionsOnline.list_of_results != null &&
+                  AgerangeCountriesOptionsOnline.list_of_results?.map(
+                    (option, index) =>
+                      index % 2 === 0 && (
+                        <MenuItem
+                          key={option}
+                          selected={index === selectedIndexC}
+                          onClick={event => handleMenuItemClickC(event, index)}
+                          className={classes.displayFlexSB}
+                        >
+                          <Typography variant="button" gutterBottom>
+                            {option}
+                          </Typography>
+                          <Typography
+                            variant="button"
+                            color="primary"
+                            gutterBottom
+                          >
+                            {
+                              AgerangeCountriesOptionsOnline.list_of_results[
+                                index + 1
+                              ]
+                            }
+                          </Typography>
+                        </MenuItem>
+                      )
+                  )}
+
                 {/* <Typography variant="h6" gutterBottom>
                   MOST RECENT
                 </Typography>
@@ -487,103 +622,193 @@ export default function Search() {
           )}
 
           {/* Cities list */}
-          {selectedIndexC >= 0 &&
-            CountryCitiesOptionsOnline.list_of_results != null && (
-              <div className={classes.menu}>
-                <List component="nav" aria-label="Countries">
-                  <ListItem
-                    button
-                    aria-haspopup="true"
-                    aria-controls="lock-menu2"
-                    aria-label="Countries"
-                    onClick={handleClickListItemCit}
-                  >
-                    <ListItemText
-                      primary="Cities"
-                      secondary={
-                        selectedIndexCit == -1 &&
-                        CountryCitiesOptionsOnline.list_of_results
-                          ? COUNTRY_CITY_MAP[
-                              CountriesOptionsOnline.list_of_results[
-                                selectedIndexC
-                              ].toLowerCase()
-                            ][
-                              CountryCitiesOptionsOnline.list_of_results[
-                                selectedIndexCit + 1
-                              ] - 1
-                            ]
-                          : COUNTRY_CITY_MAP[
-                              CountriesOptionsOnline.list_of_results[
-                                selectedIndexC
-                              ].toLowerCase()
-                            ][
-                              CountryCitiesOptionsOnline.list_of_results[
-                                selectedIndexCit
-                              ] - 1
-                            ]
-                      }
-                    />
-                  </ListItem>
-                </List>
-                <Menu
-                  id="lock-menu2"
-                  anchorEl={anchorElCit}
-                  keepMounted
-                  open={Boolean(anchorElCit)}
-                  onClose={handleCloseCit}
-                  PaperProps={{
-                    style: {
-                      maxHeight: ITEM_HEIGHT * 4.5,
-                      width: "30ch"
-                    }
-                  }}
+          {selectedIndexC != -1 && (
+            <div className={classes.menu}>
+              <List component="nav" aria-label="Countries">
+                <ListItem
+                  button
+                  aria-haspopup="true"
+                  aria-controls="lock-menu2"
+                  aria-label="Countries"
+                  onClick={handleClickListItemCit}
                 >
-                  <Typography
-                    variant="h6"
-                    className={classes.padding}
-                    gutterBottom
-                  >
-                    ONLINE
-                  </Typography>
-                  {CountryCitiesOptionsOnline.list_of_results?.map(
-                    (option, index) =>
-                      index % 2 === 0 && (
-                        <MenuItem
-                          key={option}
-                          value={option}
-                          //label={value}
-                          selected={index === selectedIndexCit}
-                          onClick={event =>
-                            handleMenuItemClickCit(event, index)
-                          }
-                          className={classes.displayFlexSB}
-                        >
-                          <Typography variant="button" gutterBottom>
-                            {
-                              COUNTRY_CITY_MAP[
+                  <ListItemText
+                    primary="Cities"
+                    secondary={
+                      selectedIndex == -1
+                        ? CountryCitiesOptionsOnline.list_of_results
+                          ? selectedIndexCit == -1
+                            ? COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline.list_of_results[
                                   selectedIndexC
                                 ].toLowerCase()
-                              ][option - 1]
-                            }
-                          </Typography>
-                          <Typography
-                            variant="button"
-                            color="primary"
-                            gutterBottom
-                          >
-                            {
-                              CountryCitiesOptionsOnline.list_of_results[
-                                index + 1
+                              ][
+                                CountryCitiesOptionsOnline.list_of_results[
+                                  selectedIndexCit + 1
+                                ] - 1
                               ]
+                            : COUNTRY_CITY_MAP[
+                                CountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesOptionsOnline.list_of_results[
+                                  selectedIndexCit
+                                ] - 1
+                              ]
+                          : ""
+                        : CountryCitiesAgerangeOptionsOnline.list_of_results
+                        ? CountriesOptionsOnline.list_of_results
+                          ? selectedIndexCit == -1
+                            ? COUNTRY_CITY_MAP[
+                                CountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesAgerangeOptionsOnline
+                                  .list_of_results[selectedIndexCit + 1] - 1
+                              ]
+                            : COUNTRY_CITY_MAP[
+                                CountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesAgerangeOptionsOnline
+                                  .list_of_results[selectedIndexCit] - 1
+                              ]
+                          : AgerangeCountriesOptionsOnline.list_of_results
+                          ? selectedIndexCit == -1
+                            ? COUNTRY_CITY_MAP[
+                                AgerangeCountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesAgerangeOptionsOnline
+                                  .list_of_results[selectedIndexCit + 1] - 1
+                              ]
+                            : COUNTRY_CITY_MAP[
+                                AgerangeCountriesOptionsOnline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesAgerangeOptionsOnline
+                                  .list_of_results[selectedIndexCit] - 1
+                              ]
+                          : ""
+                        : ""
+                    }
+                  />
+                </ListItem>
+              </List>
+              <Menu
+                id="lock-menu2"
+                anchorEl={anchorElCit}
+                keepMounted
+                open={Boolean(anchorElCit)}
+                onClose={handleCloseCit}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "30ch"
+                  }
+                }}
+              >
+                {selectedIndexC != -1 && selectedIndex == -1 && (
+                  <div>
+                    <Typography
+                      variant="h6"
+                      className={classes.padding}
+                      gutterBottom
+                    >
+                      ONLINE
+                    </Typography>
+                    {CountryCitiesOptionsOnline.list_of_results?.map(
+                      (option, index) =>
+                        index % 2 === 0 && (
+                          <MenuItem
+                            key={option}
+                            value={option}
+                            //label={value}
+                            selected={index === selectedIndexCit}
+                            onClick={event =>
+                              handleMenuItemClickCit(event, index)
                             }
-                          </Typography>
-                        </MenuItem>
-                      )
-                  )}
-                </Menu>
-              </div>
-            )}
+                            className={classes.displayFlexSB}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {
+                                COUNTRY_CITY_MAP[
+                                  CountriesOptionsOnline.list_of_results[
+                                    selectedIndexC
+                                  ].toLowerCase()
+                                ][option - 1]
+                              }
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {
+                                CountryCitiesOptionsOnline.list_of_results[
+                                  index + 1
+                                ]
+                              }
+                            </Typography>
+                          </MenuItem>
+                        )
+                    )}
+                  </div>
+                )}
+                {selectedIndexC != -1 && selectedIndex != -1 && (
+                  <div>
+                    <Typography
+                      variant="h6"
+                      className={classes.padding}
+                      gutterBottom
+                    >
+                      ONLINE
+                    </Typography>
+                    {CountryCitiesAgerangeOptionsOnline.list_of_results?.map(
+                      (option, index) =>
+                        index % 2 === 0 && (
+                          <MenuItem
+                            key={option}
+                            value={option}
+                            //label={value}
+                            selected={index === selectedIndexCit}
+                            onClick={event =>
+                              handleMenuItemClickCit(event, index)
+                            }
+                            className={classes.displayFlexSB}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {
+                                COUNTRY_CITY_MAP[
+                                  CountriesOptionsOnline.list_of_results[
+                                    selectedIndexC
+                                  ].toLowerCase()
+                                ][option - 1]
+                              }
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {
+                                CountryCitiesAgerangeOptionsOnline
+                                  .list_of_results[index + 1]
+                              }
+                            </Typography>
+                          </MenuItem>
+                        )
+                    )}
+                  </div>
+                )}
+              </Menu>
+            </div>
+          )}
 
           <div className={classes.margintop}>
             <Button
