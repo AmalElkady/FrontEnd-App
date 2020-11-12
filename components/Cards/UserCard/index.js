@@ -6,7 +6,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import moment from "moment";
 import { red } from "@material-ui/core/colors";
+
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
@@ -25,7 +27,17 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: "20%"
+    maxWidth: "20%",
+    margin: "1.5rem",
+    "@media only screen and (min-width: 1099px) ": {
+      maxWidth: "20%"
+    },
+    "@media only screen and (max-width: 1099px) ": {
+      maxWidth: "30%"
+    },
+    "@media (max-width:700px)": {
+      maxWidth: "100%"
+    }
   },
   media: {
     height: 0,
@@ -107,7 +119,7 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function UserCard() {
+export default function UserCard({ user }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
   const imgURL = "../../../static/images/avatar.png";
@@ -124,30 +136,30 @@ export default function UserCard() {
   };
 
   const handleClickLove = () => {
-    console.log("love");
     setlickLove(!clickLove);
   };
 
   return (
     <>
+      {console.log("current user ", moment().diff(user.b, "years"))}
       <Card className={classes.root}>
         <CardMedia className={classes.media} image={imgURL} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
-            User Name
+            {user.n}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {`${moment().diff(user.b, "years")} years old`}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Address
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Age
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
           <IconButton
             className={classes.iconBtn}
             aria-label="Love"
-           // onClick={handleClickLove}
+            // onClick={handleClickLove}
           >
             {/* <FavoriteIcon /> */}
             <LoveIcon />

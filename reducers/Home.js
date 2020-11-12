@@ -4,7 +4,8 @@ import {
   COUNTRY_AGERANGES_ONLONE_SUCCESS,
   AGERANGE_COUNTRIES_ONLINE_SUCCESS,
   COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS,
-  COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS
+  COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
+  ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS
 } from "../constants/ActionTypes";
 
 const initialHomeState = {
@@ -13,7 +14,8 @@ const initialHomeState = {
   countryAgerangesOnline: [],
   agerangeCountriesOnline: [],
   countryCitiesAgerangeOnline: [],
-  countryCityAgerangesOnline: []
+  countryCityAgerangesOnline: [],
+  allCountriesSelectedOnlineUsers: []
   // countrySelected: false
 };
 
@@ -49,6 +51,11 @@ const home = (state = initialHomeState, action) => {
       return {
         ...state,
         countryCityAgerangesOnline: action.payload
+      };
+    case ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS:
+      return {
+        ...state,
+        allCountriesSelectedOnlineUsers: action.payload
       };
     default:
       return state;

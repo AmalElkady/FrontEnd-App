@@ -5,7 +5,8 @@ import {
   COUNTRY_AGERANGES_ONLONE,
   AGERANGE_COUNTRIES_ONLINE,
   COUNTRY_CITIES_AGERANGE_ONLINE,
-  COUNTRY_CITY_AGERANGES_ONLINE
+  COUNTRY_CITY_AGERANGES_ONLINE,
+  ALL_COUNTRIES_SELECTED_ONLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -13,7 +14,9 @@ import {
   countryAgerangesOnlineSuccess,
   agerangeCountriesOnlineSuccess,
   fetchCountryCitiesAgerangeOnlineSuccess,
-  fetchCountryCityAgerangesOnlineSuccess
+  fetchCountryCityAgerangesOnlineSuccess,
+  fetchAllCountriesSelectedOnlineSuccess,
+  showHomeMessage
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -53,6 +56,13 @@ const getCountryCitiesAgerangeOnline = async (country, agerange) =>
   await home
     .getCountryCitiesAgerangeOnline(country, agerange)
     .then(returnCities => returnCities)
+    .catch(error => error);
+
+// Users Profiles
+const getAllCountriesSelectedOnline = async () =>
+  await home
+    .getAllCountriesSelectedOnline()
+    .then(returnUsers => returnUsers)
     .catch(error => error);
 
 // Age-Range
@@ -159,6 +169,26 @@ function* countryCitiesAgerangeOnlineRequest({ payload }) {
   }
 }
 
+// Users Profiles
+
+function* allCountriesSelectedOnlineRequest() {
+  console.log("allCountriesSelectedOnline from saga ");
+  try {
+    const fetchedAllCountriesSelestedOnline = yield call(
+      getAllCountriesSelectedOnline
+    );
+    console.log(
+      "returned allCountriesSelectedOnline from saga",
+      fetchedAllCountriesSelestedOnline
+    );
+    yield put(
+      fetchAllCountriesSelectedOnlineSuccess(fetchedAllCountriesSelestedOnline)
+    );
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Age-Range
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
@@ -191,6 +221,14 @@ export function* fetchCountryCitiesAgerangeOnline() {
   );
 }
 
+// Users Profiles
+export function* fetchAllCountriesSelectedOnline() {
+  yield takeEvery(
+    ALL_COUNTRIES_SELECTED_ONLINE,
+    allCountriesSelectedOnlineRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(fetchAllCountriesOnline),
@@ -198,6 +236,7 @@ export default function* rootSaga() {
     fork(fetchCountryAgerangesOnline),
     fork(fetchAgerangeCountriesOnline),
     fork(fetchCountryCitiesAgerangeOnline),
-    fork(fetchCountryCityAgerangesOnline)
+    fork(fetchCountryCityAgerangesOnline),
+    fork(fetchAllCountriesSelectedOnline)
   ]);
 }

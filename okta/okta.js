@@ -1006,7 +1006,126 @@ home.getCountryCityAgerangesOnline = function (country,city) {
 																				
 											  }).catch((err) => {console.log(err)});			
 											
-										}									
+										}
+home.getAllCountriesSelectedOnline = function () {
+
+	// "allcountriesflag":true,
+    // "searchlistid" : "all_countries_selected_online",
+    // "country" : "",
+    // "city" : "",
+    // "agerange" : "",
+    // "key":"",
+    // "scoreH":"",
+    // "offset":""
+									console.log("AllCountriesSelectedOnline from okta ");
+																  return new Promise(  async (resolve, reject) => {				
+																						try {
+																							
+																							const tokenValue = getCookie("access_token",false);
+																							const options = {
+																											  url: '/availablesearch',
+																											  method: 'POST',
+																											  headers: {
+																												'Accept': 'application/json',
+																												'Content-Type': 'application/json;charset=UTF-8',
+																												'Authorization': "Bearer " + tokenValue
+																											  },
+																											  data: {
+																												allcountriesflag: true,
+																												 searchlistid : `all_countries_selected_online`,
+											
+																											  }
+																											};
+												
+																							let responseX = await callAxios(options);
+																							let response = responseX.data;
+											
+																							console.log("respo data of all_countries_selected_online from all countries : ",response);
+																							
+																							if(response){
+																								//resolve(response);
+																								let returnUsers=[];
+																								response.list_of_results.forEach(async (e,i) => {
+																									if(i%2==0){
+																										let sebReturnUsers= await getselectedsearchprofiles(e);
+																										returnUsers=[...returnUsers,sebReturnUsers.list_of_results];
+																									}
+																									
+																									if(i===response.list_of_results.length-2){
+																										
+																										resolve(returnUsers.flat(1));
+																									}
+																								});	
+																								
+																									 
+																							   } else {
+																								   
+																								   resolve({"message": "no response !"})
+																							   }
+																							  
+																				
+																						} catch(err) {
+																							resolve({"message": err.message});
+																						}		
+												
+																		  
+																						
+													  }).catch((err) => {console.log(err)});			
+													
+												}
+
+
+const getselectedsearchprofiles =(searchlistid)=>{
+	console.log("searchlistid ",searchlistid)
+	
+	// "searchlistid" : "EG_4_1_18-25_on",
+    // "onlineflag" : true,
+    // "scoreH":"",
+    // "scoreL":"",
+    // "offset":""
+
+  	  return new Promise(  async (resolve, reject) => {				
+																						try {
+																							
+																							const tokenValue = getCookie("access_token",false);
+																							const options = {
+																											  url: '/getselectedsearchprofiles',
+																											  method: 'POST',
+																											  headers: {
+																												'Accept': 'application/json',
+																												'Content-Type': 'application/json;charset=UTF-8',
+																												'Authorization': "Bearer " + tokenValue
+																											  },
+																											  data: {
+																									             searchlistid : searchlistid,
+																												 onlineflag : true,
+											
+																											  }
+																											};
+												
+																							let responseX = await callAxios(options);
+																							let response = responseX.data;
+											
+																							console.log("respo data of users from all searchlistid : ",response);
+																							
+																							   if(response){
+																										resolve(response);					 
+																							   } else {
+																								   
+																								   resolve({"message": "no response !"})
+																							   }
+																				
+																						} catch(err) {
+																							resolve({"message": err.message});
+																						}		
+												
+																		  
+																						
+													  }).catch((err) => {console.log(err)});			
+													
+
+
+}																	
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
