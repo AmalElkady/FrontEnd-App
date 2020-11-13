@@ -1,6 +1,7 @@
 import axios from "axios";
 import {setCookie,removeCookie,getCookie} from '../util/session';
 import base64url from 'base64url';
+import {mapUserPhotoPath} from "../helpers/mapUserPhotoPath";
 import imageCompression from 'browser-image-compression';
 
 const auth = {};
@@ -1048,7 +1049,9 @@ home.getAllCountriesSelectedOnline = function () {
 																								response.list_of_results.forEach(async (e,i) => {
 																									if(i%2==0){
 																										let sebReturnUsers= await getselectedsearchprofiles(e);
-																										returnUsers=[...returnUsers,sebReturnUsers.list_of_results];
+																										sebReturnUsers=mapUserPhotoPath(sebReturnUsers.list_of_results,e);
+																										returnUsers=[...returnUsers,sebReturnUsers];
+																										console.log("returnUsers after map ",returnUsers);
 																									}
 																									
 																									if(i===response.list_of_results.length-2){
@@ -1125,7 +1128,53 @@ const getselectedsearchprofiles =(searchlistid)=>{
 													
 
 
-}																	
+}	
+
+
+home.requestPhotoRead=()=>{
+
+//http://128.199.32.156/api/requestphotoread?photo=0
+  	  return new Promise(  async (resolve, reject) => {				
+																						try {
+																							
+																							const tokenValue = getCookie("access_token",false);
+																							const options = {
+																											  url: '/requestphotoread?photo=0',
+																											  method: 'POST',
+																											  headers: {
+																												'Accept': 'application/json',
+																												'Content-Type': 'application/json;charset=UTF-8',
+																												'Authorization': "Bearer " + tokenValue
+																											  },
+																											//   data: {
+																									        //     
+																											//   }
+																											};
+												
+																							let responseX = await callAxios(options);
+																							let response = responseX.data;
+											
+																							console.log("respo signedRequest from okta: ",response);
+																							
+																							   if(response){
+																										resolve(response);					 
+																							   } else {
+																								   
+																								   resolve({"message": "no response !"})
+																							   }
+																				
+																						} catch(err) {
+																							resolve({"message": err.message});
+																						}		
+												
+																		  
+																						
+													  }).catch((err) => {console.log(err)});			
+													
+
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 

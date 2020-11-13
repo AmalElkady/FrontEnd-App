@@ -190,3 +190,6 @@ export const COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS =
 export const ALL_COUNTRIES_SELECTED_ONLINE = "all_countries_selected_online";
 export const ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS =
   "all_countries_selected_online_SECCESS";
+
+export const REQUEST_PHOTO_READ = "request_photo_read";
+export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";

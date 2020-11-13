@@ -122,7 +122,6 @@ Fade.propTypes = {
 export default function UserCard({ user }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
-  const imgURL = "../../../static/images/avatar.png";
 
   ////// modal
   const [open, setOpen] = React.useState(false);
@@ -141,9 +140,8 @@ export default function UserCard({ user }) {
 
   return (
     <>
-      {console.log("current user ", moment().diff(user.b, "years"))}
       <Card className={classes.root}>
-        <CardMedia className={classes.media} image={imgURL} title="userPhoto" />
+        <CardMedia className={classes.media} image={user._} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
             {user.n}

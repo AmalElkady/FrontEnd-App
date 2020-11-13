@@ -12,7 +12,9 @@ import {
   COUNTRY_CITY_AGERANGES_ONLINE,
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE,
-  ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS
+  ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+  REQUEST_PHOTO_READ,
+  REQUEST_PHOTO_READ_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -121,6 +123,21 @@ export const fetchAllCountriesSelectedOnlineSuccess = data => {
   );
   return {
     type: ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+    payload: data
+  };
+};
+
+export const requestPhotoRead = () => {
+  console.log("REQUEST_PHOTO_READ from action ");
+  return {
+    type: REQUEST_PHOTO_READ
+  };
+};
+
+export const requestPhotoReadSuccess = data => {
+  console.log("REQUEST_PHOTO_READ_SUCCESS from action ");
+  return {
+    type: REQUEST_PHOTO_READ_SUCCESS,
     payload: data
   };
 };

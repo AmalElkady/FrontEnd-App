@@ -6,7 +6,8 @@ import {
   AGERANGE_COUNTRIES_ONLINE,
   COUNTRY_CITIES_AGERANGE_ONLINE,
   COUNTRY_CITY_AGERANGES_ONLINE,
-  ALL_COUNTRIES_SELECTED_ONLINE
+  ALL_COUNTRIES_SELECTED_ONLINE,
+  REQUEST_PHOTO_READ
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -16,7 +17,8 @@ import {
   fetchCountryCitiesAgerangeOnlineSuccess,
   fetchCountryCityAgerangesOnlineSuccess,
   fetchAllCountriesSelectedOnlineSuccess,
-  showHomeMessage
+  showHomeMessage,
+  requestPhotoReadSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -63,6 +65,12 @@ const getAllCountriesSelectedOnline = async () =>
   await home
     .getAllCountriesSelectedOnline()
     .then(returnUsers => returnUsers)
+    .catch(error => error);
+
+const requestPhotoRead = async () =>
+  await home
+    .requestPhotoRead()
+    .then(signedRequest => signedRequest)
     .catch(error => error);
 
 // Age-Range
@@ -189,6 +197,20 @@ function* allCountriesSelectedOnlineRequest() {
   }
 }
 
+function* photoReadRequest() {
+  console.log("photoReadRequest from saga ");
+  try {
+    const fetchedPhotoReadsignedRequest = yield call(requestPhotoRead);
+    console.log(
+      "returned fetchedPhotoReadsignedRequest from saga",
+      fetchedPhotoReadsignedRequest
+    );
+    yield put(requestPhotoReadSuccess(fetchedPhotoReadsignedRequest));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Age-Range
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
@@ -229,6 +251,10 @@ export function* fetchAllCountriesSelectedOnline() {
   );
 }
 
+export function* fetchPhotoReadRequest() {
+  yield takeEvery(REQUEST_PHOTO_READ, photoReadRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(fetchAllCountriesOnline),
@@ -237,6 +263,7 @@ export default function* rootSaga() {
     fork(fetchAgerangeCountriesOnline),
     fork(fetchCountryCitiesAgerangeOnline),
     fork(fetchCountryCityAgerangesOnline),
-    fork(fetchAllCountriesSelectedOnline)
+    fork(fetchAllCountriesSelectedOnline),
+    fork(fetchPhotoReadRequest)
   ]);
 }

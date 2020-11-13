@@ -15,7 +15,9 @@ import Router from "next/router";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import { allCountriesSelectedOnline } from "../actions/Home";
+import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
+
+import { allCountriesSelectedOnline, requestPhotoRead } from "../actions/Home";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,12 +64,37 @@ export default function Cards() {
   const allCountriesSelectedOnlineUsers = useSelector(
     state => state.home.allCountriesSelectedOnlineUsers
   );
+
+  const photoReadSignedRequest = useSelector(
+    state => state.home.photoReadSignedRequest
+  );
   //const showMessage = useSelector(state => state.auth.showMessage);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(allCountriesSelectedOnline());
+    // //dispatch(requestPhotoRead());
   }, []);
+  useEffect(() => {
+    console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
+    if (allCountriesSelectedOnlineUsers.length != 0) {
+      console.log("88888888888888888");
+      dispatch(requestPhotoRead());
+      mapUserPhotoUrl(allCountriesSelectedOnlineUsers, photoReadSignedRequest);
+    }
+  }, [allCountriesSelectedOnlineUsers]);
+
+  useEffect(() => {
+    if (
+      photoReadSignedRequest != null &&
+      allCountriesSelectedOnlineUsers.length != 0
+    ) {
+      mapUserPhotoUrl(
+        allCountriesSelectedOnlineUsers,
+        photoReadSignedRequest.signedRequest
+      );
+    }
+  }, [photoReadSignedRequest]);
 
   const onSubmit = () => {
     showAuthLoader();
@@ -78,10 +105,15 @@ export default function Cards() {
 
   return (
     <>
-      {console.log("countries$$$$$$$ ", allCountriesSelectedOnlineUsers)}
+      {/* {console.log(
+        "countries$$$$$$$ ",
+        allCountriesSelectedOnlineUsers,
+        "signedRequest #### ",
+        photoReadSignedRequest?.signedRequest
+      )} */}
       <div className={classes.displayF}>
         {allCountriesSelectedOnlineUsers?.map((option, index) =>
-          index % 2 == 0 ? <UserCard user={JSON.parse(option)}></UserCard> : ""
+          index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
         )}
       </div>
     </>
