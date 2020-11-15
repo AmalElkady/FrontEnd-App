@@ -14,7 +14,9 @@ import {
   ALL_COUNTRIES_SELECTED_ONLINE,
   ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
   REQUEST_PHOTO_READ,
-  REQUEST_PHOTO_READ_SUCCESS
+  REQUEST_PHOTO_READ_SUCCESS,
+  ALL_COUNTRIES_OFFLINE,
+  ALL_COUNTRIES_OFFLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -33,7 +35,6 @@ export const countryAgerangesOnlineSuccess = data => {
 };
 
 export const countryCityAgerangesOnline = (country, city) => {
-  console.log("country and city selected from action ", country, city);
   return {
     type: COUNTRY_CITY_AGERANGES_ONLINE,
     payload: { country, city }
@@ -41,7 +42,6 @@ export const countryCityAgerangesOnline = (country, city) => {
 };
 
 export const fetchCountryCityAgerangesOnlineSuccess = data => {
-  console.log("returned ageranges of country and city from action ", data);
   return {
     type: COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
     payload: data
@@ -62,7 +62,6 @@ export const fetchCountriesOnlineSuccess = data => {
   };
 };
 export const agerangeCountriesOnline = agerange => {
-  console.log("ageRange selected for countries from action ", agerange);
   return {
     type: AGERANGE_COUNTRIES_ONLINE,
     payload: agerange
@@ -70,7 +69,6 @@ export const agerangeCountriesOnline = agerange => {
 };
 
 export const agerangeCountriesOnlineSuccess = data => {
-  console.log("countries returned from agerange action again", data);
   return {
     type: AGERANGE_COUNTRIES_ONLINE_SUCCESS,
     payload: data
@@ -79,7 +77,6 @@ export const agerangeCountriesOnlineSuccess = data => {
 
 /// Cities
 export const countryCitiesOnline = country => {
-  console.log("country selected from action ", country);
   return {
     type: COUNTRY_CITIES_ONLINE,
     payload: country
@@ -87,14 +84,12 @@ export const countryCitiesOnline = country => {
 };
 
 export const fetchCountryCitiesOnlineSuccess = data => {
-  console.log("returned cities from action ", data);
   return {
     type: COUNTRY_CITIES_ONLINE_SUCCESS,
     payload: data
   };
 };
 export const countryCitiesAgerangeOnline = (country, agerange) => {
-  console.log("country and agerange selected from action ", country, agerange);
   return {
     type: COUNTRY_CITIES_AGERANGE_ONLINE,
     payload: { country, agerange }
@@ -102,7 +97,6 @@ export const countryCitiesAgerangeOnline = (country, agerange) => {
 };
 
 export const fetchCountryCitiesAgerangeOnlineSuccess = data => {
-  console.log("returned cities of country and age from action ", data);
   return {
     type: COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS,
     payload: data
@@ -142,6 +136,22 @@ export const requestPhotoReadSuccess = data => {
   };
 };
 
+/// most recent
+
+export const allCountriesOffline = () => {
+  console.log("ALL_COUNTRIES_OFFLINE from action ");
+  return {
+    type: ALL_COUNTRIES_OFFLINE
+  };
+};
+
+export const allCountriesOfflineSuccess = data => {
+  console.log("ALL_COUNTRIES_OFFLINE_SUCCESS from action ");
+  return {
+    type: ALL_COUNTRIES_OFFLINE_SUCCESS,
+    payload: data
+  };
+};
 export const showHomeMessage = message => {
   return {
     type: SHOW_MESSAGE,

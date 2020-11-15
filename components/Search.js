@@ -7,11 +7,19 @@ import {
   countryAgerangesOnline,
   agerangeCountriesOnline,
   countryCitiesAgerangeOnline,
-  countryCityAgerangesOnline
+  countryCityAgerangesOnline,
+  allCountriesOffline
 } from "../actions/Home";
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
+import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -19,7 +27,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -41,7 +48,8 @@ import IntlMessages from "../util/IntlMessages";
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "70%",
-    margin: "2rem auto"
+    margin: "2rem auto",
+    textAlign: "center"
   },
   media: {
     height: 0,
@@ -96,12 +104,19 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
+  flexDirection: {
+    flexDirection: "row"
+  },
   margintop: {
     marginTop: "1.5rem"
+  },
+  margin: {
+    margin: "1rem"
   },
   padding: {
     padding: ".5rem"
   },
+
   width: {
     width: "10rem"
   }
@@ -124,6 +139,11 @@ export default function Search() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedIndexC, setSelectedIndexC] = useState(-1);
   const [selectedIndexCit, setSelectedIndexCit] = useState(-1);
+  const [optionValue, setOptionValue] = useState("active");
+
+  const handleChangeOptionValue = event => {
+    setOptionValue(event.target.value);
+  };
 
   //AgeRanges
   const CountryAgerangesOptionsOnline = useSelector(
@@ -149,6 +169,12 @@ export default function Search() {
 
   const CountryCitiesAgerangeOptionsOnline = useSelector(
     state => state.home.countryCitiesAgerangeOnline
+  );
+
+  // Offline
+  // countries
+  const CountriesOptionsOffline = useSelector(
+    state => state.home.allCountriesOffline
   );
 
   const dispatch = useDispatch();
@@ -197,50 +223,71 @@ export default function Search() {
     setAnchorElCit(null);
   };
 
-  useEffect(() => {
-    dispatch(allCountriesOnline());
-  }, []);
-  useEffect(() => {
-    if (selectedIndexC != -1 && selectedIndex == -1) {
-      // Get Cities based on Country only
-      dispatch(
-        countryCitiesOnline(
-          CountriesOptionsOnline.list_of_results[selectedIndexC]
-        )
-      );
+  // useEffect(() => {
+  //   dispatch(allCountriesOnline());
+  // }, []);
 
-      // Get Ageranges based on Country only
-      if (CountriesOptionsOnline.list_of_results != null) {
+  useEffect(() => {
+    // fill dropdowns based on optionValue
+    if (optionValue == "most recent") {
+      dispatch(allCountriesOffline());
+    } else {
+      dispatch(allCountriesOnline());
+    }
+  }, [optionValue]);
+
+  useEffect(() => {
+    if (optionValue == "active") {
+      if (selectedIndexC != -1 && selectedIndex == -1) {
+        // Get Cities based on Country only
         dispatch(
-          countryAgerangesOnline(
+          countryCitiesOnline(
             CountriesOptionsOnline.list_of_results[selectedIndexC]
           )
         );
+
+        // Get Ageranges based on Country only
+        if (CountriesOptionsOnline.list_of_results != null) {
+          dispatch(
+            countryAgerangesOnline(
+              CountriesOptionsOnline.list_of_results[selectedIndexC]
+            )
+          );
+        }
       }
-    }
-    // Get cities based on agerange and country
-    else if (
-      selectedIndex != -1 &&
-      selectedIndexC != -1 &&
-      selectedIndexCit == -1
-    ) {
-      if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
+      // Get cities based on agerange and country
+      else if (
+        selectedIndex != -1 &&
+        selectedIndexC != -1 &&
+        selectedIndexCit == -1
       ) {
-        dispatch(
-          countryCitiesAgerangeOnline(
-            allCountriesOnline.list_of_results[selectedIndexC],
-            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
-          )
-        );
-      } else {
-        dispatch(
-          countryCitiesAgerangeOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
-            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
-          )
-        );
+        if (
+          CountryAgerangesOptionsOnline.list_of_results &&
+          !AgerangeCountriesOptionsOnline.list_of_results
+        ) {
+          dispatch(
+            countryCitiesAgerangeOnline(
+              allCountriesOnline.list_of_results[selectedIndexC],
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+            )
+          );
+        } else {
+          dispatch(
+            countryCitiesAgerangeOnline(
+              AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+            )
+          );
+        }
+      }
+    } else if (optionValue == "most recent") {
+      if (selectedIndexC != -1) {
+        // Get Cities Offline based on Country only
+        // dispatch(
+        //   countryCitiesOnline(
+        //     CountriesOptionsOnline.list_of_results[selectedIndexC]
+        //   )
+        // );
       }
     }
   }, [selectedIndexC]);
@@ -299,7 +346,31 @@ export default function Search() {
 
   return (
     <>
+      {console.log("CountriesOptionsOffline ", CountriesOptionsOffline)}
       <Card className={classes.root}>
+        <FormControl component="fieldset" className={classes.margin}>
+          <FormLabel component="legend">Select Your option </FormLabel>
+          <RadioGroup
+            aria-label="option"
+            name="option"
+            value={optionValue}
+            onChange={handleChangeOptionValue}
+            className={classes.flexDirection}
+          >
+            <FormControlLabel
+              value="active"
+              control={<Radio />}
+              label="ACTIVE"
+            />
+            <FormControlLabel
+              value="most recent"
+              control={<Radio />}
+              label="MOST RECENT ACTIVE"
+            />
+          </RadioGroup>
+        </FormControl>
+
+        {/* /////////// */}
         <form
           className={classes.displayFlexSA}
           onKeyPress={event => {
@@ -308,138 +379,110 @@ export default function Search() {
           }}
         >
           {/* Age Range  */}
-          <div className={classes.menu}>
-            <List component="nav" aria-label="Age Range">
-              <ListItem
-                button
-                aria-haspopup="true"
-                aria-controls="lock-menu"
-                aria-label="Age Range"
-                onClick={handleClickListItem}
-              >
-                <ListItemText
-                  primary="Age Range"
-                  secondary={
-                    selectedIndexC == -1
-                      ? selectedIndex == -1
-                        ? ARRAY_OF_AGE_RANGE[selectedIndex + 1]
-                        : ARRAY_OF_AGE_RANGE[selectedIndex]
-                      : selectedIndexCit == -1
-                      ? CountryAgerangesOptionsOnline.list_of_results
+          {optionValue == "active" && (
+            <div className={classes.menu}>
+              <List component="nav" aria-label="Age Range">
+                <ListItem
+                  button
+                  aria-haspopup="true"
+                  aria-controls="lock-menu"
+                  aria-label="Age Range"
+                  onClick={handleClickListItem}
+                >
+                  <ListItemText
+                    primary="Age Range"
+                    secondary={
+                      selectedIndexC == -1
                         ? selectedIndex == -1
-                          ? CountryAgerangesOptionsOnline.list_of_results[
+                          ? ARRAY_OF_AGE_RANGE[selectedIndex + 1]
+                          : ARRAY_OF_AGE_RANGE[selectedIndex]
+                        : selectedIndexCit == -1
+                        ? CountryAgerangesOptionsOnline.list_of_results
+                          ? selectedIndex == -1
+                            ? CountryAgerangesOptionsOnline.list_of_results[
+                                selectedIndex + 1
+                              ]
+                            : CountryAgerangesOptionsOnline.list_of_results[
+                                selectedIndex
+                              ]
+                          : ARRAY_OF_AGE_RANGE[selectedIndex]
+                        : CountryCityAgerangesOptionsOnline.list_of_results
+                        ? selectedIndex == -1
+                          ? CountryCityAgerangesOptionsOnline.list_of_results[
                               selectedIndex + 1
                             ]
-                          : CountryAgerangesOptionsOnline.list_of_results[
+                          : CountryCityAgerangesOptionsOnline.list_of_results[
                               selectedIndex
                             ]
                         : ARRAY_OF_AGE_RANGE[selectedIndex]
-                      : CountryCityAgerangesOptionsOnline.list_of_results
-                      ? selectedIndex == -1
-                        ? CountryCityAgerangesOptionsOnline.list_of_results[
-                            selectedIndex + 1
-                          ]
-                        : CountryCityAgerangesOptionsOnline.list_of_results[
-                            selectedIndex
-                          ]
-                      : ARRAY_OF_AGE_RANGE[selectedIndex]
-                  }
-                />
-              </ListItem>
-            </List>
-            <Menu
-              id="lock-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              {selectedIndexC == -1 &&
-                ARRAY_OF_AGE_RANGE.map((option, index) => (
-                  <MenuItem
-                    className={classes.displayFlexSB}
-                    key={option}
-                    selected={index === selectedIndex}
-                    onClick={event => handleMenuItemClick(event, index)}
-                  >
-                    <Typography variant="button" gutterBottom>
-                      {option}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              {selectedIndexC != -1 && selectedIndexCit == -1 && (
-                <div>
-                  {" "}
-                  {CountryAgerangesOptionsOnline.list_of_results ? (
-                    <div>
-                      <Typography
-                        variant="h6"
-                        className={classes.padding}
-                        gutterBottom
-                      >
-                        ONLINE
+                    }
+                  />
+                </ListItem>
+              </List>
+              <Menu
+                id="lock-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {selectedIndexC == -1 &&
+                  ARRAY_OF_AGE_RANGE.map((option, index) => (
+                    <MenuItem
+                      className={classes.displayFlexSB}
+                      key={option}
+                      selected={index === selectedIndex}
+                      onClick={event => handleMenuItemClick(event, index)}
+                    >
+                      <Typography variant="button" gutterBottom>
+                        {option}
                       </Typography>
-                      {CountryAgerangesOptionsOnline.list_of_results?.map(
-                        (option, index) =>
-                          index % 2 == 0 && (
-                            <MenuItem
-                              className={`${classes.displayFlexSB} ${classes.width}`}
-                              key={option}
-                              selected={index === selectedIndex}
-                              onClick={event =>
-                                handleMenuItemClick(event, index)
-                              }
-                            >
-                              <Typography variant="button" gutterBottom>
-                                {option}
-                              </Typography>
-                              <Typography
-                                variant="button"
-                                color="primary"
-                                gutterBottom
-                              >
-                                {
-                                  CountryAgerangesOptionsOnline.list_of_results[
-                                    index + 1
-                                  ]
-                                }
-                              </Typography>
-                            </MenuItem>
-                          )
-                      )}
-                    </div>
-                  ) : (
-                    ARRAY_OF_AGE_RANGE.map((option, index) => (
-                      <MenuItem
-                        className={classes.displayFlexSB}
-                        key={option}
-                        selected={index === selectedIndex}
-                        onClick={event => handleMenuItemClick(event, index)}
-                      >
-                        <Typography variant="button" gutterBottom>
-                          {option}
+                    </MenuItem>
+                  ))}
+                {selectedIndexC != -1 && selectedIndexCit == -1 && (
+                  <div>
+                    {" "}
+                    {CountryAgerangesOptionsOnline.list_of_results ? (
+                      <div>
+                        <Typography
+                          variant="h6"
+                          className={classes.padding}
+                          gutterBottom
+                        >
+                          ONLINE
                         </Typography>
-                      </MenuItem>
-                    ))
-                  )}
-                </div>
-              )}
-
-              {selectedIndexC != -1 && selectedIndexCit != -1 && (
-                <div>
-                  {" "}
-                  <Typography
-                    variant="h6"
-                    className={classes.padding}
-                    gutterBottom
-                  >
-                    ONLINE
-                  </Typography>
-                  {CountryCityAgerangesOptionsOnline.list_of_results?.map(
-                    (option, index) =>
-                      index % 2 == 0 && (
+                        {CountryAgerangesOptionsOnline.list_of_results?.map(
+                          (option, index) =>
+                            index % 2 == 0 && (
+                              <MenuItem
+                                className={`${classes.displayFlexSB} ${classes.width}`}
+                                key={option}
+                                selected={index === selectedIndex}
+                                onClick={event =>
+                                  handleMenuItemClick(event, index)
+                                }
+                              >
+                                <Typography variant="button" gutterBottom>
+                                  {option}
+                                </Typography>
+                                <Typography
+                                  variant="button"
+                                  color="primary"
+                                  gutterBottom
+                                >
+                                  {
+                                    CountryAgerangesOptionsOnline
+                                      .list_of_results[index + 1]
+                                  }
+                                </Typography>
+                              </MenuItem>
+                            )
+                        )}
+                      </div>
+                    ) : (
+                      ARRAY_OF_AGE_RANGE.map((option, index) => (
                         <MenuItem
-                          className={`${classes.displayFlexSB} ${classes.width}`}
+                          className={classes.displayFlexSB}
                           key={option}
                           selected={index === selectedIndex}
                           onClick={event => handleMenuItemClick(event, index)}
@@ -447,27 +490,54 @@ export default function Search() {
                           <Typography variant="button" gutterBottom>
                             {option}
                           </Typography>
-                          <Typography
-                            variant="button"
-                            color="primary"
-                            gutterBottom
-                          >
-                            {
-                              CountryCityAgerangesOptionsOnline.list_of_results[
-                                index + 1
-                              ]
-                            }
-                          </Typography>
                         </MenuItem>
-                      )
-                  )}
-                </div>
-              )}
-            </Menu>
-          </div>
+                      ))
+                    )}
+                  </div>
+                )}
 
-          {/* contries list */}
-          {CountriesOptionsOnline.list_of_results && (
+                {selectedIndexC != -1 && selectedIndexCit != -1 && (
+                  <div>
+                    {" "}
+                    <Typography
+                      variant="h6"
+                      className={classes.padding}
+                      gutterBottom
+                    >
+                      ONLINE
+                    </Typography>
+                    {CountryCityAgerangesOptionsOnline.list_of_results?.map(
+                      (option, index) =>
+                        index % 2 == 0 && (
+                          <MenuItem
+                            className={`${classes.displayFlexSB} ${classes.width}`}
+                            key={option}
+                            selected={index === selectedIndex}
+                            onClick={event => handleMenuItemClick(event, index)}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {option}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {
+                                CountryCityAgerangesOptionsOnline
+                                  .list_of_results[index + 1]
+                              }
+                            </Typography>
+                          </MenuItem>
+                        )
+                    )}
+                  </div>
+                )}
+              </Menu>
+            </div>
+          )}
+          {/* contries list Online*/}
+          {optionValue == "active" && CountriesOptionsOnline.list_of_results && (
             <div className={classes.menu}>
               <List component="nav" aria-label="Countries">
                 <ListItem
@@ -621,7 +691,80 @@ export default function Search() {
             </div>
           )}
 
-          {/* Cities list */}
+          {/* Contries list Offline  */}
+          {optionValue == "most recent" && CountriesOptionsOffline && (
+            <div className={classes.menu}>
+              <List component="nav" aria-label="Countries">
+                <ListItem
+                  button
+                  aria-haspopup="true"
+                  aria-controls="lock-menu2"
+                  aria-label="Countries"
+                  onClick={handleClickListItemC}
+                >
+                  <ListItemText
+                    primary="Countries"
+                    secondary={
+                      CountriesOptionsOffline.list_of_results
+                        ? selectedIndexC == -1
+                          ? CountriesOptionsOffline.list_of_results[
+                              selectedIndexC + 1
+                            ]
+                          : CountriesOptionsOffline.list_of_results[
+                              selectedIndexC
+                            ]
+                        : ""
+                    }
+                  />
+                </ListItem>
+              </List>
+              <Menu
+                id="lock-menu2"
+                anchorEl={anchorElC}
+                keepMounted
+                open={Boolean(anchorElC)}
+                onClose={handleCloseC}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "30ch"
+                  }
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  className={classes.padding}
+                  gutterBottom
+                >
+                  MOST RECENT
+                </Typography>
+                {CountriesOptionsOffline.list_of_results?.map(
+                  (option, index) =>
+                    index % 2 === 0 && (
+                      <MenuItem
+                        key={option}
+                        selected={index === selectedIndexC}
+                        onClick={event => handleMenuItemClickC(event, index)}
+                        className={classes.displayFlexSB}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          {option}
+                        </Typography>
+                        <Typography
+                          variant="button"
+                          color="primary"
+                          gutterBottom
+                        >
+                          {CountriesOptionsOffline.list_of_results[index + 1]}
+                        </Typography>
+                      </MenuItem>
+                    )
+                )}
+              </Menu>
+            </div>
+          )}
+
+          {/* Cities list Online */}
           {selectedIndexC != -1 && (
             <div className={classes.menu}>
               <List component="nav" aria-label="Countries">
@@ -809,6 +952,8 @@ export default function Search() {
               </Menu>
             </div>
           )}
+
+          {/* Cities list Offline */}
 
           <div className={classes.margintop}>
             <Button

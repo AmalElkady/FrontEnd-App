@@ -161,7 +161,8 @@ export const UPDATE_SEARCH = "update_search";
 export const SHOW_TIMER = "show_timer";
 export const HIDE_TIMER = "hide_timer";
 
-//SEARCH
+////// SEARCH
+/// ONLINE
 // Age Range
 export const COUNTRY_AGERANGES_ONLONE = "country_ageranges_online";
 export const COUNTRY_AGERANGES_ONLONE_SUCCESS =
@@ -193,3 +194,8 @@ export const ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS =
 
 export const REQUEST_PHOTO_READ = "request_photo_read";
 export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
+
+/// MOST RECENT ACTIVE
+
+export const ALL_COUNTRIES_OFFLINE = "all_countries_offline";
+export const ALL_COUNTRIES_OFFLINE_SUCCESS = "all_countries_offline_success";

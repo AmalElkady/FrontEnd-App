@@ -7,7 +7,8 @@ import {
   COUNTRY_CITIES_AGERANGE_ONLINE,
   COUNTRY_CITY_AGERANGES_ONLINE,
   ALL_COUNTRIES_SELECTED_ONLINE,
-  REQUEST_PHOTO_READ
+  REQUEST_PHOTO_READ,
+  ALL_COUNTRIES_OFFLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -18,7 +19,8 @@ import {
   fetchCountryCityAgerangesOnlineSuccess,
   fetchAllCountriesSelectedOnlineSuccess,
   showHomeMessage,
-  requestPhotoReadSuccess
+  requestPhotoReadSuccess,
+  allCountriesOfflineSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -71,6 +73,13 @@ const requestPhotoRead = async () =>
   await home
     .requestPhotoRead()
     .then(signedRequest => signedRequest)
+    .catch(error => error);
+
+/// Offline
+const getOfflineCountries = async () =>
+  await home
+    .getAllCountriesOffline()
+    .then(returnCountries => returnCountries)
     .catch(error => error);
 
 // Age-Range
@@ -211,6 +220,17 @@ function* photoReadRequest() {
   }
 }
 
+//Offline
+function* fetchAllCountriesOfflineRequest() {
+  console.log("offline from saga");
+  try {
+    const fetchedCountriesOffline = yield call(getOfflineCountries);
+    yield put(allCountriesOfflineSuccess(fetchedCountriesOffline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Age-Range
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
@@ -255,6 +275,11 @@ export function* fetchPhotoReadRequest() {
   yield takeEvery(REQUEST_PHOTO_READ, photoReadRequest);
 }
 
+//Offline
+export function* fetchAllCountriesOffline() {
+  yield takeEvery(ALL_COUNTRIES_OFFLINE, fetchAllCountriesOfflineRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(fetchAllCountriesOnline),
@@ -264,6 +289,7 @@ export default function* rootSaga() {
     fork(fetchCountryCitiesAgerangeOnline),
     fork(fetchCountryCityAgerangesOnline),
     fork(fetchAllCountriesSelectedOnline),
-    fork(fetchPhotoReadRequest)
+    fork(fetchPhotoReadRequest),
+    fork(fetchAllCountriesOffline)
   ]);
 }

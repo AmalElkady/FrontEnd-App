@@ -14,8 +14,7 @@ export default Page(() => (
       <br />
       <Search />
       <br />
-      {/* <UserCard /> */}
-      <Cards />
+      {/* <Cards /> */}
     </div>
   </>
 ));
