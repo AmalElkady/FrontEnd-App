@@ -16,7 +16,9 @@ import {
   REQUEST_PHOTO_READ,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE,
-  ALL_COUNTRIES_OFFLINE_SUCCESS
+  ALL_COUNTRIES_OFFLINE_SUCCESS,
+  COUNTRY_CITIES_OFFLINE,
+  COUNTRY_CITIES_OFFLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -152,6 +154,23 @@ export const allCountriesOfflineSuccess = data => {
     payload: data
   };
 };
+
+export const countryCitiesOffline = country => {
+  console.log("COUNTRY_CITIES_OFFLINE from action ");
+  return {
+    type: COUNTRY_CITIES_OFFLINE,
+    payload: country
+  };
+};
+
+export const fetchCountryCitiesOfflineSuccess = data => {
+  console.log("COUNTRY_CITIES_OFFLINE_SUCCESS from action ");
+  return {
+    type: COUNTRY_CITIES_OFFLINE_SUCCESS,
+    payload: data
+  };
+};
+
 export const showHomeMessage = message => {
   return {
     type: SHOW_MESSAGE,

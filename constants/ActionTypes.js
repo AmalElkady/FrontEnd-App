@@ -199,3 +199,6 @@ export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
 
 export const ALL_COUNTRIES_OFFLINE = "all_countries_offline";
 export const ALL_COUNTRIES_OFFLINE_SUCCESS = "all_countries_offline_success";
+
+export const COUNTRY_CITIES_OFFLINE = "country_cities_offline";
+export const COUNTRY_CITIES_OFFLINE_SUCCESS = "country_cities_offline_success";

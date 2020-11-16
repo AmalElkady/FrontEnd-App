@@ -8,7 +8,8 @@ import {
   COUNTRY_CITY_AGERANGES_ONLINE,
   ALL_COUNTRIES_SELECTED_ONLINE,
   REQUEST_PHOTO_READ,
-  ALL_COUNTRIES_OFFLINE
+  ALL_COUNTRIES_OFFLINE,
+  COUNTRY_CITIES_OFFLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -20,7 +21,8 @@ import {
   fetchAllCountriesSelectedOnlineSuccess,
   showHomeMessage,
   requestPhotoReadSuccess,
-  allCountriesOfflineSuccess
+  allCountriesOfflineSuccess,
+  fetchCountryCitiesOfflineSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -80,6 +82,12 @@ const getOfflineCountries = async () =>
   await home
     .getAllCountriesOffline()
     .then(returnCountries => returnCountries)
+    .catch(error => error);
+
+const getCountryCitiesOffline = async country =>
+  await home
+    .getCountryCitiesOffline(country)
+    .then(returnCities => returnCities)
     .catch(error => error);
 
 // Age-Range
@@ -231,6 +239,23 @@ function* fetchAllCountriesOfflineRequest() {
   }
 }
 
+function* countryCitiesOfflineRequest({ payload }) {
+  console.log("country Offline from saga ", payload);
+  try {
+    const fetchedCountryCitiesOffline = yield call(
+      getCountryCitiesOffline,
+      payload
+    );
+    console.log(
+      "returned cities offline from saga ",
+      fetchedCountryCitiesOffline
+    );
+    yield put(fetchCountryCitiesOfflineSuccess(fetchedCountryCitiesOffline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Age-Range
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
@@ -279,6 +304,9 @@ export function* fetchPhotoReadRequest() {
 export function* fetchAllCountriesOffline() {
   yield takeEvery(ALL_COUNTRIES_OFFLINE, fetchAllCountriesOfflineRequest);
 }
+export function* fetchCountryCitiesOffline() {
+  yield takeEvery(COUNTRY_CITIES_OFFLINE, countryCitiesOfflineRequest);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -290,6 +318,7 @@ export default function* rootSaga() {
     fork(fetchCountryCityAgerangesOnline),
     fork(fetchAllCountriesSelectedOnline),
     fork(fetchPhotoReadRequest),
-    fork(fetchAllCountriesOffline)
+    fork(fetchAllCountriesOffline),
+    fork(fetchCountryCitiesOffline)
   ]);
 }

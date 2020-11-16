@@ -8,7 +8,8 @@ import {
   agerangeCountriesOnline,
   countryCitiesAgerangeOnline,
   countryCityAgerangesOnline,
-  allCountriesOffline
+  allCountriesOffline,
+  countryCitiesOffline
 } from "../actions/Home";
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
@@ -172,9 +173,13 @@ export default function Search() {
   );
 
   // Offline
-  // countries
+  // Countries
   const CountriesOptionsOffline = useSelector(
     state => state.home.allCountriesOffline
+  );
+  // Cities
+  const CountryCitiesOptionsOffline = useSelector(
+    state => state.home.countryCitiesOffline
   );
 
   const dispatch = useDispatch();
@@ -209,6 +214,8 @@ export default function Search() {
     setAnchorElCit(null);
   };
 
+  ////
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -229,6 +236,9 @@ export default function Search() {
 
   useEffect(() => {
     // fill dropdowns based on optionValue
+    setSelectedIndex(-1);
+    setSelectedIndexC(-1);
+    setSelectedIndexCit(-1);
     if (optionValue == "most recent") {
       dispatch(allCountriesOffline());
     } else {
@@ -283,64 +293,72 @@ export default function Search() {
     } else if (optionValue == "most recent") {
       if (selectedIndexC != -1) {
         // Get Cities Offline based on Country only
-        // dispatch(
-        //   countryCitiesOnline(
-        //     CountriesOptionsOnline.list_of_results[selectedIndexC]
-        //   )
-        // );
+        dispatch(
+          countryCitiesOffline(
+            CountriesOptionsOffline.list_of_results[selectedIndexC]
+          )
+        );
       }
     }
   }, [selectedIndexC]);
 
   useEffect(() => {
-    if (selectedIndexC == -1 && selectedIndex != -1) {
-      // Get countries based on agerange
-      dispatch(
-        agerangeCountriesOnline(
-          ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
-        )
-      );
-    }
-
-    // Get cities based on agerange and country
-    else if (selectedIndexC != -1) {
-      if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
-      ) {
-        dispatch(
-          countryCitiesAgerangeOnline(
-            CountriesOptionsOnline.list_of_results[selectedIndexC],
-            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
-          )
-        );
-      } else {
-        //Get countries based on agerange
+    if (optionValue == "active") {
+      if (selectedIndexC == -1 && selectedIndex != -1) {
+        // Get countries based on agerange
         dispatch(
           agerangeCountriesOnline(
             ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
           )
         );
-        dispatch(
-          countryCitiesAgerangeOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
-            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
-          )
-        );
+      }
+      // Get cities based on agerange and country
+      else if (selectedIndexC != -1) {
+        if (
+          CountryAgerangesOptionsOnline.list_of_results &&
+          !AgerangeCountriesOptionsOnline.list_of_results
+        ) {
+          dispatch(
+            countryCitiesAgerangeOnline(
+              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+            )
+          );
+        } else {
+          //Get countries based on agerange
+          dispatch(
+            agerangeCountriesOnline(
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+            )
+          );
+          dispatch(
+            countryCitiesAgerangeOnline(
+              AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+            )
+          );
+        }
       }
     }
   }, [selectedIndex]);
 
   useEffect(() => {
-    // Get AgeRanges based on Country and city
-    if (selectedIndexC != -1 && selectedIndexCit != -1 && selectedIndex == -1) {
-      console.log("country city");
-      dispatch(
-        countryCityAgerangesOnline(
-          CountriesOptionsOnline.list_of_results[selectedIndexC],
-          CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
-        )
-      );
+    if (optionValue == "active") {
+      // Get AgeRanges based on Country and city
+      if (
+        selectedIndexC != -1 &&
+        selectedIndexCit != -1 &&
+        selectedIndex == -1
+      ) {
+        console.log("country city");
+        dispatch(
+          countryCityAgerangesOnline(
+            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
+          )
+        );
+      }
+    } else if (optionValue == "most recent") {
     }
   }, [selectedIndexCit]);
 
@@ -674,19 +692,6 @@ export default function Search() {
                         </MenuItem>
                       )
                   )}
-
-                {/* <Typography variant="h6" gutterBottom>
-                  MOST RECENT
-                </Typography>
-                {CountriesOptionsOfline.map((option, index) => (
-                  <MenuItem
-                    key={option}
-                    selected={index === selectedIndexC}
-                    onClick={event => handleMenuItemClickC(event, index)}
-                  >
-                    {option}
-                  </MenuItem>
-                ))} */}
               </Menu>
             </div>
           )}
@@ -707,10 +712,11 @@ export default function Search() {
                     secondary={
                       CountriesOptionsOffline.list_of_results
                         ? selectedIndexC == -1
-                          ? CountriesOptionsOffline.list_of_results[
-                              selectedIndexC + 1
-                            ]
-                          : CountriesOptionsOffline.list_of_results[
+                          ? "Select Country"
+                          : // ? CountriesOptionsOffline.list_of_results[
+                            //     selectedIndexCOf + 1
+                            //   ]
+                            CountriesOptionsOffline.list_of_results[
                               selectedIndexC
                             ]
                         : ""
@@ -765,14 +771,14 @@ export default function Search() {
           )}
 
           {/* Cities list Online */}
-          {selectedIndexC != -1 && (
+          {optionValue == "active" && selectedIndexC != -1 && (
             <div className={classes.menu}>
-              <List component="nav" aria-label="Countries">
+              <List component="nav" aria-label="cities">
                 <ListItem
                   button
                   aria-haspopup="true"
                   aria-controls="lock-menu2"
-                  aria-label="Countries"
+                  aria-label="cities"
                   onClick={handleClickListItemCit}
                 >
                   <ListItemText
@@ -954,7 +960,110 @@ export default function Search() {
           )}
 
           {/* Cities list Offline */}
-
+          {optionValue == "most recent" &&
+            CountryCitiesOptionsOffline &&
+            selectedIndexC != -1 && (
+              <div className={classes.menu}>
+                <List component="nav" aria-label="Cities">
+                  <ListItem
+                    button
+                    aria-haspopup="true"
+                    aria-controls="lock-menu2"
+                    aria-label="cities"
+                    onClick={handleClickListItemCit}
+                  >
+                    <ListItemText
+                      primary="Cities"
+                      secondary={
+                        CountryCitiesOptionsOffline
+                          ? selectedIndexCit == -1
+                            ? // ? COUNTRY_CITY_MAP[
+                              //     CountriesOptionsOffline.list_of_results[
+                              //       selectedIndexC
+                              //     ].toLowerCase()
+                              //   ][
+                              //     CountryCitiesOptionsOffline.list_of_results[
+                              //       selectedIndexCit + 1
+                              //     ] - 1
+                              //   ]
+                              "Select City"
+                            : COUNTRY_CITY_MAP[
+                                CountriesOptionsOffline.list_of_results[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][
+                                CountryCitiesOptionsOffline.list_of_results[
+                                  selectedIndexCit
+                                ] - 1
+                              ]
+                          : ""
+                      }
+                    />
+                  </ListItem>
+                </List>
+                <Menu
+                  id="lock-menu2"
+                  anchorEl={anchorElCit}
+                  keepMounted
+                  open={Boolean(anchorElCit)}
+                  onClose={handleCloseCit}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT * 4.5,
+                      width: "30ch"
+                    }
+                  }}
+                >
+                  {selectedIndexC != -1 && (
+                    <div>
+                      <Typography
+                        variant="h6"
+                        className={classes.padding}
+                        gutterBottom
+                      >
+                        Most Recent
+                      </Typography>
+                      {CountryCitiesOptionsOffline.list_of_results?.map(
+                        (option, index) =>
+                          index % 2 === 0 && (
+                            <MenuItem
+                              key={option}
+                              value={option}
+                              //label={value}
+                              selected={index === selectedIndexCit}
+                              onClick={event =>
+                                handleMenuItemClickCit(event, index)
+                              }
+                              className={classes.displayFlexSB}
+                            >
+                              <Typography variant="button" gutterBottom>
+                                {
+                                  COUNTRY_CITY_MAP[
+                                    CountriesOptionsOffline.list_of_results[
+                                      selectedIndexC
+                                    ].toLowerCase()
+                                  ][option - 1]
+                                }
+                              </Typography>
+                              <Typography
+                                variant="button"
+                                color="primary"
+                                gutterBottom
+                              >
+                                {
+                                  CountryCitiesOptionsOffline.list_of_results[
+                                    index + 1
+                                  ]
+                                }
+                              </Typography>
+                            </MenuItem>
+                          )
+                      )}
+                    </div>
+                  )}
+                </Menu>
+              </div>
+            )}
           <div className={classes.margintop}>
             <Button
               onClick={() => {

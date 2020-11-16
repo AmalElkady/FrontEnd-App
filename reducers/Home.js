@@ -7,7 +7,8 @@ import {
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
   REQUEST_PHOTO_READ_SUCCESS,
-  ALL_COUNTRIES_OFFLINE_SUCCESS
+  ALL_COUNTRIES_OFFLINE_SUCCESS,
+  COUNTRY_CITIES_OFFLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialHomeState = {
@@ -19,6 +20,7 @@ const initialHomeState = {
   countryCityAgerangesOnline: [],
   allCountriesSelectedOnlineUsers: [],
   allCountriesOffline: null,
+  countryCitiesOffline: null,
   photoReadSignedRequest: null
   // countrySelected: false
 };
@@ -71,6 +73,12 @@ const home = (state = initialHomeState, action) => {
       return {
         ...state,
         allCountriesOffline: action.payload
+      };
+    case COUNTRY_CITIES_OFFLINE_SUCCESS:
+      console.log("offline cities from reducer :", action.payload);
+      return {
+        ...state,
+        countryCitiesOffline: action.payload
       };
     default:
       return state;
