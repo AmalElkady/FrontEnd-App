@@ -9,8 +9,11 @@ import {
   countryCitiesAgerangeOnline,
   countryCityAgerangesOnline,
   allCountriesOffline,
-  countryCitiesOffline
+  countryCitiesOffline,
+  countryRecentActiveUsers
 } from "../actions/Home";
+import { showAuthLoader } from "../actions/Auth";
+
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -122,13 +125,6 @@ const useStyles = makeStyles(theme => ({
     width: "10rem"
   }
 }));
-
-const CountriesOptionsOfline = [
-  "canada  30",
-  "Italy 20",
-  "Tunisia 10",
-  "Oman 10"
-];
 const ITEM_HEIGHT = 48;
 
 export default function Search() {
@@ -362,9 +358,24 @@ export default function Search() {
     }
   }, [selectedIndexCit]);
 
+  const onSearch = () => {
+    if (optionValue == "active") {
+    } else if (optionValue == "most recent") {
+      if (selectedIndexC != -1 && selectedIndexCit == -1) {
+        // Get Users based on country only
+        console.log("Get Users based on country only");
+        dispatch(
+          countryRecentActiveUsers(
+            CountriesOptionsOffline.list_of_results[selectedIndexC]
+          )
+        );
+      } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
+      }
+    }
+  };
   return (
     <>
-      {console.log("CountriesOptionsOffline ", CountriesOptionsOffline)}
+      {/* {console.log("CountriesOptionsOffline ", CountriesOptionsOffline)} */}
       <Card className={classes.root}>
         <FormControl component="fieldset" className={classes.margin}>
           <FormLabel component="legend">Select Your option </FormLabel>
@@ -1067,7 +1078,8 @@ export default function Search() {
           <div className={classes.margintop}>
             <Button
               onClick={() => {
-                showAuthLoader();
+                dispatch(showAuthLoader());
+                onSearch();
               }}
               variant="contained"
               color="primary"

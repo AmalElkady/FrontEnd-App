@@ -202,3 +202,7 @@ export const ALL_COUNTRIES_OFFLINE_SUCCESS = "all_countries_offline_success";
 
 export const COUNTRY_CITIES_OFFLINE = "country_cities_offline";
 export const COUNTRY_CITIES_OFFLINE_SUCCESS = "country_cities_offline_success";
+
+export const COUNTRY_RECENT_ACTIVE_USERS = "country_recent_active_users";
+export const COUNTRY_RECENT_ACTIVE_USERS_SUCCESS =
+  "country_recent_active_users_success";

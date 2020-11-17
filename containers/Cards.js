@@ -61,9 +61,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Cards() {
+  // Online
   const allCountriesSelectedOnlineUsers = useSelector(
     state => state.home.allCountriesSelectedOnlineUsers
   );
+
+  // offline
+  const countryRecentActiveUsers = useSelector(
+    state => state.home.countryRecentActiveUsers
+  );
+
+  ////
+  const searchState = useSelector(state => state.home.searchState);
 
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
@@ -75,46 +84,81 @@ export default function Cards() {
     dispatch(allCountriesSelectedOnline());
     // //dispatch(requestPhotoRead());
   }, []);
-  useEffect(() => {
-    console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
-    if (allCountriesSelectedOnlineUsers.length != 0) {
-      console.log("88888888888888888");
-      dispatch(requestPhotoRead());
-      mapUserPhotoUrl(allCountriesSelectedOnlineUsers, photoReadSignedRequest);
-    }
-  }, [allCountriesSelectedOnlineUsers]);
+  // useEffect(() => {
+  //   // console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
+  //   // if (allCountriesSelectedOnlineUsers.length != 0) {
+  //   //   console.log("88888888888888888");
+  //   //   dispatch(requestPhotoRead());
+  //   //   mapUserPhotoUrl(allCountriesSelectedOnlineUsers, photoReadSignedRequest);
+  //   // }
+  // }, [allCountriesSelectedOnlineUsers]);
 
   useEffect(() => {
-    if (
-      photoReadSignedRequest != null &&
-      allCountriesSelectedOnlineUsers.length != 0
-    ) {
-      mapUserPhotoUrl(
-        allCountriesSelectedOnlineUsers,
-        photoReadSignedRequest.signedRequest
-      );
+    if (countryRecentActiveUsers != null) {
+      console.log("countryRecentActiveUsers change", countryRecentActiveUsers);
+      dispatch(requestPhotoRead());
+    }
+  }, [countryRecentActiveUsers]);
+
+  useEffect(() => {
+    console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
+    if (photoReadSignedRequest != null) {
+      if (searchState == "most recent" && countryRecentActiveUsers != null) {
+        console.log(
+          "countryRecentActiveUsers :on map ",
+          countryRecentActiveUsers
+        );
+        const newUsers = mapUserPhotoUrl(
+          countryRecentActiveUsers.users,
+          photoReadSignedRequest.signedRequest
+        );
+        console.log("newUserssss :", newUsers);
+      } else if (
+        searchState == "active" &&
+        allCountriesSelectedOnlineUsers != null
+      ) {
+        console.log(
+          "allCountriesSelectedOnlineUsers :on map ",
+          countryRecentActiveUsers
+        );
+        mapUserPhotoUrl(
+          allCountriesSelectedOnlineUsers,
+          photoReadSignedRequest.signedRequest
+        );
+      }
     }
   }, [photoReadSignedRequest]);
-
-  const onSubmit = () => {
-    showAuthLoader();
-    dispatch(userAddSubscribe(selectedValue));
-  };
 
   const classes = useStyles();
 
   return (
     <>
       {/* {console.log(
-        "countries$$$$$$$ ",
-        allCountriesSelectedOnlineUsers,
-        "signedRequest #### ",
-        photoReadSignedRequest?.signedRequest
+        "countryRecentActiveUsers from render : ",
+        countryRecentActiveUsers,
+        "searchState",
+        searchState
+        // "signedRequest #### ",
+        // photoReadSignedRequest?.signedRequest
       )} */}
       <div className={classes.displayF}>
-        {allCountriesSelectedOnlineUsers?.map((option, index) =>
-          index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
-        )}
+        {/* {searchState == "active" &&
+          allCountriesSelectedOnlineUsers?.map((option, index) =>
+            index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
+          )} */}
+        {searchState == "most recent" &&
+          countryRecentActiveUsers.users?.map((option, index) =>
+            index % 2 == 0 ? (
+              <UserCard
+                key={option.i}
+                user={option}
+                country={countryRecentActiveUsers.country}
+                timeScore={countryRecentActiveUsers.users[index + 1]}
+              ></UserCard>
+            ) : (
+              ""
+            )
+          )}
       </div>
     </>
   );

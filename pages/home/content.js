@@ -14,7 +14,7 @@ export default Page(() => (
       <br />
       <Search />
       <br />
-      {/* <Cards /> */}
+      <Cards />
     </div>
   </>
 ));

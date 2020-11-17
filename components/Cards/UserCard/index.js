@@ -7,6 +7,7 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
+import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../../../util/data";
 import { red } from "@material-ui/core/colors";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -119,7 +120,7 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, country, timeScore }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
 
@@ -147,10 +148,18 @@ export default function UserCard({ user }) {
             {user.n}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {`${moment().diff(user.b, "years")} years old`}
+            {user.b
+              ? `${moment().diff(user.b, "years")} Years Old`
+              : `${moment().diff(
+                  timeScore.substring(0, 8),
+                  "years"
+                )} Years Old`}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Address
+            {country}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {user.ci ? COUNTRY_CITY_MAP[country.toLowerCase()][user.ci] : ""}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
