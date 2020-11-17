@@ -10,7 +10,8 @@ import {
   REQUEST_PHOTO_READ,
   ALL_COUNTRIES_OFFLINE,
   COUNTRY_CITIES_OFFLINE,
-  COUNTRY_RECENT_ACTIVE_USERS
+  COUNTRY_RECENT_ACTIVE_USERS,
+  COUNTRY_CITY_RECENT_ACTIVE_USERS
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -24,7 +25,8 @@ import {
   requestPhotoReadSuccess,
   allCountriesOfflineSuccess,
   fetchCountryCitiesOfflineSuccess,
-  fetchCountryRecentActiveUsersSuccess
+  fetchCountryRecentActiveUsersSuccess,
+  fetchCountryCityRecentActiveUsersSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -95,6 +97,12 @@ const getCountryCitiesOffline = async country =>
 const getCountryRecentActiveUsers = async country =>
   await home
     .getCountryRecentActiveUsers(country)
+    .then(returnUsers => returnUsers)
+    .catch(error => error);
+
+const getCountryCityRecentActiveUsers = async (country, city) =>
+  await home
+    .getCountryCityRecentActiveUsers(country, city)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -283,6 +291,29 @@ function* countryRecentActiveUsersRequest({ payload }) {
   }
 }
 
+function* countryCityRecentActiveUsersRequest({ payload }) {
+  const { country, city } = payload;
+  console.log("country city recent user from saga ", payload);
+  try {
+    const fetchedCountryCityRecentActiveUsers = yield call(
+      getCountryCityRecentActiveUsers,
+      country,
+      city
+    );
+    console.log(
+      "return recent user from saga ",
+      fetchedCountryCityRecentActiveUsers
+    );
+    yield put(
+      fetchCountryCityRecentActiveUsersSuccess(
+        fetchedCountryCityRecentActiveUsers
+      )
+    );
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 // Age-Range
 export function* fetchCountryAgerangesOnline() {
   yield takeEvery(COUNTRY_AGERANGES_ONLONE, countryAgerangesOnlineRequest);
@@ -339,6 +370,13 @@ export function* fetchCountryRecentActiveUsers() {
   yield takeEvery(COUNTRY_RECENT_ACTIVE_USERS, countryRecentActiveUsersRequest);
 }
 
+export function* fetchCountryCityRecentActiveUsers() {
+  yield takeEvery(
+    COUNTRY_CITY_RECENT_ACTIVE_USERS,
+    countryCityRecentActiveUsersRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(fetchAllCountriesOnline),
@@ -351,6 +389,7 @@ export default function* rootSaga() {
     fork(fetchPhotoReadRequest),
     fork(fetchAllCountriesOffline),
     fork(fetchCountryCitiesOffline),
-    fork(fetchCountryRecentActiveUsers)
+    fork(fetchCountryRecentActiveUsers),
+    fork(fetchCountryCityRecentActiveUsers)
   ]);
 }

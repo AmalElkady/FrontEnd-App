@@ -71,6 +71,10 @@ export default function Cards() {
     state => state.home.countryRecentActiveUsers
   );
 
+  const countryCityRecentActiveUsers = useSelector(
+    state => state.home.countryCityRecentActiveUsers
+  );
+
   ////
   const searchState = useSelector(state => state.home.searchState);
 
@@ -101,18 +105,40 @@ export default function Cards() {
   }, [countryRecentActiveUsers]);
 
   useEffect(() => {
+    if (countryCityRecentActiveUsers != null) {
+      console.log(
+        "countryCityRecentActiveUsers change",
+        countryCityRecentActiveUsers
+      );
+      dispatch(requestPhotoRead());
+    }
+  }, [countryCityRecentActiveUsers]);
+
+  useEffect(() => {
     console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
     if (photoReadSignedRequest != null) {
-      if (searchState == "most recent" && countryRecentActiveUsers != null) {
-        console.log(
-          "countryRecentActiveUsers :on map ",
-          countryRecentActiveUsers
-        );
-        const newUsers = mapUserPhotoUrl(
-          countryRecentActiveUsers.users,
-          photoReadSignedRequest.signedRequest
-        );
-        console.log("newUserssss :", newUsers);
+      if (searchState == "most recent") {
+        if (countryRecentActiveUsers != null) {
+          console.log(
+            "countryRecentActiveUsers :on map ",
+            countryRecentActiveUsers
+          );
+          // Users based on Country
+          mapUserPhotoUrl(
+            countryRecentActiveUsers.users,
+            photoReadSignedRequest.signedRequest
+          );
+        } else if (countryCityRecentActiveUsers != null) {
+          console.log(
+            "countryCityRecentActiveUsers :on map ",
+            countryCityRecentActiveUsers
+          );
+          // Users based on Country and city
+          mapUserPhotoUrl(
+            countryCityRecentActiveUsers.users,
+            photoReadSignedRequest.signedRequest
+          );
+        }
       } else if (
         searchState == "active" &&
         allCountriesSelectedOnlineUsers != null
@@ -147,18 +173,31 @@ export default function Cards() {
             index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
           )} */}
         {searchState == "most recent" &&
-          countryRecentActiveUsers.users?.map((option, index) =>
-            index % 2 == 0 ? (
-              <UserCard
-                key={option.i}
-                user={option}
-                country={countryRecentActiveUsers.country}
-                timeScore={countryRecentActiveUsers.users[index + 1]}
-              ></UserCard>
-            ) : (
-              ""
-            )
-          )}
+          (countryRecentActiveUsers != null
+            ? countryRecentActiveUsers.users.map((option, index) =>
+                index % 2 == 0 ? (
+                  <UserCard
+                    key={option.i}
+                    user={option}
+                    country={countryRecentActiveUsers.country}
+                    timeScore={countryRecentActiveUsers.users[index + 1]}
+                  ></UserCard>
+                ) : (
+                  ""
+                )
+              )
+            : countryCityRecentActiveUsers?.users.map((option, index) =>
+                index % 2 == 0 ? (
+                  <UserCard
+                    key={option.i}
+                    user={option}
+                    country={countryCityRecentActiveUsers.country}
+                    timeScore={countryCityRecentActiveUsers.users[index + 1]}
+                  ></UserCard>
+                ) : (
+                  ""
+                )
+              ))}
       </div>
     </>
   );

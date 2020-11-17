@@ -10,7 +10,8 @@ import {
   countryCityAgerangesOnline,
   allCountriesOffline,
   countryCitiesOffline,
-  countryRecentActiveUsers
+  countryRecentActiveUsers,
+  countryCityRecentActiveUsers
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -370,6 +371,15 @@ export default function Search() {
           )
         );
       } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
+
+        // Get Users based on country and city
+        console.log("Get Users based on country and city");
+        dispatch(
+          countryCityRecentActiveUsers(
+            CountriesOptionsOffline.list_of_results[selectedIndexC],
+            CountryCitiesOptionsOffline.list_of_results[selectedIndexCit]
+          )
+        );
       }
     }
   };

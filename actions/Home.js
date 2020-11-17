@@ -20,7 +20,9 @@ import {
   COUNTRY_CITIES_OFFLINE,
   COUNTRY_CITIES_OFFLINE_SUCCESS,
   COUNTRY_RECENT_ACTIVE_USERS,
-  COUNTRY_RECENT_ACTIVE_USERS_SUCCESS
+  COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
+  COUNTRY_CITY_RECENT_ACTIVE_USERS,
+  COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -185,6 +187,22 @@ export const fetchCountryRecentActiveUsersSuccess = data => {
   console.log("COUNTRY_RECENT_ACTIVE_USERS_SUCCESS from action :", data);
   return {
     type: COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
+    payload: data
+  };
+};
+
+export const countryCityRecentActiveUsers = (country, city) => {
+  console.log("COUNTRY_CITY_RECENT_ACTIVE_USERS from action :", country, city);
+  return {
+    type: COUNTRY_CITY_RECENT_ACTIVE_USERS,
+    payload: { country, city }
+  };
+};
+
+export const fetchCountryCityRecentActiveUsersSuccess = data => {
+  console.log("COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS from action :", data);
+  return {
+    type: COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
     payload: data
   };
 };

@@ -1338,7 +1338,63 @@ home.getCountryRecentActiveUsers = function (country) {
 															
 						  }).catch((err) => {console.log(err)});			
 						
-					}				
+					}	
+					
+home.getCountryCityRecentActiveUsers = function (country,city) {
+
+						// "searchlistid" : "${co}_${ci}_country_city_recent_active_users",
+						// "onlineflag" : false,
+						// "scoreH":"",
+						// "scoreL":"",
+						// "offset":""
+									console.log("country selected and city for recent_active_users from okta ",country ,city);
+														  return new Promise(  async (resolve, reject) => {				
+																				try {
+																					
+																					const tokenValue = getCookie("access_token",false);
+																					const options = {
+																									  url: '/getselectedsearchprofiles',
+																									  method: 'POST',
+																									  headers: {
+																										'Accept': 'application/json',
+																										'Content-Type': 'application/json;charset=UTF-8',
+																										'Authorization': "Bearer " + tokenValue
+																									  },
+																									  data: {
+																										 searchlistid : `${country}_${city}_country_city_recent_active_users`,
+																										 onlineflag : false,
+									
+																									  }
+																									};
+										
+																					let responseX = await callAxios(options);
+																					let response = responseX.data;
+									
+																					console.log("respo data of recent_active_users offline from okta : ",response);
+																					
+																					   if(response){
+																						// const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
+																						// console.log("ReturnUsers okta : ",ReturnUsers);
+																						const ReturnUsers={
+																							country,
+																							users:mapUserPhotoPath(response.list_of_results,country)
+																						}
+																						console.log("ReturnUsers country city okta : ",ReturnUsers);
+																						resolve(ReturnUsers);					 
+																					   } else {
+																						   
+																						   resolve({"message": "no response !"})
+																					   }
+																		
+																				} catch(err) {
+																					resolve({"message": err.message});
+																				}		
+										
+																  
+																				
+											  }).catch((err) => {console.log(err)});			
+											
+										}				
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 

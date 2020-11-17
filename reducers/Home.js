@@ -9,7 +9,8 @@ import {
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE_SUCCESS,
   COUNTRY_CITIES_OFFLINE_SUCCESS,
-  COUNTRY_RECENT_ACTIVE_USERS_SUCCESS
+  COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
+  COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialHomeState = {
@@ -23,6 +24,7 @@ const initialHomeState = {
   allCountriesOffline: null,
   countryCitiesOffline: null,
   countryRecentActiveUsers: null,
+  countryCityRecentActiveUsers: null,
   photoReadSignedRequest: null,
   searchState: "active"
   // countrySelected: false
@@ -73,25 +75,29 @@ const home = (state = initialHomeState, action) => {
         photoReadSignedRequest: action.payload
       };
     case ALL_COUNTRIES_OFFLINE_SUCCESS:
-      console.log("offline from reducer :", action.payload);
       return {
         ...state,
         allCountriesOffline: action.payload
       };
     case COUNTRY_CITIES_OFFLINE_SUCCESS:
-      console.log("offline cities from reducer :", action.payload);
       return {
         ...state,
         countryCitiesOffline: action.payload
       };
     case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS:
+      return {
+        ...state,
+        countryRecentActiveUsers: action.payload,
+        searchState: "most recent"
+      };
+    case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
       console.log(
-        "COUNTRY_RECENT_ACTIVE_USERS_SUCCESS from reducer :",
+        "COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS from reducer :",
         action.payload
       );
       return {
         ...state,
-        countryRecentActiveUsers: action.payload,
+        countryCityRecentActiveUsers: action.payload,
         searchState: "most recent"
       };
     default:

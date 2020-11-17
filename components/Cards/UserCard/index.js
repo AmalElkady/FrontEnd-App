@@ -159,7 +159,9 @@ export default function UserCard({ user, country, timeScore }) {
             {country}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {user.ci ? COUNTRY_CITY_MAP[country.toLowerCase()][user.ci] : ""}
+            {user.ci
+              ? COUNTRY_CITY_MAP[country.toLowerCase()][user.ci - 1]
+              : ""}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
