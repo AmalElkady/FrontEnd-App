@@ -210,6 +210,11 @@ export const COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE =
 export const COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS =
   "country_cities_agerange_selected_online_success";
 
+export const COUNTRY_CITY_AGERANGE_SELECTED_ONLINE =
+  "country_city_agerange_selected_online";
+export const COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS =
+  "country_city_agerange_selected_online_success";
+
 export const REQUEST_PHOTO_READ = "request_photo_read";
 export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
 

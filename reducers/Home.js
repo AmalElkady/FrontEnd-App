@@ -14,7 +14,8 @@ import {
   COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
   COUNTRY_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITY_SELECTED_ONLINE_SUCCESS,
-  COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS
+  COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS,
+  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialHomeState = {
@@ -29,6 +30,7 @@ const initialHomeState = {
   countrySelectedOnlineUsers: null,
   countryCitySelectedOnlineUsers: null,
   countryCitiesAgerangeSelectedOnlineUsers: null,
+  countryCityAgerangeSelectedOnlineUsers: null,
   allCountriesOffline: null,
   countryCitiesOffline: null,
   countryRecentActiveUsers: null,
@@ -101,6 +103,13 @@ const home = (state = initialHomeState, action) => {
       return {
         ...state,
         countryCitiesAgerangeSelectedOnlineUsers: action.payload,
+        searchState: "active"
+      };
+
+    case COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS:
+      return {
+        ...state,
+        countryCityAgerangeSelectedOnlineUsers: action.payload,
         searchState: "active"
       };
     case REQUEST_PHOTO_READ_SUCCESS:

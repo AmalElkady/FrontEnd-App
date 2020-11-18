@@ -15,7 +15,8 @@ import {
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
   COUNTRY_SELECTED_ONLINE,
   COUNTRY_CITY_SELECTED_ONLINE,
-  COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE
+  COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE,
+  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -34,7 +35,8 @@ import {
   fetchAgerangeAllCountriesSelectedOnlineSuccess,
   fetchCountrySelectedOnlineSuccess,
   fetchCountryCitySelectedOnlineSuccess,
-  fetchCountryCitiesAgerangeSelectedOnlineSuccess
+  fetchCountryCitiesAgerangeSelectedOnlineSuccess,
+  fetchCountryCityAgerangeSelectedOnlineSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -104,6 +106,12 @@ const getCountryCitySelectedOnline = async (country, city) =>
 const getCountryCitiesAgerangeSelectedOnline = async (country, agerange) =>
   await home
     .getCountryCitiesAgerangeSelectedOnline(country, agerange)
+    .then(returnUsers => returnUsers)
+    .catch(error => error);
+
+const getCountryCityAgerangeSelectedOnline = async (country, city, agerange) =>
+  await home
+    .getCountryCityAgerangeSelectedOnline(country, city, agerange)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -343,6 +351,35 @@ function* countryCitiesAgerangeSelectedOnlineRequest({ payload }) {
   }
 }
 
+function* countryCityAgerangeSelectedOnlineRequest({ payload }) {
+  const { country, city, agerange } = payload;
+  console.log(
+    "countryCityAgerangeSelectedOnline from saga ",
+    country,
+    city,
+    agerange
+  );
+  try {
+    const fetchedCountryCityAgerangeSelestedOnline = yield call(
+      getCountryCityAgerangeSelectedOnline,
+      country,
+      city,
+      agerange
+    );
+    console.log(
+      "returned fetchedCountryCityAgerangeSelestedOnline from saga",
+      fetchedCountryCityAgerangeSelestedOnline
+    );
+    yield put(
+      fetchCountryCityAgerangeSelectedOnlineSuccess(
+        fetchedCountryCityAgerangeSelestedOnline
+      )
+    );
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 function* photoReadRequest() {
   console.log("photoReadRequest from saga ");
   try {
@@ -492,6 +529,13 @@ export function* fetchCountryCitiesAgerangeSelectedOnline() {
   );
 }
 
+export function* fetchCountryCityAgerangeSelectedOnline() {
+  yield takeEvery(
+    COUNTRY_CITY_AGERANGE_SELECTED_ONLINE,
+    countryCityAgerangeSelectedOnlineRequest
+  );
+}
+
 export function* fetchPhotoReadRequest() {
   yield takeEvery(REQUEST_PHOTO_READ, photoReadRequest);
 }
@@ -532,6 +576,7 @@ export default function* rootSaga() {
     fork(fetchAgerangeAllCountriesSelectedOnline),
     fork(fetchCountrySelectedOnline),
     fork(fetchCountryCitySelectedOnline),
-    fork(fetchCountryCitiesAgerangeSelectedOnline)
+    fork(fetchCountryCitiesAgerangeSelectedOnline),
+    fork(fetchCountryCityAgerangeSelectedOnline)
   ]);
 }

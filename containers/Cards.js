@@ -23,6 +23,7 @@ import {
   countrySelectedOnline,
   countryCitySelectedOnline,
   countryCitiesAgerangeSelectedOnline,
+  countryCityAgerangeSelectedOnline,
   requestPhotoRead
 } from "../actions/Home";
 
@@ -96,8 +97,8 @@ export default function Cards() {
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
     //dispatch(countryCitySelectedOnline("EG", "3"));
-    dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
-    // //dispatch(requestPhotoRead());
+    //dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
+    dispatch(countryCityAgerangeSelectedOnline("EG", "3", "18-25"));
   }, []);
   // useEffect(() => {
   //   // console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
