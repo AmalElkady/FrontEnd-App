@@ -12,7 +12,8 @@ import {
   COUNTRY_CITIES_OFFLINE,
   COUNTRY_RECENT_ACTIVE_USERS,
   COUNTRY_CITY_RECENT_ACTIVE_USERS,
-  AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE
+  AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
+  COUNTRY_SELECTED_ONLINE
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -80,6 +81,12 @@ const getAllCountriesSelectedOnline = async () =>
 const getAgerangeAllCountriesSelectedOnline = async agerange =>
   await home
     .getAgerangeAllCountriesSelectedOnline(agerange)
+    .then(returnUsers => returnUsers)
+    .catch(error => error);
+
+const getCountrySelectedOnline = async country =>
+  await home
+    .getCountrySelectedOnline(country)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -254,6 +261,23 @@ function* agerangeAllCountriesSelectedOnlineRequest({ payload }) {
   }
 }
 
+function* countrySelectedOnlineRequest({ payload }) {
+  console.log("countrySelectedOnline from saga ", payload);
+  try {
+    const fetchedCountrySelestedOnline = yield call(
+      getCountrySelectedOnline,
+      payload
+    );
+    console.log(
+      "returned fetchedCountrySelestedOnline from saga",
+      fetchedCountrySelestedOnline
+    );
+    yield put(fetchCountrySelectedOnlineSuccess(fetchedCountrySelestedOnline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 function* photoReadRequest() {
   console.log("photoReadRequest from saga ");
   try {
@@ -385,6 +409,10 @@ export function* fetchAgerangeAllCountriesSelectedOnline() {
   );
 }
 
+export function* fetchCountrySelectedOnline() {
+  yield takeEvery(COUNTRY_SELECTED_ONLINE, countrySelectedOnlineRequest);
+}
+
 export function* fetchPhotoReadRequest() {
   yield takeEvery(REQUEST_PHOTO_READ, photoReadRequest);
 }
@@ -422,6 +450,7 @@ export default function* rootSaga() {
     fork(fetchCountryCitiesOffline),
     fork(fetchCountryRecentActiveUsers),
     fork(fetchCountryCityRecentActiveUsers),
-    fork(fetchAgerangeAllCountriesSelectedOnline)
+    fork(fetchAgerangeAllCountriesSelectedOnline),
+    fork(fetchCountrySelectedOnline)
   ]);
 }

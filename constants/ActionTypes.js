@@ -197,6 +197,10 @@ export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE =
 export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS =
   "agerange_all_countries_selected_online_success";
 
+export const COUNTRY_SELECTED_ONLINE = "country_selected_online";
+export const COUNTRY_SELECTED_ONLINE_SUCCESS =
+  "country_selected_online_success";
+
 export const REQUEST_PHOTO_READ = "request_photo_read";
 export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
 

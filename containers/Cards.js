@@ -20,6 +20,7 @@ import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 import {
   allCountriesSelectedOnline,
   agerangeAllCountriesSelectedOnline,
+  countrySelectedOnline,
   requestPhotoRead
 } from "../actions/Home";
 
@@ -90,7 +91,8 @@ export default function Cards() {
 
   useEffect(() => {
     // dispatch(allCountriesSelectedOnline());
-    dispatch(agerangeAllCountriesSelectedOnline("18-25"));
+    //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
+    dispatch(countrySelectedOnline("EG"));
     // //dispatch(requestPhotoRead());
   }, []);
   // useEffect(() => {
