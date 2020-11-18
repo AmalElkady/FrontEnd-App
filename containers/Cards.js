@@ -17,7 +17,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 
-import { allCountriesSelectedOnline, requestPhotoRead } from "../actions/Home";
+import {
+  allCountriesSelectedOnline,
+  agerangeAllCountriesSelectedOnline,
+  requestPhotoRead
+} from "../actions/Home";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,7 +89,8 @@ export default function Cards() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allCountriesSelectedOnline());
+    // dispatch(allCountriesSelectedOnline());
+    dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     // //dispatch(requestPhotoRead());
   }, []);
   // useEffect(() => {

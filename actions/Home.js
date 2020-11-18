@@ -22,7 +22,9 @@ import {
   COUNTRY_RECENT_ACTIVE_USERS,
   COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
   COUNTRY_CITY_RECENT_ACTIVE_USERS,
-  COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS
+  COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
+  AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
+  AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -127,6 +129,24 @@ export const fetchAllCountriesSelectedOnlineSuccess = data => {
   };
 };
 
+export const agerangeAllCountriesSelectedOnline = agerange => {
+  console.log("agerangeAllCountriesSelectedOnline from action", agerange);
+  return {
+    type: AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
+    payload: agerange
+  };
+};
+export const fetchAgerangeAllCountriesSelectedOnlineSuccess = data => {
+  console.log(
+    "returned users AgerangeAllCountriesSelectedOnline from action ",
+    data
+  );
+  return {
+    type: AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
+    payload: data
+  };
+};
+
 export const requestPhotoRead = () => {
   console.log("REQUEST_PHOTO_READ from action ");
   return {
@@ -192,7 +212,6 @@ export const fetchCountryRecentActiveUsersSuccess = data => {
 };
 
 export const countryCityRecentActiveUsers = (country, city) => {
-  console.log("COUNTRY_CITY_RECENT_ACTIVE_USERS from action :", country, city);
   return {
     type: COUNTRY_CITY_RECENT_ACTIVE_USERS,
     payload: { country, city }
@@ -200,7 +219,6 @@ export const countryCityRecentActiveUsers = (country, city) => {
 };
 
 export const fetchCountryCityRecentActiveUsersSuccess = data => {
-  console.log("COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS from action :", data);
   return {
     type: COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
     payload: data

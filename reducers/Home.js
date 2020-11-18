@@ -6,6 +6,7 @@ import {
   COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS,
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+  AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE_SUCCESS,
   COUNTRY_CITIES_OFFLINE_SUCCESS,
@@ -21,6 +22,7 @@ const initialHomeState = {
   countryCitiesAgerangeOnline: [],
   countryCityAgerangesOnline: [],
   allCountriesSelectedOnlineUsers: null,
+  AgerangeAllCountriesSelectedOnlineUsers: null,
   allCountriesOffline: null,
   countryCitiesOffline: null,
   countryRecentActiveUsers: null,
@@ -69,6 +71,13 @@ const home = (state = initialHomeState, action) => {
         allCountriesSelectedOnlineUsers: action.payload,
         searchState: "active"
       };
+
+    case AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS:
+      return {
+        ...state,
+        agerangeAllCountriesSelectedOnlineUsers: action.payload,
+        searchState: "active"
+      };
     case REQUEST_PHOTO_READ_SUCCESS:
       return {
         ...state,
@@ -91,10 +100,6 @@ const home = (state = initialHomeState, action) => {
         searchState: "most recent"
       };
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
-      console.log(
-        "COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS from reducer :",
-        action.payload
-      );
       return {
         ...state,
         countryCityRecentActiveUsers: action.payload,

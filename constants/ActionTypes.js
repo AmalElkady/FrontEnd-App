@@ -170,7 +170,7 @@ export const COUNTRY_AGERANGES_ONLONE_SUCCESS =
 
 export const COUNTRY_CITY_AGERANGES_ONLINE = "country_city_ageranges_online";
 export const COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS =
-  "country_city_ageranges_online_succes";
+  "country_city_ageranges_online_success";
 
 //Countries
 export const GET_ALL_COUNTRIES_ONLINE = "all_countries_online";
@@ -185,12 +185,17 @@ export const COUNTRY_CITIES_ONLINE = "country_cities_online";
 export const COUNTRY_CITIES_ONLINE_SUCCESS = "country_cities_online_success";
 export const COUNTRY_CITIES_AGERANGE_ONLINE = "country_cities_agerange_online";
 export const COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS =
-  "country_cities_agerange_online_succes";
+  "country_cities_agerange_online_success";
 
 // User profiles
 export const ALL_COUNTRIES_SELECTED_ONLINE = "all_countries_selected_online";
 export const ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS =
-  "all_countries_selected_online_SECCESS";
+  "all_countries_selected_online_success";
+
+export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE =
+  "agerange_all_countries_selected_online";
+export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS =
+  "agerange_all_countries_selected_online_success";
 
 export const REQUEST_PHOTO_READ = "request_photo_read";
 export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
