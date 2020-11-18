@@ -22,6 +22,7 @@ import {
   agerangeAllCountriesSelectedOnline,
   countrySelectedOnline,
   countryCitySelectedOnline,
+  countryCitiesAgerangeSelectedOnline,
   requestPhotoRead
 } from "../actions/Home";
 
@@ -94,7 +95,8 @@ export default function Cards() {
     // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
-    dispatch(countryCitySelectedOnline("EG", "3"));
+    //dispatch(countryCitySelectedOnline("EG", "3"));
+    dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
     // //dispatch(requestPhotoRead());
   }, []);
   // useEffect(() => {
