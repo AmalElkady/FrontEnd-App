@@ -1156,7 +1156,7 @@ home.getCountrySelectedOnline = function (country) {
 													// "key":"",
 													// "scoreH":"",
 													// "offset":""
-																					console.log("agerangeAllCountriesSelectedOnline from okta ",country);
+																					console.log("countrySelectedOnline from okta ",country);
 																												  return new Promise(  async (resolve, reject) => {				
 																																		try {
 																																			
@@ -1215,6 +1215,74 @@ home.getCountrySelectedOnline = function (country) {
 																									
 }
 		
+home.getCountryCitySelectedOnline = function (country,city) {
+
+	// "allcountriesflag":false,
+	// "searchlistid" : "${co}_${ci}_country_city_selected_online",
+	// "country" : "",
+	// "city" : "",
+	// "agerange" : "",
+	// "key":"",
+	// "scoreH":"",
+	// "offset":""
+									console.log("CountryCitySelectedOnline from okta ",country,city);
+																  return new Promise(  async (resolve, reject) => {				
+																						try {
+																							
+																							const tokenValue = getCookie("access_token",false);
+																							const options = {
+																											  url: '/availablesearch',
+																											  method: 'POST',
+																											  headers: {
+																												'Accept': 'application/json',
+																												'Content-Type': 'application/json;charset=UTF-8',
+																												'Authorization': "Bearer " + tokenValue
+																											  },
+																											  data: {
+																												allcountriesflag: false,
+																												 searchlistid : `${country}_${city}_country_city_selected_online`,
+											
+																											  }
+																											};
+												
+																							let responseX = await callAxios(options);
+																							let response = responseX.data;
+											
+																							console.log("respo data of ${co}_${ci}country_selected_online from okta : ",response);
+																							
+																							if(response){
+																								//resolve(response);
+																								// let returnUsers=[];
+																								// response.list_of_results.forEach(async (e,i) => {
+																								// 	if(i%2==0){
+																								// 		let sebReturnUsers= await getselectedsearchprofiles(e);
+																								// 		sebReturnUsers=mapUserPhotoPath(sebReturnUsers.list_of_results,e);
+																								// 		returnUsers=[...returnUsers,sebReturnUsers];
+																								// 		console.log("returnUsers after map ",returnUsers);
+																								// 	}
+																									
+																								// 	if(i===response.list_of_results.length-2){
+																										
+																								// 		resolve(returnUsers.flat(1));
+																								// 	}
+																								// });	
+																								
+																									 
+																							   } else {
+																								   
+																								   resolve({"message": "no response !"})
+																							   }
+																							  
+																				
+																						} catch(err) {
+																							resolve({"message": err.message});
+																						}		
+												
+																		  
+																						
+													  }).catch((err) => {console.log(err)});			
+													
+}
 
 
 

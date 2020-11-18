@@ -26,7 +26,9 @@ import {
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
   COUNTRY_SELECTED_ONLINE,
-  COUNTRY_SELECTED_ONLINE_SUCCESS
+  COUNTRY_SELECTED_ONLINE_SUCCESS,
+  COUNTRY_CITY_SELECTED_ONLINE,
+  COUNTRY_CITY_SELECTED_ONLINE_SUCCESS
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -130,7 +132,6 @@ export const fetchAllCountriesSelectedOnlineSuccess = data => {
     payload: data
   };
 };
-
 export const agerangeAllCountriesSelectedOnline = agerange => {
   console.log("agerangeAllCountriesSelectedOnline from action", agerange);
   return {
@@ -160,6 +161,21 @@ export const fetchCountrySelectedOnlineSuccess = data => {
   console.log("returned users COUNTRY_SELECTED_ONLINE from action ", data);
   return {
     type: COUNTRY_SELECTED_ONLINE_SUCCESS,
+    payload: data
+  };
+};
+
+export const countryCitySelectedOnline = (country, city) => {
+  console.log("countryCitySelectedOnline from action", country, city);
+  return {
+    type: COUNTRY_CITY_SELECTED_ONLINE,
+    payload: { country, city }
+  };
+};
+export const fetchCountryCitySelectedOnlineSuccess = data => {
+  console.log("returned users COUNTRY_City_SELECTED_ONLINE from action ", data);
+  return {
+    type: COUNTRY_CITY_SELECTED_ONLINE_SUCCESS,
     payload: data
   };
 };

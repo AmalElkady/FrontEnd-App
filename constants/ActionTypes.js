@@ -201,6 +201,10 @@ export const COUNTRY_SELECTED_ONLINE = "country_selected_online";
 export const COUNTRY_SELECTED_ONLINE_SUCCESS =
   "country_selected_online_success";
 
+export const COUNTRY_CITY_SELECTED_ONLINE = "country_city_selected_online";
+export const COUNTRY_CITY_SELECTED_ONLINE_SUCCESS =
+  "country_city_selected_online_success";
+
 export const REQUEST_PHOTO_READ = "request_photo_read";
 export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
 
