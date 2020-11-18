@@ -310,7 +310,7 @@ export default function Search() {
         );
       }
       // Get cities based on agerange and country
-      else if (selectedIndexC != -1) {
+      else if (selectedIndexC != -1 && selectedIndex != -1) {
         if (
           CountryAgerangesOptionsOnline.list_of_results &&
           !AgerangeCountriesOptionsOnline.list_of_results
@@ -325,13 +325,13 @@ export default function Search() {
           //Get countries based on agerange
           dispatch(
             agerangeCountriesOnline(
-              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex + 1].replace(/\s/g, "")
             )
           );
           dispatch(
             countryCitiesAgerangeOnline(
               AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
-              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex + 1].replace(/\s/g, "")
             )
           );
         }
@@ -347,7 +347,6 @@ export default function Search() {
         selectedIndexCit != -1 &&
         selectedIndex == -1
       ) {
-        console.log("country city");
         dispatch(
           countryCityAgerangesOnline(
             CountriesOptionsOnline.list_of_results[selectedIndexC],
@@ -364,16 +363,13 @@ export default function Search() {
     } else if (optionValue == "most recent") {
       if (selectedIndexC != -1 && selectedIndexCit == -1) {
         // Get Users based on country only
-        console.log("Get Users based on country only");
         dispatch(
           countryRecentActiveUsers(
             CountriesOptionsOffline.list_of_results[selectedIndexC]
           )
         );
       } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
-
         // Get Users based on country and city
-        console.log("Get Users based on country and city");
         dispatch(
           countryCityRecentActiveUsers(
             CountriesOptionsOffline.list_of_results[selectedIndexC],
@@ -385,7 +381,6 @@ export default function Search() {
   };
   return (
     <>
-      {/* {console.log("CountriesOptionsOffline ", CountriesOptionsOffline)} */}
       <Card className={classes.root}>
         <FormControl component="fieldset" className={classes.margin}>
           <FormLabel component="legend">Select Your option </FormLabel>
@@ -433,23 +428,19 @@ export default function Search() {
                     secondary={
                       selectedIndexC == -1
                         ? selectedIndex == -1
-                          ? ARRAY_OF_AGE_RANGE[selectedIndex + 1]
+                          ? "Select Age Range"
                           : ARRAY_OF_AGE_RANGE[selectedIndex]
                         : selectedIndexCit == -1
                         ? CountryAgerangesOptionsOnline.list_of_results
                           ? selectedIndex == -1
-                            ? CountryAgerangesOptionsOnline.list_of_results[
-                                selectedIndex + 1
-                              ]
+                            ? "Select Age Range"
                             : CountryAgerangesOptionsOnline.list_of_results[
                                 selectedIndex
                               ]
                           : ARRAY_OF_AGE_RANGE[selectedIndex]
                         : CountryCityAgerangesOptionsOnline.list_of_results
                         ? selectedIndex == -1
-                          ? CountryCityAgerangesOptionsOnline.list_of_results[
-                              selectedIndex + 1
-                            ]
+                          ? "Select Age Range"
                           : CountryCityAgerangesOptionsOnline.list_of_results[
                               selectedIndex
                             ]
@@ -465,19 +456,33 @@ export default function Search() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {selectedIndexC == -1 &&
-                  ARRAY_OF_AGE_RANGE.map((option, index) => (
+                {selectedIndexC == -1 && (
+                  <div>
                     <MenuItem
+                      onClick={() => {
+                        setSelectedIndex(-1);
+                        setAnchorEl(null);
+                      }}
                       className={classes.displayFlexSB}
-                      key={option}
-                      selected={index === selectedIndex}
-                      onClick={event => handleMenuItemClick(event, index)}
                     >
                       <Typography variant="button" gutterBottom>
-                        {option}
+                        No Select
                       </Typography>
                     </MenuItem>
-                  ))}
+                    {ARRAY_OF_AGE_RANGE.map((option, index) => (
+                      <MenuItem
+                        className={classes.displayFlexSB}
+                        key={option}
+                        selected={index === selectedIndex}
+                        onClick={event => handleMenuItemClick(event, index)}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          {option}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </div>
+                )}
                 {selectedIndexC != -1 && selectedIndexCit == -1 && (
                   <div>
                     {" "}
@@ -490,6 +495,17 @@ export default function Search() {
                         >
                           ONLINE
                         </Typography>
+                        <MenuItem
+                          onClick={() => {
+                            setSelectedIndex(-1);
+                            setAnchorEl(null);
+                          }}
+                          className={classes.displayFlexSB}
+                        >
+                          <Typography variant="button" gutterBottom>
+                            No Select
+                          </Typography>
+                        </MenuItem>
                         {CountryAgerangesOptionsOnline.list_of_results?.map(
                           (option, index) =>
                             index % 2 == 0 && (
@@ -519,18 +535,31 @@ export default function Search() {
                         )}
                       </div>
                     ) : (
-                      ARRAY_OF_AGE_RANGE.map((option, index) => (
+                      <div>
                         <MenuItem
+                          onClick={() => {
+                            setSelectedIndex(-1);
+                            setAnchorEl(null);
+                          }}
                           className={classes.displayFlexSB}
-                          key={option}
-                          selected={index === selectedIndex}
-                          onClick={event => handleMenuItemClick(event, index)}
                         >
                           <Typography variant="button" gutterBottom>
-                            {option}
+                            No Select
                           </Typography>
                         </MenuItem>
-                      ))
+                        {ARRAY_OF_AGE_RANGE.map((option, index) => (
+                          <MenuItem
+                            className={classes.displayFlexSB}
+                            key={option}
+                            selected={index === selectedIndex}
+                            onClick={event => handleMenuItemClick(event, index)}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {option}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )}
@@ -545,11 +574,48 @@ export default function Search() {
                     >
                       ONLINE
                     </Typography>
-                    {CountryCityAgerangesOptionsOnline.list_of_results?.map(
-                      (option, index) =>
-                        index % 2 == 0 && (
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedIndex(-1);
+                        setAnchorEl(null);
+                      }}
+                      className={classes.displayFlexSB}
+                    >
+                      <Typography variant="button" gutterBottom>
+                        No Select
+                      </Typography>
+                    </MenuItem>
+                    {CountryCityAgerangesOptionsOnline.list_of_results
+                      ? CountryCityAgerangesOptionsOnline.list_of_results?.map(
+                          (option, index) =>
+                            index % 2 == 0 && (
+                              <MenuItem
+                                className={`${classes.displayFlexSB} ${classes.width}`}
+                                key={option}
+                                selected={index === selectedIndex}
+                                onClick={event =>
+                                  handleMenuItemClick(event, index)
+                                }
+                              >
+                                <Typography variant="button" gutterBottom>
+                                  {option}
+                                </Typography>
+                                <Typography
+                                  variant="button"
+                                  color="primary"
+                                  gutterBottom
+                                >
+                                  {
+                                    CountryCityAgerangesOptionsOnline
+                                      .list_of_results[index + 1]
+                                  }
+                                </Typography>
+                              </MenuItem>
+                            )
+                        )
+                      : ARRAY_OF_AGE_RANGE.map((option, index) => (
                           <MenuItem
-                            className={`${classes.displayFlexSB} ${classes.width}`}
+                            className={classes.displayFlexSB}
                             key={option}
                             selected={index === selectedIndex}
                             onClick={event => handleMenuItemClick(event, index)}
@@ -557,19 +623,8 @@ export default function Search() {
                             <Typography variant="button" gutterBottom>
                               {option}
                             </Typography>
-                            <Typography
-                              variant="button"
-                              color="primary"
-                              gutterBottom
-                            >
-                              {
-                                CountryCityAgerangesOptionsOnline
-                                  .list_of_results[index + 1]
-                              }
-                            </Typography>
                           </MenuItem>
-                        )
-                    )}
+                        ))}
                   </div>
                 )}
               </Menu>
@@ -591,16 +646,18 @@ export default function Search() {
                     secondary={
                       AgerangeCountriesOptionsOnline.list_of_results == null
                         ? selectedIndexC == -1
-                          ? CountriesOptionsOnline.list_of_results[
-                              selectedIndexC + 1
-                            ]
+                          ? // ? CountriesOptionsOnline.list_of_results[
+                            //     selectedIndexC + 1
+                            //   ]
+                            "Select Country"
                           : CountriesOptionsOnline.list_of_results[
                               selectedIndexC
                             ]
                         : selectedIndexC == -1
-                        ? AgerangeCountriesOptionsOnline.list_of_results[
-                            selectedIndexC + 1
-                          ]
+                        ? // ? AgerangeCountriesOptionsOnline.list_of_results[
+                          //     selectedIndexC + 1
+                          //   ]
+                          "Select Country"
                         : AgerangeCountriesOptionsOnline.list_of_results[
                             selectedIndexC
                           ]
@@ -628,6 +685,17 @@ export default function Search() {
                 >
                   ONLINE
                 </Typography>
+                <MenuItem
+                  onClick={() => {
+                    setSelectedIndexC(-1);
+                    setAnchorElC(null);
+                  }}
+                  className={classes.displayFlexSB}
+                >
+                  <Typography variant="button" gutterBottom>
+                    No Select
+                  </Typography>
+                </MenuItem>
                 {selectedIndex != -1 &&
                   selectedIndexC == -1 &&
                   AgerangeCountriesOptionsOnline.list_of_results?.map(
@@ -765,6 +833,17 @@ export default function Search() {
                 >
                   MOST RECENT
                 </Typography>
+                <MenuItem
+                  onClick={() => {
+                    setSelectedIndexC(-1);
+                    setAnchorElC(null);
+                  }}
+                  className={classes.displayFlexSB}
+                >
+                  <Typography variant="button" gutterBottom>
+                    No Select
+                  </Typography>
+                </MenuItem>
                 {CountriesOptionsOffline.list_of_results?.map(
                   (option, index) =>
                     index % 2 === 0 && (
@@ -808,15 +887,7 @@ export default function Search() {
                       selectedIndex == -1
                         ? CountryCitiesOptionsOnline.list_of_results
                           ? selectedIndexCit == -1
-                            ? COUNTRY_CITY_MAP[
-                                CountriesOptionsOnline.list_of_results[
-                                  selectedIndexC
-                                ].toLowerCase()
-                              ][
-                                CountryCitiesOptionsOnline.list_of_results[
-                                  selectedIndexCit + 1
-                                ] - 1
-                              ]
+                            ? "select City"
                             : COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline.list_of_results[
                                   selectedIndexC
@@ -826,18 +897,21 @@ export default function Search() {
                                   selectedIndexCit
                                 ] - 1
                               ]
+                          : CountryCitiesAgerangeOptionsOnline.list_of_results
+                          ? setSelectedIndexC(-1)
                           : ""
                         : CountryCitiesAgerangeOptionsOnline.list_of_results
                         ? CountriesOptionsOnline.list_of_results
                           ? selectedIndexCit == -1
-                            ? COUNTRY_CITY_MAP[
-                                CountriesOptionsOnline.list_of_results[
-                                  selectedIndexC
-                                ].toLowerCase()
-                              ][
-                                CountryCitiesAgerangeOptionsOnline
-                                  .list_of_results[selectedIndexCit + 1] - 1
-                              ]
+                            ? // ? COUNTRY_CITY_MAP[
+                              //     CountriesOptionsOnline.list_of_results[
+                              //       selectedIndexC
+                              //     ].toLowerCase()
+                              //   ][
+                              //     CountryCitiesAgerangeOptionsOnline
+                              //       .list_of_results[selectedIndexCit + 1] - 1
+                              //   ]
+                              "Select City"
                             : COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline.list_of_results[
                                   selectedIndexC
@@ -848,15 +922,16 @@ export default function Search() {
                               ]
                           : AgerangeCountriesOptionsOnline.list_of_results
                           ? selectedIndexCit == -1
-                            ? COUNTRY_CITY_MAP[
-                                AgerangeCountriesOptionsOnline.list_of_results[
-                                  selectedIndexC
-                                ].toLowerCase()
-                              ][
-                                CountryCitiesAgerangeOptionsOnline
-                                  .list_of_results[selectedIndexCit + 1] - 1
-                              ]
-                            : COUNTRY_CITY_MAP[
+                            ? "Select City"
+                            : // ? COUNTRY_CITY_MAP[
+                              //     AgerangeCountriesOptionsOnline.list_of_results[
+                              //       selectedIndexC
+                              //     ].toLowerCase()
+                              //   ][
+                              //     CountryCitiesAgerangeOptionsOnline
+                              //       .list_of_results[selectedIndexCit + 1] - 1
+                              //   ]
+                              COUNTRY_CITY_MAP[
                                 AgerangeCountriesOptionsOnline.list_of_results[
                                   selectedIndexC
                                 ].toLowerCase()
@@ -892,6 +967,17 @@ export default function Search() {
                     >
                       ONLINE
                     </Typography>
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedIndexCit(-1);
+                        setAnchorElCit(null);
+                      }}
+                      className={classes.displayFlexSB}
+                    >
+                      <Typography variant="button" gutterBottom>
+                        No Select
+                      </Typography>
+                    </MenuItem>
                     {CountryCitiesOptionsOnline.list_of_results?.map(
                       (option, index) =>
                         index % 2 === 0 && (
@@ -939,6 +1025,17 @@ export default function Search() {
                     >
                       ONLINE
                     </Typography>
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedIndexCit(-1);
+                        setAnchorElCit(null);
+                      }}
+                      className={classes.displayFlexSB}
+                    >
+                      <Typography variant="button" gutterBottom>
+                        No Select
+                      </Typography>
+                    </MenuItem>
                     {CountryCitiesAgerangeOptionsOnline.list_of_results?.map(
                       (option, index) =>
                         index % 2 === 0 && (
@@ -1044,6 +1141,18 @@ export default function Search() {
                       >
                         Most Recent
                       </Typography>
+
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedIndexCit(-1);
+                          setAnchorElCit(null);
+                        }}
+                        className={classes.displayFlexSB}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          No Select
+                        </Typography>
+                      </MenuItem>
                       {CountryCitiesOptionsOffline.list_of_results?.map(
                         (option, index) =>
                           index % 2 === 0 && (
