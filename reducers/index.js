@@ -3,6 +3,7 @@ import { persist } from "./services/reduxPersist";
 import { combineReducers } from "redux";
 import { settingsMigration } from "./migrations/Settings";
 import { authMigration } from "./migrations/Auth";
+import { homeMigration } from "./migrations/Home";
 import { createMigrate } from "redux-persist";
 import Settings from "./Settings";
 import ChatData from "./Chat";
@@ -53,6 +54,21 @@ const authPersistConfig = {
 
 //persistCombineReducers(authPersistConfig, { form: formReducer });
 
+const homePersistConfig = {
+  key: "home",
+  version: 1,
+  whitelist: [
+    //"allCountriesOffline",
+    //"allCountriesOfflineUsers",
+    //"countryCitiesOffline"
+    // "countryRecentActiveUsers",
+    //"countryCityRecentActiveUsers",
+    // "searchState"
+  ], //
+  //transforms: [saveSubsetFilter],
+  migrate: createMigrate(homeMigration, { debug: MIGRATION_DEBUG })
+};
+
 ///////////////////////////////////////
 /////////////////////////////////////
 export default history =>
@@ -62,5 +78,6 @@ export default history =>
     contacts: Contact,
     mail: Mail,
     home: Home,
+    // home: persist(homePersistConfig, Home),
     auth: persist(authPersistConfig, Auth)
   });

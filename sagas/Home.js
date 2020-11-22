@@ -16,7 +16,8 @@ import {
   COUNTRY_SELECTED_ONLINE,
   COUNTRY_CITY_SELECTED_ONLINE,
   COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE,
-  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE
+  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE,
+  ALL_COUNTRIES_OFFLINE_USERS
 } from "../constants/ActionTypes";
 import {
   fetchCountriesOnlineSuccess,
@@ -36,7 +37,8 @@ import {
   fetchCountrySelectedOnlineSuccess,
   fetchCountryCitySelectedOnlineSuccess,
   fetchCountryCitiesAgerangeSelectedOnlineSuccess,
-  fetchCountryCityAgerangeSelectedOnlineSuccess
+  fetchCountryCityAgerangeSelectedOnlineSuccess,
+  allCountriesOfflineUsersSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
 
@@ -128,15 +130,21 @@ const getOfflineCountries = async () =>
     .then(returnCountries => returnCountries)
     .catch(error => error);
 
+const getOfflineCountriesAllUsers = async (country, SL, offset) =>
+  await home
+    .getAllCountriesOfflineUsers(country, SL, offset)
+    .then(returnUsers => returnUsers)
+    .catch(error => error);
+
 const getCountryCitiesOffline = async country =>
   await home
     .getCountryCitiesOffline(country)
     .then(returnCities => returnCities)
     .catch(error => error);
 
-const getCountryRecentActiveUsers = async country =>
+const getCountryRecentActiveUsers = async (country, SL, SH, offset) =>
   await home
-    .getCountryRecentActiveUsers(country)
+    .getCountryRecentActiveUsers(country, SL, SH, offset)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -405,6 +413,26 @@ function* fetchAllCountriesOfflineRequest() {
   }
 }
 
+function* fetchAllCountriesOfflineUsersRequest({ payload }) {
+  const { country, SL, offset } = payload;
+  console.log("offline all users from saga ", country, SL, offset);
+  try {
+    const fetchedCountriesOfflineUsers = yield call(
+      getOfflineCountriesAllUsers,
+      country,
+      SL,
+      offset
+    );
+    console.log(
+      "fetchedCountriesOfflineUsers : ",
+      fetchedCountriesOfflineUsers
+    );
+    yield put(allCountriesOfflineUsersSuccess(fetchedCountriesOfflineUsers));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 function* countryCitiesOfflineRequest({ payload }) {
   console.log("country Offline from saga ", payload);
   try {
@@ -423,11 +451,15 @@ function* countryCitiesOfflineRequest({ payload }) {
 }
 
 function* countryRecentActiveUsersRequest({ payload }) {
+  const { country, SL, SH, offset } = payload;
   console.log("country recent user from saga ", payload);
   try {
     const fetchedCountryRecentActiveUsers = yield call(
       getCountryRecentActiveUsers,
-      payload
+      country,
+      SL,
+      SH,
+      offset
     );
     console.log(
       "return recent user from saga ",
@@ -544,6 +576,13 @@ export function* fetchPhotoReadRequest() {
 export function* fetchAllCountriesOffline() {
   yield takeEvery(ALL_COUNTRIES_OFFLINE, fetchAllCountriesOfflineRequest);
 }
+
+export function* fetchAllCountriesOfflineUsers() {
+  yield takeEvery(
+    ALL_COUNTRIES_OFFLINE_USERS,
+    fetchAllCountriesOfflineUsersRequest
+  );
+}
 export function* fetchCountryCitiesOffline() {
   yield takeEvery(COUNTRY_CITIES_OFFLINE, countryCitiesOfflineRequest);
 }
@@ -570,6 +609,7 @@ export default function* rootSaga() {
     fork(fetchAllCountriesSelectedOnline),
     fork(fetchPhotoReadRequest),
     fork(fetchAllCountriesOffline),
+    fork(fetchAllCountriesOfflineUsers),
     fork(fetchCountryCitiesOffline),
     fork(fetchCountryRecentActiveUsers),
     fork(fetchCountryCityRecentActiveUsers),

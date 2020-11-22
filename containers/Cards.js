@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Typography from "@material-ui/core/Typography";
 import UserCard from "../components/Cards/UserCard";
+import UsersOffline from "../components/UsersOffline";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import SwipeableViews from "react-swipeable-views";
 import AppBar from "@material-ui/core/AppBar";
@@ -24,41 +27,10 @@ import {
   countryCitySelectedOnline,
   countryCitiesAgerangeSelectedOnline,
   countryCityAgerangeSelectedOnline,
+  countryRecentActiveUsers,
+  countryCityRecentActiveUsers,
   requestPhotoRead
 } from "../actions/Home";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-};
-
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`
-  };
-}
 
 const useStyles = makeStyles(theme => ({
   displayF: {
@@ -75,7 +47,7 @@ export default function Cards() {
   );
 
   // offline
-  const countryRecentActiveUsers = useSelector(
+  const CountryRecentActiveUsers = useSelector(
     state => state.home.countryRecentActiveUsers
   );
 
@@ -93,12 +65,14 @@ export default function Cards() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (searchState == "most recent") {
+    }
     // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
     //dispatch(countryCitySelectedOnline("EG", "3"));
     //dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
-    dispatch(countryCityAgerangeSelectedOnline("EG", "3", "18-25"));
+    //dispatch(countryCityAgerangeSelectedOnline("EG", "3", "18-25"));
   }, []);
   // useEffect(() => {
   //   // console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
@@ -109,12 +83,19 @@ export default function Cards() {
   //   // }
   // }, [allCountriesSelectedOnlineUsers]);
 
+  // useEffect(() => {
+  //   if (allCountriesOfflineUsers != null) {
+  //     console.log("allCountriesOfflineUsers change", allCountriesOfflineUsers);
+  //     // dispatch(requestPhotoRead());
+  //   }
+  // }, [allCountriesOfflineUsers]);
+
   useEffect(() => {
-    if (countryRecentActiveUsers != null) {
-      console.log("countryRecentActiveUsers change", countryRecentActiveUsers);
+    if (CountryRecentActiveUsers != null) {
+      console.log("countryRecentActiveUsers change", CountryRecentActiveUsers);
       dispatch(requestPhotoRead());
     }
-  }, [countryRecentActiveUsers]);
+  }, [CountryRecentActiveUsers]);
 
   useEffect(() => {
     if (countryCityRecentActiveUsers != null) {
@@ -127,17 +108,17 @@ export default function Cards() {
   }, [countryCityRecentActiveUsers]);
 
   useEffect(() => {
-    console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
+    // console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
     if (photoReadSignedRequest != null) {
       if (searchState == "most recent") {
-        if (countryRecentActiveUsers != null) {
+        if (CountryRecentActiveUsers != null) {
           console.log(
             "countryRecentActiveUsers :on map ",
-            countryRecentActiveUsers
+            CountryRecentActiveUsers
           );
           // Users based on Country
           mapUserPhotoUrl(
-            countryRecentActiveUsers.users,
+            CountryRecentActiveUsers.users,
             photoReadSignedRequest.signedRequest
           );
         } else if (countryCityRecentActiveUsers != null) {
@@ -174,43 +155,65 @@ export default function Cards() {
       {/* {console.log(
         "countryRecentActiveUsers from render : ",
         countryRecentActiveUsers,
+        "countryCityRecentActiveUsers from render : ",
+        countryCityRecentActiveUsers,
         "searchState",
         searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
       )} */}
-      <div className={classes.displayF}>
-        {/* {searchState == "active" &&
+      {/* {searchState == "active" &&
           allCountriesSelectedOnlineUsers?.map((option, index) =>
             index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
           )} */}
-        {searchState == "most recent" &&
-          (countryRecentActiveUsers != null
-            ? countryRecentActiveUsers.users.map((option, index) =>
+
+      {/* Display Most Recent Users */}
+      {searchState == "most recent" &&
+        (CountryRecentActiveUsers != null ? (
+          <InfiniteScroll
+            dataLength={CountryRecentActiveUsers.length}
+            next={dispatch(
+              countryRecentActiveUsers(CountryRecentActiveUsers.country)
+            )}
+            hasMore={CountryRecentActiveUsers.length < 10 ? false : true}
+            loader={<CircularProgress />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            <div className={classes.displayF}>
+              {CountryRecentActiveUsers.users.map((option, index) =>
                 index % 2 == 0 ? (
                   <UserCard
                     key={option.i}
                     user={option}
-                    country={countryRecentActiveUsers.country}
-                    timeScore={countryRecentActiveUsers.users[index + 1]}
+                    country={CountryRecentActiveUsers.country}
+                    timeScore={CountryRecentActiveUsers.users[index + 1]}
                   ></UserCard>
                 ) : (
                   ""
                 )
-              )
-            : countryCityRecentActiveUsers?.users.map((option, index) =>
-                index % 2 == 0 ? (
-                  <UserCard
-                    key={option.i}
-                    user={option}
-                    country={countryCityRecentActiveUsers.country}
-                    timeScore={countryCityRecentActiveUsers.users[index + 1]}
-                  ></UserCard>
-                ) : (
-                  ""
-                )
-              ))}
-      </div>
+              )}
+            </div>
+          </InfiniteScroll>
+        ) : countryCityRecentActiveUsers != null ? (
+          countryCityRecentActiveUsers?.users.map((option, index) =>
+            index % 2 == 0 ? (
+              <UserCard
+                key={option.i}
+                user={option}
+                country={countryCityRecentActiveUsers.country}
+                timeScore={countryCityRecentActiveUsers.users[index + 1]}
+              ></UserCard>
+            ) : (
+              ""
+            )
+          )
+        ) : (
+          <UsersOffline />
+        ))}
     </>
   );
 }

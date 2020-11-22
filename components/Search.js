@@ -11,7 +11,8 @@ import {
   allCountriesOffline,
   countryCitiesOffline,
   countryRecentActiveUsers,
-  countryCityRecentActiveUsers
+  countryCityRecentActiveUsers,
+  allCountriesOfflineUsers
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -103,7 +104,8 @@ const useStyles = makeStyles(theme => ({
   },
   displayFlexSA: {
     display: "flex",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    flexWrap: "wrap"
   },
   displayFlexSB: {
     display: "flex",
@@ -179,6 +181,10 @@ export default function Search() {
     state => state.home.countryCitiesOffline
   );
 
+  const selectedCountryIndexForUsers = useSelector(
+    state => state.home.selectedCountryIndexForUsers
+  );
+
   const dispatch = useDispatch();
 
   const handleClickListItem = event => {
@@ -227,18 +233,16 @@ export default function Search() {
     setAnchorElCit(null);
   };
 
-  // useEffect(() => {
-  //   dispatch(allCountriesOnline());
-  // }, []);
-
   useEffect(() => {
     // fill dropdowns based on optionValue
     setSelectedIndex(-1);
     setSelectedIndexC(-1);
     setSelectedIndexCit(-1);
     if (optionValue == "most recent") {
+      //Get all Countries Offline
       dispatch(allCountriesOffline());
     } else {
+      // Get all Countries Online
       dispatch(allCountriesOnline());
     }
   }, [optionValue]);
@@ -358,24 +362,51 @@ export default function Search() {
     }
   }, [selectedIndexCit]);
 
+  useEffect(() => {
+    if (CountriesOptionsOffline != null) {
+      console.log(
+        "CountriesOptionsOffline from Cards Component : ",
+        CountriesOptionsOffline
+      );
+      // Get most recent users for first call
+      dispatch(
+        allCountriesOfflineUsers(
+          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
+          0,
+          0
+        )
+      );
+    }
+  }, [CountriesOptionsOffline]);
+
   const onSearch = () => {
     if (optionValue == "active") {
     } else if (optionValue == "most recent") {
-      if (selectedIndexC != -1 && selectedIndexCit == -1) {
-        // Get Users based on country only
-        dispatch(
-          countryRecentActiveUsers(
-            CountriesOptionsOffline.list_of_results[selectedIndexC]
-          )
-        );
-      } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
-        // Get Users based on country and city
-        dispatch(
-          countryCityRecentActiveUsers(
-            CountriesOptionsOffline.list_of_results[selectedIndexC],
-            CountryCitiesOptionsOffline.list_of_results[selectedIndexCit]
-          )
-        );
+      let scoreH = "",
+        ScoreL = "",
+        offsetOffline = 0;
+      if (selectedIndex == -1) {
+        if (selectedIndexC != -1 && selectedIndexCit == -1) {
+          // Get Users based on country only
+          dispatch(
+            countryRecentActiveUsers(
+              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              ScoreL,
+              scoreH,
+              offsetOffline
+            )
+          );
+        } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
+          // Get Users based on country and city
+          dispatch(
+            countryCityRecentActiveUsers(
+              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit]
+            )
+          );
+        }
+      } else {
+        // calc scoreH and scoreL from age range
       }
     }
   };
@@ -630,6 +661,61 @@ export default function Search() {
               </Menu>
             </div>
           )}
+
+          {optionValue == "most recent" && (
+            <div className={classes.menu}>
+              <List component="nav" aria-label="Age Range">
+                <ListItem
+                  button
+                  aria-haspopup="true"
+                  aria-controls="lock-menu"
+                  aria-label="Age Range"
+                  onClick={handleClickListItem}
+                >
+                  <ListItemText
+                    primary="Age Range"
+                    secondary={
+                      selectedIndex == -1
+                        ? "Select Age Range"
+                        : ARRAY_OF_AGE_RANGE[selectedIndex]
+                    }
+                  />
+                </ListItem>
+              </List>
+              <Menu
+                id="lock-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    setSelectedIndex(-1);
+                    setAnchorEl(null);
+                  }}
+                  className={classes.displayFlexSB}
+                >
+                  <Typography variant="button" gutterBottom>
+                    No Select
+                  </Typography>
+                </MenuItem>
+                {ARRAY_OF_AGE_RANGE.map((option, index) => (
+                  <MenuItem
+                    className={classes.displayFlexSB}
+                    key={option}
+                    selected={index === selectedIndex}
+                    onClick={event => handleMenuItemClick(event, index)}
+                  >
+                    <Typography variant="button" gutterBottom>
+                      {option}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </div>
+          )}
+
           {/* contries list Online*/}
           {optionValue == "active" && CountriesOptionsOnline.list_of_results && (
             <div className={classes.menu}>

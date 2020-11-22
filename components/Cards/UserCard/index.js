@@ -120,7 +120,7 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function UserCard({ user, country, timeScore }) {
+export default function UserCard({ user, timeScore }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
 
@@ -156,11 +156,11 @@ export default function UserCard({ user, country, timeScore }) {
                 )} Years Old`}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {country}
+            {user.co}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {user.ci
-              ? COUNTRY_CITY_MAP[country.toLowerCase()][user.ci - 1]
+              ? COUNTRY_CITY_MAP[user.co.toLowerCase()][user.ci - 1]
               : ""}
           </Typography>
         </CardContent>

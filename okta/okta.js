@@ -2,6 +2,7 @@ import axios from "axios";
 import {setCookie,removeCookie,getCookie} from '../util/session';
 import base64url from 'base64url';
 import {mapUserPhotoPath} from "../helpers/mapUserPhotoPath";
+import {convertListToTwoArrays} from "../helpers/convertListToTwoArrays";
 import imageCompression from 'browser-image-compression';
 
 const auth = {};
@@ -163,7 +164,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 															
 													
 													} else {
-														resolve({"message": res.code});
+														resolve({"message": res.message});
 													}
 													
 								
@@ -1575,7 +1576,34 @@ home.getAllCountriesOffline = function () {
 											
 		  }).catch((err) => {console.log(err)});			
 		
-	}
+}
+
+home.getAllCountriesOfflineUsers = function (country,SL,offset) {
+	console.log("getAllCountriesOfflineUsers from okta",country,SL,offset)
+						  return new Promise(  async (resolve, reject) => {				
+												try {
+													let users= await home.getCountryRecentActiveUsers(country,"",SL,offset);
+													console.log(`respo all_countries_offline_Users data from okta :${country} `,users);
+													
+													   if(users){
+														const mapedList =convertListToTwoArrays(users);
+														console.log("usersArr, timeScoreArr" ,mapedList);
+													    resolve(mapedList)
+																					 
+													   } else {
+														   
+														   resolve({"message": "no response !"})
+													   }
+										
+												} catch(err) {
+													resolve({"message": err.message});
+												}		
+		
+								  
+												
+			  }).catch((err) => {console.log(err)});			
+			
+}
 
 home.getCountryCitiesOffline = function (country) {
 
@@ -1630,14 +1658,14 @@ home.getCountryCitiesOffline = function (country) {
 			}	
 
 
-home.getCountryRecentActiveUsers = function (country) {
+home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
 
-	// "searchlistid" : "EG_country_recent_active_users",
+	// "searchlistid" :"EG_country_recent_active_users",
     // "onlineflag" : false,
     // "scoreH":"",
     // "scoreL":"",
     // "offset":""
-				console.log("country selected for recent_active_users from okta ",country);
+				console.log("country selected for recent_active_users from okta SH ",country, SL,SH,offset);
 									  return new Promise(  async (resolve, reject) => {				
 															try {
 																
@@ -1653,6 +1681,9 @@ home.getCountryRecentActiveUsers = function (country) {
 																				  data: {
 																					 searchlistid : `${country}_country_recent_active_users`,
 																					 onlineflag : false,
+																					 scoreH:SH,
+																					 scoreL:SL,
+																					 offset
 				
 																				  }
 																				};
@@ -1665,11 +1696,11 @@ home.getCountryRecentActiveUsers = function (country) {
 																   if(response){
 																	//const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
 																	//console.log("ReturnUsers okta : ",ReturnUsers);
-																	const ReturnUsers={
-																		country,
-																		users:mapUserPhotoPath(response.list_of_results,country)
-																	}
-																	console.log("ReturnUsers okta : ",ReturnUsers);
+																	// const ReturnUsers={
+																	// 	users:mapUserPhotoPath(response.list_of_results,country)
+																	// }
+																	const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
+																	//console.log("ReturnUsers okta : ",ReturnUsers);
 																	resolve(ReturnUsers);					 
 																   } else {
 																	   

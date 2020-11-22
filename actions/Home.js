@@ -32,7 +32,10 @@ import {
   COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE,
   COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITY_AGERANGE_SELECTED_ONLINE,
-  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS
+  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS,
+  ALL_COUNTRIES_OFFLINE_USERS,
+  ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
+  SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -261,6 +264,22 @@ export const allCountriesOfflineSuccess = data => {
   };
 };
 
+export const allCountriesOfflineUsers = (country, SL, offset) => {
+  console.log("ALL_COUNTRIES_OFFLINEUsers from action ", country, SL, offset);
+  return {
+    type: ALL_COUNTRIES_OFFLINE_USERS,
+    payload: { country, SL, offset }
+  };
+};
+
+export const allCountriesOfflineUsersSuccess = data => {
+  console.log("ALL_COUNTRIES_OFFLINE_USERS_SUCCESS from action ", data);
+  return {
+    type: ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
+    payload: data
+  };
+};
+
 export const countryCitiesOffline = country => {
   console.log("COUNTRY_CITIES_OFFLINE from action ");
   return {
@@ -277,11 +296,11 @@ export const fetchCountryCitiesOfflineSuccess = data => {
   };
 };
 
-export const countryRecentActiveUsers = country => {
+export const countryRecentActiveUsers = (country, SL, SH, offset) => {
   console.log("country_recent_active_users from action ");
   return {
     type: COUNTRY_RECENT_ACTIVE_USERS,
-    payload: country
+    payload: { country, SL, SH, offset }
   };
 };
 

@@ -15,8 +15,11 @@ import {
   COUNTRY_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITY_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS,
-  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS
+  COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS,
+  ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
+  SHOW_MESSAGE
 } from "../constants/ActionTypes";
+import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 
 const initialHomeState = {
   allCountriesOnline: [],
@@ -32,12 +35,21 @@ const initialHomeState = {
   countryCitiesAgerangeSelectedOnlineUsers: null,
   countryCityAgerangeSelectedOnlineUsers: null,
   allCountriesOffline: null,
+  allCountriesOfflineUsers: [],
+  allCountriesOfflineUsersTimeScore: [],
   countryCitiesOffline: null,
   countryRecentActiveUsers: null,
   countryCityRecentActiveUsers: null,
   photoReadSignedRequest: null,
-  searchState: "active"
-  // countrySelected: false
+  searchState: "active",
+  scoreHOffline: "",
+  scoreLOffline: "",
+  OffsetOfline: 0,
+  endOfResult: false,
+  selectedCountryIndexForUsers: 0,
+  showMessage: false,
+  loader: false,
+  alertMessage: ""
 };
 
 const home = (state = initialHomeState, action) => {
@@ -122,6 +134,31 @@ const home = (state = initialHomeState, action) => {
         ...state,
         allCountriesOffline: action.payload
       };
+
+    case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS:
+      console.log("action.payload from reducer []", action.payload);
+      const { offset, SL } = calcValueOfSlAndOffset(
+        action.payload.timeScoreArr
+      );
+      let end = false;
+      if (action.payload.usersArr.length === 0) {
+        end = true;
+      }
+      return {
+        ...state,
+        allCountriesOfflineUsers: [
+          ...state.allCountriesOfflineUsers,
+          ...action.payload.usersArr
+        ],
+        allCountriesOfflineUsersTimeScore: [
+          ...state.allCountriesOfflineUsersTimeScore,
+          ...action.payload.timeScoreArr
+        ],
+        OffsetOfline: offset,
+        scoreLOffline: SL,
+        endOfResult: end,
+        searchState: "most recent"
+      };
     case COUNTRY_CITIES_OFFLINE_SUCCESS:
       return {
         ...state,
@@ -139,6 +176,14 @@ const home = (state = initialHomeState, action) => {
         countryCityRecentActiveUsers: action.payload,
         searchState: "most recent"
       };
+    case SHOW_MESSAGE: {
+      return {
+        ...state,
+        alertMessage: action.payload,
+        showMessage: true,
+        loader: false
+      };
+    }
     default:
       return state;
   }

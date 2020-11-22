@@ -77,6 +77,7 @@
     "react-image-crop": "^8.6.6",
     "react-image-file-resizer": "^0.3.8",
     "react-images-upload": "^1.2.8",
+    "react-infinite-scroll-component": "^5.1.0",
     "react-intl": "^2.9.0",
     "react-joyride": "^2.0.5",
     "react-jvectormap": "^0.0.12",
