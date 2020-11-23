@@ -238,3 +238,5 @@ export const COUNTRY_CITY_RECENT_ACTIVE_USERS =
   "country_city_recent_active_users";
 export const COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS =
   "country_city_recent_active_users_success";
+
+export const RESET_STATES = "reset_states";

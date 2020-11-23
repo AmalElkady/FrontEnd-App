@@ -29,7 +29,8 @@ import {
   countryCityAgerangeSelectedOnline,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
-  requestPhotoRead
+  requestPhotoRead,
+  resetStates
 } from "../actions/Home";
 
 const useStyles = makeStyles(theme => ({
@@ -51,12 +52,32 @@ export default function Cards() {
     state => state.home.countryRecentActiveUsers
   );
 
+  const CountriesOptionsOffline = useSelector(
+    state => state.home.allCountriesOffline
+  );
+  // Cities
+  // const CountryCitiesOptionsOffline = useSelector(
+  //   state => state.home.countryCitiesOffline
+  // );
+
+  const selectedCountryIndexForUsers = useSelector(
+    state => state.home.selectedCountryIndexForUsers
+  );
+
+  const countryRecentActiveUsersTimescore = useSelector(
+    state => state.home.countryRecentActiveUsersTimescore
+  );
+
   const countryCityRecentActiveUsers = useSelector(
     state => state.home.countryCityRecentActiveUsers
   );
 
   ////
   const searchState = useSelector(state => state.home.searchState);
+
+  const OffsetOfline = useSelector(state => state.home.OffsetOfline);
+  const scoreLOffline = useSelector(state => state.home.scoreLOffline);
+  const endOfResult = useSelector(state => state.home.endOfResult);
 
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
@@ -65,8 +86,8 @@ export default function Cards() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (searchState == "most recent") {
-    }
+    console.log("reset from component cards ");
+    dispatch(resetStates());
     // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
@@ -118,7 +139,7 @@ export default function Cards() {
           );
           // Users based on Country
           mapUserPhotoUrl(
-            CountryRecentActiveUsers.users,
+            CountryRecentActiveUsers,
             photoReadSignedRequest.signedRequest
           );
         } else if (countryCityRecentActiveUsers != null) {
@@ -150,15 +171,34 @@ export default function Cards() {
 
   const classes = useStyles();
 
+  const onSearchScroll = () => {
+    console.log(
+      "endOfResult scoreLOffline OffsetOfline scroll onsearch",
+      endOfResult,
+      scoreLOffline,
+      OffsetOfline
+    );
+    if (!endOfResult) {
+      dispatch(
+        countryRecentActiveUsers(
+          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
+          scoreLOffline,
+          "",
+          OffsetOfline
+        )
+      );
+    }
+  };
+
   return (
     <>
       {/* {console.log(
         "countryRecentActiveUsers from render : ",
-        countryRecentActiveUsers,
-        "countryCityRecentActiveUsers from render : ",
-        countryCityRecentActiveUsers,
-        "searchState",
-        searchState
+        CountryRecentActiveUsers
+        // "countryCityRecentActiveUsers from render : ",
+        // countryCityRecentActiveUsers,
+        // "searchState",
+        // searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
       )} */}
@@ -169,13 +209,12 @@ export default function Cards() {
 
       {/* Display Most Recent Users */}
       {searchState == "most recent" &&
-        (CountryRecentActiveUsers != null ? (
+        (CountryRecentActiveUsers.length != 0 ? (
           <InfiniteScroll
             dataLength={CountryRecentActiveUsers.length}
-            next={dispatch(
-              countryRecentActiveUsers(CountryRecentActiveUsers.country)
-            )}
-            hasMore={CountryRecentActiveUsers.length < 10 ? false : true}
+            next={onSearchScroll}
+            height={500}
+            hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
@@ -184,18 +223,13 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {CountryRecentActiveUsers.users.map((option, index) =>
-                index % 2 == 0 ? (
-                  <UserCard
-                    key={option.i}
-                    user={option}
-                    country={CountryRecentActiveUsers.country}
-                    timeScore={CountryRecentActiveUsers.users[index + 1]}
-                  ></UserCard>
-                ) : (
-                  ""
-                )
-              )}
+              {CountryRecentActiveUsers.map((option, index) => (
+                <UserCard
+                  key={option.i}
+                  user={option}
+                  timeScore={countryRecentActiveUsersTimescore[index]}
+                ></UserCard>
+              ))}
             </div>
           </InfiniteScroll>
         ) : countryCityRecentActiveUsers != null ? (

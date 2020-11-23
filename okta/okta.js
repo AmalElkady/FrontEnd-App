@@ -1587,7 +1587,7 @@ home.getAllCountriesOfflineUsers = function (country,SL,offset) {
 													
 													   if(users){
 														const mapedList =convertListToTwoArrays(users);
-														console.log("usersArr, timeScoreArr" ,mapedList);
+														console.log("usersArr, timeScoreArr from okta" ,mapedList);
 													    resolve(mapedList)
 																					 
 													   } else {

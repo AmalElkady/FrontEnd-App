@@ -17,9 +17,11 @@ import {
   COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS,
   ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
-  SHOW_MESSAGE
+  SHOW_MESSAGE,
+  RESET_STATES
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
+import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
 
 const initialHomeState = {
   allCountriesOnline: [],
@@ -38,7 +40,8 @@ const initialHomeState = {
   allCountriesOfflineUsers: [],
   allCountriesOfflineUsersTimeScore: [],
   countryCitiesOffline: null,
-  countryRecentActiveUsers: null,
+  countryRecentActiveUsers: [],
+  countryRecentActiveUsersTimescore: [],
   countryCityRecentActiveUsers: null,
   photoReadSignedRequest: null,
   searchState: "active",
@@ -135,7 +138,7 @@ const home = (state = initialHomeState, action) => {
         allCountriesOffline: action.payload
       };
 
-    case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS:
+    case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS: {
       console.log("action.payload from reducer []", action.payload);
       const { offset, SL } = calcValueOfSlAndOffset(
         action.payload.timeScoreArr
@@ -159,22 +162,48 @@ const home = (state = initialHomeState, action) => {
         endOfResult: end,
         searchState: "most recent"
       };
+    }
     case COUNTRY_CITIES_OFFLINE_SUCCESS:
       return {
         ...state,
         countryCitiesOffline: action.payload
       };
-    case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS:
+    case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS: {
+      const mapedList = convertListToTwoArrays(action.payload);
+      console.log("usersArr, timeScoreArr from reducer", mapedList);
+      const { offset, SL } = calcValueOfSlAndOffset(mapedList.timeScoreArr);
+      let end = false;
+      if (mapedList.usersArr.length === 0) {
+        end = true;
+      }
       return {
         ...state,
-        countryRecentActiveUsers: action.payload,
+        countryRecentActiveUsers: [
+          ...state.countryRecentActiveUsers,
+          ...mapedList.usersArr
+        ],
+        countryRecentActiveUsersTimescore: [
+          ...state.countryRecentActiveUsersTimescore,
+          ...mapedList.timeScoreArr
+        ],
+        OffsetOfline: offset,
+        scoreLOffline: SL,
+        endOfResult: end,
         searchState: "most recent"
       };
+    }
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
       return {
         ...state,
         countryCityRecentActiveUsers: action.payload,
         searchState: "most recent"
+      };
+    case RESET_STATES:
+      return {
+        ...state,
+        scoreLOffline: "",
+        OffsetOfline: 0,
+        endOfResult: false
       };
     case SHOW_MESSAGE: {
       return {

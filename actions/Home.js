@@ -35,7 +35,8 @@ import {
   COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS,
   ALL_COUNTRIES_OFFLINE_USERS,
   ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
-  SHOW_MESSAGE
+  SHOW_MESSAGE,
+  RESET_STATES
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -297,7 +298,13 @@ export const fetchCountryCitiesOfflineSuccess = data => {
 };
 
 export const countryRecentActiveUsers = (country, SL, SH, offset) => {
-  console.log("country_recent_active_users from action ");
+  console.log(
+    "country_recent_active_users from action :",
+    country,
+    SL,
+    SH,
+    offset
+  );
   return {
     type: COUNTRY_RECENT_ACTIVE_USERS,
     payload: { country, SL, SH, offset }
@@ -330,5 +337,11 @@ export const showHomeMessage = message => {
   return {
     type: SHOW_MESSAGE,
     payload: message
+  };
+};
+
+export const resetStates = () => {
+  return {
+    type: RESET_STATES
   };
 };

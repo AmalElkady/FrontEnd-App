@@ -95,7 +95,10 @@ export default function UsersOffline() {
   const classes = useStyles();
   useEffect(() => {
     if (AllCountriesOfflineUsers != []) {
-      console.log("allCountriesOfflineUsers change", AllCountriesOfflineUsers);
+      console.log(
+        "allCountriesOfflineUsers change from users-offline component",
+        AllCountriesOfflineUsers
+      );
       dispatch(requestPhotoRead());
     }
   }, [AllCountriesOfflineUsers]);
@@ -122,16 +125,15 @@ export default function UsersOffline() {
     }
   }, [photoReadSignedRequest]);
 
-  const onScroll = () => {
+  const handleScroll = () => {
     console.log(
-      "endOfResult selectedCountryIndexForUsers scoreLOffline OffsetOfline",
+      "endOfResult selectedCountryIndexForUsers scoreLOffline OffsetOfline users-offline component ",
       endOfResult,
       selectedCountryIndexForUsers,
       scoreLOffline,
       OffsetOfline
     );
     if (!endOfResult) {
-      console.log("trueeeeee");
       dispatch(
         allCountriesOfflineUsers(
           CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
@@ -155,13 +157,13 @@ export default function UsersOffline() {
       {searchState == "most recent" && AllCountriesOfflineUsers != [] && (
         <InfiniteScroll
           dataLength={AllCountriesOfflineUsers.length}
-          next={onScroll()}
+          height={500}
+          next={handleScroll}
           hasMore={!endOfResult}
-          // hasMore={true}
           loader={<CircularProgress />}
           endMessage={
             <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
+              <b>Yay! You have seen all Users most recent </b>
             </p>
           }
         >

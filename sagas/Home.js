@@ -142,7 +142,7 @@ const getCountryCitiesOffline = async country =>
     .then(returnCities => returnCities)
     .catch(error => error);
 
-const getCountryRecentActiveUsers = async (country, SL, SH, offset) =>
+const getCountryRecentActiveUsers = async (country, SH, SL, offset) =>
   await home
     .getCountryRecentActiveUsers(country, SL, SH, offset)
     .then(returnUsers => returnUsers)
@@ -424,7 +424,7 @@ function* fetchAllCountriesOfflineUsersRequest({ payload }) {
       offset
     );
     console.log(
-      "fetchedCountriesOfflineUsers : ",
+      "fetchedALLCountriesOfflineUsers : ",
       fetchedCountriesOfflineUsers
     );
     yield put(allCountriesOfflineUsersSuccess(fetchedCountriesOfflineUsers));

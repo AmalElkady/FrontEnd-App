@@ -12,7 +12,8 @@ import {
   countryCitiesOffline,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
-  allCountriesOfflineUsers
+  allCountriesOfflineUsers,
+  resetStates
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -365,14 +366,13 @@ export default function Search() {
   useEffect(() => {
     if (CountriesOptionsOffline != null) {
       console.log(
-        "CountriesOptionsOffline from Cards Component : ",
-        CountriesOptionsOffline
+        "get allCountriesOfflineUsers first time from search Component : "
       );
       // Get most recent users for first call
       dispatch(
         allCountriesOfflineUsers(
           CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
-          0,
+          "",
           0
         )
       );
@@ -382,18 +382,26 @@ export default function Search() {
   const onSearch = () => {
     if (optionValue == "active") {
     } else if (optionValue == "most recent") {
-      let scoreH = "",
-        ScoreL = "",
-        offsetOffline = 0;
+      //without Agerange
       if (selectedIndex == -1) {
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
+          //dispatch(resetStates());
+          // console.log(
+          //   "country ,scoreLOffline,OffsetOfline :",
+          //   CountriesOptionsOffline.list_of_results[selectedIndexC],
+          //   scoreLOffline,
+          //   OffsetOfline
+          // );
+
+          console.log("click search:");
+
           dispatch(
             countryRecentActiveUsers(
               CountriesOptionsOffline.list_of_results[selectedIndexC],
-              ScoreL,
-              scoreH,
-              offsetOffline
+              "",
+              "",
+              0
             )
           );
         } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
