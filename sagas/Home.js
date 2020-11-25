@@ -148,9 +148,9 @@ const getCountryRecentActiveUsers = async (country, SH, SL, offset) =>
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
-const getCountryCityRecentActiveUsers = async (country, city) =>
+const getCountryCityRecentActiveUsers = async (country, city, SH, SL, offset) =>
   await home
-    .getCountryCityRecentActiveUsers(country, city)
+    .getCountryCityRecentActiveUsers(country, city, SH, SL, offset)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -474,13 +474,16 @@ function* countryRecentActiveUsersRequest({ payload }) {
 }
 
 function* countryCityRecentActiveUsersRequest({ payload }) {
-  const { country, city } = payload;
+  const { country, city, SL, SH, offset } = payload;
   console.log("country city recent user from saga ", payload);
   try {
     const fetchedCountryCityRecentActiveUsers = yield call(
       getCountryCityRecentActiveUsers,
       country,
-      city
+      city,
+      SL,
+      SH,
+      offset
     );
     console.log(
       "return recent user from saga ",

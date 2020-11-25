@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { userSignOut } from "../../actions/Auth";
+import { resetStates } from "../../actions/Home";
 import IntlMessages from "../../util/IntlMessages";
 
 class UserInfo extends React.Component {
@@ -62,6 +63,7 @@ class UserInfo extends React.Component {
           <MenuItem
             onClick={() => {
               this.handleRequestClose();
+              this.props.resetStates();
               this.props.userSignOut();
             }}
           >
@@ -79,4 +81,4 @@ const mapStateToProps = ({ settings, auth }) => {
   const { locale } = settings;
   return { locale, auth };
 };
-export default connect(mapStateToProps, { userSignOut })(UserInfo);
+export default connect(mapStateToProps, { userSignOut, resetStates })(UserInfo);

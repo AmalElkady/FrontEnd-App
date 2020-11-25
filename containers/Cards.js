@@ -56,9 +56,9 @@ export default function Cards() {
     state => state.home.allCountriesOffline
   );
   // Cities
-  // const CountryCitiesOptionsOffline = useSelector(
-  //   state => state.home.countryCitiesOffline
-  // );
+  const CountryCitiesOptionsOffline = useSelector(
+    state => state.home.countryCitiesOffline
+  );
 
   const selectedCountryIndexForUsers = useSelector(
     state => state.home.selectedCountryIndexForUsers
@@ -68,8 +68,12 @@ export default function Cards() {
     state => state.home.countryRecentActiveUsersTimescore
   );
 
-  const countryCityRecentActiveUsers = useSelector(
+  const CountryCityRecentActiveUsers = useSelector(
     state => state.home.countryCityRecentActiveUsers
+  );
+
+  const countryCityRecentActiveUsersTimescore = useSelector(
+    state => state.home.countryCityRecentActiveUsersTimescore
   );
 
   ////
@@ -87,7 +91,7 @@ export default function Cards() {
 
   useEffect(() => {
     console.log("reset from component cards ");
-    dispatch(resetStates());
+    //dispatch(resetStates());
     // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
@@ -112,27 +116,34 @@ export default function Cards() {
   // }, [allCountriesOfflineUsers]);
 
   useEffect(() => {
-    if (CountryRecentActiveUsers != null) {
+    if (CountryRecentActiveUsers.length != 0) {
       console.log("countryRecentActiveUsers change", CountryRecentActiveUsers);
       dispatch(requestPhotoRead());
+    } else {
+      //console.log("reset from component cards country recent2 ");
+      // dispatch(resetStates());
     }
   }, [CountryRecentActiveUsers]);
 
   useEffect(() => {
-    if (countryCityRecentActiveUsers != null) {
+    if (countryCityRecentActiveUsers.length != 0) {
       console.log(
         "countryCityRecentActiveUsers change",
         countryCityRecentActiveUsers
       );
       dispatch(requestPhotoRead());
+    } else {
+      // console.log("reset from component cards country city recent ");
+      // dispatch(resetStates());
     }
-  }, [countryCityRecentActiveUsers]);
+  }, [CountryCityRecentActiveUsers]);
 
   useEffect(() => {
     // console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
     if (photoReadSignedRequest != null) {
+      console.log("faaaaalse ,", searchState);
       if (searchState == "most recent") {
-        if (CountryRecentActiveUsers != null) {
+        if (CountryRecentActiveUsers.length != 0) {
           console.log(
             "countryRecentActiveUsers :on map ",
             CountryRecentActiveUsers
@@ -142,14 +153,14 @@ export default function Cards() {
             CountryRecentActiveUsers,
             photoReadSignedRequest.signedRequest
           );
-        } else if (countryCityRecentActiveUsers != null) {
+        } else if (CountryCityRecentActiveUsers.length != 0) {
           console.log(
             "countryCityRecentActiveUsers :on map ",
-            countryCityRecentActiveUsers
+            CountryCityRecentActiveUsers
           );
           // Users based on Country and city
           mapUserPhotoUrl(
-            countryCityRecentActiveUsers.users,
+            CountryCityRecentActiveUsers,
             photoReadSignedRequest.signedRequest
           );
         }
@@ -171,7 +182,7 @@ export default function Cards() {
 
   const classes = useStyles();
 
-  const onSearchScroll = () => {
+  const onScrollCountryRecentUsers = () => {
     console.log(
       "endOfResult scoreLOffline OffsetOfline scroll onsearch",
       endOfResult,
@@ -190,18 +201,40 @@ export default function Cards() {
     }
   };
 
+  const onScrollCountryCityRecentUsers = () => {
+    console.log(
+      "endOfResult scoreLOffline OffsetOfline onScrollCountryCityRecentUsers",
+      endOfResult,
+      scoreLOffline,
+      OffsetOfline
+    );
+    if (!endOfResult) {
+      dispatch(
+        countryCityRecentActiveUsers(
+          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
+          CountryCitiesOptionsOffline.list_of_results[0],
+          scoreLOffline,
+          "",
+          OffsetOfline
+        )
+      );
+    }
+  };
+
   return (
     <>
-      {/* {console.log(
+      {console.log(
         "countryRecentActiveUsers from render : ",
-        CountryRecentActiveUsers
-        // "countryCityRecentActiveUsers from render : ",
-        // countryCityRecentActiveUsers,
+        CountryRecentActiveUsers,
+        "countryCityRecentActiveUsers from render : ",
+        CountryCityRecentActiveUsers,
+        "end ",
+        endOfResult
         // "searchState",
         // searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
-      )} */}
+      )}
       {/* {searchState == "active" &&
           allCountriesSelectedOnlineUsers?.map((option, index) =>
             index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
@@ -212,13 +245,13 @@ export default function Cards() {
         (CountryRecentActiveUsers.length != 0 ? (
           <InfiniteScroll
             dataLength={CountryRecentActiveUsers.length}
-            next={onSearchScroll}
+            next={onScrollCountryRecentUsers}
             height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all</b>
+                <b>Yay! You have seen it all country users</b>
               </p>
             }
           >
@@ -232,19 +265,29 @@ export default function Cards() {
               ))}
             </div>
           </InfiniteScroll>
-        ) : countryCityRecentActiveUsers != null ? (
-          countryCityRecentActiveUsers?.users.map((option, index) =>
-            index % 2 == 0 ? (
-              <UserCard
-                key={option.i}
-                user={option}
-                country={countryCityRecentActiveUsers.country}
-                timeScore={countryCityRecentActiveUsers.users[index + 1]}
-              ></UserCard>
-            ) : (
-              ""
-            )
-          )
+        ) : CountryCityRecentActiveUsers.length != 0 ? (
+          <InfiniteScroll
+            dataLength={CountryCityRecentActiveUsers.length}
+            next={onScrollCountryCityRecentUsers}
+            height={250}
+            hasMore={!endOfResult}
+            loader={<CircularProgress />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all country and cities users</b>
+              </p>
+            }
+          >
+            <div className={classes.displayF}>
+              {CountryCityRecentActiveUsers.map((option, index) => (
+                <UserCard
+                  key={option.i}
+                  user={option}
+                  timeScore={countryCityRecentActiveUsersTimescore[index]}
+                ></UserCard>
+              ))}
+            </div>
+          </InfiniteScroll>
         ) : (
           <UsersOffline />
         ))}

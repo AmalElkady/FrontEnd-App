@@ -319,10 +319,10 @@ export const fetchCountryRecentActiveUsersSuccess = data => {
   };
 };
 
-export const countryCityRecentActiveUsers = (country, city) => {
+export const countryCityRecentActiveUsers = (country, city, SL, SH, offset) => {
   return {
     type: COUNTRY_CITY_RECENT_ACTIVE_USERS,
-    payload: { country, city }
+    payload: { country, city, SL, SH, offset }
   };
 };
 
@@ -341,6 +341,7 @@ export const showHomeMessage = message => {
 };
 
 export const resetStates = () => {
+  console.log("recet from action");
   return {
     type: RESET_STATES
   };

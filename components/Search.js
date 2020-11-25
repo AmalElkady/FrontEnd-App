@@ -386,16 +386,6 @@ export default function Search() {
       if (selectedIndex == -1) {
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
-          //dispatch(resetStates());
-          // console.log(
-          //   "country ,scoreLOffline,OffsetOfline :",
-          //   CountriesOptionsOffline.list_of_results[selectedIndexC],
-          //   scoreLOffline,
-          //   OffsetOfline
-          // );
-
-          console.log("click search:");
-
           dispatch(
             countryRecentActiveUsers(
               CountriesOptionsOffline.list_of_results[selectedIndexC],
@@ -409,7 +399,10 @@ export default function Search() {
           dispatch(
             countryCityRecentActiveUsers(
               CountriesOptionsOffline.list_of_results[selectedIndexC],
-              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit]
+              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit],
+              "",
+              "",
+              0
             )
           );
         }

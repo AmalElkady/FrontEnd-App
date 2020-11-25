@@ -1717,14 +1717,14 @@ home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
 						
 					}	
 					
-home.getCountryCityRecentActiveUsers = function (country,city) {
+home.getCountryCityRecentActiveUsers = function (country,city,SH,SL,offset) {
 
 						// "searchlistid" : "${co}_${ci}_country_city_recent_active_users",
 						// "onlineflag" : false,
 						// "scoreH":"",
 						// "scoreL":"",
 						// "offset":""
-									console.log("country selected and city for recent_active_users from okta ",country ,city);
+									console.log("country selected and city for recent_active_users from okta ",country ,city,SL,SH,offset);
 														  return new Promise(  async (resolve, reject) => {				
 																				try {
 																					
@@ -1740,7 +1740,9 @@ home.getCountryCityRecentActiveUsers = function (country,city) {
 																									  data: {
 																										 searchlistid : `${country}_${city}_country_city_recent_active_users`,
 																										 onlineflag : false,
-									
+																										 scoreH:SH,
+																										 scoreL:SL,
+																										 offset
 																									  }
 																									};
 										
@@ -1752,11 +1754,13 @@ home.getCountryCityRecentActiveUsers = function (country,city) {
 																					   if(response){
 																						// const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
 																						// console.log("ReturnUsers okta : ",ReturnUsers);
-																						const ReturnUsers={
-																							country,
-																							users:mapUserPhotoPath(response.list_of_results,country)
-																						}
-																						console.log("ReturnUsers country city okta : ",ReturnUsers);
+																						// const ReturnUsers={
+																						// 	country,
+																						// 	users:mapUserPhotoPath(response.list_of_results,country)
+																						// }
+																						const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
+																	
+																						//console.log("ReturnUsers country city okta : ",ReturnUsers);
 																						resolve(ReturnUsers);					 
 																					   } else {
 																						   

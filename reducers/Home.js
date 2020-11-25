@@ -42,7 +42,8 @@ const initialHomeState = {
   countryCitiesOffline: null,
   countryRecentActiveUsers: [],
   countryRecentActiveUsersTimescore: [],
-  countryCityRecentActiveUsers: null,
+  countryCityRecentActiveUsers: [],
+  countryCityRecentActiveUsersTimescore: [],
   photoReadSignedRequest: null,
   searchState: "active",
   scoreHOffline: "",
@@ -193,9 +194,31 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
+      const mapedList = convertListToTwoArrays(action.payload);
+      console.log(
+        "usersArr, timeScoreArr COUNTRY_CITY from reducer",
+        mapedList
+      );
+      const { offset, SL } = calcValueOfSlAndOffset(mapedList.timeScoreArr);
+      let end = false;
+      if (mapedList.usersArr.length === 0) {
+        end = true;
+      }
       return {
         ...state,
-        countryCityRecentActiveUsers: action.payload,
+        countryCityRecentActiveUsers: [
+          ...state.countryCityRecentActiveUsers,
+          ...mapedList.usersArr
+        ],
+        countryCityRecentActiveUsersTimescore: [
+          ...state.countryCityRecentActiveUsersTimescore,
+          ...mapedList.timeScoreArr
+        ],
+        countryRecentActiveUsers: [],
+        countryRecentActiveUsersTimescore: [],
+        OffsetOfline: offset,
+        scoreLOffline: SL,
+        endOfResult: end,
         searchState: "most recent"
       };
     case RESET_STATES:
@@ -203,7 +226,10 @@ const home = (state = initialHomeState, action) => {
         ...state,
         scoreLOffline: "",
         OffsetOfline: 0,
-        endOfResult: false
+        endOfResult: false,
+        searchState: "active"
+        // allCountriesOfflineUsers: [],
+        // allCountriesOfflineUsersTimeScore: []
       };
     case SHOW_MESSAGE: {
       return {
