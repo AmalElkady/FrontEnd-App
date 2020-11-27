@@ -141,7 +141,6 @@ export default function Cards() {
   useEffect(() => {
     // console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
     if (photoReadSignedRequest != null) {
-      console.log("faaaaalse ,", searchState);
       if (searchState == "most recent") {
         if (CountryRecentActiveUsers.length != 0) {
           console.log(

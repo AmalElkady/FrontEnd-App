@@ -25,6 +25,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import { calcSlShFromAgerange } from "../helpers/calcSlShFromAgerange";
 
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -408,6 +409,32 @@ export default function Search() {
         }
       } else {
         // calc scoreH and scoreL from age range
+        const { scoreL, scoreH } = calcSlShFromAgerange(
+          ARRAY_OF_AGE_RANGE[selectedIndex]
+        );
+        console.log("scoreL,scoreH ", scoreL, scoreH);
+        if (selectedIndexC != -1 && selectedIndexCit == -1) {
+          // Get Users based on country only
+          dispatch(
+            countryRecentActiveUsers(
+              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              scoreL,
+              scoreH,
+              0
+            )
+          );
+        } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
+          // Get Users based on country and city
+          dispatch(
+            countryCityRecentActiveUsers(
+              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit],
+              scoreL,
+              scoreH,
+              0
+            )
+          );
+        }
       }
     }
   };
