@@ -1551,7 +1551,7 @@ home.getAllCountriesOffline = function () {
 																  },
 																  data: {
 																	allcountriesflag: true,
-																     searchlistid : "all_countries_offline",
+																     searchlistid : "all_countries_recent",
 
 																  }
 																};
@@ -1630,7 +1630,7 @@ home.getCountryCitiesOffline = function (country) {
 																		  },
 																		  data: {
 																			allcountriesflag: false,
-																			 searchlistid : `${country}_country_cities_offline`,
+																			 searchlistid : `${country}_country_cities_recent`,
 		
 																		  }
 																		};
