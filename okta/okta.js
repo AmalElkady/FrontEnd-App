@@ -1067,7 +1067,7 @@ home.getAllCountriesSelectedOnline = function (SH,offset) {
 													  }).catch((err) => {console.log(err)});			
 													
 												}
-home.getAgerangeAllCountriesSelectedOnline = function (ageRange) {
+home.getAgerangeAllCountriesSelectedOnline = function (ageRange,SH,offset) {
 
 													// "allcountriesflag":true,
 													// "searchlistid" : "${ageRange}_agerange_all_countries_selected_online",
@@ -1077,7 +1077,7 @@ home.getAgerangeAllCountriesSelectedOnline = function (ageRange) {
 													// "key":"",
 													// "scoreH":"",
 													// "offset":""
-																					console.log("agerangeAllCountriesSelectedOnline from okta ",ageRange);
+																					console.log("agerangeAllCountriesSelectedOnline from okta ",ageRange,SH,offset);
 																												  return new Promise(  async (resolve, reject) => {				
 																																		try {
 																																			
@@ -1093,6 +1093,8 @@ home.getAgerangeAllCountriesSelectedOnline = function (ageRange) {
 																																							  data: {
 																																								allcountriesflag: true,
 																																								 searchlistid : `${ageRange}_agerange_all_countries_selected_online`,
+																																								 scoreH:SH,
+																																								 offset:offset
 																							
 																																							  }
 																																							};
@@ -1103,22 +1105,10 @@ home.getAgerangeAllCountriesSelectedOnline = function (ageRange) {
 																																			console.log("respo data of agerange_all_countries_selected_online from okta : ",response);
 																																			
 																																			if(response){
-																																				//resolve(response);
-																																				// let returnUsers=[];
-																																				// response.list_of_results.forEach(async (e,i) => {
-																																				// 	if(i%2==0){
-																																				// 		let sebReturnUsers= await getselectedsearchprofiles(e);
-																																				// 		sebReturnUsers=mapUserPhotoPath(sebReturnUsers.list_of_results,e);
-																																				// 		returnUsers=[...returnUsers,sebReturnUsers];
-																																				// 		console.log("returnUsers after map ",returnUsers);
-																																				// 	}
-																																					
-																																				// 	if(i===response.list_of_results.length-2){
-																																						
-																																				// 		resolve(returnUsers.flat(1));
-																																				// 	}
-																																				// });	
+																																				const mapedList =convertListToTwoArrays(response.list_of_results);
+																																				console.log("usersArr, ScoreArr from okta all countries selected " ,mapedList);
 																																				
+																																				resolve(mapedList);
 																																					 
 																																			   } else {
 																																				   
@@ -1416,7 +1406,7 @@ home.getCountryCityAgerangeSelectedOnline = function (country,city,ageRange) {
 
 
 home.getselectedsearchprofiles =(searchlistid,SH,offset)=>{
-	console.log("searchlistid ",searchlistid)
+	console.log("searchlistid  from okta",searchlistid,SH,offset)
 	
 	// "searchlistid" : "EG_4_1_18-25_on",
     // "onlineflag" : true,

@@ -12,9 +12,9 @@ import {
   COUNTRY_CITY_AGERANGES_ONLINE,
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE,
-  ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+  ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE_USERS,
-  ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS,
+  ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS,
   REQUEST_PHOTO_READ,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE,
@@ -27,6 +27,8 @@ import {
   COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
+  SELECTED_ONLINE_USERS,
+  SELECTED_ONLINE_USERS_SUCCESS,
   COUNTRY_SELECTED_ONLINE,
   COUNTRY_SELECTED_ONLINE_SUCCESS,
   COUNTRY_CITY_SELECTED_ONLINE,
@@ -39,7 +41,10 @@ import {
   ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
   SHOW_MESSAGE,
   RESET_STATES,
-  RESET_END_RES
+  RESET_END_RES,
+  RESET_END_RES_USERS,
+  RESET_STATES_ONLINE,
+  SELECTED_AGERANGE_INDEX
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -135,7 +140,7 @@ export const allCountriesSelectedOnline = (SH, offset) => {
 };
 export const fetchAllCountriesSelectedOnlineSuccess = data => {
   return {
-    type: ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+    type: ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
     payload: data
   };
 };
@@ -148,16 +153,21 @@ export const allCountriesSelectedOnlineUsers = (option, SH, offset) => {
 };
 export const fetchAllCountriesSelectedOnlineUsersSuccess = data => {
   return {
-    type: ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS,
+    type: ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS,
     payload: data
   };
 };
 
-export const agerangeAllCountriesSelectedOnline = agerange => {
-  console.log("agerangeAllCountriesSelectedOnline from action", agerange);
+export const agerangeAllCountriesSelectedOnline = (agerange, SH, offset) => {
+  console.log(
+    "agerangeAllCountriesSelectedOnline from action",
+    agerange,
+    SH,
+    offset
+  );
   return {
     type: AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
-    payload: agerange
+    payload: { agerange, SH, offset }
   };
 };
 export const fetchAgerangeAllCountriesSelectedOnlineSuccess = data => {
@@ -170,6 +180,22 @@ export const fetchAgerangeAllCountriesSelectedOnlineSuccess = data => {
     payload: data
   };
 };
+
+///// users
+export const selectedOnlineUsers = (option, SH, offset) => {
+  console.log("option from action ", option, SH, offset);
+  return {
+    type: SELECTED_ONLINE_USERS,
+    payload: { option, SH, offset }
+  };
+};
+export const fetchSelectedOnlineUsersSuccess = data => {
+  return {
+    type: SELECTED_ONLINE_USERS_SUCCESS,
+    payload: data
+  };
+};
+////
 
 export const countrySelectedOnline = country => {
   console.log("countrySelectedOnline from action", country);
@@ -353,14 +379,33 @@ export const showHomeMessage = message => {
   };
 };
 
+export const selectedAgerangeIndex = index => {
+  return {
+    type: SELECTED_AGERANGE_INDEX,
+    payload: index
+  };
+};
+
 export const resetStates = () => {
   return {
     type: RESET_STATES
   };
 };
 
+export const resetStatesOnline = () => {
+  return {
+    type: RESET_STATES_ONLINE
+  };
+};
+
 export const resetEndRes = () => {
   return {
     type: RESET_END_RES
+  };
+};
+
+export const resetEndResUsers = () => {
+  return {
+    type: RESET_END_RES_USERS
   };
 };

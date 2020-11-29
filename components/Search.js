@@ -9,12 +9,16 @@ import {
   countryCitiesAgerangeOnline,
   countryCityAgerangesOnline,
   allCountriesSelectedOnline,
+  agerangeAllCountriesSelectedOnline,
   allCountriesOffline,
   countryCitiesOffline,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
   allCountriesOfflineUsers,
-  resetStates
+  resetStatesOnline,
+  resetEndRes,
+  resetEndResUsers,
+  selectedAgerangeIndex
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -244,6 +248,7 @@ export default function Search() {
     setSelectedIndex(-1);
     setSelectedIndexC(-1);
     setSelectedIndexCit(-1);
+    dispatch(resetStatesOnline());
     if (optionValue == "most recent") {
       //Get all Countries Offline
       dispatch(allCountriesOffline());
@@ -392,7 +397,26 @@ export default function Search() {
   }, [CountriesOptionsOnline]);
 
   const onSearch = () => {
+    dispatch(resetEndRes());
+    dispatch(resetEndResUsers());
+    dispatch(resetStatesOnline());
     if (optionValue == "active") {
+      // Get users based on agerange online
+      if (
+        selectedIndex != -1 &&
+        selectedIndexC == -1 &&
+        selectedIndexCit == -1
+      ) {
+        //Get agerangeAllCountriesSelectedOnline Options (first time)
+        dispatch(selectedAgerangeIndex(selectedIndex));
+        dispatch(
+          agerangeAllCountriesSelectedOnline(
+            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+            "",
+            0
+          )
+        );
+      }
     } else if (optionValue == "most recent") {
       //without Agerange
       if (selectedIndex == -1) {

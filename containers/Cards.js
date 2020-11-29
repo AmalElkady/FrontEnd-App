@@ -24,6 +24,7 @@ import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 import {
   allCountriesSelectedOnline,
   allCountriesSelectedOnlineUsers,
+  selectedOnlineUsers,
   agerangeAllCountriesSelectedOnline,
   countrySelectedOnline,
   countryCitySelectedOnline,
@@ -32,8 +33,11 @@ import {
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
   requestPhotoRead,
+  resetEndResUsers,
+  resetEndRes,
   resetStates
 } from "../actions/Home";
+import { ARRAY_OF_AGE_RANGE } from "../util/data";
 
 const useStyles = makeStyles(theme => ({
   displayF: {
@@ -51,6 +55,22 @@ export default function Cards() {
 
   const currentIndexAllCountriesSelectedOnline = useSelector(
     state => state.home.currentIndexAllCountriesSelectedOnline
+  );
+
+  ///users
+  const SelectedOnlineUsers = useSelector(
+    state => state.home.selectedOnlineUsers
+  );
+  const selectedOnlineUsersTimeScore = useSelector(
+    state => state.home.selectedOnlineUsersTimeScore
+  );
+  const currentIndexSelectedOnline = useSelector(
+    state => state.home.currentIndexSelectedOnline
+  );
+
+  ///
+  const AgerangeAllCountriesSelectedOnline = useSelector(
+    state => state.home.agerangeAllCountriesSelectedOnline
   );
 
   // offline
@@ -84,12 +104,18 @@ export default function Cards() {
 
   ////
   const searchState = useSelector(state => state.home.searchState);
+  const OffsetOnline = useSelector(state => state.home.OffsetOnline);
+  const scoreLOnline = useSelector(state => state.home.scoreLOnline);
   const OffsetOnlineUsers = useSelector(state => state.home.OffsetOnlineUsers);
   const scoreLOnlineUsers = useSelector(state => state.home.scoreLOnlineUsers);
+  const selectedAgerangeIndex = useSelector(
+    state => state.home.ageRangeSelectedIndex
+  );
 
   const OffsetOfline = useSelector(state => state.home.OffsetOfline);
   const scoreLOffline = useSelector(state => state.home.scoreLOffline);
   const endOfResult = useSelector(state => state.home.endOfResult);
+  const endOfResultUsers = useSelector(state => state.home.endOfResultUsers);
 
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
@@ -100,7 +126,6 @@ export default function Cards() {
   useEffect(() => {
     //console.log("reset from component cards ");
     //dispatch(resetStates());
-    // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
     //dispatch(countrySelectedOnline("EG"));
     //dispatch(countryCitySelectedOnline("EG", "3"));
@@ -121,6 +146,35 @@ export default function Cards() {
     }
   }, [AllCountriesSelectedOnline]);
 
+  useEffect(() => {
+    if (
+      AgerangeAllCountriesSelectedOnline.length != 0 &&
+      SelectedOnlineUsers.length == 0
+    ) {
+      // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
+      console.log(
+        "agerangeAllCountriesSelectedOnline change ",
+        AgerangeAllCountriesSelectedOnline
+      );
+      dispatch(
+        selectedOnlineUsers(
+          AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
+          "", //SH
+          0 //offset
+        )
+      );
+    }
+  }, [AgerangeAllCountriesSelectedOnline]);
+
+  useEffect(() => {
+    if (SelectedOnlineUsers.length != 0) {
+      // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
+      console.log("selectedOnlineUsers change ", SelectedOnlineUsers);
+      dispatch(requestPhotoRead());
+    }
+  }, [SelectedOnlineUsers]);
+
+  ///offline
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
       console.log("countryRecentActiveUsers change", CountryRecentActiveUsers);
@@ -143,6 +197,8 @@ export default function Cards() {
       // dispatch(resetStates());
     }
   }, [CountryCityRecentActiveUsers]);
+
+  ///
 
   useEffect(() => {
     // console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
@@ -169,24 +225,69 @@ export default function Cards() {
             photoReadSignedRequest.signedRequest
           );
         }
-      } else if (
-        searchState == "active"
-        //&&
-        //allCountriesSelectedOnlineUsers != null
-      ) {
-        // console.log(
-        //   "allCountriesSelectedOnlineUsers :on map ",
-        //   countryRecentActiveUsers
-        // );
-        // mapUserPhotoUrl(
-        //   allCountriesSelectedOnlineUsers,
-        //   photoReadSignedRequest.signedRequest
-        // );
+      } else if (searchState == "active") {
+        if (
+          AgerangeAllCountriesSelectedOnline.length != 0 &&
+          SelectedOnlineUsers.length != 0
+        ) {
+          console.log("SelectedOnlineUsers :on map ", SelectedOnlineUsers);
+          mapUserPhotoUrl(
+            SelectedOnlineUsers,
+            photoReadSignedRequest.signedRequest
+          );
+        }
       }
     }
   }, [photoReadSignedRequest]);
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (
+      endOfResultUsers &&
+      AgerangeAllCountriesSelectedOnline.length != 0 &&
+      currentIndexSelectedOnline <=
+        AgerangeAllCountriesSelectedOnline.length - 1 &&
+      currentIndexSelectedOnline != 0
+    ) {
+      // get users of next option
+      console.log(
+        "endOfResultUsers change scoreLOnlineUsers ",
+        scoreLOnlineUsers,
+        OffsetOnlineUsers,
+        currentIndexSelectedOnline,
+        AgerangeAllCountriesSelectedOnline.length,
+        AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline]
+      );
+      dispatch(
+        selectedOnlineUsers(
+          AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
+          scoreLOnlineUsers, //SH
+          OffsetOnlineUsers //offset
+        )
+      );
+      dispatch(resetEndResUsers());
+    }
+  }, [endOfResultUsers]);
+
+  useEffect(() => {
+    if (
+      currentIndexSelectedOnline ===
+      AgerangeAllCountriesSelectedOnline.length - 1
+    ) {
+      console.log("get next options");
+      // Get online users other options
+      //dispatch(resetEndResUsers());
+      dispatch(
+        agerangeAllCountriesSelectedOnline(
+          ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
+          scoreLOnline,
+          OffsetOnline
+        )
+      );
+      dispatch(resetEndRes());
+    }
+  }, [currentIndexSelectedOnline]);
 
   const onScrollCountryRecentUsers = () => {
     console.log(
@@ -227,10 +328,38 @@ export default function Cards() {
     }
   };
 
+  const handleScrollAgerange = () => {
+    console.log(
+      " endOfResultUsers ,endOfResult handleScrollAgerange",
+      endOfResultUsers,
+      endOfResult,
+      AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
+      scoreLOnline,
+      OffsetOnline
+    );
+    if (AgerangeAllCountriesSelectedOnline.length == 1) {
+      console.log("==true");
+      dispatch(
+        agerangeAllCountriesSelectedOnline(
+          ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
+          scoreLOnline,
+          OffsetOnline
+        )
+      );
+    } else if (!endOfResultUsers) {
+      dispatch(
+        selectedOnlineUsers(
+          AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
+          scoreLOnlineUsers, //SH
+          OffsetOnlineUsers //offset
+        )
+      );
+    }
+  };
+
   return (
     <>
-      {console
-        .log
+      {console.log(
         // "countryRecentActiveUsers from render : ",
         // CountryRecentActiveUsers,
         // "countryCityRecentActiveUsers from render : ",
@@ -243,9 +372,45 @@ export default function Cards() {
         // photoReadSignedRequest?.signedRequest
         // "AllCountriesSelectedOnline :",
         // AllCountriesSelectedOnline
-        ()}
-      {searchState == "active" && AllCountriesSelectedOnline.length != 0 && (
+        "endOfResult from render ",
+        endOfResult
+      )}
+
+      {/* Display Online Users */}
+      {searchState == "active" &&
+      AgerangeAllCountriesSelectedOnline.length != 0 ? (
+        SelectedOnlineUsers.length != 0 ? (
+          <InfiniteScroll
+            dataLength={SelectedOnlineUsers.length}
+            next={handleScrollAgerange}
+            height={250}
+            hasMore={!endOfResult}
+            loader={<CircularProgress />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it agerange all countries users</b>
+              </p>
+            }
+          >
+            <div className={classes.displayF}>
+              {SelectedOnlineUsers.map((option, index) => (
+                <UserCard
+                  key={option.i}
+                  user={option}
+                  timeScore={selectedOnlineUsersTimeScore[index]}
+                ></UserCard>
+              ))}
+            </div>
+          </InfiniteScroll>
+        ) : AllCountriesSelectedOnline.length != 0 ? (
+          <UsersOnline />
+        ) : (
+          ""
+        )
+      ) : AllCountriesSelectedOnline.length != 0 ? (
         <UsersOnline />
+      ) : (
+        ""
       )}
       {/* Display Most Recent Users */}
       {searchState == "most recent" &&

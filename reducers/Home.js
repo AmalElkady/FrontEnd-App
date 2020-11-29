@@ -5,8 +5,8 @@ import {
   AGERANGE_COUNTRIES_ONLINE_SUCCESS,
   COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS,
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
-  ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
-  ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS,
+  ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
+  ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS,
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE_SUCCESS,
@@ -20,7 +20,11 @@ import {
   ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
   SHOW_MESSAGE,
   RESET_STATES,
-  RESET_END_RES
+  RESET_END_RES,
+  RESET_END_RES_USERS,
+  SELECTED_ONLINE_USERS_SUCCESS,
+  RESET_STATES_ONLINE,
+  SELECTED_AGERANGE_INDEX
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
@@ -45,8 +49,14 @@ const initialHomeState = {
   scoreLOnline: "",
   OffsetOnlineUsers: 0,
   scoreLOnlineUsers: "",
+  //users
+  selectedOnlineUsers: [],
+  selectedOnlineUsersTimeScore: [],
+  currentIndexSelectedOnline: 0,
+  //
+  agerangeAllCountriesSelectedOnline: [],
+  agerangeAllCountriesSelectedOnlineCount: [],
 
-  AgerangeAllCountriesSelectedOnlineUsers: null,
   countrySelectedOnlineUsers: null,
   countryCitySelectedOnlineUsers: null,
   countryCitiesAgerangeSelectedOnlineUsers: null,
@@ -65,6 +75,7 @@ const initialHomeState = {
   scoreLOffline: "",
   OffsetOfline: 0,
   //
+  ageRangeSelectedIndex: 0,
   photoReadSignedRequest: null,
   searchState: "active",
   endOfResult: false,
@@ -109,7 +120,7 @@ const home = (state = initialHomeState, action) => {
         ...state,
         countryCityAgerangesOnline: action.payload
       };
-    case ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS: {
+    case ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
 
       if (action.payload.usersArr.length == 0) {
@@ -130,7 +141,7 @@ const home = (state = initialHomeState, action) => {
         scoreLOnline: SL
       };
     }
-    case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS: {
+    case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
 
       if (action.payload.usersArr.length == 0) {
@@ -152,12 +163,56 @@ const home = (state = initialHomeState, action) => {
         scoreLOnlineUsers: SL
       };
     }
-    case AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS:
+    case AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
+      console.log(
+        "AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS from reducer ",
+        action.payload
+      );
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResult = true;
+      }
       return {
         ...state,
-        agerangeAllCountriesSelectedOnlineUsers: action.payload,
-        searchState: "active"
+        agerangeAllCountriesSelectedOnline: [
+          ...state.agerangeAllCountriesSelectedOnline,
+          ...action.payload.usersArr
+        ],
+        agerangeAllCountriesSelectedOnlineCount: [
+          ...state.agerangeAllCountriesSelectedOnline,
+          ...action.payload.scoreArr
+        ],
+        searchState: "active",
+        OffsetOnline: offset,
+        scoreLOnline: SL
       };
+    }
+    case SELECTED_ONLINE_USERS_SUCCESS: {
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+
+      if (
+        action.payload.usersArr.length == 0 &&
+        state.agerangeAllCountriesSelectedOnline.length > 1
+      ) {
+        console.log("********* end of users*********");
+        state.endOfResultUsers = true;
+        state.currentIndexSelectedOnline++;
+      }
+      return {
+        ...state,
+        selectedOnlineUsers: [
+          ...state.selectedOnlineUsers,
+          ...action.payload.usersArr
+        ],
+        selectedOnlineUsersTimeScore: [
+          ...state.selectedOnlineUsersTimeScore,
+          ...action.payload.scoreArr
+        ],
+        searchState: "active",
+        OffsetOnlineUsers: offset,
+        scoreLOnlineUsers: SL
+      };
+    }
 
     case COUNTRY_SELECTED_ONLINE_SUCCESS:
       return {
@@ -275,6 +330,11 @@ const home = (state = initialHomeState, action) => {
         endOfResult: end,
         searchState: "most recent"
       };
+    case SELECTED_AGERANGE_INDEX:
+      return {
+        ...state,
+        ageRangeSelectedIndex: action.payload
+      };
     case RESET_STATES:
       return {
         ...state,
@@ -285,12 +345,28 @@ const home = (state = initialHomeState, action) => {
         // allCountriesOfflineUsers: [],
         // allCountriesOfflineUsersTimeScore: []
       };
-
-    case RESET_END_RES:
+    case RESET_STATES_ONLINE:
+      console.log("rest state online");
+      return {
+        ...state,
+        selectedOnlineUsers: [],
+        selectedOnlineUsersTimeScore: [],
+        currentIndexSelectedOnline: 0,
+        agerangeAllCountriesSelectedOnline: [],
+        agerangeAllCountriesSelectedOnlineCount: []
+      };
+    case RESET_END_RES_USERS:
       console.log("rest end users");
       return {
         ...state,
         endOfResultUsers: false
+      };
+
+    case RESET_END_RES:
+      console.log("rest end");
+      return {
+        ...state,
+        endOfResult: false
       };
 
     case SHOW_MESSAGE: {

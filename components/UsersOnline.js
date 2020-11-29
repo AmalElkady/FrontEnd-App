@@ -15,7 +15,8 @@ import {
   allCountriesSelectedOnline,
   allCountriesSelectedOnlineUsers,
   requestPhotoRead,
-  resetEndRes
+  resetEndRes,
+  resetEndResUsers
 } from "../actions/Home";
 
 const useStyles = makeStyles(theme => ({
@@ -94,7 +95,7 @@ export default function UsersOnline() {
           OffsetOnlineUsers //offset
         )
       );
-      dispatch(resetEndRes());
+      dispatch(resetEndResUsers());
     }
   }, [endOfResultUsers]);
 
@@ -105,6 +106,7 @@ export default function UsersOnline() {
     ) {
       // Get online users other options
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+      //dispatch(resetEndRes());
     }
   }, [currentIndexAllCountriesSelectedOnline]);
 
