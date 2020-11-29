@@ -20,7 +20,9 @@ import {
   resetEndResUsers,
   selectedAgerangeIndex,
   selectedCountryIndex,
-  countrySelectedOnline
+  selectedCityIndex,
+  countrySelectedOnline,
+  countryCitySelectedOnline
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -433,6 +435,30 @@ export default function Search() {
         dispatch(
           countrySelectedOnline(
             CountriesOptionsOnline.list_of_results[selectedIndexC],
+            "",
+            0
+          )
+        );
+      }
+      //Get online users based on country and city online
+      else if (
+        selectedIndex == -1 &&
+        selectedIndexC != -1 &&
+        selectedIndexCit != -1
+      ) {
+        //Get countryCitySelectedOnline Options (first time)
+        //dispatch(countryCitySelectedOnline("EG", "3"));
+        console.log(
+          "countryCitySelectedOnline on search ",
+          CountriesOptionsOnline.list_of_results[selectedIndexC],
+          CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
+        );
+        dispatch(selectedCountryIndex(selectedIndexC));
+        dispatch(selectedCityIndex(selectedIndexCit));
+        dispatch(
+          countryCitySelectedOnline(
+            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
             "",
             0
           )

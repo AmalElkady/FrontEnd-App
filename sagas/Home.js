@@ -114,9 +114,9 @@ const getCountrySelectedOnline = async (country, SH, offset) =>
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
-const getCountryCitySelectedOnline = async (country, city) =>
+const getCountryCitySelectedOnline = async (country, city, SH, offset) =>
   await home
-    .getCountryCitySelectedOnline(country, city)
+    .getCountryCitySelectedOnline(country, city, SH, offset)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -393,13 +393,21 @@ function* countrySelectedOnlineRequest({ payload }) {
 }
 
 function* countryCitySelectedOnlineRequest({ payload }) {
-  const { country, city } = payload;
-  console.log("countryCitySelectedOnline from saga ", country, city);
+  const { country, city, SH, offset } = payload;
+  console.log(
+    "countryCitySelectedOnline from saga ",
+    country,
+    city,
+    SH,
+    offset
+  );
   try {
     const fetchedCountryCitySelestedOnline = yield call(
       getCountryCitySelectedOnline,
       country,
-      city
+      city,
+      SH,
+      offset
     );
     console.log(
       "returned fetchedCountryCitySelestedOnline from saga",

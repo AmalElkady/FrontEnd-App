@@ -252,6 +252,7 @@ export const COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS =
 
 export const SELECTED_AGERANGE_INDEX = "selected_agerange_index";
 export const SELECTED_COUNTRY_INDEX = "selected_country_index";
+export const SELECTED_CITY_INDEX = "selected_city_index";
 export const RESET_STATES = "reset_states";
 export const RESET_STATES_ONLINE = "reset_states_online";
 export const RESET_END_RES = "reset_end_res";

@@ -45,7 +45,8 @@ import {
   RESET_END_RES_USERS,
   RESET_STATES_ONLINE,
   SELECTED_AGERANGE_INDEX,
-  SELECTED_COUNTRY_INDEX
+  SELECTED_COUNTRY_INDEX,
+  SELECTED_CITY_INDEX
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -213,11 +214,17 @@ export const fetchCountrySelectedOnlineSuccess = data => {
   };
 };
 
-export const countryCitySelectedOnline = (country, city) => {
-  console.log("countryCitySelectedOnline from action", country, city);
+export const countryCitySelectedOnline = (country, city, SH, offset) => {
+  console.log(
+    "countryCitySelectedOnline from action",
+    country,
+    city,
+    SH,
+    offset
+  );
   return {
     type: COUNTRY_CITY_SELECTED_ONLINE,
-    payload: { country, city }
+    payload: { country, city, SH, offset }
   };
 };
 export const fetchCountryCitySelectedOnlineSuccess = data => {
@@ -390,6 +397,13 @@ export const selectedAgerangeIndex = index => {
 export const selectedCountryIndex = index => {
   return {
     type: SELECTED_COUNTRY_INDEX,
+    payload: index
+  };
+};
+
+export const selectedCityIndex = index => {
+  return {
+    type: SELECTED_CITY_INDEX,
     payload: index
   };
 };
