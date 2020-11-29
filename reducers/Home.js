@@ -65,9 +65,11 @@ const initialHomeState = {
   countryCitySelectedOnline: [],
   countryCitySelectedOnlineCount: [],
 
-  countryCitiesAgerangeSelectedOnlineUsers: null,
-  countryCityAgerangeSelectedOnlineUsers: null,
+  countryCitiesAgerangeSelectedOnline: [],
+  countryCitiesAgerangeSelectedOnlineCount: [],
 
+  countryCityAgerangeSelectedOnline: [],
+  countryCityAgerangeSelectedOnlineCount: [],
   //offline
   allCountriesOffline: null,
   allCountriesOfflineUsers: [],
@@ -201,7 +203,9 @@ const home = (state = initialHomeState, action) => {
         if (
           state.agerangeAllCountriesSelectedOnline.length > 1 ||
           state.countrySelectedOnline.length > 1 ||
-          state.countryCitySelectedOnline > 1
+          state.countryCitySelectedOnline.length > 1 ||
+          state.countryCitiesAgerangeSelectedOnline.length > 1 ||
+          state.countryCityAgerangeSelectedOnline.length > 1
         ) {
           console.log("********* end of users*********");
           state.endOfResultUsers = true;
@@ -273,13 +277,30 @@ const home = (state = initialHomeState, action) => {
       };
     }
 
-    case COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS:
+    case COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS: {
+      console.log(
+        "COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS from reducer ",
+        action.payload
+      );
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResult = true;
+      }
       return {
         ...state,
-        countryCitiesAgerangeSelectedOnlineUsers: action.payload,
-        searchState: "active"
+        countryCitiesAgerangeSelectedOnline: [
+          ...state.countryCitiesAgerangeSelectedOnline,
+          ...action.payload.usersArr
+        ],
+        countryCitiesAgerangeSelectedOnlineCount: [
+          ...state.countryCitiesAgerangeSelectedOnlineCount,
+          ...action.payload.usersArr
+        ],
+        searchState: "active",
+        OffsetOnline: offset,
+        scoreLOnline: SL
       };
-
+    }
     case COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS:
       return {
         ...state,
@@ -415,7 +436,11 @@ const home = (state = initialHomeState, action) => {
         countrySelectedOnline: [],
         countrySelectedOnlineCount: [],
         countryCitySelectedOnline: [],
-        countryCitySelectedOnlineCount: []
+        countryCitySelectedOnlineCount: [],
+        countryCitiesAgerangeSelectedOnline: [],
+        countryCitiesAgerangeSelectedOnlineCount: [],
+        countryCityAgerangeSelectedOnline: [],
+        countryCityAgerangeSelectedOnlineCount: []
       };
     case RESET_END_RES_USERS:
       console.log("rest end users");

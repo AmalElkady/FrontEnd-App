@@ -235,15 +235,22 @@ export const fetchCountryCitySelectedOnlineSuccess = data => {
   };
 };
 
-export const countryCitiesAgerangeSelectedOnline = (country, agerange) => {
+export const countryCitiesAgerangeSelectedOnline = (
+  country,
+  agerange,
+  SH,
+  offset
+) => {
   console.log(
     "COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE from action",
     country,
-    agerange
+    agerange,
+    SH,
+    offset
   );
   return {
     type: COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE,
-    payload: { country, agerange }
+    payload: { country, agerange, SH, offset }
   };
 };
 export const fetchCountryCitiesAgerangeSelectedOnlineSuccess = data => {
@@ -257,16 +264,24 @@ export const fetchCountryCitiesAgerangeSelectedOnlineSuccess = data => {
   };
 };
 
-export const countryCityAgerangeSelectedOnline = (country, city, agerange) => {
+export const countryCityAgerangeSelectedOnline = (
+  country,
+  city,
+  agerange,
+  SH,
+  offset
+) => {
   console.log(
     "COUNTRY_CITY_AGERANGE_SELECTED_ONLINE from action",
     country,
     city,
-    agerange
+    agerange,
+    SH,
+    offset
   );
   return {
     type: COUNTRY_CITY_AGERANGE_SELECTED_ONLINE,
-    payload: { country, city, agerange }
+    payload: { country, city, agerange, SH, offset }
   };
 };
 export const fetchCountryCityAgerangeSelectedOnlineSuccess = data => {

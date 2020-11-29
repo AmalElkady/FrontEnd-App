@@ -54,13 +54,24 @@ export default function Cards() {
     state => state.home.allCountriesOnline
   );
 
+  const AgerangeCountriesOptionsOnline = useSelector(
+    state => state.home.agerangeCountriesOnline
+  );
+
   //cities
   const CountryCitiesOptionsOnline = useSelector(
     state => state.home.countryCitiesOnline
   );
+  const CountryCitiesAgerangeOptionsOnline = useSelector(
+    state => state.home.countryCitiesAgerangeOnline
+  );
+  //agerange
+  const CountryAgerangesOptionsOnline = useSelector(
+    state => state.home.countryAgerangesOnline
+  );
 
-  const AgerangeCountriesOptionsOnline = useSelector(
-    state => state.home.agerangeCountriesOnline
+  const CountryCityAgerangesOptionsOnline = useSelector(
+    state => state.home.countryCityAgerangesOnline
   );
 
   ///users
@@ -91,6 +102,10 @@ export default function Cards() {
 
   const CountryCitySelectedOnline = useSelector(
     state => state.home.countryCitySelectedOnline
+  );
+
+  const CountryCitiesAgerangeSelectedOnline = useSelector(
+    state => state.home.countryCitiesAgerangeSelectedOnline
   );
 
   // offline
@@ -224,8 +239,27 @@ export default function Cards() {
   }, [CountryCitySelectedOnline]);
 
   useEffect(() => {
-    if (SelectedOnlineUsers.length != 0) {
+    if (
+      CountryCitiesAgerangeSelectedOnline.length != 0 &&
+      SelectedOnlineUsers.length == 0
+    ) {
       // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
+      console.log(
+        "CountryCitiesAgerangeSelectedOnline change ",
+        CountryCitiesAgerangeSelectedOnline
+      );
+      dispatch(
+        selectedOnlineUsers(
+          CountryCitiesAgerangeSelectedOnline[currentIndexSelectedOnline],
+          "", //SH
+          0 //offset
+        )
+      );
+    }
+  }, [CountryCitiesAgerangeSelectedOnline]);
+
+  useEffect(() => {
+    if (SelectedOnlineUsers.length != 0) {
       console.log("selectedOnlineUsers change ", SelectedOnlineUsers);
       dispatch(requestPhotoRead());
     }
@@ -287,7 +321,8 @@ export default function Cards() {
           if (
             AgerangeAllCountriesSelectedOnline.length != 0 ||
             CountrySelectedOnline.length != 0 ||
-            CountryCitySelectedOnline.length != 0
+            CountryCitySelectedOnline.length != 0 ||
+            CountryCitiesAgerangeSelectedOnline.length
           )
             console.log("SelectedOnlineUsers :on map ", SelectedOnlineUsers);
           mapUserPhotoUrl(
@@ -334,6 +369,18 @@ export default function Cards() {
         dispatch(
           selectedOnlineUsers(
             CountryCitySelectedOnline[currentIndexSelectedOnline],
+            scoreLOnlineUsers, //SH
+            OffsetOnlineUsers //offset
+          )
+        );
+      } else if (
+        CountryCitiesAgerangeSelectedOnline.length != 0 &&
+        currentIndexSelectedOnline <=
+          CountryCitiesAgerangeSelectedOnline.length - 1
+      ) {
+        dispatch(
+          selectedOnlineUsers(
+            CountryCitiesAgerangeSelectedOnline[currentIndexSelectedOnline],
             scoreLOnlineUsers, //SH
             OffsetOnlineUsers //offset
           )
@@ -386,6 +433,51 @@ export default function Cards() {
           OffsetOnline
         )
       );
+      dispatch(resetEndRes());
+    } else if (
+      currentIndexSelectedOnline ===
+      CountryCitiesAgerangeSelectedOnline.length - 1
+    ) {
+      console.log("get next options 4");
+      // Get online users other options
+      if (
+        CountryAgerangesOptionsOnline.list_of_results &&
+        !AgerangeCountriesOptionsOnline.list_of_results
+      ) {
+        console.log(
+          "countryCitiesAgerangeSelectedOnline 1 on search ",
+          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          CountryAgerangesOptionsOnline.list_of_results[selectedAgerangeIndex]
+        );
+
+        dispatch(
+          countryCitiesAgerangeSelectedOnline(
+            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountryAgerangesOptionsOnline.list_of_results[
+              selectedAgerangeIndex
+            ],
+            scoreLOnline,
+            OffsetOnline
+          )
+        );
+      } else {
+        console.log(
+          "countryCitiesAgerangeSelectedOnline 2 on search ",
+          AgerangeCountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, "")
+        );
+        dispatch(
+          countryCitiesAgerangeSelectedOnline(
+            AgerangeCountriesOptionsOnline.list_of_results[
+              countrySelectedIndex
+            ],
+            ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
+            scoreLOnline,
+            OffsetOnline
+          )
+        );
+      }
+
       dispatch(resetEndRes());
     }
   }, [currentIndexSelectedOnline]);
@@ -527,6 +619,58 @@ export default function Cards() {
     }
   };
 
+  const handleScrollCountryAgerange = () => {
+    console.log(
+      " endOfResultUsers ,endOfResult handleScrollCountryCity",
+      endOfResultUsers,
+      endOfResult,
+      currentIndexSelectedOnline,
+      CountryCitySelectedOnline[currentIndexSelectedOnline],
+      scoreLOnline,
+      OffsetOnline,
+      scoreLOnlineUsers, //SH
+      OffsetOnlineUsers //offset
+    );
+    if (CountryCitiesAgerangeSelectedOnline.length == 1) {
+      if (
+        CountryAgerangesOptionsOnline.list_of_results &&
+        !AgerangeCountriesOptionsOnline.list_of_results
+      ) {
+        dispatch(
+          countryCitiesAgerangeSelectedOnline(
+            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountryAgerangesOptionsOnline.list_of_results[
+              selectedAgerangeIndex
+            ],
+            scoreLOnline,
+            OffsetOnline
+          )
+        );
+      } else {
+        dispatch(
+          countryCitiesAgerangeSelectedOnline(
+            AgerangeCountriesOptionsOnline.list_of_results[
+              countrySelectedIndex
+            ],
+            ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
+            scoreLOnline,
+            OffsetOnline
+          )
+        );
+      }
+    } else if (!endOfResultUsers) {
+      console.log("endOfResultUsers false");
+
+      dispatch(
+        selectedOnlineUsers(
+          CountryCitiesAgerangeSelectedOnline[currentIndexSelectedOnline],
+          scoreLOnlineUsers, //SH
+          OffsetOnlineUsers //offset
+        )
+      );
+    }
+  };
+
   return (
     <>
       {console.log(
@@ -616,6 +760,34 @@ export default function Cards() {
             endMessage={
               <p style={{ textAlign: "center" }}>
                 <b>Yay! You have seen country city selected users</b>
+              </p>
+            }
+          >
+            <div className={classes.displayF}>
+              {SelectedOnlineUsers.map((option, index) => (
+                <UserCard
+                  key={option.i}
+                  user={option}
+                  timeScore={selectedOnlineUsersTimeScore[index]}
+                ></UserCard>
+              ))}
+            </div>
+          </InfiniteScroll>
+        ) : (
+          ""
+        )
+      ) : // Display online users searched by country and agerange only
+      CountryCitiesAgerangeSelectedOnline.length != 0 ? (
+        SelectedOnlineUsers.length != 0 ? (
+          <InfiniteScroll
+            dataLength={SelectedOnlineUsers.length}
+            next={handleScrollCountryAgerange}
+            height={250}
+            hasMore={!endOfResult}
+            loader={<CircularProgress />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen country cities agerange selected users</b>
               </p>
             }
           >

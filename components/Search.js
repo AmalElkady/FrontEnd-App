@@ -22,7 +22,9 @@ import {
   selectedCountryIndex,
   selectedCityIndex,
   countrySelectedOnline,
-  countryCitySelectedOnline
+  countryCitySelectedOnline,
+  countryCitiesAgerangeSelectedOnline,
+  countryCityAgerangeSelectedOnline
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -37,20 +39,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { calcSlShFromAgerange } from "../helpers/calcSlShFromAgerange";
 
 import Typography from "@material-ui/core/Typography";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -344,13 +333,14 @@ export default function Search() {
           //Get countries based on agerange
           dispatch(
             agerangeCountriesOnline(
-              ARRAY_OF_AGE_RANGE[selectedIndex + 1].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
             )
           );
+
           dispatch(
             countryCitiesAgerangeOnline(
               AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
-              ARRAY_OF_AGE_RANGE[selectedIndex + 1].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
             )
           );
         }
@@ -440,7 +430,7 @@ export default function Search() {
           )
         );
       }
-      //Get online users based on country and city online
+      //Get online users based on country and city only
       else if (
         selectedIndex == -1 &&
         selectedIndexC != -1 &&
@@ -463,6 +453,59 @@ export default function Search() {
             0
           )
         );
+      }
+
+      //Get online users based on country and agerange only
+      else if (
+        selectedIndex != -1 &&
+        selectedIndexC != -1 &&
+        selectedIndexCit == -1
+      ) {
+        //dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
+
+        //Get countryCitiesAgerangeSelectedOnline Options click country --> ageRange (first time)
+        dispatch(selectedCountryIndex(selectedIndexC));
+        dispatch(selectedAgerangeIndex(selectedIndex));
+        if (
+          CountryAgerangesOptionsOnline.list_of_results &&
+          !AgerangeCountriesOptionsOnline.list_of_results
+        ) {
+          console.log(
+            "countryCitiesAgerangeSelectedOnline 1 on search ",
+            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+          );
+
+          dispatch(
+            countryCitiesAgerangeSelectedOnline(
+              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              "",
+              0
+            )
+          );
+        } else {
+          console.log(
+            "countryCitiesAgerangeSelectedOnline 2 on search ",
+            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+          );
+          dispatch(
+            countryCitiesAgerangeSelectedOnline(
+              AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+              "",
+              0
+            )
+          );
+        }
+      }
+      //Get online users based on country and city and agerange
+      else if (
+        selectedIndex != -1 &&
+        selectedIndexC != -1 &&
+        selectedIndexCit != -1
+      ) {
       }
     } else if (optionValue == "most recent") {
       //without Agerange

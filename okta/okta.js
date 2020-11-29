@@ -1251,7 +1251,7 @@ home.getCountryCitySelectedOnline = function (country,city, SH, offset) {
 													
 }
 
-home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange) {
+home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange, SH, offset) {
 
 	// "allcountriesflag":false,
 	// "searchlistid" : "${co}_${agerange}_country_cities_agerange_selected_online",
@@ -1261,7 +1261,7 @@ home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange) {
 	// "key":"",
 	// "scoreH":"",
 	// "offset":""
-									console.log("CountryCitiesAgerangeSelectedOnline from okta ",country,ageRange);
+									console.log("CountryCitiesAgerangeSelectedOnline from okta ",country,ageRange, SH, offset);
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1277,7 +1277,8 @@ home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange) {
 																											  data: {
 																												allcountriesflag: false,
 																												 searchlistid : `${country}_${ageRange}_country_cities_agerange_selected_online`,
-											
+																												 scoreH:SH,
+																												 offset:offset
 																											  }
 																											};
 												
@@ -1287,21 +1288,12 @@ home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange) {
 																							console.log("respo data of ${co}_${agerange}_country_cities_agerange_selected_online from okta : ",response);
 																							
 																							if(response){
-																								//resolve(response);
-																								// let returnUsers=[];
-																								// response.list_of_results.forEach(async (e,i) => {
-																								// 	if(i%2==0){
-																								// 		let sebReturnUsers= await getselectedsearchprofiles(e);
-																								// 		sebReturnUsers=mapUserPhotoPath(sebReturnUsers.list_of_results,e);
-																								// 		returnUsers=[...returnUsers,sebReturnUsers];
-																								// 		console.log("returnUsers after map ",returnUsers);
-																								// 	}
 																									
-																								// 	if(i===response.list_of_results.length-2){
-																										
-																								// 		resolve(returnUsers.flat(1));
-																								// 	}
-																								// });	
+																								const mapedList =convertListToTwoArrays(response.list_of_results);
+																								console.log("usersArr, ScoreArr from okta country selected " ,mapedList);
+																								
+																								resolve(mapedList);
+																									 
 																								
 																									 
 																							   } else {
