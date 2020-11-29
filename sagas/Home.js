@@ -108,9 +108,9 @@ const getAgerangeAllCountriesSelectedOnline = async (agerange, SH, offset) =>
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
-const getCountrySelectedOnline = async country =>
+const getCountrySelectedOnline = async (country, SH, offset) =>
   await home
-    .getCountrySelectedOnline(country)
+    .getCountrySelectedOnline(country, SH, offset)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -373,11 +373,14 @@ function* agerangeAllCountriesSelectedOnlineRequest({ payload }) {
 }
 
 function* countrySelectedOnlineRequest({ payload }) {
-  console.log("countrySelectedOnline from saga ", payload);
+  const { country, SH, offset } = payload;
+  console.log("countrySelectedOnline from saga ", country, SH, offset);
   try {
     const fetchedCountrySelestedOnline = yield call(
       getCountrySelectedOnline,
-      payload
+      country,
+      SH,
+      offset
     );
     console.log(
       "returned fetchedCountrySelestedOnline from saga",

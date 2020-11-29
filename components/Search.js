@@ -18,7 +18,9 @@ import {
   resetStatesOnline,
   resetEndRes,
   resetEndResUsers,
-  selectedAgerangeIndex
+  selectedAgerangeIndex,
+  selectedCountryIndex,
+  countrySelectedOnline
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
 
@@ -401,7 +403,7 @@ export default function Search() {
     dispatch(resetEndResUsers());
     dispatch(resetStatesOnline());
     if (optionValue == "active") {
-      // Get users based on agerange online
+      // Get online users based on agerange only
       if (
         selectedIndex != -1 &&
         selectedIndexC == -1 &&
@@ -412,6 +414,25 @@ export default function Search() {
         dispatch(
           agerangeAllCountriesSelectedOnline(
             ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+            "",
+            0
+          )
+        );
+      } //Get online users based on country only
+      else if (
+        selectedIndex == -1 &&
+        selectedIndexC != -1 &&
+        selectedIndexCit == -1
+      ) {
+        //Get countrySelectedOnline Options (first time)
+        console.log(
+          "CountriesOptionsOnline on search ",
+          CountriesOptionsOnline
+        );
+        dispatch(selectedCountryIndex(selectedIndexC));
+        dispatch(
+          countrySelectedOnline(
+            CountriesOptionsOnline.list_of_results[selectedIndexC],
             "",
             0
           )
