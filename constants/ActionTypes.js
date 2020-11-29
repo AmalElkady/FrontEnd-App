@@ -192,6 +192,11 @@ export const ALL_COUNTRIES_SELECTED_ONLINE = "all_countries_selected_online";
 export const ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS =
   "all_countries_selected_online_success";
 
+export const ALL_COUNTRIES_SELECTED_ONLINE_USERS =
+  "all_countries_selected_online_users";
+export const ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS =
+  "all_countries_selected_online_users_success";
+
 export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE =
   "agerange_all_countries_selected_online";
 export const AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS =
@@ -240,3 +245,5 @@ export const COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS =
   "country_city_recent_active_users_success";
 
 export const RESET_STATES = "reset_states";
+
+export const RESET_END_RES = "reset_end_res";

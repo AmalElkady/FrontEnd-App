@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Typography from "@material-ui/core/Typography";
 import UserCard from "../components/Cards/UserCard";
 import UsersOffline from "../components/UsersOffline";
+import UsersOnline from "../components/UsersOnline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import SwipeableViews from "react-swipeable-views";
@@ -22,6 +23,7 @@ import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 
 import {
   allCountriesSelectedOnline,
+  allCountriesSelectedOnlineUsers,
   agerangeAllCountriesSelectedOnline,
   countrySelectedOnline,
   countryCitySelectedOnline,
@@ -43,8 +45,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Cards() {
   // Online
-  const allCountriesSelectedOnlineUsers = useSelector(
-    state => state.home.allCountriesSelectedOnlineUsers
+  const AllCountriesSelectedOnline = useSelector(
+    state => state.home.allCountriesSelectedOnline
+  );
+
+  const currentIndexAllCountriesSelectedOnline = useSelector(
+    state => state.home.currentIndexAllCountriesSelectedOnline
   );
 
   // offline
@@ -78,6 +84,8 @@ export default function Cards() {
 
   ////
   const searchState = useSelector(state => state.home.searchState);
+  const OffsetOnlineUsers = useSelector(state => state.home.OffsetOnlineUsers);
+  const scoreLOnlineUsers = useSelector(state => state.home.scoreLOnlineUsers);
 
   const OffsetOfline = useSelector(state => state.home.OffsetOfline);
   const scoreLOffline = useSelector(state => state.home.scoreLOffline);
@@ -90,7 +98,7 @@ export default function Cards() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("reset from component cards ");
+    //console.log("reset from component cards ");
     //dispatch(resetStates());
     // dispatch(allCountriesSelectedOnline());
     //dispatch(agerangeAllCountriesSelectedOnline("18-25"));
@@ -99,21 +107,19 @@ export default function Cards() {
     //dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
     //dispatch(countryCityAgerangeSelectedOnline("EG", "3", "18-25"));
   }, []);
-  // useEffect(() => {
-  //   // console.log("88888888888888888* :", allCountriesSelectedOnlineUsers.length);
-  //   // if (allCountriesSelectedOnlineUsers.length != 0) {
-  //   //   console.log("88888888888888888");
-  //   //   dispatch(requestPhotoRead());
-  //   //   mapUserPhotoUrl(allCountriesSelectedOnlineUsers, photoReadSignedRequest);
-  //   // }
-  // }, [allCountriesSelectedOnlineUsers]);
 
-  // useEffect(() => {
-  //   if (allCountriesOfflineUsers != null) {
-  //     console.log("allCountriesOfflineUsers change", allCountriesOfflineUsers);
-  //     // dispatch(requestPhotoRead());
-  //   }
-  // }, [allCountriesOfflineUsers]);
+  useEffect(() => {
+    if (AllCountriesSelectedOnline.length != 0) {
+      // Get users of AllCountriesSelectedOnline (first time)
+      dispatch(
+        allCountriesSelectedOnlineUsers(
+          AllCountriesSelectedOnline[currentIndexAllCountriesSelectedOnline],
+          scoreLOnlineUsers, //SH
+          OffsetOnlineUsers //offset
+        )
+      );
+    }
+  }, [AllCountriesSelectedOnline]);
 
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
@@ -126,10 +132,10 @@ export default function Cards() {
   }, [CountryRecentActiveUsers]);
 
   useEffect(() => {
-    if (countryCityRecentActiveUsers.length != 0) {
+    if (CountryCityRecentActiveUsers.length != 0) {
       console.log(
         "countryCityRecentActiveUsers change",
-        countryCityRecentActiveUsers
+        CountryCityRecentActiveUsers
       );
       dispatch(requestPhotoRead());
     } else {
@@ -164,17 +170,18 @@ export default function Cards() {
           );
         }
       } else if (
-        searchState == "active" &&
-        allCountriesSelectedOnlineUsers != null
+        searchState == "active"
+        //&&
+        //allCountriesSelectedOnlineUsers != null
       ) {
-        console.log(
-          "allCountriesSelectedOnlineUsers :on map ",
-          countryRecentActiveUsers
-        );
-        mapUserPhotoUrl(
-          allCountriesSelectedOnlineUsers,
-          photoReadSignedRequest.signedRequest
-        );
+        // console.log(
+        //   "allCountriesSelectedOnlineUsers :on map ",
+        //   countryRecentActiveUsers
+        // );
+        // mapUserPhotoUrl(
+        //   allCountriesSelectedOnlineUsers,
+        //   photoReadSignedRequest.signedRequest
+        // );
       }
     }
   }, [photoReadSignedRequest]);
@@ -222,23 +229,24 @@ export default function Cards() {
 
   return (
     <>
-      {console.log(
-        "countryRecentActiveUsers from render : ",
-        CountryRecentActiveUsers,
-        "countryCityRecentActiveUsers from render : ",
-        CountryCityRecentActiveUsers,
-        "end ",
-        endOfResult
+      {console
+        .log
+        // "countryRecentActiveUsers from render : ",
+        // CountryRecentActiveUsers,
+        // "countryCityRecentActiveUsers from render : ",
+        // CountryCityRecentActiveUsers,
+        // "end ",
+        // endOfResult
         // "searchState",
         // searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
+        // "AllCountriesSelectedOnline :",
+        // AllCountriesSelectedOnline
+        ()}
+      {searchState == "active" && AllCountriesSelectedOnline.length != 0 && (
+        <UsersOnline />
       )}
-      {/* {searchState == "active" &&
-          allCountriesSelectedOnlineUsers?.map((option, index) =>
-            index % 2 == 0 ? <UserCard user={option}></UserCard> : ""
-          )} */}
-
       {/* Display Most Recent Users */}
       {searchState == "most recent" &&
         (CountryRecentActiveUsers.length != 0 ? (

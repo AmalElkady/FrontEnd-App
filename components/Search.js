@@ -8,6 +8,7 @@ import {
   agerangeCountriesOnline,
   countryCitiesAgerangeOnline,
   countryCityAgerangesOnline,
+  allCountriesSelectedOnline,
   allCountriesOffline,
   countryCitiesOffline,
   countryRecentActiveUsers,
@@ -146,6 +147,9 @@ export default function Search() {
   const handleChangeOptionValue = event => {
     setOptionValue(event.target.value);
   };
+
+  const OffsetOnline = useSelector(state => state.home.OffsetOnline);
+  const scoreLOnline = useSelector(state => state.home.scoreLOnline);
 
   //AgeRanges
   const CountryAgerangesOptionsOnline = useSelector(
@@ -379,6 +383,13 @@ export default function Search() {
       );
     }
   }, [CountriesOptionsOffline]);
+
+  useEffect(() => {
+    if (CountriesOptionsOnline.length != 0) {
+      // Get online users options for first call
+      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+    }
+  }, [CountriesOptionsOnline]);
 
   const onSearch = () => {
     if (optionValue == "active") {

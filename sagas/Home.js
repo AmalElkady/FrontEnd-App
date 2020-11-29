@@ -7,6 +7,7 @@ import {
   COUNTRY_CITIES_AGERANGE_ONLINE,
   COUNTRY_CITY_AGERANGES_ONLINE,
   ALL_COUNTRIES_SELECTED_ONLINE,
+  ALL_COUNTRIES_SELECTED_ONLINE_USERS,
   REQUEST_PHOTO_READ,
   ALL_COUNTRIES_OFFLINE,
   COUNTRY_CITIES_OFFLINE,
@@ -27,6 +28,7 @@ import {
   fetchCountryCitiesAgerangeOnlineSuccess,
   fetchCountryCityAgerangesOnlineSuccess,
   fetchAllCountriesSelectedOnlineSuccess,
+  fetchAllCountriesSelectedOnlineUsersSuccess,
   showHomeMessage,
   requestPhotoReadSuccess,
   allCountriesOfflineSuccess,
@@ -81,9 +83,14 @@ const getCountryCitiesAgerangeOnline = async (country, agerange) =>
     .catch(error => error);
 
 // Users Profiles
-const getAllCountriesSelectedOnline = async () =>
+const getAllCountriesSelectedOnline = async (SH, offset) =>
   await home
-    .getAllCountriesSelectedOnline()
+    .getAllCountriesSelectedOnline(SH, offset)
+    .then(returnUsers => returnUsers)
+    .catch(error => error);
+const getAllCountriesSelectedOnlineUsers = async (option, SH, offset) =>
+  await home
+    .getselectedsearchprofiles(option, SH, offset)
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
@@ -255,11 +262,14 @@ function* countryCitiesAgerangeOnlineRequest({ payload }) {
 
 // Users Profiles
 
-function* allCountriesSelectedOnlineRequest() {
+function* allCountriesSelectedOnlineRequest({ payload }) {
+  const { SH, offset } = payload;
   console.log("allCountriesSelectedOnline from saga ");
   try {
     const fetchedAllCountriesSelestedOnline = yield call(
-      getAllCountriesSelectedOnline
+      getAllCountriesSelectedOnline,
+      SH,
+      offset
     );
     console.log(
       "returned allCountriesSelectedOnline from saga",
@@ -267,6 +277,35 @@ function* allCountriesSelectedOnlineRequest() {
     );
     yield put(
       fetchAllCountriesSelectedOnlineSuccess(fetchedAllCountriesSelestedOnline)
+    );
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
+function* allCountriesSelectedOnlineUsersRequest({ payload }) {
+  const { option, SH, offset } = payload;
+  console.log(
+    "allCountriesSelectedUsersOnline from saga: ",
+    option,
+    SH,
+    offset
+  );
+  try {
+    const fetchedAllCountriesSelestedOnlineUsers = yield call(
+      getAllCountriesSelectedOnlineUsers,
+      option,
+      SH,
+      offset
+    );
+    console.log(
+      "returned fetchedAllCountriesSelestedOnlineUsers from saga",
+      fetchedAllCountriesSelestedOnlineUsers
+    );
+    yield put(
+      fetchAllCountriesSelectedOnlineUsersSuccess(
+        fetchedAllCountriesSelestedOnlineUsers
+      )
     );
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -539,6 +578,12 @@ export function* fetchAllCountriesSelectedOnline() {
   );
 }
 
+export function* fetchAllCountriesSelectedOnlineUsers() {
+  yield takeEvery(
+    ALL_COUNTRIES_SELECTED_ONLINE_USERS,
+    allCountriesSelectedOnlineUsersRequest
+  );
+}
 export function* fetchAgerangeAllCountriesSelectedOnline() {
   yield takeEvery(
     AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
@@ -610,6 +655,7 @@ export default function* rootSaga() {
     fork(fetchCountryCitiesAgerangeOnline),
     fork(fetchCountryCityAgerangesOnline),
     fork(fetchAllCountriesSelectedOnline),
+    fork(fetchAllCountriesSelectedOnlineUsers),
     fork(fetchPhotoReadRequest),
     fork(fetchAllCountriesOffline),
     fork(fetchAllCountriesOfflineUsers),

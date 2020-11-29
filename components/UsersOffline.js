@@ -94,7 +94,7 @@ export default function UsersOffline() {
 
   const classes = useStyles();
   useEffect(() => {
-    if (AllCountriesOfflineUsers != []) {
+    if (AllCountriesOfflineUsers.length != 0) {
       console.log(
         "allCountriesOfflineUsers change from users-offline component",
         AllCountriesOfflineUsers
@@ -110,7 +110,7 @@ export default function UsersOffline() {
     );
     if (photoReadSignedRequest != null) {
       if (searchState == "most recent") {
-        if (AllCountriesOfflineUsers != []) {
+        if (AllCountriesOfflineUsers.length != 0) {
           console.log(
             "AllCountriesOfflineUsers :on map ",
             AllCountriesOfflineUsers
@@ -145,18 +145,19 @@ export default function UsersOffline() {
   };
   return (
     <>
-      {console.log(
+      {console
+        .log
         // "allCountriesOfflineUsers from render : ",
         // AllCountriesOfflineUsers,
         // AllCountriesOfflineUsersTimeScore
-        "endOfResult ",
-        endOfResult
+        // "endOfResult ",
+        // endOfResult
         // "searchState",
         // searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
-      )}
-      {searchState == "most recent" && AllCountriesOfflineUsers != [] && (
+        ()}
+      {searchState == "most recent" && AllCountriesOfflineUsers.length != 0 && (
         <InfiniteScroll
           dataLength={AllCountriesOfflineUsers.length}
           height={300}

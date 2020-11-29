@@ -13,6 +13,8 @@ import {
   COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS,
   ALL_COUNTRIES_SELECTED_ONLINE,
   ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
+  ALL_COUNTRIES_SELECTED_ONLINE_USERS,
+  ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS,
   REQUEST_PHOTO_READ,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE,
@@ -36,7 +38,8 @@ import {
   ALL_COUNTRIES_OFFLINE_USERS,
   ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
   SHOW_MESSAGE,
-  RESET_STATES
+  RESET_STATES,
+  RESET_END_RES
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -124,22 +127,32 @@ export const fetchCountryCitiesAgerangeOnlineSuccess = data => {
 };
 
 // Users Profiles
-export const allCountriesSelectedOnline = () => {
-  console.log("all_countries_selected_online from action ");
+export const allCountriesSelectedOnline = (SH, offset) => {
   return {
-    type: ALL_COUNTRIES_SELECTED_ONLINE
+    type: ALL_COUNTRIES_SELECTED_ONLINE,
+    payload: { SH, offset }
   };
 };
 export const fetchAllCountriesSelectedOnlineSuccess = data => {
-  console.log(
-    "returned users all_countries_selected_online from action ",
-    data
-  );
   return {
     type: ALL_COUNTRIES_SELECTED_ONLINE_SECCUSS,
     payload: data
   };
 };
+
+export const allCountriesSelectedOnlineUsers = (option, SH, offset) => {
+  return {
+    type: ALL_COUNTRIES_SELECTED_ONLINE_USERS,
+    payload: { option, SH, offset }
+  };
+};
+export const fetchAllCountriesSelectedOnlineUsersSuccess = data => {
+  return {
+    type: ALL_COUNTRIES_SELECTED_ONLINE_USERS_SECCUSS,
+    payload: data
+  };
+};
+
 export const agerangeAllCountriesSelectedOnline = agerange => {
   console.log("agerangeAllCountriesSelectedOnline from action", agerange);
   return {
@@ -341,8 +354,13 @@ export const showHomeMessage = message => {
 };
 
 export const resetStates = () => {
-  console.log("recet from action");
   return {
     type: RESET_STATES
+  };
+};
+
+export const resetEndRes = () => {
+  return {
+    type: RESET_END_RES
   };
 };

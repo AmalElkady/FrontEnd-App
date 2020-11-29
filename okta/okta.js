@@ -1010,7 +1010,7 @@ home.getCountryCityAgerangesOnline = function (country,city) {
 											  }).catch((err) => {console.log(err)});			
 											
 										}
-home.getAllCountriesSelectedOnline = function () {
+home.getAllCountriesSelectedOnline = function (SH,offset) {
 
 	// "allcountriesflag":true,
     // "searchlistid" : "all_countries_selected_online",
@@ -1020,7 +1020,7 @@ home.getAllCountriesSelectedOnline = function () {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-									console.log("AllCountriesSelectedOnline from okta ");
+									console.log("AllCountriesSelectedOnline from okta offset ,",SH,offset);
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1036,7 +1036,8 @@ home.getAllCountriesSelectedOnline = function () {
 																											  data: {
 																												allcountriesflag: true,
 																												 searchlistid : `all_countries_selected_online`,
-											
+																												 scoreH:SH,
+   																												 offset:offset
 																											  }
 																											};
 												
@@ -1046,22 +1047,10 @@ home.getAllCountriesSelectedOnline = function () {
 																							console.log("respo data of all_countries_selected_online from all countries : ",response);
 																							
 																							if(response){
-																								//resolve(response);
-																								let returnUsers=[];
-																								response.list_of_results.forEach(async (e,i) => {
-																									if(i%2==0){
-																										let sebReturnUsers= await getselectedsearchprofiles(e);
-																										sebReturnUsers=mapUserPhotoPath(sebReturnUsers.list_of_results,e);
-																										returnUsers=[...returnUsers,sebReturnUsers];
-																										console.log("returnUsers after map ",returnUsers);
-																									}
-																									
-																									if(i===response.list_of_results.length-2){
-																										
-																										resolve(returnUsers.flat(1));
-																									}
-																								});	
+																								const mapedList =convertListToTwoArrays(response.list_of_results);
+																								console.log("usersArr, ScoreArr from okta all countries selected " ,mapedList);
 																								
+																								resolve(mapedList);
 																									 
 																							   } else {
 																								   
@@ -1426,7 +1415,7 @@ home.getCountryCityAgerangeSelectedOnline = function (country,city,ageRange) {
 
 
 
-const getselectedsearchprofiles =(searchlistid)=>{
+home.getselectedsearchprofiles =(searchlistid,SH,offset)=>{
 	console.log("searchlistid ",searchlistid)
 	
 	// "searchlistid" : "EG_4_1_18-25_on",
@@ -1450,6 +1439,9 @@ const getselectedsearchprofiles =(searchlistid)=>{
 																											  data: {
 																									             searchlistid : searchlistid,
 																												 onlineflag : true,
+																												 scoreH:SH,
+    																											 scoreL:"",
+    																											 offset
 											
 																											  }
 																											};
@@ -1460,7 +1452,13 @@ const getselectedsearchprofiles =(searchlistid)=>{
 																							console.log("respo data of users from all searchlistid : ",response);
 																							
 																							   if(response){
-																										resolve(response);					 
+
+																								const ReturnUsers=mapUserPhotoPath(response.list_of_results,searchlistid);
+																								//console.log("ReturnUsers map Path in okta : ",ReturnUsers);
+																								const mapedList =convertListToTwoArrays(ReturnUsers);
+														                                        console.log("usersArr, timeScoreArr from okta" ,mapedList);
+
+																										resolve(mapedList);					 
 																							   } else {
 																								   
 																								   resolve({"message": "no response !"})
