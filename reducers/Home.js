@@ -301,12 +301,30 @@ const home = (state = initialHomeState, action) => {
         scoreLOnline: SL
       };
     }
-    case COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS:
+    case COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS: {
+      console.log(
+        "COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS from reducer ",
+        action.payload
+      );
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResult = true;
+      }
       return {
         ...state,
-        countryCityAgerangeSelectedOnlineUsers: action.payload,
-        searchState: "active"
+        countryCityAgerangeSelectedOnline: [
+          ...state.countryCityAgerangeSelectedOnline,
+          ...action.payload.usersArr
+        ],
+        countryCityAgerangeSelectedOnlineCount: [
+          ...state.countryCityAgerangeSelectedOnlineCount,
+          ...action.payload.usersArr
+        ],
+        searchState: "active",
+        OffsetOnline: offset,
+        scoreLOnline: SL
       };
+    }
     case REQUEST_PHOTO_READ_SUCCESS:
       return {
         ...state,

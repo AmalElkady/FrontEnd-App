@@ -461,8 +461,6 @@ export default function Search() {
         selectedIndexC != -1 &&
         selectedIndexCit == -1
       ) {
-        //dispatch(countryCitiesAgerangeSelectedOnline("EG", "18-25"));
-
         //Get countryCitiesAgerangeSelectedOnline Options click country --> ageRange (first time)
         dispatch(selectedCountryIndex(selectedIndexC));
         dispatch(selectedAgerangeIndex(selectedIndex));
@@ -506,6 +504,35 @@ export default function Search() {
         selectedIndexC != -1 &&
         selectedIndexCit != -1
       ) {
+        dispatch(selectedCountryIndex(selectedIndexC));
+        dispatch(selectedAgerangeIndex(selectedIndex));
+        dispatch(selectedCityIndex(selectedIndexCit));
+        if (
+          CountryAgerangesOptionsOnline.list_of_results &&
+          !AgerangeCountriesOptionsOnline.list_of_results
+        ) {
+          dispatch(
+            countryCityAgerangeSelectedOnline(
+              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              "",
+              0
+            )
+          );
+        } else {
+          dispatch(
+            countryCityAgerangeSelectedOnline(
+              AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountryCitiesAgerangeOptionsOnline.list_of_results[
+                selectedIndexCit
+              ],
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+              "",
+              0
+            )
+          );
+        }
       }
     } else if (optionValue == "most recent") {
       //without Agerange
