@@ -369,9 +369,6 @@ export default function Search() {
 
   useEffect(() => {
     if (CountriesOptionsOffline != null) {
-      console.log(
-        "get allCountriesOfflineUsers first time from search Component : "
-      );
       // Get most recent users for first call
       dispatch(
         allCountriesOfflineUsers(
@@ -417,10 +414,7 @@ export default function Search() {
         selectedIndexCit == -1
       ) {
         //Get countrySelectedOnline Options (first time)
-        console.log(
-          "CountriesOptionsOnline on search ",
-          CountriesOptionsOnline
-        );
+
         dispatch(selectedCountryIndex(selectedIndexC));
         dispatch(
           countrySelectedOnline(
@@ -438,11 +432,7 @@ export default function Search() {
       ) {
         //Get countryCitySelectedOnline Options (first time)
         //dispatch(countryCitySelectedOnline("EG", "3"));
-        console.log(
-          "countryCitySelectedOnline on search ",
-          CountriesOptionsOnline.list_of_results[selectedIndexC],
-          CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
-        );
+
         dispatch(selectedCountryIndex(selectedIndexC));
         dispatch(selectedCityIndex(selectedIndexCit));
         dispatch(
@@ -468,12 +458,6 @@ export default function Search() {
           CountryAgerangesOptionsOnline.list_of_results &&
           !AgerangeCountriesOptionsOnline.list_of_results
         ) {
-          console.log(
-            "countryCitiesAgerangeSelectedOnline 1 on search ",
-            CountriesOptionsOnline.list_of_results[selectedIndexC],
-            CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
-          );
-
           dispatch(
             countryCitiesAgerangeSelectedOnline(
               CountriesOptionsOnline.list_of_results[selectedIndexC],
@@ -483,11 +467,6 @@ export default function Search() {
             )
           );
         } else {
-          console.log(
-            "countryCitiesAgerangeSelectedOnline 2 on search ",
-            AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
-            ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
-          );
           dispatch(
             countryCitiesAgerangeSelectedOnline(
               AgerangeCountriesOptionsOnline.list_of_results[selectedIndexC],
@@ -564,7 +543,7 @@ export default function Search() {
         const { scoreL, scoreH } = calcSlShFromAgerange(
           ARRAY_OF_AGE_RANGE[selectedIndex]
         );
-        console.log("scoreL,scoreH ", scoreL, scoreH);
+
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
           dispatch(
@@ -1205,7 +1184,7 @@ export default function Search() {
                                 CountryCitiesAgerangeOptionsOnline
                                   .list_of_results[selectedIndexCit] - 1
                               ]
-                          : ""
+                          : "Select City"
                         : ""
                     }
                   />

@@ -48,7 +48,7 @@ const initialHomeState = {
   allCountriesSelectedOnlineUsers: [],
   allCountriesSelectedOnlineUsersTimeScore: [],
   OffsetOnline: 0,
-  scoreLOnline: "",
+  scoreLOnline: 0,
   OffsetOnlineUsers: 0,
   scoreLOnlineUsers: "",
   //users
@@ -90,7 +90,7 @@ const initialHomeState = {
   searchState: "active",
   endOfResult: false,
   endOfResultUsers: false,
-
+  limitCount: 5,
   selectedCountryIndexForUsers: 0,
   showMessage: false,
   loader: false,
@@ -131,7 +131,14 @@ const home = (state = initialHomeState, action) => {
         countryCityAgerangesOnline: action.payload
       };
     case ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
-      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnline = offset;
+        state.scoreLOnline = SL;
+      } else {
+        state.OffsetOnline = "0";
+        state.scoreLOnline = "0";
+      }
 
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
@@ -146,15 +153,16 @@ const home = (state = initialHomeState, action) => {
           ...state.allCountriesSelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
-        OffsetOnline: offset,
-        scoreLOnline: SL
+        searchState: "active"
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
 
-      if (action.payload.usersArr.length == 0) {
+      if (
+        action.payload.usersArr.length == 0 &&
+        state.allCountriesSelectedOnline.length > 1
+      ) {
         state.endOfResultUsers = true;
         state.currentIndexAllCountriesSelectedOnline++;
       }
@@ -174,10 +182,6 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS from reducer ",
-        action.payload
-      );
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
@@ -207,7 +211,6 @@ const home = (state = initialHomeState, action) => {
           state.countryCitiesAgerangeSelectedOnline.length > 1 ||
           state.countryCityAgerangeSelectedOnline.length > 1
         ) {
-          console.log("********* end of users*********");
           state.endOfResultUsers = true;
           state.currentIndexSelectedOnline++;
         }
@@ -229,11 +232,14 @@ const home = (state = initialHomeState, action) => {
     }
 
     case COUNTRY_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "COUNTRY_SELECTED_ONLINE_SUCCESS from reducer ",
-        action.payload
-      );
-      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnline = offset;
+        state.scoreLOnline = SL;
+      } else {
+        state.OffsetOnline = "0";
+        state.scoreLOnline = "0";
+      }
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
       }
@@ -247,16 +253,10 @@ const home = (state = initialHomeState, action) => {
           ...state.countrySelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
-        OffsetOnline: offset,
-        scoreLOnline: SL
+        searchState: "active"
       };
     }
     case COUNTRY_CITY_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "COUNTRY_CITY_SELECTED_ONLINE_SUCCESS from reducer ",
-        action.payload
-      );
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
@@ -278,10 +278,6 @@ const home = (state = initialHomeState, action) => {
     }
 
     case COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS from reducer ",
-        action.payload
-      );
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
@@ -302,10 +298,6 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS from reducer ",
-        action.payload
-      );
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       if (action.payload.usersArr.length == 0) {
         state.endOfResult = true;
@@ -337,7 +329,6 @@ const home = (state = initialHomeState, action) => {
       };
 
     case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS: {
-      console.log("action.payload from reducer []", action.payload);
       let { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       let end = false;
       if (action.payload.usersArr.length === 0) {

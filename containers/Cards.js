@@ -183,10 +183,6 @@ export default function Cards() {
       SelectedOnlineUsers.length == 0
     ) {
       // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
-      console.log(
-        "agerangeAllCountriesSelectedOnline change ",
-        AgerangeAllCountriesSelectedOnline
-      );
       dispatch(
         selectedOnlineUsers(
           AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
@@ -200,7 +196,7 @@ export default function Cards() {
   useEffect(() => {
     if (CountrySelectedOnline.length != 0 && SelectedOnlineUsers.length == 0) {
       // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
-      console.log("CountrySelectedOnline change ", CountrySelectedOnline);
+
       dispatch(
         selectedOnlineUsers(
           CountrySelectedOnline[currentIndexSelectedOnline],
@@ -217,10 +213,7 @@ export default function Cards() {
       SelectedOnlineUsers.length == 0
     ) {
       // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
-      console.log(
-        "countryCitySelectedOnline change ",
-        CountryCitySelectedOnline
-      );
+
       dispatch(
         selectedOnlineUsers(
           CountryCitySelectedOnline[currentIndexSelectedOnline],
@@ -237,10 +230,7 @@ export default function Cards() {
       SelectedOnlineUsers.length == 0
     ) {
       // Get users of CountryCitiesAgerangeSelectedOnline (first time)
-      console.log(
-        "CountryCitiesAgerangeSelectedOnline change ",
-        CountryCitiesAgerangeSelectedOnline
-      );
+
       dispatch(
         selectedOnlineUsers(
           CountryCitiesAgerangeSelectedOnline[currentIndexSelectedOnline],
@@ -257,10 +247,7 @@ export default function Cards() {
       SelectedOnlineUsers.length == 0
     ) {
       // Get users of CountryCityAgerangeSelectedOnline (first time)
-      console.log(
-        "CountryCityAgerangeSelectedOnline change ",
-        CountryCityAgerangeSelectedOnline
-      );
+
       dispatch(
         selectedOnlineUsers(
           CountryCityAgerangeSelectedOnline[currentIndexSelectedOnline],
@@ -273,7 +260,6 @@ export default function Cards() {
 
   useEffect(() => {
     if (SelectedOnlineUsers.length != 0) {
-      console.log("selectedOnlineUsers change ", SelectedOnlineUsers);
       dispatch(requestPhotoRead());
     }
   }, [SelectedOnlineUsers]);
@@ -281,20 +267,12 @@ export default function Cards() {
   ///offline
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
-      console.log("countryRecentActiveUsers change", CountryRecentActiveUsers);
       dispatch(requestPhotoRead());
-    } else {
-      //console.log("reset from component cards country recent2 ");
-      // dispatch(resetStates());
     }
   }, [CountryRecentActiveUsers]);
 
   useEffect(() => {
     if (CountryCityRecentActiveUsers.length != 0) {
-      console.log(
-        "countryCityRecentActiveUsers change",
-        CountryCityRecentActiveUsers
-      );
       dispatch(requestPhotoRead());
     } else {
       // console.log("reset from component cards country city recent ");
@@ -305,7 +283,6 @@ export default function Cards() {
   ///
 
   useEffect(() => {
-    // console.log("photoReadSignedRequest changed : ", photoReadSignedRequest);
     if (photoReadSignedRequest != null) {
       if (searchState == "most recent") {
         if (CountryRecentActiveUsers.length != 0) {
@@ -338,11 +315,10 @@ export default function Cards() {
             CountryCitiesAgerangeSelectedOnline.length != 0 ||
             CountryCityAgerangeSelectedOnline.length != 0
           )
-            console.log("SelectedOnlineUsers :on map ", SelectedOnlineUsers);
-          mapUserPhotoUrl(
-            SelectedOnlineUsers,
-            photoReadSignedRequest.signedRequest
-          );
+            mapUserPhotoUrl(
+              SelectedOnlineUsers,
+              photoReadSignedRequest.signedRequest
+            );
         }
       }
     }
@@ -421,7 +397,6 @@ export default function Cards() {
       currentIndexSelectedOnline ===
       AgerangeAllCountriesSelectedOnline.length - 1
     ) {
-      console.log("get next options");
       // Get online users other options
       dispatch(
         agerangeAllCountriesSelectedOnline(
@@ -435,8 +410,8 @@ export default function Cards() {
       currentIndexSelectedOnline ===
       CountrySelectedOnline.length - 1
     ) {
-      console.log("get next options 2");
       // Get online users other options
+
       dispatch(
         countrySelectedOnline(
           CountriesOptionsOnline.list_of_results[countrySelectedIndex],
@@ -449,7 +424,6 @@ export default function Cards() {
       currentIndexSelectedOnline ===
       CountryCitySelectedOnline.length - 1
     ) {
-      console.log("get next options 3");
       // Get online users other options
       dispatch(
         countryCitySelectedOnline(
@@ -464,18 +438,11 @@ export default function Cards() {
       currentIndexSelectedOnline ===
       CountryCitiesAgerangeSelectedOnline.length - 1
     ) {
-      console.log("get next options 4");
       // Get online users other options
       if (
         CountryAgerangesOptionsOnline.list_of_results &&
         !AgerangeCountriesOptionsOnline.list_of_results
       ) {
-        console.log(
-          "countryCitiesAgerangeSelectedOnline 1 on search ",
-          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
-          CountryAgerangesOptionsOnline.list_of_results[selectedAgerangeIndex]
-        );
-
         dispatch(
           countryCitiesAgerangeSelectedOnline(
             CountriesOptionsOnline.list_of_results[countrySelectedIndex],
@@ -487,11 +454,6 @@ export default function Cards() {
           )
         );
       } else {
-        console.log(
-          "countryCitiesAgerangeSelectedOnline 2 on search ",
-          AgerangeCountriesOptionsOnline.list_of_results[countrySelectedIndex],
-          ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, "")
-        );
         dispatch(
           countryCitiesAgerangeSelectedOnline(
             AgerangeCountriesOptionsOnline.list_of_results[
@@ -509,7 +471,6 @@ export default function Cards() {
       currentIndexSelectedOnline ===
       CountryCityAgerangeSelectedOnline.length - 1
     ) {
-      console.log("get next options 5");
       // Get online users other options
       if (
         CountryAgerangesOptionsOnline.list_of_results &&
@@ -588,16 +549,7 @@ export default function Cards() {
   ////
   //online
   const handleScrollAgerange = () => {
-    console.log(
-      " endOfResultUsers ,endOfResult handleScrollAgerange",
-      endOfResultUsers,
-      endOfResult,
-      AgerangeAllCountriesSelectedOnline[currentIndexSelectedOnline],
-      scoreLOnline,
-      OffsetOnline
-    );
     if (AgerangeAllCountriesSelectedOnline.length == 1) {
-      console.log("==true");
       dispatch(
         agerangeAllCountriesSelectedOnline(
           ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
@@ -617,19 +569,7 @@ export default function Cards() {
   };
 
   const handleScrollCountry = () => {
-    console.log(
-      " endOfResultUsers ,endOfResult handleScrollCountry",
-      endOfResultUsers,
-      endOfResult,
-      currentIndexSelectedOnline,
-      CountrySelectedOnline[currentIndexSelectedOnline],
-      scoreLOnline,
-      OffsetOnline,
-      scoreLOnlineUsers, //SH
-      OffsetOnlineUsers //offset
-    );
     if (CountrySelectedOnline.length == 1) {
-      console.log("==true");
       dispatch(
         countrySelectedOnline(
           CountriesOptionsOnline.list_of_results[countrySelectedIndex],
@@ -638,7 +578,6 @@ export default function Cards() {
         )
       );
     } else if (!endOfResultUsers) {
-      console.log("endOfResultUsers false");
       dispatch(
         selectedOnlineUsers(
           CountrySelectedOnline[currentIndexSelectedOnline],
@@ -650,19 +589,7 @@ export default function Cards() {
   };
 
   const handleScrollCountryCity = () => {
-    console.log(
-      " endOfResultUsers ,endOfResult handleScrollCountryCity",
-      endOfResultUsers,
-      endOfResult,
-      currentIndexSelectedOnline,
-      CountryCitySelectedOnline[currentIndexSelectedOnline],
-      scoreLOnline,
-      OffsetOnline,
-      scoreLOnlineUsers, //SH
-      OffsetOnlineUsers //offset
-    );
     if (CountryCitySelectedOnline.length == 1) {
-      console.log("==true");
       dispatch(
         countryCitySelectedOnline(
           CountriesOptionsOnline.list_of_results[countrySelectedIndex],
@@ -672,7 +599,6 @@ export default function Cards() {
         )
       );
     } else if (!endOfResultUsers) {
-      console.log("endOfResultUsers false");
       dispatch(
         selectedOnlineUsers(
           CountryCitySelectedOnline[currentIndexSelectedOnline],
@@ -684,17 +610,6 @@ export default function Cards() {
   };
 
   const handleScrollCountryAgerange = () => {
-    console.log(
-      " endOfResultUsers ,endOfResult handleScrollCountryCity",
-      endOfResultUsers,
-      endOfResult,
-      currentIndexSelectedOnline,
-      CountryCitySelectedOnline[currentIndexSelectedOnline],
-      scoreLOnline,
-      OffsetOnline,
-      scoreLOnlineUsers, //SH
-      OffsetOnlineUsers //offset
-    );
     if (CountryCitiesAgerangeSelectedOnline.length == 1) {
       if (
         CountryAgerangesOptionsOnline.list_of_results &&
@@ -723,8 +638,6 @@ export default function Cards() {
         );
       }
     } else if (!endOfResultUsers) {
-      console.log("endOfResultUsers false");
-
       dispatch(
         selectedOnlineUsers(
           CountryCitiesAgerangeSelectedOnline[currentIndexSelectedOnline],
@@ -736,17 +649,6 @@ export default function Cards() {
   };
 
   const handleScrollCountryCityAgerange = () => {
-    console.log(
-      " endOfResultUsers ,endOfResult handleScrollCountryCityAgerange",
-      endOfResultUsers,
-      endOfResult,
-      currentIndexSelectedOnline,
-      CountryCitySelectedOnline[currentIndexSelectedOnline],
-      scoreLOnline,
-      OffsetOnline,
-      scoreLOnlineUsers, //SH
-      OffsetOnlineUsers //offset
-    );
     if (CountryCityAgerangeSelectedOnline.length == 1) {
       if (
         CountryAgerangesOptionsOnline.list_of_results &&
@@ -779,8 +681,6 @@ export default function Cards() {
         );
       }
     } else if (!endOfResultUsers) {
-      console.log("endOfResultUsers false");
-
       dispatch(
         selectedOnlineUsers(
           CountryCityAgerangeSelectedOnline[currentIndexSelectedOnline],
@@ -793,7 +693,7 @@ export default function Cards() {
 
   return (
     <>
-      {console.log(
+      {/* {console.log(
         // "countryRecentActiveUsers from render : ",
         // CountryRecentActiveUsers,
         // "countryCityRecentActiveUsers from render : ",
@@ -807,8 +707,12 @@ export default function Cards() {
         // "AllCountriesSelectedOnline :",
         // AllCountriesSelectedOnline
         "endOfResult from render ",
-        endOfResult
-      )}
+        endOfResult,
+        scoreLOnline,
+        OffsetOnline,
+        currentIndexSelectedOnline,
+        CountrySelectedOnline
+      )} */}
 
       {/* Display Online Users */}
       {searchState == "active" &&

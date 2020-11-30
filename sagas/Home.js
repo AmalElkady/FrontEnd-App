@@ -195,17 +195,14 @@ function* countryAgerangesOnlineRequest({ payload }) {
 
 function* countryCityAgerangesOnlineRequest({ payload }) {
   const { country, city } = payload;
-  console.log("country and city from saga ", country, city);
+
   try {
     const fetchedCountryCityAgerangesOnline = yield call(
       getCountryCityAgerangesOnline,
       country,
       city
     );
-    console.log(
-      "returned ageranges from saga based on country and city",
-      fetchedCountryCityAgerangesOnline
-    );
+
     yield put(
       fetchCountryCityAgerangesOnlineSuccess(fetchedCountryCityAgerangesOnline)
     );
@@ -225,16 +222,12 @@ function* fetchAllCountriesOnlineRequest() {
 }
 
 function* AgerangeCountriesOnlineRequest({ payload }) {
-  console.log("agerange for countries from saga ", payload);
   try {
     const fetchedAgerangeCountriesOnline = yield call(
       getAgerangeCountriesOnline,
       payload
     );
-    console.log(
-      "returned countries of age from saga ",
-      fetchedAgerangeCountriesOnline
-    );
+
     yield put(agerangeCountriesOnlineSuccess(fetchedAgerangeCountriesOnline));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -243,13 +236,12 @@ function* AgerangeCountriesOnlineRequest({ payload }) {
 
 // Cities
 function* countryCitiesOnlineRequest({ payload }) {
-  console.log("country from saga ", payload);
   try {
     const fetchedCountryCitiesOnline = yield call(
       getCountryCitiesOnline,
       payload
     );
-    console.log("returned cities from saga ", fetchedCountryCitiesOnline);
+
     yield put(fetchCountryCitiesOnlineSuccess(fetchedCountryCitiesOnline));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -258,17 +250,13 @@ function* countryCitiesOnlineRequest({ payload }) {
 
 function* countryCitiesAgerangeOnlineRequest({ payload }) {
   const { country, agerange } = payload;
-  console.log("country and agerange from saga ", country, agerange);
   try {
     const fetchedCountryCitiesAgerangeOnline = yield call(
       getCountryCitiesAgerangeOnline,
       country,
       agerange
     );
-    console.log(
-      "returned cities from saga based on country and agerang",
-      fetchedCountryCitiesAgerangeOnline
-    );
+
     yield put(
       fetchCountryCitiesAgerangeOnlineSuccess(
         fetchedCountryCitiesAgerangeOnline
@@ -283,17 +271,14 @@ function* countryCitiesAgerangeOnlineRequest({ payload }) {
 
 function* allCountriesSelectedOnlineRequest({ payload }) {
   const { SH, offset } = payload;
-  console.log("allCountriesSelectedOnline from saga ");
+
   try {
     const fetchedAllCountriesSelestedOnline = yield call(
       getAllCountriesSelectedOnline,
       SH,
       offset
     );
-    console.log(
-      "returned allCountriesSelectedOnline from saga",
-      fetchedAllCountriesSelestedOnline
-    );
+
     yield put(
       fetchAllCountriesSelectedOnlineSuccess(fetchedAllCountriesSelestedOnline)
     );
@@ -304,12 +289,7 @@ function* allCountriesSelectedOnlineRequest({ payload }) {
 
 function* allCountriesSelectedOnlineUsersRequest({ payload }) {
   const { option, SH, offset } = payload;
-  console.log(
-    "allCountriesSelectedUsersOnline from saga: ",
-    option,
-    SH,
-    offset
-  );
+
   try {
     const fetchedAllCountriesSelestedOnlineUsers = yield call(
       getAllCountriesSelectedOnlineUsers,
@@ -317,10 +297,7 @@ function* allCountriesSelectedOnlineUsersRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedAllCountriesSelestedOnlineUsers from saga",
-      fetchedAllCountriesSelestedOnlineUsers
-    );
+
     yield put(
       fetchAllCountriesSelectedOnlineUsersSuccess(
         fetchedAllCountriesSelestedOnlineUsers
@@ -334,7 +311,7 @@ function* allCountriesSelectedOnlineUsersRequest({ payload }) {
 //usesr
 function* selectedOnlineUsersRequest({ payload }) {
   const { option, SH, offset } = payload;
-  console.log("SelectedUsersOnline from saga: ", option, SH, offset);
+
   try {
     const fetchedSelestedOnlineUsers = yield call(
       getSelectedOnlineUsers,
@@ -342,10 +319,7 @@ function* selectedOnlineUsersRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedSelestedOnlineUsers from saga",
-      fetchedSelestedOnlineUsers
-    );
+
     yield put(fetchSelectedOnlineUsersSuccess(fetchedSelestedOnlineUsers));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -356,12 +330,7 @@ function* selectedOnlineUsersRequest({ payload }) {
 
 function* agerangeAllCountriesSelectedOnlineRequest({ payload }) {
   const { agerange, SH, offset } = payload;
-  console.log(
-    "agerangeAllCountriesSelectedOnline from saga ",
-    agerange,
-    SH,
-    offset
-  );
+
   try {
     const fetchedAgerangeAllCountriesSelestedOnline = yield call(
       getAgerangeAllCountriesSelectedOnline,
@@ -369,10 +338,7 @@ function* agerangeAllCountriesSelectedOnlineRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedAgerangeAllCountriesSelestedOnline from saga",
-      fetchedAgerangeAllCountriesSelestedOnline
-    );
+
     yield put(
       fetchAgerangeAllCountriesSelectedOnlineSuccess(
         fetchedAgerangeAllCountriesSelestedOnline
@@ -385,7 +351,7 @@ function* agerangeAllCountriesSelectedOnlineRequest({ payload }) {
 
 function* countrySelectedOnlineRequest({ payload }) {
   const { country, SH, offset } = payload;
-  console.log("countrySelectedOnline from saga ", country, SH, offset);
+
   try {
     const fetchedCountrySelestedOnline = yield call(
       getCountrySelectedOnline,
@@ -393,10 +359,7 @@ function* countrySelectedOnlineRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedCountrySelestedOnline from saga",
-      fetchedCountrySelestedOnline
-    );
+
     yield put(fetchCountrySelectedOnlineSuccess(fetchedCountrySelestedOnline));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -405,13 +368,7 @@ function* countrySelectedOnlineRequest({ payload }) {
 
 function* countryCitySelectedOnlineRequest({ payload }) {
   const { country, city, SH, offset } = payload;
-  console.log(
-    "countryCitySelectedOnline from saga ",
-    country,
-    city,
-    SH,
-    offset
-  );
+
   try {
     const fetchedCountryCitySelestedOnline = yield call(
       getCountryCitySelectedOnline,
@@ -420,10 +377,7 @@ function* countryCitySelectedOnlineRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedCountryCitySelestedOnline from saga",
-      fetchedCountryCitySelestedOnline
-    );
+
     yield put(
       fetchCountryCitySelectedOnlineSuccess(fetchedCountryCitySelestedOnline)
     );
@@ -434,13 +388,7 @@ function* countryCitySelectedOnlineRequest({ payload }) {
 
 function* countryCitiesAgerangeSelectedOnlineRequest({ payload }) {
   const { country, agerange, SH, offset } = payload;
-  console.log(
-    "countryCitiesAgerangeSelectedOnline from saga ",
-    country,
-    agerange,
-    SH,
-    offset
-  );
+
   try {
     const fetchedCountryCitiesAgerangeSelestedOnline = yield call(
       getCountryCitiesAgerangeSelectedOnline,
@@ -449,10 +397,7 @@ function* countryCitiesAgerangeSelectedOnlineRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedCountryCitiesAgerangeSelestedOnline from saga",
-      fetchedCountryCitiesAgerangeSelestedOnline
-    );
+
     yield put(
       fetchCountryCitiesAgerangeSelectedOnlineSuccess(
         fetchedCountryCitiesAgerangeSelestedOnline
@@ -465,14 +410,7 @@ function* countryCitiesAgerangeSelectedOnlineRequest({ payload }) {
 
 function* countryCityAgerangeSelectedOnlineRequest({ payload }) {
   const { country, city, agerange, SH, offset } = payload;
-  console.log(
-    "countryCityAgerangeSelectedOnline from saga ",
-    country,
-    city,
-    agerange,
-    SH,
-    offset
-  );
+
   try {
     const fetchedCountryCityAgerangeSelestedOnline = yield call(
       getCountryCityAgerangeSelectedOnline,
@@ -482,10 +420,7 @@ function* countryCityAgerangeSelectedOnlineRequest({ payload }) {
       SH,
       offset
     );
-    console.log(
-      "returned fetchedCountryCityAgerangeSelestedOnline from saga",
-      fetchedCountryCityAgerangeSelestedOnline
-    );
+
     yield put(
       fetchCountryCityAgerangeSelectedOnlineSuccess(
         fetchedCountryCityAgerangeSelestedOnline
@@ -497,13 +432,9 @@ function* countryCityAgerangeSelectedOnlineRequest({ payload }) {
 }
 
 function* photoReadRequest() {
-  console.log("photoReadRequest from saga ");
   try {
     const fetchedPhotoReadsignedRequest = yield call(requestPhotoRead);
-    console.log(
-      "returned fetchedPhotoReadsignedRequest from saga",
-      fetchedPhotoReadsignedRequest
-    );
+
     yield put(requestPhotoReadSuccess(fetchedPhotoReadsignedRequest));
   } catch (error) {
     yield put(showHomeMessage(error));

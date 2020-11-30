@@ -14,12 +14,15 @@ export const mapUserPhotoPath = (userArr, co_ci_v) => {
   // active state
   else {
     const co = co_ci_v.substring(0, 2);
+    const ci = co_ci_v.substring(3, 5);
+    ci.replace(/_/, "");
     co_ci_v = co_ci_v.substring(0, 6);
     newUsersArr = userArr.map((e, i) => {
       if (i % 2 == 0) {
         e = JSON.parse(e);
         e._ = co_ci_v + "/" + e.i + e._;
         e.co = co;
+        e.ci = ci;
       }
       return e;
     });

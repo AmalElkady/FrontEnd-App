@@ -161,22 +161,12 @@ export const fetchAllCountriesSelectedOnlineUsersSuccess = data => {
 };
 
 export const agerangeAllCountriesSelectedOnline = (agerange, SH, offset) => {
-  console.log(
-    "agerangeAllCountriesSelectedOnline from action",
-    agerange,
-    SH,
-    offset
-  );
   return {
     type: AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE,
     payload: { agerange, SH, offset }
   };
 };
 export const fetchAgerangeAllCountriesSelectedOnlineSuccess = data => {
-  console.log(
-    "returned users AgerangeAllCountriesSelectedOnline from action ",
-    data
-  );
   return {
     type: AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
     payload: data
@@ -185,7 +175,6 @@ export const fetchAgerangeAllCountriesSelectedOnlineSuccess = data => {
 
 ///// users
 export const selectedOnlineUsers = (option, SH, offset) => {
-  console.log("option from action ", option, SH, offset);
   return {
     type: SELECTED_ONLINE_USERS,
     payload: { option, SH, offset }
@@ -200,14 +189,12 @@ export const fetchSelectedOnlineUsersSuccess = data => {
 ////
 
 export const countrySelectedOnline = (country, SH, offset) => {
-  console.log("countrySelectedOnline from action", country, SH, offset);
   return {
     type: COUNTRY_SELECTED_ONLINE,
     payload: { country, SH, offset }
   };
 };
 export const fetchCountrySelectedOnlineSuccess = data => {
-  console.log("returned users COUNTRY_SELECTED_ONLINE from action ", data);
   return {
     type: COUNTRY_SELECTED_ONLINE_SUCCESS,
     payload: data
@@ -215,20 +202,12 @@ export const fetchCountrySelectedOnlineSuccess = data => {
 };
 
 export const countryCitySelectedOnline = (country, city, SH, offset) => {
-  console.log(
-    "countryCitySelectedOnline from action",
-    country,
-    city,
-    SH,
-    offset
-  );
   return {
     type: COUNTRY_CITY_SELECTED_ONLINE,
     payload: { country, city, SH, offset }
   };
 };
 export const fetchCountryCitySelectedOnlineSuccess = data => {
-  console.log("returned users COUNTRY_City_SELECTED_ONLINE from action ", data);
   return {
     type: COUNTRY_CITY_SELECTED_ONLINE_SUCCESS,
     payload: data
@@ -241,23 +220,12 @@ export const countryCitiesAgerangeSelectedOnline = (
   SH,
   offset
 ) => {
-  console.log(
-    "COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE from action",
-    country,
-    agerange,
-    SH,
-    offset
-  );
   return {
     type: COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE,
     payload: { country, agerange, SH, offset }
   };
 };
 export const fetchCountryCitiesAgerangeSelectedOnlineSuccess = data => {
-  console.log(
-    "returned users COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE from action ",
-    data
-  );
   return {
     type: COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE_SUCCESS,
     payload: data
@@ -271,24 +239,12 @@ export const countryCityAgerangeSelectedOnline = (
   SH,
   offset
 ) => {
-  console.log(
-    "COUNTRY_CITY_AGERANGE_SELECTED_ONLINE from action",
-    country,
-    city,
-    agerange,
-    SH,
-    offset
-  );
   return {
     type: COUNTRY_CITY_AGERANGE_SELECTED_ONLINE,
     payload: { country, city, agerange, SH, offset }
   };
 };
 export const fetchCountryCityAgerangeSelectedOnlineSuccess = data => {
-  console.log(
-    "returned users COUNTRY_CITIES_AGERANGE_SELECTED_ONLINE from action ",
-    data
-  );
   return {
     type: COUNTRY_CITY_AGERANGE_SELECTED_ONLINE_SUCCESS,
     payload: data
@@ -296,14 +252,12 @@ export const fetchCountryCityAgerangeSelectedOnlineSuccess = data => {
 };
 
 export const requestPhotoRead = () => {
-  console.log("REQUEST_PHOTO_READ from action ");
   return {
     type: REQUEST_PHOTO_READ
   };
 };
 
 export const requestPhotoReadSuccess = data => {
-  console.log("REQUEST_PHOTO_READ_SUCCESS from action ");
   return {
     type: REQUEST_PHOTO_READ_SUCCESS,
     payload: data

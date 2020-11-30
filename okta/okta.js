@@ -1376,7 +1376,7 @@ home.getCountryCityAgerangeSelectedOnline = function (country,city,ageRange, SH,
 
 
 home.getselectedsearchprofiles =(searchlistid,SH,offset)=>{
-	console.log("searchlistid  from okta",searchlistid,SH,offset)
+	//console.log("searchlistid  from okta",searchlistid,SH,offset)
 	
 	// "searchlistid" : "EG_4_1_18-25_on",
     // "onlineflag" : true,
@@ -1460,7 +1460,7 @@ home.requestPhotoRead=()=>{
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo signedRequest from okta: ",response);
+																							//console.log("respo signedRequest from okta: ",response);
 																							
 																							   if(response){
 																										resolve(response);					 

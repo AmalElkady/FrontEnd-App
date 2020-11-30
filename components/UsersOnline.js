@@ -84,10 +84,12 @@ export default function UsersOnline() {
   useEffect(() => {
     if (
       endOfResultUsers &&
-      currentIndexAllCountriesSelectedOnline !=
+      AllCountriesSelectedOnline.length != 0 &&
+      currentIndexAllCountriesSelectedOnline <=
         AllCountriesSelectedOnline.length - 1
     ) {
       // get users of next option
+
       dispatch(
         allCountriesSelectedOnlineUsers(
           AllCountriesSelectedOnline[currentIndexAllCountriesSelectedOnline],
@@ -106,12 +108,14 @@ export default function UsersOnline() {
     ) {
       // Get online users other options
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
-      //dispatch(resetEndRes());
+      dispatch(resetEndRes());
     }
   }, [currentIndexAllCountriesSelectedOnline]);
 
   const handleScroll = () => {
-    if (!endOfResultUsers) {
+    if (AllCountriesSelectedOnline.length == 1) {
+      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+    } else if (!endOfResultUsers) {
       dispatch(
         allCountriesSelectedOnlineUsers(
           AllCountriesSelectedOnline[currentIndexAllCountriesSelectedOnline],
