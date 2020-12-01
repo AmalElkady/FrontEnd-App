@@ -24,12 +24,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 
 import {
-  allCountriesSelectedOnline,
-  agerangeAllCountriesSelectedOnline,
-  countrySelectedOnline,
-  countryCitySelectedOnline,
-  countryCitiesAgerangeSelectedOnline,
-  countryCityAgerangeSelectedOnline,
+  allCountriesOffline,
+  countryCitiesOffline,
+  resetEndRes,
+  resetEndResUsers,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
   allCountriesOfflineUsers,
@@ -57,6 +55,10 @@ export default function UsersOffline() {
     state => state.home.allCountriesOfflineUsersTimeScore
   );
 
+  const currentIndexAllCountriesOffline = useSelector(
+    state => state.home.currentIndexAllCountriesOffline
+  );
+
   const searchState = useSelector(state => state.home.searchState);
   const showMessage = useSelector(state => state.home.showMessage);
   const loader = useSelector(state => state.home.loader);
@@ -64,12 +66,14 @@ export default function UsersOffline() {
 
   const OffsetOfline = useSelector(state => state.home.OffsetOfline);
   const scoreLOffline = useSelector(state => state.home.scoreLOffline);
+  const OffsetOflineUsers = useSelector(state => state.home.OffsetOflineUsers);
+  const scoreLOfflineUsers = useSelector(
+    state => state.home.scoreLOfflineUsers
+  );
   const endOfResult = useSelector(state => state.home.endOfResult);
+  const endOfResultUsers = useSelector(state => state.home.endOfResultUsers);
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
-  );
-  const selectedCountryIndexForUsers = useSelector(
-    state => state.home.selectedCountryIndexForUsers
   );
 
   const dispatch = useDispatch();
@@ -104,6 +108,37 @@ export default function UsersOffline() {
   }, [AllCountriesOfflineUsers]);
 
   useEffect(() => {
+    if (
+      endOfResultUsers &&
+      CountriesOptionsOffline.length != 0 &&
+      currentIndexAllCountriesOffline <= CountriesOptionsOffline.length - 1
+    ) {
+      // get users of next option
+      console.log("next option countries offline");
+      dispatch(
+        allCountriesOfflineUsers(
+          CountriesOptionsOffline[currentIndexAllCountriesOffline],
+          scoreLOfflineUsers,
+          OffsetOflineUsers
+        )
+      );
+      dispatch(resetEndResUsers());
+    }
+  }, [endOfResultUsers]);
+
+  useEffect(() => {
+    if (
+      CountriesOptionsOffline.length > 1 &&
+      currentIndexAllCountriesOffline === CountriesOptionsOffline.length - 1
+    ) {
+      // Get online users other options
+      console.log("currentIndexAllCountriesOffline change");
+      dispatch(allCountriesOffline(scoreLOffline, OffsetOfline));
+      dispatch(resetEndRes());
+    }
+  }, [currentIndexAllCountriesOffline]);
+
+  useEffect(() => {
     console.log(
       "photoReadSignedRequest changed from AllCountriesOfflineUsers component : ",
       photoReadSignedRequest
@@ -127,26 +162,32 @@ export default function UsersOffline() {
 
   const handleScroll = () => {
     console.log(
-      "endOfResult selectedCountryIndexForUsers scoreLOffline OffsetOfline users-offline component ",
+      "endOfResult scoreLOfflineUsers OffsetOflineUsers users-offline component ",
       endOfResult,
-      selectedCountryIndexForUsers,
-      scoreLOffline,
-      OffsetOfline
+      currentIndexAllCountriesOffline,
+      scoreLOfflineUsers,
+      OffsetOflineUsers
     );
-    if (!endOfResult) {
+    // if (CountriesOptionsOffline.length == 1) {
+    //   dispatch(allCountriesOffline(scoreLOffline, OffsetOfline));
+    // }
+    if (!endOfResultUsers) {
       dispatch(
         allCountriesOfflineUsers(
-          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
-          scoreLOffline,
-          OffsetOfline
+          CountriesOptionsOffline[currentIndexAllCountriesOffline],
+          scoreLOfflineUsers,
+          OffsetOflineUsers
         )
       );
+    } else if (CountriesOptionsOffline.length == 1) {
+      console.log("close end###########");
+      dispatch(allCountriesOffline(scoreLOffline, OffsetOfline));
+      dispatch(resetEndRes());
     }
   };
   return (
     <>
-      {console
-        .log
+      {console.log(
         // "allCountriesOfflineUsers from render : ",
         // AllCountriesOfflineUsers,
         // AllCountriesOfflineUsersTimeScore
@@ -156,7 +197,9 @@ export default function UsersOffline() {
         // searchState
         // "signedRequest #### ",
         // photoReadSignedRequest?.signedRequest
-        ()}
+        "endOfResultUsers ",
+        endOfResultUsers
+      )}
       {searchState == "most recent" && AllCountriesOfflineUsers.length != 0 && (
         <InfiniteScroll
           dataLength={AllCountriesOfflineUsers.length}

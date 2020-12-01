@@ -1484,7 +1484,7 @@ home.requestPhotoRead=()=>{
 
 //// OFFLINE
 
-home.getAllCountriesOffline = function () {
+home.getAllCountriesOffline = function (SH, offset) {
 
 	// "allcountriesflag": true,
     // "searchlistid" : "all_countries_offline",
@@ -1494,7 +1494,7 @@ home.getAllCountriesOffline = function () {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-
+console.log("all offline countries ",SH, offset);
 					  return new Promise(  async (resolve, reject) => {				
 											try {
 												
@@ -1510,7 +1510,8 @@ home.getAllCountriesOffline = function () {
 																  data: {
 																	allcountriesflag: true,
 																     searchlistid : "all_countries_recent",
-
+																	 scoreH:SH,
+																	 offset:offset
 																  }
 																};
 	
@@ -1520,7 +1521,11 @@ home.getAllCountriesOffline = function () {
 												console.log("respo all_countries_offline data from okta : ",response);
 												
 												   if(response){
-																	resolve(response);					 
+																	//resolve(response);	
+												     const mapedList =convertListToTwoArrays(response.list_of_results);
+													 console.log("usersArr, ScoreArr from okta all countries offline " ,mapedList);
+																								
+													resolve(mapedList);				 
 												   } else {
 													   
 													   resolve({"message": "no response !"})
@@ -1563,7 +1568,7 @@ home.getAllCountriesOfflineUsers = function (country,SL,offset) {
 			
 }
 
-home.getCountryCitiesOffline = function (country) {
+home.getCountryCitiesOffline = function (country, SH, offset ) {
 
 		// "allcountriesflag": false,
 		// "searchlistid" : "EG_country_cities_offline",
@@ -1573,7 +1578,7 @@ home.getCountryCitiesOffline = function (country) {
 		// "key":"",
 		// "scoreH":"",
 		// "offset":""
-		console.log("country selected for cities offline from okta ",country);
+		console.log("country selected for cities offline from okta ", country, SH, offset );
 							  return new Promise(  async (resolve, reject) => {				
 													try {
 														
@@ -1589,7 +1594,8 @@ home.getCountryCitiesOffline = function (country) {
 																		  data: {
 																			allcountriesflag: false,
 																			 searchlistid : `${country}_country_cities_recent`,
-		
+																			 scoreH:SH,
+																			 offset:offset
 																		  }
 																		};
 			
@@ -1599,7 +1605,11 @@ home.getCountryCitiesOffline = function (country) {
 														console.log("respo data of cities offline from okta : ",response);
 														
 														   if(response){
-																			resolve(response);					 
+																		//	resolve(response);
+																		const mapedList =convertListToTwoArrays(response.list_of_results);
+													 console.log("usersArr, ScoreArr from okta all countries offline " ,mapedList);
+																								
+													resolve(mapedList);						 
 														   } else {
 															   
 															   resolve({"message": "no response !"})

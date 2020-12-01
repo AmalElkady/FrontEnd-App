@@ -150,9 +150,9 @@ const requestPhotoRead = async () =>
     .catch(error => error);
 
 /// Offline
-const getOfflineCountries = async () =>
+const getOfflineCountries = async (SL, offset) =>
   await home
-    .getAllCountriesOffline()
+    .getAllCountriesOffline(SL, offset)
     .then(returnCountries => returnCountries)
     .catch(error => error);
 
@@ -162,9 +162,9 @@ const getOfflineCountriesAllUsers = async (country, SL, offset) =>
     .then(returnUsers => returnUsers)
     .catch(error => error);
 
-const getCountryCitiesOffline = async country =>
+const getCountryCitiesOffline = async (country, SL, offset) =>
   await home
-    .getCountryCitiesOffline(country)
+    .getCountryCitiesOffline(country, SL, offset)
     .then(returnCities => returnCities)
     .catch(error => error);
 
@@ -442,10 +442,11 @@ function* photoReadRequest() {
 }
 
 //Offline
-function* fetchAllCountriesOfflineRequest() {
-  console.log("offline from saga");
+function* fetchAllCountriesOfflineRequest({ payload }) {
+  const { SL, offset } = payload;
+  console.log("offline options from saga ", SL, offset);
   try {
-    const fetchedCountriesOffline = yield call(getOfflineCountries);
+    const fetchedCountriesOffline = yield call(getOfflineCountries, SL, offset);
     yield put(allCountriesOfflineSuccess(fetchedCountriesOffline));
   } catch (error) {
     yield put(showHomeMessage(error));
@@ -473,11 +474,14 @@ function* fetchAllCountriesOfflineUsersRequest({ payload }) {
 }
 
 function* countryCitiesOfflineRequest({ payload }) {
+  const { country, SL, offset } = payload;
   console.log("country Offline from saga ", payload);
   try {
     const fetchedCountryCitiesOffline = yield call(
       getCountryCitiesOffline,
-      payload
+      country,
+      SL,
+      offset
     );
     console.log(
       "returned cities offline from saga ",

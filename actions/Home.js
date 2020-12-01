@@ -266,10 +266,11 @@ export const requestPhotoReadSuccess = data => {
 
 /// most recent
 
-export const allCountriesOffline = () => {
-  console.log("ALL_COUNTRIES_OFFLINE from action ");
+export const allCountriesOffline = (SL, offset) => {
+  console.log("ALL_COUNTRIES_OFFLINE from action ,", SL, offset);
   return {
-    type: ALL_COUNTRIES_OFFLINE
+    type: ALL_COUNTRIES_OFFLINE,
+    payload: { SL, offset }
   };
 };
 
@@ -297,11 +298,11 @@ export const allCountriesOfflineUsersSuccess = data => {
   };
 };
 
-export const countryCitiesOffline = country => {
-  console.log("COUNTRY_CITIES_OFFLINE from action ");
+export const countryCitiesOffline = (country, SL, offset) => {
+  console.log("COUNTRY_CITIES_OFFLINE from action ", country, SL, offset);
   return {
     type: COUNTRY_CITIES_OFFLINE,
-    payload: country
+    payload: { country, SL, offset }
   };
 };
 

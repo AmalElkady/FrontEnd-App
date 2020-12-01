@@ -71,17 +71,34 @@ const initialHomeState = {
   countryCityAgerangeSelectedOnline: [],
   countryCityAgerangeSelectedOnlineCount: [],
   //offline
-  allCountriesOffline: null,
+  allCountriesOffline: [],
+  allCountriesOfflineCount: [],
+
   allCountriesOfflineUsers: [],
   allCountriesOfflineUsersTimeScore: [],
-  countryCitiesOffline: null,
+
+  countryCitiesOffline: [],
+  countryCitiesOfflineCount: [],
+
   countryRecentActiveUsers: [],
   countryRecentActiveUsersTimescore: [],
+
   countryCityRecentActiveUsers: [],
   countryCityRecentActiveUsersTimescore: [],
+
+  endOfResultCo: false, // for country list
+  scoreLOfflineCo: 0,
+  OffsetOfflineCo: 0,
+  endOfResultCi: false, // for city list
+  scoreLOfflineCi: "",
+  OffsetOfflineCi: 0,
+
   scoreHOffline: "",
   scoreLOffline: "",
   OffsetOfline: 0,
+  scoreLOfflineUsers: "",
+  OffsetOflineUsers: 0,
+  currentIndexAllCountriesOffline: 0,
   //
   ageRangeSelectedIndex: 0,
   countrySelectedIndex: 0,
@@ -91,7 +108,6 @@ const initialHomeState = {
   endOfResult: false,
   endOfResultUsers: false,
   limitCount: 5,
-  selectedCountryIndexForUsers: 0,
   showMessage: false,
   loader: false,
   alertMessage: ""
@@ -269,7 +285,7 @@ const home = (state = initialHomeState, action) => {
         ],
         countryCitySelectedOnlineCount: [
           ...state.countryCitySelectedOnlineCount,
-          ...action.payload.usersArr
+          ...action.payload.scoreArr
         ],
         searchState: "active",
         OffsetOnline: offset,
@@ -290,7 +306,7 @@ const home = (state = initialHomeState, action) => {
         ],
         countryCitiesAgerangeSelectedOnlineCount: [
           ...state.countryCitiesAgerangeSelectedOnlineCount,
-          ...action.payload.usersArr
+          ...action.payload.scoreArr
         ],
         searchState: "active",
         OffsetOnline: offset,
@@ -310,7 +326,7 @@ const home = (state = initialHomeState, action) => {
         ],
         countryCityAgerangeSelectedOnlineCount: [
           ...state.countryCityAgerangeSelectedOnlineCount,
-          ...action.payload.usersArr
+          ...action.payload.scoreArr
         ],
         searchState: "active",
         OffsetOnline: offset,
@@ -322,17 +338,42 @@ const home = (state = initialHomeState, action) => {
         ...state,
         photoReadSignedRequest: action.payload
       };
-    case ALL_COUNTRIES_OFFLINE_SUCCESS:
+    case ALL_COUNTRIES_OFFLINE_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOfflineCo = offset;
+        state.scoreLOfflineCo = SL;
+      } else {
+        state.OffsetOfflineCo = "0";
+        state.scoreLOfflineCo = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultCo = true;
+      }
       return {
         ...state,
-        allCountriesOffline: action.payload
+        allCountriesOffline: [
+          ...state.allCountriesOffline,
+          ...action.payload.usersArr
+        ],
+        allCountriesOfflineCount: [
+          ...state.allCountriesOfflineCount,
+          ...action.payload.scoreArr
+        ],
+        searchState: "most recent"
       };
-
+    }
     case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS: {
-      let { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
-      let end = false;
-      if (action.payload.usersArr.length === 0) {
-        end = true;
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+
+      if (
+        action.payload.usersArr.length === 0
+        // &&
+        // state.allCountriesOffline.length > 1
+      ) {
+        console.log("end true");
+        state.endOfResultUsers = true;
+        state.currentIndexAllCountriesOffline++;
       }
       return {
         ...state,
@@ -344,17 +385,36 @@ const home = (state = initialHomeState, action) => {
           ...state.allCountriesOfflineUsersTimeScore,
           ...action.payload.scoreArr
         ],
-        OffsetOfline: offset,
-        scoreLOffline: SL,
-        endOfResult: end,
+        OffsetOflineUsers: offset,
+        scoreLOfflineUsers: SL,
         searchState: "most recent"
       };
     }
-    case COUNTRY_CITIES_OFFLINE_SUCCESS:
+    case COUNTRY_CITIES_OFFLINE_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOfflineCi = offset;
+        state.scoreLOfflineCi = SL;
+      } else {
+        state.OffsetOfflineCi = "0";
+        state.scoreLOfflineCi = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultCi = true;
+      }
       return {
         ...state,
-        countryCitiesOffline: action.payload
+        countryCitiesOffline: [
+          ...state.countryCitiesOffline,
+          ...action.payload.usersArr
+        ],
+        countryCitiesOfflineCount: [
+          ...state.countryCitiesOfflineCount,
+          ...action.payload.scoreArr
+        ],
+        searchState: "most recent"
       };
+    }
     case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS: {
       const mapedList = convertListToTwoArrays(action.payload);
       console.log("usersArr, timeScoreArr from reducer", mapedList);

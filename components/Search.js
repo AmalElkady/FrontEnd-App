@@ -27,6 +27,8 @@ import {
   countryCityAgerangeSelectedOnline
 } from "../actions/Home";
 import { showAuthLoader } from "../actions/Auth";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
@@ -174,18 +176,31 @@ export default function Search() {
     state => state.home.countryCitiesAgerangeOnline
   );
 
-  // Offline
+  ////////// Offline
   // Countries
   const CountriesOptionsOffline = useSelector(
     state => state.home.allCountriesOffline
   );
+  const CountriesOptionsOfflineCount = useSelector(
+    state => state.home.allCountriesOfflineCount
+  );
+  const OffsetOfflineCo = useSelector(state => state.home.OffsetOfflineCo);
+  const scoreLOfflineCo = useSelector(state => state.home.scoreLOfflineCo);
+  const endOfResultCo = useSelector(state => state.home.endOfResultCo);
   // Cities
   const CountryCitiesOptionsOffline = useSelector(
     state => state.home.countryCitiesOffline
   );
 
-  const selectedCountryIndexForUsers = useSelector(
-    state => state.home.selectedCountryIndexForUsers
+  const CountryCitiesOptionsOfflineCount = useSelector(
+    state => state.home.countryCitiesOfflineCount
+  );
+  const OffsetOfflineCi = useSelector(state => state.home.OffsetOfflineCi);
+  const scoreLOfflineCi = useSelector(state => state.home.scoreLOfflineCi);
+  const endOfResultCi = useSelector(state => state.home.endOfResultCi);
+
+  const currentIndexAllCountriesOffline = useSelector(
+    state => state.home.currentIndexAllCountriesOffline
   );
 
   const dispatch = useDispatch();
@@ -242,9 +257,13 @@ export default function Search() {
     setSelectedIndexC(-1);
     setSelectedIndexCit(-1);
     dispatch(resetStatesOnline());
+    dispatch(resetEndResUsers());
+    dispatch(resetEndRes());
     if (optionValue == "most recent") {
-      //Get all Countries Offline
-      dispatch(allCountriesOffline());
+      //Get all Countries Offline first time
+      CountriesOptionsOffline.length == 0
+        ? dispatch(allCountriesOffline("", 0))
+        : "";
     } else {
       // Get all Countries Online
       dispatch(allCountriesOnline());
@@ -296,12 +315,10 @@ export default function Search() {
         }
       }
     } else if (optionValue == "most recent") {
-      if (selectedIndexC != -1) {
-        // Get Cities Offline based on Country only
+      if (selectedIndexC != -1 && CountryCitiesOptionsOffline.length == 0) {
+        // Get Cities Offline based on Country only (first time)
         dispatch(
-          countryCitiesOffline(
-            CountriesOptionsOffline.list_of_results[selectedIndexC]
-          )
+          countryCitiesOffline(CountriesOptionsOffline[selectedIndexC], "", 0)
         );
       }
     }
@@ -368,11 +385,11 @@ export default function Search() {
   }, [selectedIndexCit]);
 
   useEffect(() => {
-    if (CountriesOptionsOffline != null) {
+    if (CountriesOptionsOffline.length != 0) {
       // Get most recent users for first call
       dispatch(
         allCountriesOfflineUsers(
-          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
+          CountriesOptionsOffline[currentIndexAllCountriesOffline],
           "",
           0
         )
@@ -386,6 +403,37 @@ export default function Search() {
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
     }
   }, [CountriesOptionsOnline]);
+
+  //// scroll lists
+  const handleScrollCountriesOffline = () => {
+    if (!endOfResultCo) {
+      // Get countries Offline (next options)
+      console.log(
+        "scoreLOfflineCo, OffsetOfflineCo",
+        scoreLOfflineCo,
+        OffsetOfflineCo
+      );
+      dispatch(allCountriesOffline(scoreLOfflineCo, OffsetOfflineCo));
+    }
+  };
+
+  const handleScrollCitiesOffline = () => {
+    if (!endOfResultCi) {
+      // Get Cities Offline based on Country only (next options)
+      // console.log(
+      //   "scoreLOfflineCi, OffsetOfflineCi",
+      //   scoreLOfflineCi,
+      //   OffsetOfflineCi
+      // );
+      dispatch(
+        countryCitiesOffline(
+          CountriesOptionsOffline[selectedIndexC],
+          scoreLOfflineCi,
+          OffsetOfflineCi
+        )
+      );
+    }
+  };
 
   const onSearch = () => {
     dispatch(resetEndRes());
@@ -520,7 +568,7 @@ export default function Search() {
           // Get Users based on country only
           dispatch(
             countryRecentActiveUsers(
-              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              CountriesOptionsOffline[selectedIndexC],
               "",
               "",
               0
@@ -530,8 +578,8 @@ export default function Search() {
           // Get Users based on country and city
           dispatch(
             countryCityRecentActiveUsers(
-              CountriesOptionsOffline.list_of_results[selectedIndexC],
-              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit],
+              CountriesOptionsOffline[selectedIndexC],
+              CountryCitiesOptionsOffline[selectedIndexCit],
               "",
               "",
               0
@@ -548,7 +596,7 @@ export default function Search() {
           // Get Users based on country only
           dispatch(
             countryRecentActiveUsers(
-              CountriesOptionsOffline.list_of_results[selectedIndexC],
+              CountriesOptionsOffline[selectedIndexC],
               scoreL,
               scoreH,
               0
@@ -558,8 +606,8 @@ export default function Search() {
           // Get Users based on country and city
           dispatch(
             countryCityRecentActiveUsers(
-              CountriesOptionsOffline.list_of_results[selectedIndexC],
-              CountryCitiesOptionsOffline.list_of_results[selectedIndexCit],
+              CountriesOptionsOffline[selectedIndexC],
+              CountryCitiesOptionsOffline[selectedIndexCit],
               scoreL,
               scoreH,
               0
@@ -1031,7 +1079,7 @@ export default function Search() {
           )}
 
           {/* Contries list Offline  */}
-          {optionValue == "most recent" && CountriesOptionsOffline && (
+          {optionValue == "most recent" && CountriesOptionsOffline.length != 0 && (
             <div className={classes.menu}>
               <List component="nav" aria-label="Countries">
                 <ListItem
@@ -1044,15 +1092,13 @@ export default function Search() {
                   <ListItemText
                     primary="Countries"
                     secondary={
-                      CountriesOptionsOffline.list_of_results
+                      CountriesOptionsOffline
                         ? selectedIndexC == -1
                           ? "Select Country"
                           : // ? CountriesOptionsOffline.list_of_results[
                             //     selectedIndexCOf + 1
                             //   ]
-                            CountriesOptionsOffline.list_of_results[
-                              selectedIndexC
-                            ]
+                            CountriesOptionsOffline[selectedIndexC]
                         : ""
                     }
                   />
@@ -1071,46 +1117,47 @@ export default function Search() {
                   }
                 }}
               >
-                <Typography
-                  variant="h6"
-                  className={classes.padding}
-                  gutterBottom
+                <InfiniteScroll
+                  dataLength={CountriesOptionsOffline.length}
+                  next={handleScrollCountriesOffline}
+                  height={100}
+                  hasMore={!endOfResultCo}
+                  loader={<CircularProgress />}
                 >
-                  MOST RECENT
-                </Typography>
-                <MenuItem
-                  onClick={() => {
-                    setSelectedIndexC(-1);
-                    setAnchorElC(null);
-                  }}
-                  className={classes.displayFlexSB}
-                >
-                  <Typography variant="button" gutterBottom>
-                    No Select
+                  <Typography
+                    variant="h6"
+                    className={classes.padding}
+                    gutterBottom
+                  >
+                    MOST RECENT
                   </Typography>
-                </MenuItem>
-                {CountriesOptionsOffline.list_of_results?.map(
-                  (option, index) =>
-                    index % 2 === 0 && (
-                      <MenuItem
-                        key={option}
-                        selected={index === selectedIndexC}
-                        onClick={event => handleMenuItemClickC(event, index)}
-                        className={classes.displayFlexSB}
-                      >
-                        <Typography variant="button" gutterBottom>
-                          {option}
-                        </Typography>
-                        <Typography
-                          variant="button"
-                          color="primary"
-                          gutterBottom
-                        >
-                          {CountriesOptionsOffline.list_of_results[index + 1]}
-                        </Typography>
-                      </MenuItem>
-                    )
-                )}
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedIndexC(-1);
+                      setAnchorElC(null);
+                    }}
+                    className={classes.displayFlexSB}
+                  >
+                    <Typography variant="button" gutterBottom>
+                      No Select
+                    </Typography>
+                  </MenuItem>
+                  {CountriesOptionsOffline?.map((option, index) => (
+                    <MenuItem
+                      key={option}
+                      selected={index === selectedIndexC}
+                      onClick={event => handleMenuItemClickC(event, index)}
+                      className={classes.displayFlexSB}
+                    >
+                      <Typography variant="button" gutterBottom>
+                        {option}
+                      </Typography>
+                      <Typography variant="button" color="primary" gutterBottom>
+                        {CountriesOptionsOfflineCount[index]}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </InfiniteScroll>
               </Menu>
             </div>
           )}
@@ -1324,7 +1371,7 @@ export default function Search() {
 
           {/* Cities list Offline */}
           {optionValue == "most recent" &&
-            CountryCitiesOptionsOffline &&
+            CountryCitiesOptionsOffline.length != 0 &&
             selectedIndexC != -1 && (
               <div className={classes.menu}>
                 <List component="nav" aria-label="Cities">
@@ -1340,30 +1387,21 @@ export default function Search() {
                       secondary={
                         CountryCitiesOptionsOffline
                           ? selectedIndexCit == -1
-                            ? // ? COUNTRY_CITY_MAP[
-                              //     CountriesOptionsOffline.list_of_results[
-                              //       selectedIndexC
-                              //     ].toLowerCase()
-                              //   ][
-                              //     CountryCitiesOptionsOffline.list_of_results[
-                              //       selectedIndexCit + 1
-                              //     ] - 1
-                              //   ]
-                              "Select City"
+                            ? "Select City"
                             : COUNTRY_CITY_MAP[
-                                CountriesOptionsOffline.list_of_results[
+                                CountriesOptionsOffline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
-                                CountryCitiesOptionsOffline.list_of_results[
-                                  selectedIndexCit
-                                ] - 1
+                                CountryCitiesOptionsOffline[selectedIndexCit] -
+                                  1
                               ]
                           : ""
                       }
                     />
                   </ListItem>
                 </List>
+
                 <Menu
                   id="lock-menu2"
                   anchorEl={anchorElCit}
@@ -1377,65 +1415,75 @@ export default function Search() {
                     }
                   }}
                 >
-                  {selectedIndexC != -1 && (
-                    <div>
-                      <Typography
-                        variant="h6"
-                        className={classes.padding}
-                        gutterBottom
-                      >
-                        Most Recent
-                      </Typography>
+                  <InfiniteScroll
+                    dataLength={CountryCitiesOptionsOffline.length}
+                    next={handleScrollCitiesOffline}
+                    height={150}
+                    hasMore={!endOfResultCi}
+                    loader={<CircularProgress />}
+                    // endMessage={
 
-                      <MenuItem
-                        onClick={() => {
-                          setSelectedIndexCit(-1);
-                          setAnchorElCit(null);
-                        }}
-                        className={classes.displayFlexSB}
-                      >
-                        <Typography variant="button" gutterBottom>
-                          No Select
+                    //     // <p style={{ textAlign: "center" }}>
+                    //     //   <b>Yay! You have seen all offline cities</b>
+                    //     // </p>
+
+                    // }
+                  >
+                    {selectedIndexC != -1 && (
+                      <div>
+                        <Typography
+                          variant="h6"
+                          className={classes.padding}
+                          gutterBottom
+                        >
+                          Most Recent
                         </Typography>
-                      </MenuItem>
-                      {CountryCitiesOptionsOffline.list_of_results?.map(
-                        (option, index) =>
-                          index % 2 === 0 && (
-                            <MenuItem
-                              key={option}
-                              value={option}
-                              //label={value}
-                              selected={index === selectedIndexCit}
-                              onClick={event =>
-                                handleMenuItemClickCit(event, index)
+
+                        <MenuItem
+                          onClick={() => {
+                            setSelectedIndexCit(-1);
+                            setAnchorElCit(null);
+                          }}
+                          className={classes.displayFlexSB}
+                        >
+                          <Typography variant="button" gutterBottom>
+                            No Select
+                          </Typography>
+                        </MenuItem>
+                        {/* apply scroll  */}
+
+                        {CountryCitiesOptionsOffline?.map((option, index) => (
+                          <MenuItem
+                            key={option}
+                            value={option}
+                            //label={value}
+                            selected={index === selectedIndexCit}
+                            onClick={event =>
+                              handleMenuItemClickCit(event, index)
+                            }
+                            className={classes.displayFlexSB}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {
+                                COUNTRY_CITY_MAP[
+                                  CountriesOptionsOffline[
+                                    selectedIndexC
+                                  ].toLowerCase()
+                                ][option - 1]
                               }
-                              className={classes.displayFlexSB}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
                             >
-                              <Typography variant="button" gutterBottom>
-                                {
-                                  COUNTRY_CITY_MAP[
-                                    CountriesOptionsOffline.list_of_results[
-                                      selectedIndexC
-                                    ].toLowerCase()
-                                  ][option - 1]
-                                }
-                              </Typography>
-                              <Typography
-                                variant="button"
-                                color="primary"
-                                gutterBottom
-                              >
-                                {
-                                  CountryCitiesOptionsOffline.list_of_results[
-                                    index + 1
-                                  ]
-                                }
-                              </Typography>
-                            </MenuItem>
-                          )
-                      )}
-                    </div>
-                  )}
+                              {CountryCitiesOptionsOfflineCount[index]}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                      </div>
+                    )}
+                  </InfiniteScroll>
                 </Menu>
               </div>
             )}
