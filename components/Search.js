@@ -12,11 +12,13 @@ import {
   agerangeAllCountriesSelectedOnline,
   allCountriesOffline,
   countryCitiesOffline,
+  allCountriesOfflineUsers,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
   resetStatesOnline,
   resetEndRes,
   resetEndResUsers,
+  resetStatesOffline,
   selectedAgerangeIndex,
   selectedCountryIndex,
   selectedCityIndex,
@@ -182,6 +184,14 @@ export default function Search() {
   );
   const CountriesOptionsOfflineCount = useSelector(
     state => state.home.allCountriesOfflineCount
+  );
+
+  const AllCountriesOfflineUsers = useSelector(
+    state => state.home.allCountriesOfflineUsers
+  );
+
+  const currentIndexAllCountriesOffline = useSelector(
+    state => state.home.currentIndexAllCountriesOffline
   );
 
   const OffsetOfflineCo = useSelector(state => state.home.OffsetOfflineCo);
@@ -388,6 +398,20 @@ export default function Search() {
     }
   }, [CountriesOptionsOnline]);
 
+  //offline
+  useEffect(() => {
+    if (CountriesOptionsOffline.length != 0 && AllCountriesOfflineUsers == 0) {
+      // Get online users options for first call
+      dispatch(
+        allCountriesOfflineUsers(
+          CountriesOptionsOffline[currentIndexAllCountriesOffline],
+          "",
+          0
+        )
+      );
+    }
+  }, [CountriesOptionsOffline]);
+
   //// scroll lists
   const handleScrollCountriesOffline = () => {
     if (!endOfResultCo) {
@@ -404,11 +428,6 @@ export default function Search() {
   const handleScrollCitiesOffline = () => {
     if (!endOfResultCi) {
       // Get Cities Offline based on Country only (next options)
-      // console.log(
-      //   "scoreLOfflineCi, OffsetOfflineCi",
-      //   scoreLOfflineCi,
-      //   OffsetOfflineCi
-      // );
       dispatch(
         countryCitiesOffline(
           CountriesOptionsOffline[selectedIndexC],
@@ -547,9 +566,11 @@ export default function Search() {
       }
     } else if (optionValue == "most recent") {
       //without Agerange
+      dispatch(resetStatesOffline());
       if (selectedIndex == -1) {
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
+          dispatch(selectedCountryIndex(selectedIndexC));
           dispatch(
             countryRecentActiveUsers(
               CountriesOptionsOffline[selectedIndexC],
@@ -560,6 +581,8 @@ export default function Search() {
           );
         } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
           // Get Users based on country and city
+          dispatch(selectedCountryIndex(selectedIndexC));
+          dispatch(selectedCityIndex(selectedIndexCit));
           dispatch(
             countryCityRecentActiveUsers(
               CountriesOptionsOffline[selectedIndexC],

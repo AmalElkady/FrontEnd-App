@@ -47,6 +47,7 @@ import {
   RESET_END_RES_OF,
   RESET_END_RES_USERS,
   RESET_STATES_ONLINE,
+  RESET_STATES_OFFLINE,
   SELECTED_AGERANGE_INDEX,
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX
@@ -406,6 +407,12 @@ export const resetStates = () => {
 export const resetStatesOnline = () => {
   return {
     type: RESET_STATES_ONLINE
+  };
+};
+
+export const resetStatesOffline = () => {
+  return {
+    type: RESET_STATES_OFFLINE
   };
 };
 

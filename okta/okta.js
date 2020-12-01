@@ -1549,9 +1549,10 @@ home.getAllCountriesOfflineUsers = function (country,SL,offset) {
 													console.log(`respo all_countries_offline_Users data from okta :${country} `,users);
 													
 													   if(users){
-														const mapedList =convertListToTwoArrays(users);
-														console.log("usersArr, timeScoreArr from okta" ,mapedList);
-													    resolve(mapedList)
+														// const mapedList =convertListToTwoArrays(users);
+														// console.log("usersArr, timeScoreArr from okta" ,mapedList);
+														// resolve(mapedList)
+														resolve(users);
 																					 
 													   } else {
 														   
@@ -1662,14 +1663,14 @@ home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
 																console.log("respo data of recent_active_users offline from okta : ",response);
 																
 																   if(response){
-																	//const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
-																	//console.log("ReturnUsers okta : ",ReturnUsers);
-																	// const ReturnUsers={
-																	// 	users:mapUserPhotoPath(response.list_of_results,country)
-																	// }
+																	
 																	const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
+																	const mapedList =convertListToTwoArrays(ReturnUsers);
+													               console.log("usersArr, ScoreArr from okta country recent " ,mapedList);
+																								
+													                resolve(mapedList);	
 																	//console.log("ReturnUsers okta : ",ReturnUsers);
-																	resolve(ReturnUsers);					 
+																	//resolve(ReturnUsers);					 
 																   } else {
 																	   
 																	   resolve({"message": "no response !"})
@@ -1720,15 +1721,13 @@ home.getCountryCityRecentActiveUsers = function (country,city,SH,SL,offset) {
 																					console.log("respo data of recent_active_users offline from okta : ",response);
 																					
 																					   if(response){
-																						// const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
-																						// console.log("ReturnUsers okta : ",ReturnUsers);
-																						// const ReturnUsers={
-																						// 	country,
-																						// 	users:mapUserPhotoPath(response.list_of_results,country)
-																						// }
+																						
 																						const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
-																	
-																						//console.log("ReturnUsers country city okta : ",ReturnUsers);
+																						const mapedList =convertListToTwoArrays(ReturnUsers);
+																						console.log("usersArr, ScoreArr from okta country recent " ,mapedList);
+																													 
+																						 resolve(mapedList);	
+																						
 																						resolve(ReturnUsers);					 
 																					   } else {
 																						   

@@ -116,33 +116,29 @@ export default function Cards() {
 
   // offline
 
+  //all
   const CountriesOptionsOfflineScroll = useSelector(
     state => state.home.allCountriesOfflineScroll
   );
 
-  const AllCountriesOfflineUsers = useSelector(
-    state => state.home.allCountriesOfflineUsers
-  );
+  // const AllCountriesOfflineUsers = useSelector(
+  //   state => state.home.allCountriesOfflineUsers
+  // );
 
-  const currentIndexAllCountriesOffline = useSelector(
-    state => state.home.currentIndexAllCountriesOffline
-  );
+  // const currentIndexAllCountriesOffline = useSelector(
+  //   state => state.home.currentIndexAllCountriesOffline
+  // );
 
+  // search-country
   const CountryRecentActiveUsers = useSelector(
     state => state.home.countryRecentActiveUsers
-  );
-
-  const CountriesOptionsOffline = useSelector(
-    state => state.home.allCountriesOffline
-  );
-  const selectedCountryIndexForUsers = useSelector(
-    state => state.home.selectedCountryIndexForUsers
   );
 
   const countryRecentActiveUsersTimescore = useSelector(
     state => state.home.countryRecentActiveUsersTimescore
   );
 
+  // search-country-city
   const CountryCityRecentActiveUsers = useSelector(
     state => state.home.countryCityRecentActiveUsers
   );
@@ -169,10 +165,21 @@ export default function Cards() {
   );
   const citySelectedIndex = useSelector(state => state.home.citySelectedIndex);
 
+  //All offline
   const OffsetOfline = useSelector(state => state.home.OffsetOfline);
   const scoreLOffline = useSelector(state => state.home.scoreLOffline);
   const endOfResult = useSelector(state => state.home.endOfResult);
   const endOfResultUsers = useSelector(state => state.home.endOfResultUsers);
+  // search offline
+  const OffsetOflineUsersS = useSelector(
+    state => state.home.OffsetOflineUsersS
+  );
+  const scoreLOfflineUsersS = useSelector(
+    state => state.home.scoreLOfflineUsersS
+  );
+  const endOfResultUsersOfS = useSelector(
+    state => state.home.endOfResultUsersOfS
+  );
 
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
@@ -282,22 +289,6 @@ export default function Cards() {
   }, [SelectedOnlineUsers]);
 
   ///offline
-  useEffect(() => {
-    if (
-      CountriesOptionsOfflineScroll.length != 0 &&
-      AllCountriesOfflineUsers == 0
-    ) {
-      // Get most recent users for first call
-      console.log("from cords &&&&& ", CountriesOptionsOfflineScroll);
-      dispatch(
-        allCountriesOfflineUsers(
-          CountriesOptionsOfflineScroll[currentIndexAllCountriesOffline],
-          "",
-          0
-        )
-      );
-    }
-  }, [CountriesOptionsOfflineScroll]);
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
       dispatch(requestPhotoRead());
@@ -543,18 +534,18 @@ export default function Cards() {
   // offline
   const onScrollCountryRecentUsers = () => {
     console.log(
-      "endOfResult scoreLOffline OffsetOfline scroll onsearch",
-      endOfResult,
-      scoreLOffline,
-      OffsetOfline
+      "endOfResultUsersOfS OffsetOfline scroll onsearch",
+      endOfResultUsersOfS,
+      scoreLOfflineUsersS,
+      OffsetOflineUsersS
     );
-    if (!endOfResult) {
+    if (!endOfResultUsersOfS) {
       dispatch(
         countryRecentActiveUsers(
-          CountriesOptionsOffline[selectedCountryIndexForUsers],
-          scoreLOffline,
+          CountriesOptionsOfflineScroll[countrySelectedIndex],
+          scoreLOfflineUsersS,
           "",
-          OffsetOfline
+          OffsetOflineUsersS
         )
       );
     }
@@ -570,7 +561,7 @@ export default function Cards() {
     if (!endOfResult) {
       dispatch(
         countryCityRecentActiveUsers(
-          CountriesOptionsOffline[selectedCountryIndexForUsers],
+          CountriesOptionsOffline[countrySelectedIndex],
           CountryCitiesOptionsOffline[0],
           scoreLOffline,
           "",
@@ -901,7 +892,7 @@ export default function Cards() {
             dataLength={CountryRecentActiveUsers.length}
             next={onScrollCountryRecentUsers}
             height={500}
-            hasMore={!endOfResult}
+            hasMore={!endOfResultUsersOfS}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>

@@ -27,6 +27,7 @@ import {
   RESET_END_RES_USERS_OF,
   SELECTED_ONLINE_USERS_SUCCESS,
   RESET_STATES_ONLINE,
+  RESET_STATES_OFFLINE,
   SELECTED_AGERANGE_INDEX,
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX
@@ -111,6 +112,10 @@ const initialHomeState = {
   scoreLOfflineUsers: "", // for offline users
   OffsetOflineUsers: 0,
   endOfResultUsersOf: false,
+
+  scoreLOfflineUsersS: "", // for offline users search
+  OffsetOflineUsersS: 0,
+  endOfResultUsersOfS: false, //for search
   currentIndexAllCountriesOffline: 0,
 
   ////
@@ -460,39 +465,31 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS: {
-      const mapedList = convertListToTwoArrays(action.payload);
-      console.log("usersArr, timeScoreArr from reducer", mapedList);
-      const { offset, SL } = calcValueOfSlAndOffset(mapedList.scoreArr);
-      let end = false;
-      if (mapedList.usersArr.length === 0) {
-        end = true;
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+
+      if (action.payload.usersArr.length === 0) {
+        state.endOfResultUsersOfS = true;
       }
       return {
         ...state,
         countryRecentActiveUsers: [
           ...state.countryRecentActiveUsers,
-          ...mapedList.usersArr
+          ...action.payload.usersArr
         ],
         countryRecentActiveUsersTimescore: [
           ...state.countryRecentActiveUsersTimescore,
-          ...mapedList.scoreArr
+          ...action.payload.scoreArr
         ],
-        OffsetOfline: offset,
-        scoreLOffline: SL,
-        endOfResult: end,
+        OffsetOflineUsersS: offset,
+        scoreLOfflineUsersS: SL,
         searchState: "most recent"
       };
     }
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
-      const mapedList = convertListToTwoArrays(action.payload);
-      console.log(
-        "usersArr, timeScoreArr COUNTRY_CITY from reducer",
-        mapedList
-      );
-      const { offset, SL } = calcValueOfSlAndOffset(mapedList.scoreArr);
-      let end = false;
-      if (mapedList.usersArr.length === 0) {
-        end = true;
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+
+      if (action.payload.usersArr.length === 0) {
+        state.endOfResultUsersOfS = true;
       }
       return {
         ...state,
@@ -504,11 +501,8 @@ const home = (state = initialHomeState, action) => {
           ...state.countryCityRecentActiveUsersTimescore,
           ...mapedList.scoreArr
         ],
-        countryRecentActiveUsers: [],
-        countryRecentActiveUsersTimescore: [],
-        OffsetOfline: offset,
-        scoreLOffline: SL,
-        endOfResult: end,
+        OffsetOflineUsersS: offset,
+        scoreLOfflineUsersS: SL,
         searchState: "most recent"
       };
     case SELECTED_AGERANGE_INDEX:
@@ -554,6 +548,18 @@ const home = (state = initialHomeState, action) => {
         countryCitiesAgerangeSelectedOnlineCount: [],
         countryCityAgerangeSelectedOnline: [],
         countryCityAgerangeSelectedOnlineCount: []
+      };
+    case RESET_STATES_ONLINE:
+      console.log("rest state Offline");
+      return {
+        ...state,
+        scoreLOfflineUsersS: "", // for offline users search
+        OffsetOflineUsersS: 0,
+        endOfResultUsersOfS: false, //for search
+        countryRecentActiveUsers: [],
+        countryRecentActiveUsersTimescore: [],
+        countryCityRecentActiveUsers: [],
+        countryCityRecentActiveUsersTimescore: []
       };
     case RESET_END_RES_USERS:
       console.log("rest end users");
