@@ -117,10 +117,9 @@ export default function Cards() {
   // offline
 
   //all
-  const CountriesOptionsOfflineScroll = useSelector(
-    state => state.home.allCountriesOfflineScroll
+  const CountriesOptionsOffline = useSelector(
+    state => state.home.allCountriesOffline
   );
-
   // const AllCountriesOfflineUsers = useSelector(
   //   state => state.home.allCountriesOfflineUsers
   // );
@@ -298,9 +297,6 @@ export default function Cards() {
   useEffect(() => {
     if (CountryCityRecentActiveUsers.length != 0) {
       dispatch(requestPhotoRead());
-    } else {
-      // console.log("reset from component cards country city recent ");
-      // dispatch(resetStates());
     }
   }, [CountryCityRecentActiveUsers]);
 
@@ -542,7 +538,7 @@ export default function Cards() {
     if (!endOfResultUsersOfS) {
       dispatch(
         countryRecentActiveUsers(
-          CountriesOptionsOfflineScroll[countrySelectedIndex],
+          CountriesOptionsOffline[countrySelectedIndex],
           scoreLOfflineUsersS,
           "",
           OffsetOflineUsersS
@@ -553,19 +549,19 @@ export default function Cards() {
 
   const onScrollCountryCityRecentUsers = () => {
     console.log(
-      "endOfResult scoreLOffline OffsetOfline onScrollCountryCityRecentUsers",
-      endOfResult,
-      scoreLOffline,
-      OffsetOfline
+      "endOfResultUsersOfS OffsetOfline scroll onsearch",
+      endOfResultUsersOfS,
+      scoreLOfflineUsersS,
+      OffsetOflineUsersS
     );
-    if (!endOfResult) {
+    if (!endOfResultUsersOfS) {
       dispatch(
         countryCityRecentActiveUsers(
           CountriesOptionsOffline[countrySelectedIndex],
-          CountryCitiesOptionsOffline[0],
-          scoreLOffline,
+          CountryCitiesOptionsOffline[citySelectedIndex],
+          scoreLOfflineUsersS,
           "",
-          OffsetOfline
+          OffsetOflineUsersS
         )
       );
     }
@@ -915,7 +911,7 @@ export default function Cards() {
             dataLength={CountryCityRecentActiveUsers.length}
             next={onScrollCountryCityRecentUsers}
             height={250}
-            hasMore={!endOfResult}
+            hasMore={!endOfResultUsersOfS}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>

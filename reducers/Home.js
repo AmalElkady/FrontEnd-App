@@ -495,11 +495,11 @@ const home = (state = initialHomeState, action) => {
         ...state,
         countryCityRecentActiveUsers: [
           ...state.countryCityRecentActiveUsers,
-          ...mapedList.usersArr
+          ...action.payload.usersArr
         ],
         countryCityRecentActiveUsersTimescore: [
           ...state.countryCityRecentActiveUsersTimescore,
-          ...mapedList.scoreArr
+          ...action.payload.scoreArr
         ],
         OffsetOflineUsersS: offset,
         scoreLOfflineUsersS: SL,
@@ -549,7 +549,7 @@ const home = (state = initialHomeState, action) => {
         countryCityAgerangeSelectedOnline: [],
         countryCityAgerangeSelectedOnlineCount: []
       };
-    case RESET_STATES_ONLINE:
+    case RESET_STATES_OFFLINE:
       console.log("rest state Offline");
       return {
         ...state,
