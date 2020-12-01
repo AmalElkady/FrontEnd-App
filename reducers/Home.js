@@ -30,7 +30,8 @@ import {
   RESET_STATES_OFFLINE,
   SELECTED_AGERANGE_INDEX,
   SELECTED_COUNTRY_INDEX,
-  SELECTED_CITY_INDEX
+  SELECTED_CITY_INDEX,
+  SET_AGE_SCORES
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
@@ -102,26 +103,29 @@ const initialHomeState = {
   OffsetOfflineCi: 0,
 
   /////
-  scoreHOffline: "", // for country list of users
+  // for all countries list of users
   scoreLOffline: "",
   OffsetOffline: 0,
   endOfResultOf: false,
   allCountriesOfflineScroll: [],
   allCountriesOfflineScrollcount: [],
+  currentIndexAllCountriesOffline: 0,
 
-  scoreLOfflineUsers: "", // for offline users
+  scoreLOfflineUsers: "", // for all offline users
   OffsetOflineUsers: 0,
   endOfResultUsersOf: false,
 
-  scoreLOfflineUsersS: "", // for offline users search
+  scoreHOfflineUsersS: "", // for offline users search
+  //scoreLOfflineUsersS: "",
   OffsetOflineUsersS: 0,
   endOfResultUsersOfS: false, //for search
-  currentIndexAllCountriesOffline: 0,
 
+  ageScoreL: 0,
+  ageScoreH: 0,
   ////
-  ageRangeSelectedIndex: 0,
-  countrySelectedIndex: 0,
-  citySelectedIndex: 0,
+  ageRangeSelectedIndex: -1,
+  countrySelectedIndex: -1,
+  citySelectedIndex: -1,
 
   photoReadSignedRequest: null,
   searchState: "active",
@@ -481,7 +485,7 @@ const home = (state = initialHomeState, action) => {
           ...action.payload.scoreArr
         ],
         OffsetOflineUsersS: offset,
-        scoreLOfflineUsersS: SL,
+        scoreHOfflineUsersS: SL,
         searchState: "most recent"
       };
     }
@@ -502,7 +506,7 @@ const home = (state = initialHomeState, action) => {
           ...action.payload.scoreArr
         ],
         OffsetOflineUsersS: offset,
-        scoreLOfflineUsersS: SL,
+        scoreHOfflineUsersS: SL,
         searchState: "most recent"
       };
     case SELECTED_AGERANGE_INDEX:
@@ -513,7 +517,7 @@ const home = (state = initialHomeState, action) => {
     case SELECTED_COUNTRY_INDEX:
       return {
         ...state,
-        ageRangeSelectedIndex: action.payload
+        countrySelectedIndex: action.payload
       };
 
     case SELECTED_CITY_INDEX:
@@ -521,6 +525,14 @@ const home = (state = initialHomeState, action) => {
         ...state,
         citySelectedIndex: action.payload
       };
+
+    case SET_AGE_SCORES:
+      return {
+        ...state,
+        ageScoreL: action.payload.SL,
+        ageScoreH: action.payload.SH
+      };
+
     case RESET_STATES:
       return {
         ...state,
@@ -553,8 +565,10 @@ const home = (state = initialHomeState, action) => {
       console.log("rest state Offline");
       return {
         ...state,
-        scoreLOfflineUsersS: "", // for offline users search
+        scoreHOfflineUsersS: "", // for offline users search
         OffsetOflineUsersS: 0,
+        ageScoreL: 0,
+        ageScoreH: 0,
         endOfResultUsersOfS: false, //for search
         countryRecentActiveUsers: [],
         countryRecentActiveUsersTimescore: [],

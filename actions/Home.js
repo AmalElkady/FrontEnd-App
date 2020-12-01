@@ -50,7 +50,8 @@ import {
   RESET_STATES_OFFLINE,
   SELECTED_AGERANGE_INDEX,
   SELECTED_COUNTRY_INDEX,
-  SELECTED_CITY_INDEX
+  SELECTED_CITY_INDEX,
+  SET_AGE_SCORES
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -395,6 +396,13 @@ export const selectedCityIndex = index => {
   return {
     type: SELECTED_CITY_INDEX,
     payload: index
+  };
+};
+
+export const setAgeScores = (SL, SH) => {
+  return {
+    type: SET_AGE_SCORES,
+    payload: { SL, SH }
   };
 };
 

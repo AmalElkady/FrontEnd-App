@@ -175,7 +175,7 @@ const getCountryCitiesOffline = async (country, SL, offset) =>
     .then(returnCities => returnCities)
     .catch(error => error);
 
-const getCountryRecentActiveUsers = async (country, SH, SL, offset) =>
+const getCountryRecentActiveUsers = async (country, SL, SH, offset) =>
   await home
     .getCountryRecentActiveUsers(country, SL, SH, offset)
     .then(returnUsers => returnUsers)

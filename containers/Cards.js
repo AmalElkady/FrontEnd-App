@@ -173,12 +173,14 @@ export default function Cards() {
   const OffsetOflineUsersS = useSelector(
     state => state.home.OffsetOflineUsersS
   );
-  const scoreLOfflineUsersS = useSelector(
-    state => state.home.scoreLOfflineUsersS
+  const scoreHOfflineUsersS = useSelector(
+    state => state.home.scoreHOfflineUsersS
   );
   const endOfResultUsersOfS = useSelector(
     state => state.home.endOfResultUsersOfS
   );
+
+  const ageScoreL = useSelector(state => state.home.ageScoreL);
 
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
@@ -532,15 +534,18 @@ export default function Cards() {
     console.log(
       "endOfResultUsersOfS OffsetOfline scroll onsearch",
       endOfResultUsersOfS,
-      scoreLOfflineUsersS,
-      OffsetOflineUsersS
+      scoreHOfflineUsersS,
+      OffsetOflineUsersS,
+      countrySelectedIndex,
+      ageScoreL,
+      CountriesOptionsOffline[countrySelectedIndex]
     );
     if (!endOfResultUsersOfS) {
       dispatch(
         countryRecentActiveUsers(
           CountriesOptionsOffline[countrySelectedIndex],
-          scoreLOfflineUsersS,
-          "",
+          ageScoreL,
+          scoreHOfflineUsersS,
           OffsetOflineUsersS
         )
       );
@@ -551,7 +556,7 @@ export default function Cards() {
     console.log(
       "endOfResultUsersOfS OffsetOfline scroll onsearch",
       endOfResultUsersOfS,
-      scoreLOfflineUsersS,
+      scoreHOfflineUsersS,
       OffsetOflineUsersS
     );
     if (!endOfResultUsersOfS) {
@@ -559,8 +564,8 @@ export default function Cards() {
         countryCityRecentActiveUsers(
           CountriesOptionsOffline[countrySelectedIndex],
           CountryCitiesOptionsOffline[citySelectedIndex],
-          scoreLOfflineUsersS,
-          "",
+          scoreHOfflineUsersS,
+          ageScoreL,
           OffsetOflineUsersS
         )
       );

@@ -22,6 +22,7 @@ import {
   selectedAgerangeIndex,
   selectedCountryIndex,
   selectedCityIndex,
+  setAgeScores,
   countrySelectedOnline,
   countryCitySelectedOnline,
   countryCitiesAgerangeSelectedOnline,
@@ -441,8 +442,8 @@ export default function Search() {
   const onSearch = () => {
     dispatch(resetEndRes());
     dispatch(resetEndResUsers());
-    dispatch(resetStatesOnline());
     if (optionValue == "active") {
+      dispatch(resetStatesOnline());
       // Get online users based on agerange only
       if (
         selectedIndex != -1 &&
@@ -570,6 +571,7 @@ export default function Search() {
       if (selectedIndex == -1) {
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
+
           dispatch(selectedCountryIndex(selectedIndexC));
           dispatch(
             countryRecentActiveUsers(
@@ -598,9 +600,13 @@ export default function Search() {
         const { scoreL, scoreH } = calcSlShFromAgerange(
           ARRAY_OF_AGE_RANGE[selectedIndex]
         );
+        console.log("scoreL, scoreH ", scoreL, scoreH);
+        dispatch(selectedAgerangeIndex(selectedIndex));
+        dispatch(setAgeScores(scoreL, scoreH));
 
         if (selectedIndexC != -1 && selectedIndexCit == -1) {
           // Get Users based on country only
+          dispatch(selectedCountryIndex(selectedIndexC));
           dispatch(
             countryRecentActiveUsers(
               CountriesOptionsOffline[selectedIndexC],
@@ -611,12 +617,14 @@ export default function Search() {
           );
         } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
           // Get Users based on country and city
+          dispatch(selectedCountryIndex(selectedIndexC));
+          dispatch(selectedCityIndex(selectedIndexCit));
           dispatch(
             countryCityRecentActiveUsers(
               CountriesOptionsOffline[selectedIndexC],
               CountryCitiesOptionsOffline[selectedIndexCit],
-              scoreL,
               scoreH,
+              scoreL,
               0
             )
           );
