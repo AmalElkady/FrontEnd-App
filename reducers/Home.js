@@ -10,6 +10,7 @@ import {
   AGERANGE_ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS,
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE_SUCCESS,
+  ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS,
   COUNTRY_CITIES_OFFLINE_SUCCESS,
   COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
   COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS,
@@ -21,7 +22,9 @@ import {
   SHOW_MESSAGE,
   RESET_STATES,
   RESET_END_RES,
+  RESET_END_RES_OF,
   RESET_END_RES_USERS,
+  RESET_END_RES_USERS_OF,
   SELECTED_ONLINE_USERS_SUCCESS,
   RESET_STATES_ONLINE,
   SELECTED_AGERANGE_INDEX,
@@ -70,6 +73,10 @@ const initialHomeState = {
 
   countryCityAgerangeSelectedOnline: [],
   countryCityAgerangeSelectedOnlineCount: [],
+
+  endOfResult: false,
+  endOfResultUsers: false,
+
   //offline
   allCountriesOffline: [],
   allCountriesOfflineCount: [],
@@ -85,7 +92,7 @@ const initialHomeState = {
 
   countryCityRecentActiveUsers: [],
   countryCityRecentActiveUsersTimescore: [],
-
+  //////
   endOfResultCo: false, // for country list
   scoreLOfflineCo: 0,
   OffsetOfflineCo: 0,
@@ -93,20 +100,26 @@ const initialHomeState = {
   scoreLOfflineCi: "",
   OffsetOfflineCi: 0,
 
-  scoreHOffline: "",
+  /////
+  scoreHOffline: "", // for country list of users
   scoreLOffline: "",
-  OffsetOfline: 0,
-  scoreLOfflineUsers: "",
+  OffsetOffline: 0,
+  endOfResultOf: false,
+  allCountriesOfflineScroll: [],
+  allCountriesOfflineScrollcount: [],
+
+  scoreLOfflineUsers: "", // for offline users
   OffsetOflineUsers: 0,
+  endOfResultUsersOf: false,
   currentIndexAllCountriesOffline: 0,
-  //
+
+  ////
   ageRangeSelectedIndex: 0,
   countrySelectedIndex: 0,
   citySelectedIndex: 0,
+
   photoReadSignedRequest: null,
   searchState: "active",
-  endOfResult: false,
-  endOfResultUsers: false,
   limitCount: 5,
   showMessage: false,
   loader: false,
@@ -350,6 +363,12 @@ const home = (state = initialHomeState, action) => {
       if (action.payload.usersArr.length == 0) {
         state.endOfResultCo = true;
       }
+      if (state.allCountriesOffline.length == 0) {
+        state.allCountriesOfflineScroll = action.payload.usersArr;
+        state.allCountriesOfflineScrollCount = action.payload.scoreArr;
+        state.OffsetOffline = state.OffsetOfflineCo;
+        state.scoreLOffline = state.scoreLOfflineCo;
+      }
       return {
         ...state,
         allCountriesOffline: [
@@ -358,6 +377,31 @@ const home = (state = initialHomeState, action) => {
         ],
         allCountriesOfflineCount: [
           ...state.allCountriesOfflineCount,
+          ...action.payload.scoreArr
+        ],
+        searchState: "most recent"
+      };
+    }
+    case ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOffline = offset;
+        state.scoreLOffline = SL;
+      } else {
+        state.OffsetOffline = "0";
+        state.scoreLOffline = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultOf = true;
+      }
+      return {
+        ...state,
+        allCountriesOfflineScroll: [
+          ...state.allCountriesOfflineScroll,
+          ...action.payload.usersArr
+        ],
+        allCountriesOfflineScrollCount: [
+          ...state.allCountriesOfflineScrollCount,
           ...action.payload.scoreArr
         ],
         searchState: "most recent"
@@ -372,7 +416,7 @@ const home = (state = initialHomeState, action) => {
         // state.allCountriesOffline.length > 1
       ) {
         console.log("end true");
-        state.endOfResultUsers = true;
+        state.endOfResultUsersOf = true;
         state.currentIndexAllCountriesOffline++;
       }
       return {
@@ -517,6 +561,12 @@ const home = (state = initialHomeState, action) => {
         ...state,
         endOfResultUsers: false
       };
+    case RESET_END_RES_USERS_OF:
+      console.log("rest end users of");
+      return {
+        ...state,
+        endOfResultUsersOf: false
+      };
 
     case RESET_END_RES:
       console.log("rest end");
@@ -525,6 +575,12 @@ const home = (state = initialHomeState, action) => {
         endOfResult: false
       };
 
+    case RESET_END_RES_OF:
+      console.log("rest end Of");
+      return {
+        ...state,
+        endOfResultOf: false
+      };
     case SHOW_MESSAGE: {
       return {
         ...state,

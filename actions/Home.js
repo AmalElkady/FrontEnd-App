@@ -19,6 +19,8 @@ import {
   REQUEST_PHOTO_READ_SUCCESS,
   ALL_COUNTRIES_OFFLINE,
   ALL_COUNTRIES_OFFLINE_SUCCESS,
+  ALL_COUNTRIES_OFFLINE_SCROLL,
+  ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS,
   COUNTRY_CITIES_OFFLINE,
   COUNTRY_CITIES_OFFLINE_SUCCESS,
   COUNTRY_RECENT_ACTIVE_USERS,
@@ -42,6 +44,7 @@ import {
   SHOW_MESSAGE,
   RESET_STATES,
   RESET_END_RES,
+  RESET_END_RES_OF,
   RESET_END_RES_USERS,
   RESET_STATES_ONLINE,
   SELECTED_AGERANGE_INDEX,
@@ -282,6 +285,22 @@ export const allCountriesOfflineSuccess = data => {
   };
 };
 
+export const allCountriesOfflineScroll = (SL, offset) => {
+  console.log("ALL_COUNTRIES_OFFLINE_Scroll from action ,", SL, offset);
+  return {
+    type: ALL_COUNTRIES_OFFLINE_SCROLL,
+    payload: { SL, offset }
+  };
+};
+
+export const allCountriesOfflineScrollSuccess = data => {
+  console.log("ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS from action ");
+  return {
+    type: ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS,
+    payload: data
+  };
+};
+
 export const allCountriesOfflineUsers = (country, SL, offset) => {
   console.log("ALL_COUNTRIES_OFFLINEUsers from action ", country, SL, offset);
   return {
@@ -396,8 +415,20 @@ export const resetEndRes = () => {
   };
 };
 
+export const resetEndResOf = () => {
+  return {
+    type: RESET_END_RES_OF
+  };
+};
+
 export const resetEndResUsers = () => {
   return {
     type: RESET_END_RES_USERS
+  };
+};
+
+export const resetEndResUsersOf = () => {
+  return {
+    type: RESET_END_RES_USERS_OF
   };
 };

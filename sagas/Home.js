@@ -10,6 +10,7 @@ import {
   ALL_COUNTRIES_SELECTED_ONLINE_USERS,
   REQUEST_PHOTO_READ,
   ALL_COUNTRIES_OFFLINE,
+  ALL_COUNTRIES_OFFLINE_SCROLL,
   COUNTRY_CITIES_OFFLINE,
   COUNTRY_RECENT_ACTIVE_USERS,
   COUNTRY_CITY_RECENT_ACTIVE_USERS,
@@ -33,6 +34,7 @@ import {
   showHomeMessage,
   requestPhotoReadSuccess,
   allCountriesOfflineSuccess,
+  allCountriesOfflineScrollSuccess,
   fetchCountryCitiesOfflineSuccess,
   fetchCountryRecentActiveUsersSuccess,
   fetchCountryCityRecentActiveUsersSuccess,
@@ -151,6 +153,11 @@ const requestPhotoRead = async () =>
 
 /// Offline
 const getOfflineCountries = async (SL, offset) =>
+  await home
+    .getAllCountriesOffline(SL, offset)
+    .then(returnCountries => returnCountries)
+    .catch(error => error);
+const getOfflineCountriesScroll = async (SL, offset) =>
   await home
     .getAllCountriesOffline(SL, offset)
     .then(returnCountries => returnCountries)
@@ -453,6 +460,21 @@ function* fetchAllCountriesOfflineRequest({ payload }) {
   }
 }
 
+function* fetchAllCountriesOfflineScrollRequest({ payload }) {
+  const { SL, offset } = payload;
+  console.log("offline options from saga ", SL, offset);
+  try {
+    const fetchedCountriesOffline = yield call(
+      getOfflineCountriesScroll,
+      SL,
+      offset
+    );
+    yield put(allCountriesOfflineScrollSuccess(fetchedCountriesOffline));
+  } catch (error) {
+    yield put(showHomeMessage(error));
+  }
+}
+
 function* fetchAllCountriesOfflineUsersRequest({ payload }) {
   const { country, SL, offset } = payload;
   console.log("offline all users from saga ", country, SL, offset);
@@ -633,6 +655,13 @@ export function* fetchAllCountriesOffline() {
   yield takeEvery(ALL_COUNTRIES_OFFLINE, fetchAllCountriesOfflineRequest);
 }
 
+export function* fetchAllCountriesOfflineScroll() {
+  yield takeEvery(
+    ALL_COUNTRIES_OFFLINE_SCROLL,
+    fetchAllCountriesOfflineScrollRequest
+  );
+}
+
 export function* fetchAllCountriesOfflineUsers() {
   yield takeEvery(
     ALL_COUNTRIES_OFFLINE_USERS,
@@ -666,6 +695,7 @@ export default function* rootSaga() {
     fork(fetchAllCountriesSelectedOnlineUsers),
     fork(fetchPhotoReadRequest),
     fork(fetchAllCountriesOffline),
+    fork(fetchAllCountriesOfflineScroll),
     fork(fetchAllCountriesOfflineUsers),
     fork(fetchCountryCitiesOffline),
     fork(fetchCountryRecentActiveUsers),

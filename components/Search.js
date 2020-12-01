@@ -14,7 +14,6 @@ import {
   countryCitiesOffline,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
-  allCountriesOfflineUsers,
   resetStatesOnline,
   resetEndRes,
   resetEndResUsers,
@@ -184,6 +183,7 @@ export default function Search() {
   const CountriesOptionsOfflineCount = useSelector(
     state => state.home.allCountriesOfflineCount
   );
+
   const OffsetOfflineCo = useSelector(state => state.home.OffsetOfflineCo);
   const scoreLOfflineCo = useSelector(state => state.home.scoreLOfflineCo);
   const endOfResultCo = useSelector(state => state.home.endOfResultCo);
@@ -198,10 +198,6 @@ export default function Search() {
   const OffsetOfflineCi = useSelector(state => state.home.OffsetOfflineCi);
   const scoreLOfflineCi = useSelector(state => state.home.scoreLOfflineCi);
   const endOfResultCi = useSelector(state => state.home.endOfResultCi);
-
-  const currentIndexAllCountriesOffline = useSelector(
-    state => state.home.currentIndexAllCountriesOffline
-  );
 
   const dispatch = useDispatch();
 
@@ -384,19 +380,7 @@ export default function Search() {
     }
   }, [selectedIndexCit]);
 
-  useEffect(() => {
-    if (CountriesOptionsOffline.length != 0) {
-      // Get most recent users for first call
-      dispatch(
-        allCountriesOfflineUsers(
-          CountriesOptionsOffline[currentIndexAllCountriesOffline],
-          "",
-          0
-        )
-      );
-    }
-  }, [CountriesOptionsOffline]);
-
+  /// online
   useEffect(() => {
     if (CountriesOptionsOnline.length != 0) {
       // Get online users options for first call
@@ -1421,13 +1405,6 @@ export default function Search() {
                     height={150}
                     hasMore={!endOfResultCi}
                     loader={<CircularProgress />}
-                    // endMessage={
-
-                    //     // <p style={{ textAlign: "center" }}>
-                    //     //   <b>Yay! You have seen all offline cities</b>
-                    //     // </p>
-
-                    // }
                   >
                     {selectedIndexC != -1 && (
                       <div>

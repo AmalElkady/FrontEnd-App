@@ -30,6 +30,8 @@ import {
   countryCitySelectedOnline,
   countryCitiesAgerangeSelectedOnline,
   countryCityAgerangeSelectedOnline,
+  allCountriesOfflineScroll,
+  allCountriesOfflineUsers,
   countryRecentActiveUsers,
   countryCityRecentActiveUsers,
   requestPhotoRead,
@@ -113,6 +115,19 @@ export default function Cards() {
   );
 
   // offline
+
+  const CountriesOptionsOfflineScroll = useSelector(
+    state => state.home.allCountriesOfflineScroll
+  );
+
+  const AllCountriesOfflineUsers = useSelector(
+    state => state.home.allCountriesOfflineUsers
+  );
+
+  const currentIndexAllCountriesOffline = useSelector(
+    state => state.home.currentIndexAllCountriesOffline
+  );
+
   const CountryRecentActiveUsers = useSelector(
     state => state.home.countryRecentActiveUsers
   );
@@ -164,6 +179,8 @@ export default function Cards() {
   );
   //const showMessage = useSelector(state => state.auth.showMessage);
   const dispatch = useDispatch();
+
+  // online
   useEffect(() => {
     if (AllCountriesSelectedOnline.length != 0) {
       // Get users of AllCountriesSelectedOnline (first time)
@@ -265,6 +282,22 @@ export default function Cards() {
   }, [SelectedOnlineUsers]);
 
   ///offline
+  useEffect(() => {
+    if (
+      CountriesOptionsOfflineScroll.length != 0 &&
+      AllCountriesOfflineUsers == 0
+    ) {
+      // Get most recent users for first call
+      console.log("from cords &&&&& ", CountriesOptionsOfflineScroll);
+      dispatch(
+        allCountriesOfflineUsers(
+          CountriesOptionsOfflineScroll[currentIndexAllCountriesOffline],
+          "",
+          0
+        )
+      );
+    }
+  }, [CountriesOptionsOfflineScroll]);
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
       dispatch(requestPhotoRead());
@@ -518,7 +551,7 @@ export default function Cards() {
     if (!endOfResult) {
       dispatch(
         countryRecentActiveUsers(
-          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
+          CountriesOptionsOffline[selectedCountryIndexForUsers],
           scoreLOffline,
           "",
           OffsetOfline
@@ -537,8 +570,8 @@ export default function Cards() {
     if (!endOfResult) {
       dispatch(
         countryCityRecentActiveUsers(
-          CountriesOptionsOffline.list_of_results[selectedCountryIndexForUsers],
-          CountryCitiesOptionsOffline.list_of_results[0],
+          CountriesOptionsOffline[selectedCountryIndexForUsers],
+          CountryCitiesOptionsOffline[0],
           scoreLOffline,
           "",
           OffsetOfline

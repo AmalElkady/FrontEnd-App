@@ -234,6 +234,10 @@ export const REQUEST_PHOTO_READ_SUCCESS = "request_photo_read_success";
 export const ALL_COUNTRIES_OFFLINE = "all_countries_offline";
 export const ALL_COUNTRIES_OFFLINE_SUCCESS = "all_countries_offline_success";
 
+export const ALL_COUNTRIES_OFFLINE_SCROLL = "all_countries_offline_scroll";
+export const ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS =
+  "all_countries_offline__scroll_success";
+
 export const COUNTRY_CITIES_OFFLINE = "country_cities_offline";
 export const COUNTRY_CITIES_OFFLINE_SUCCESS = "country_cities_offline_success";
 
@@ -256,4 +260,6 @@ export const SELECTED_CITY_INDEX = "selected_city_index";
 export const RESET_STATES = "reset_states";
 export const RESET_STATES_ONLINE = "reset_states_online";
 export const RESET_END_RES = "reset_end_res";
+export const RESET_END_RES_OF = "reset_end_res";
 export const RESET_END_RES_USERS = "reset_end_res_users";
+export const RESET_END_RES_USERS_OF = "reset_end_res_users_of";
