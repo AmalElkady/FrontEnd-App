@@ -52,6 +52,7 @@ import {
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX,
   SET_AGE_SCORES,
+  SET_SEARCH_STATE,
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
   RESET_STATES_LIST_CITY_ONLINE
@@ -409,6 +410,12 @@ export const setAgeScores = (SL, SH) => {
   return {
     type: SET_AGE_SCORES,
     payload: { SL, SH }
+  };
+};
+export const setSearchState = searchState => {
+  return {
+    type: SET_SEARCH_STATE,
+    payload: searchState
   };
 };
 

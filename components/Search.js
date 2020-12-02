@@ -26,6 +26,7 @@ import {
   selectedCountryIndex,
   selectedCityIndex,
   setAgeScores,
+  setSearchState,
   countrySelectedOnline,
   countryCitySelectedOnline,
   countryCitiesAgerangeSelectedOnline,
@@ -306,6 +307,7 @@ export default function Search() {
     dispatch(resetStatesOnline());
     dispatch(resetEndResUsers());
     dispatch(resetEndRes());
+    dispatch(setSearchState(optionValue));
     if (optionValue == "most recent") {
       //Get all Countries Offline first time
       CountriesOptionsOffline.length == 0
@@ -321,7 +323,6 @@ export default function Search() {
   }, [optionValue]);
 
   useEffect(() => {
-    console.log("selectedIndexC ", selectedIndexC);
     if (optionValue == "active") {
       if (selectedIndexC != -1 && selectedIndex == -1) {
         // Get Cities based on Country only first time

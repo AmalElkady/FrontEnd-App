@@ -32,6 +32,7 @@ import {
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX,
   SET_AGE_SCORES,
+  SET_SEARCH_STATE,
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
   RESET_STATES_LIST_CITY_ONLINE
@@ -326,8 +327,7 @@ const home = (state = initialHomeState, action) => {
         allCountriesSelectedOnlineCount: [
           ...state.allCountriesSelectedOnlineCount,
           ...action.payload.scoreArr
-        ],
-        searchState: "active"
+        ]
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
@@ -350,7 +350,6 @@ const home = (state = initialHomeState, action) => {
           ...state.allCountriesSelectedOnlineUsersTimeScore,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnlineUsers: offset,
         scoreLOnlineUsers: SL
       };
@@ -370,7 +369,6 @@ const home = (state = initialHomeState, action) => {
           ...state.agerangeAllCountriesSelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnline: offset,
         scoreLOnline: SL
       };
@@ -399,7 +397,6 @@ const home = (state = initialHomeState, action) => {
           ...state.selectedOnlineUsersTimeScore,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnlineUsers: offset,
         scoreLOnlineUsers: SL
       };
@@ -426,8 +423,7 @@ const home = (state = initialHomeState, action) => {
         countrySelectedOnlineCount: [
           ...state.countrySelectedOnlineCount,
           ...action.payload.scoreArr
-        ],
-        searchState: "active"
+        ]
       };
     }
     case COUNTRY_CITY_SELECTED_ONLINE_SUCCESS: {
@@ -445,7 +441,6 @@ const home = (state = initialHomeState, action) => {
           ...state.countryCitySelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnline: offset,
         scoreLOnline: SL
       };
@@ -466,7 +461,6 @@ const home = (state = initialHomeState, action) => {
           ...state.countryCitiesAgerangeSelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnline: offset,
         scoreLOnline: SL
       };
@@ -486,7 +480,6 @@ const home = (state = initialHomeState, action) => {
           ...state.countryCityAgerangeSelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        searchState: "active",
         OffsetOnline: offset,
         scoreLOnline: SL
       };
@@ -523,8 +516,7 @@ const home = (state = initialHomeState, action) => {
         allCountriesOfflineCount: [
           ...state.allCountriesOfflineCount,
           ...action.payload.scoreArr
-        ],
-        searchState: "most recent"
+        ]
       };
     }
     case ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS: {
@@ -548,8 +540,7 @@ const home = (state = initialHomeState, action) => {
         allCountriesOfflineScrollCount: [
           ...state.allCountriesOfflineScrollCount,
           ...action.payload.scoreArr
-        ],
-        searchState: "most recent"
+        ]
       };
     }
     case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS: {
@@ -560,7 +551,6 @@ const home = (state = initialHomeState, action) => {
         // &&
         // state.allCountriesOffline.length > 1
       ) {
-        console.log("end true");
         state.endOfResultUsersOf = true;
         state.currentIndexAllCountriesOffline++;
       }
@@ -575,8 +565,7 @@ const home = (state = initialHomeState, action) => {
           ...action.payload.scoreArr
         ],
         OffsetOflineUsers: offset,
-        scoreLOfflineUsers: SL,
-        searchState: "most recent"
+        scoreLOfflineUsers: SL
       };
     }
     case COUNTRY_CITIES_OFFLINE_SUCCESS: {
@@ -600,8 +589,7 @@ const home = (state = initialHomeState, action) => {
         countryCitiesOfflineCount: [
           ...state.countryCitiesOfflineCount,
           ...action.payload.scoreArr
-        ],
-        searchState: "most recent"
+        ]
       };
     }
     case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS: {
@@ -621,8 +609,7 @@ const home = (state = initialHomeState, action) => {
           ...action.payload.scoreArr
         ],
         OffsetOflineUsersS: offset,
-        scoreHOfflineUsersS: SL,
-        searchState: "most recent"
+        scoreHOfflineUsersS: SL
       };
     }
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS: {
@@ -642,8 +629,7 @@ const home = (state = initialHomeState, action) => {
           ...action.payload.scoreArr
         ],
         OffsetOflineUsersS: offset,
-        scoreHOfflineUsersS: SL,
-        searchState: "most recent"
+        scoreHOfflineUsersS: SL
       };
     }
     case SELECTED_AGERANGE_INDEX:
@@ -668,6 +654,12 @@ const home = (state = initialHomeState, action) => {
         ...state,
         ageScoreL: action.payload.SL,
         ageScoreH: action.payload.SH
+      };
+
+    case SET_SEARCH_STATE:
+      return {
+        ...state,
+        searchState: action.payload
       };
 
     case RESET_STATES:
