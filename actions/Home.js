@@ -84,9 +84,11 @@ export const fetchCountryCityAgerangesOnlineSuccess = data => {
 };
 
 // Countries
-export const allCountriesOnline = () => {
+export const allCountriesOnline = (SL, offset) => {
+  console.log("SL, offset from action ", SL, offset);
   return {
-    type: GET_ALL_COUNTRIES_ONLINE
+    type: GET_ALL_COUNTRIES_ONLINE,
+    payload: { SL, offset }
   };
 };
 

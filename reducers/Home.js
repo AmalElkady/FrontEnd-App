@@ -34,16 +34,24 @@ import {
   SET_AGE_SCORES
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
-import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
 
 const initialHomeState = {
   //online dropdown
   allCountriesOnline: [],
+  allCountriesOnlineCount: [],
+
   countryCitiesOnline: [],
   countryAgerangesOnline: [],
   agerangeCountriesOnline: [],
   countryCitiesAgerangeOnline: [],
   countryCityAgerangesOnline: [],
+
+  endOfResultOnCo: false, // for country list
+  scoreLOnlineCo: "",
+  OffsetonlineCo: 0,
+  endOfResultOnCi: false, // for city list
+  scoreLOnlineCi: "",
+  OffsetOnlineCi: 0,
 
   // online selected
   allCountriesSelectedOnline: [],
@@ -137,11 +145,31 @@ const initialHomeState = {
 
 const home = (state = initialHomeState, action) => {
   switch (action.type) {
-    case FETCH_ALL_COUNTRIES_ONLINE_SUCCESS:
+    case FETCH_ALL_COUNTRIES_ONLINE_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnlineCo = offset;
+        state.scoreLOnlineCo = SL;
+      } else {
+        state.OffsetOnlineCo = "0";
+        state.scoreLOnlineCo = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultOnCo = true;
+      }
       return {
         ...state,
-        allCountriesOnline: action.payload
+        allCountriesOnline: action.payload,
+        allCountriesOnline: [
+          ...state.allCountriesOnline,
+          ...action.payload.usersArr
+        ],
+        allCountriesOnlineCount: [
+          ...state.allCountriesOnlineCount,
+          ...action.payload.scoreArr
+        ]
       };
+    }
     case COUNTRY_CITIES_ONLINE_SUCCESS:
       return {
         ...state,

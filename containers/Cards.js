@@ -436,7 +436,7 @@ export default function Cards() {
 
       dispatch(
         countrySelectedOnline(
-          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          CountriesOptionsOnline[countrySelectedIndex],
           scoreLOnline,
           OffsetOnline
         )
@@ -449,7 +449,7 @@ export default function Cards() {
       // Get online users other options
       dispatch(
         countryCitySelectedOnline(
-          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          CountriesOptionsOnline[countrySelectedIndex],
           CountryCitiesOptionsOnline.list_of_results[citySelectedIndex],
           scoreLOnline,
           OffsetOnline
@@ -467,7 +467,7 @@ export default function Cards() {
       ) {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
-            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountriesOptionsOnline[countrySelectedIndex],
             CountryAgerangesOptionsOnline.list_of_results[
               selectedAgerangeIndex
             ],
@@ -500,7 +500,7 @@ export default function Cards() {
       ) {
         dispatch(
           countryCityAgerangeSelectedOnline(
-            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountriesOptionsOnline[countrySelectedIndex],
             CountryCitiesOptionsOnline.list_of_results[citySelectedIndex],
             CountryAgerangesOptionsOnline.list_of_results[
               selectedAgerangeIndex
@@ -597,7 +597,7 @@ export default function Cards() {
     if (CountrySelectedOnline.length == 1) {
       dispatch(
         countrySelectedOnline(
-          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          CountriesOptionsOnline[countrySelectedIndex],
           scoreLOnline,
           OffsetOnline
         )
@@ -617,7 +617,7 @@ export default function Cards() {
     if (CountryCitySelectedOnline.length == 1) {
       dispatch(
         countryCitySelectedOnline(
-          CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+          CountriesOptionsOnline[countrySelectedIndex],
           CountryCitiesOptionsOnline.list_of_results[citySelectedIndex],
           scoreLOnline,
           OffsetOnline
@@ -642,7 +642,7 @@ export default function Cards() {
       ) {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
-            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountriesOptionsOnline[countrySelectedIndex],
             CountryAgerangesOptionsOnline.list_of_results[
               selectedAgerangeIndex
             ],
@@ -681,7 +681,7 @@ export default function Cards() {
       ) {
         dispatch(
           countryCityAgerangeSelectedOnline(
-            CountriesOptionsOnline.list_of_results[countrySelectedIndex],
+            CountriesOptionsOnline[countrySelectedIndex],
             CountryCitiesOptionsOnline.list_of_results[citySelectedIndex],
             CountryAgerangesOptionsOnline.list_of_results[
               selectedAgerangeIndex

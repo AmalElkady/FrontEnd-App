@@ -165,9 +165,15 @@ export default function Search() {
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
   );
+  const CountriesOptionsOnlineCount = useSelector(
+    state => state.home.allCountriesOnlineCount
+  );
   const AgerangeCountriesOptionsOnline = useSelector(
     state => state.home.agerangeCountriesOnline
   );
+  const OffsetOnlineCo = useSelector(state => state.home.OffsetOnlineCo);
+  const scoreLOnlineCo = useSelector(state => state.home.scoreLOnlineCo);
+  const endOfResultOnCo = useSelector(state => state.home.endOfResultOnCo);
 
   // Cities
   const CountryCitiesOptionsOnline = useSelector(
@@ -272,8 +278,10 @@ export default function Search() {
         ? dispatch(allCountriesOffline("", 0))
         : "";
     } else {
-      // Get all Countries Online
-      dispatch(allCountriesOnline());
+      // Get all Countries Online first time
+      CountriesOptionsOnline.length == 0
+        ? dispatch(allCountriesOnline("", 0))
+        : "";
     }
   }, [optionValue]);
 
@@ -281,18 +289,12 @@ export default function Search() {
     if (optionValue == "active") {
       if (selectedIndexC != -1 && selectedIndex == -1) {
         // Get Cities based on Country only
-        dispatch(
-          countryCitiesOnline(
-            CountriesOptionsOnline.list_of_results[selectedIndexC]
-          )
-        );
+        dispatch(countryCitiesOnline(CountriesOptionsOnline[selectedIndexC]));
 
         // Get Ageranges based on Country only
-        if (CountriesOptionsOnline.list_of_results != null) {
+        if (CountriesOptionsOnline.length != 0) {
           dispatch(
-            countryAgerangesOnline(
-              CountriesOptionsOnline.list_of_results[selectedIndexC]
-            )
+            countryAgerangesOnline(CountriesOptionsOnline[selectedIndexC])
           );
         }
       }
@@ -308,7 +310,7 @@ export default function Search() {
         ) {
           dispatch(
             countryCitiesAgerangeOnline(
-              allCountriesOnline.list_of_results[selectedIndexC],
+              CountriesOptionsOnline[selectedIndexC],
               CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
             )
           );
@@ -349,7 +351,7 @@ export default function Search() {
         ) {
           dispatch(
             countryCitiesAgerangeOnline(
-              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountriesOptionsOnline[selectedIndexC],
               CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
             )
           );
@@ -382,7 +384,7 @@ export default function Search() {
       ) {
         dispatch(
           countryCityAgerangesOnline(
-            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountriesOptionsOnline[selectedIndexC],
             CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
           )
         );
@@ -414,6 +416,23 @@ export default function Search() {
   }, [CountriesOptionsOffline]);
 
   //// scroll lists
+  // online
+  const handleScrollCountriesOnline = () => {
+    if (!endOfResultOnCo) {
+      // Get countries Offline (next options)
+      console.log(
+        "scoreLOfflineCo, OffsetOfflineCo",
+        scoreLOnlineCo,
+        OffsetOnlineCo
+      );
+      if (AgerangeCountriesOptionsOnline.list_of_results) {
+        console.log("get next AgerangeCountriesOptionsOnline");
+      } else {
+        dispatch(allCountriesOnline(scoreLOnlineCo, OffsetOnlineCo));
+      }
+    }
+  };
+  // offline
   const handleScrollCountriesOffline = () => {
     if (!endOfResultCo) {
       // Get countries Offline (next options)
@@ -469,11 +488,7 @@ export default function Search() {
 
         dispatch(selectedCountryIndex(selectedIndexC));
         dispatch(
-          countrySelectedOnline(
-            CountriesOptionsOnline.list_of_results[selectedIndexC],
-            "",
-            0
-          )
+          countrySelectedOnline(CountriesOptionsOnline[selectedIndexC], "", 0)
         );
       }
       //Get online users based on country and city only
@@ -489,7 +504,7 @@ export default function Search() {
         dispatch(selectedCityIndex(selectedIndexCit));
         dispatch(
           countryCitySelectedOnline(
-            CountriesOptionsOnline.list_of_results[selectedIndexC],
+            CountriesOptionsOnline[selectedIndexC],
             CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
             "",
             0
@@ -512,7 +527,7 @@ export default function Search() {
         ) {
           dispatch(
             countryCitiesAgerangeSelectedOnline(
-              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountriesOptionsOnline[selectedIndexC],
               CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
               "",
               0
@@ -544,7 +559,7 @@ export default function Search() {
         ) {
           dispatch(
             countryCityAgerangeSelectedOnline(
-              CountriesOptionsOnline.list_of_results[selectedIndexC],
+              CountriesOptionsOnline[selectedIndexC],
               CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
               CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
               "",
@@ -939,7 +954,7 @@ export default function Search() {
           )}
 
           {/* contries list Online*/}
-          {optionValue == "active" && CountriesOptionsOnline.list_of_results && (
+          {optionValue == "active" && CountriesOptionsOnline.length != 0 && (
             <div className={classes.menu}>
               <List component="nav" aria-label="Countries">
                 <ListItem
@@ -958,9 +973,7 @@ export default function Search() {
                             //     selectedIndexC + 1
                             //   ]
                             "Select Country"
-                          : CountriesOptionsOnline.list_of_results[
-                              selectedIndexC
-                            ]
+                          : CountriesOptionsOnline[selectedIndexC]
                         : selectedIndexC == -1
                         ? // ? AgerangeCountriesOptionsOnline.list_of_results[
                           //     selectedIndexC + 1
@@ -986,109 +999,124 @@ export default function Search() {
                   }
                 }}
               >
-                <Typography
-                  variant="h6"
-                  className={classes.padding}
-                  gutterBottom
+                <InfiniteScroll
+                  dataLength={
+                    AgerangeCountriesOptionsOnline.list_of_results
+                      ? AgerangeCountriesOptionsOnline.length
+                      : CountriesOptionsOnline.length != 0
+                      ? CountriesOptionsOnline.length
+                      : ""
+                  }
+                  next={handleScrollCountriesOnline}
+                  height={100}
+                  hasMore={!endOfResultOnCo}
+                  loader={<CircularProgress />}
                 >
-                  ONLINE
-                </Typography>
-                <MenuItem
-                  onClick={() => {
-                    setSelectedIndexC(-1);
-                    setAnchorElC(null);
-                  }}
-                  className={classes.displayFlexSB}
-                >
-                  <Typography variant="button" gutterBottom>
-                    No Select
+                  <Typography
+                    variant="h6"
+                    className={classes.padding}
+                    gutterBottom
+                  >
+                    ONLINE
                   </Typography>
-                </MenuItem>
-                {selectedIndex != -1 &&
-                  selectedIndexC == -1 &&
-                  AgerangeCountriesOptionsOnline.list_of_results?.map(
-                    (option, index) =>
-                      index % 2 === 0 && (
-                        <MenuItem
-                          key={option}
-                          selected={index === selectedIndexC}
-                          onClick={event => handleMenuItemClickC(event, index)}
-                          className={classes.displayFlexSB}
-                        >
-                          <Typography variant="button" gutterBottom>
-                            {option}
-                          </Typography>
-                          <Typography
-                            variant="button"
-                            color="primary"
-                            gutterBottom
-                          >
-                            {
-                              AgerangeCountriesOptionsOnline.list_of_results[
-                                index + 1
-                              ]
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedIndexC(-1);
+                      setAnchorElC(null);
+                    }}
+                    className={classes.displayFlexSB}
+                  >
+                    <Typography variant="button" gutterBottom>
+                      No Select
+                    </Typography>
+                  </MenuItem>
+                  {selectedIndex != -1 &&
+                    selectedIndexC == -1 &&
+                    AgerangeCountriesOptionsOnline.list_of_results?.map(
+                      (option, index) =>
+                        index % 2 === 0 && (
+                          <MenuItem
+                            key={option}
+                            selected={index === selectedIndexC}
+                            onClick={event =>
+                              handleMenuItemClickC(event, index)
                             }
-                          </Typography>
-                        </MenuItem>
-                      )
-                  )}
-                {((selectedIndex == -1 && selectedIndexC == -1) ||
-                  (selectedIndex != -1 &&
-                    selectedIndexC != -1 &&
-                    AgerangeCountriesOptionsOnline.list_of_results == null) ||
-                  (selectedIndex == -1 && selectedIndexC != -1)) &&
-                  CountriesOptionsOnline.list_of_results?.map(
-                    (option, index) =>
-                      index % 2 === 0 && (
-                        <MenuItem
-                          key={option}
-                          selected={index === selectedIndexC}
-                          onClick={event => handleMenuItemClickC(event, index)}
-                          className={classes.displayFlexSB}
-                        >
-                          <Typography variant="button" gutterBottom>
-                            {option}
-                          </Typography>
-                          <Typography
-                            variant="button"
-                            color="primary"
-                            gutterBottom
+                            className={classes.displayFlexSB}
                           >
-                            {CountriesOptionsOnline.list_of_results[index + 1]}
-                          </Typography>
-                        </MenuItem>
-                      )
-                  )}
+                            <Typography variant="button" gutterBottom>
+                              {option}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {
+                                AgerangeCountriesOptionsOnline.list_of_results[
+                                  index + 1
+                                ]
+                              }
+                            </Typography>
+                          </MenuItem>
+                        )
+                    )}
+                  {((selectedIndex == -1 && selectedIndexC == -1) ||
+                    (selectedIndex != -1 &&
+                      selectedIndexC != -1 &&
+                      AgerangeCountriesOptionsOnline.list_of_results == null) ||
+                    (selectedIndex == -1 && selectedIndexC != -1)) &&
+                    CountriesOptionsOnline?.map((option, index) => (
+                      <MenuItem
+                        key={option}
+                        selected={index === selectedIndexC}
+                        onClick={event => handleMenuItemClickC(event, index)}
+                        className={classes.displayFlexSB}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          {option}
+                        </Typography>
+                        <Typography
+                          variant="button"
+                          color="primary"
+                          gutterBottom
+                        >
+                          {CountriesOptionsOnlineCount[index]}
+                        </Typography>
+                      </MenuItem>
+                    ))}
 
-                {selectedIndex != -1 &&
-                  selectedIndexC != -1 &&
-                  AgerangeCountriesOptionsOnline.list_of_results != null &&
-                  AgerangeCountriesOptionsOnline.list_of_results?.map(
-                    (option, index) =>
-                      index % 2 === 0 && (
-                        <MenuItem
-                          key={option}
-                          selected={index === selectedIndexC}
-                          onClick={event => handleMenuItemClickC(event, index)}
-                          className={classes.displayFlexSB}
-                        >
-                          <Typography variant="button" gutterBottom>
-                            {option}
-                          </Typography>
-                          <Typography
-                            variant="button"
-                            color="primary"
-                            gutterBottom
-                          >
-                            {
-                              AgerangeCountriesOptionsOnline.list_of_results[
-                                index + 1
-                              ]
+                  {selectedIndex != -1 &&
+                    selectedIndexC != -1 &&
+                    AgerangeCountriesOptionsOnline.list_of_results != null &&
+                    AgerangeCountriesOptionsOnline.list_of_results?.map(
+                      (option, index) =>
+                        index % 2 === 0 && (
+                          <MenuItem
+                            key={option}
+                            selected={index === selectedIndexC}
+                            onClick={event =>
+                              handleMenuItemClickC(event, index)
                             }
-                          </Typography>
-                        </MenuItem>
-                      )
-                  )}
+                            className={classes.displayFlexSB}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {option}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {
+                                AgerangeCountriesOptionsOnline.list_of_results[
+                                  index + 1
+                                ]
+                              }
+                            </Typography>
+                          </MenuItem>
+                        )
+                    )}
+                </InfiniteScroll>
               </Menu>
             </div>
           )}
@@ -1196,7 +1224,7 @@ export default function Search() {
                           ? selectedIndexCit == -1
                             ? "select City"
                             : COUNTRY_CITY_MAP[
-                                CountriesOptionsOnline.list_of_results[
+                                CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
@@ -1208,7 +1236,7 @@ export default function Search() {
                           ? setSelectedIndexC(-1)
                           : ""
                         : CountryCitiesAgerangeOptionsOnline.list_of_results
-                        ? CountriesOptionsOnline.list_of_results
+                        ? CountriesOptionsOnline
                           ? selectedIndexCit == -1
                             ? // ? COUNTRY_CITY_MAP[
                               //     CountriesOptionsOnline.list_of_results[
@@ -1220,7 +1248,7 @@ export default function Search() {
                               //   ]
                               "Select City"
                             : COUNTRY_CITY_MAP[
-                                CountriesOptionsOnline.list_of_results[
+                                CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
@@ -1301,7 +1329,7 @@ export default function Search() {
                             <Typography variant="button" gutterBottom>
                               {
                                 COUNTRY_CITY_MAP[
-                                  CountriesOptionsOnline.list_of_results[
+                                  CountriesOptionsOnline[
                                     selectedIndexC
                                   ].toLowerCase()
                                 ][option - 1]
@@ -1359,7 +1387,7 @@ export default function Search() {
                             <Typography variant="button" gutterBottom>
                               {
                                 COUNTRY_CITY_MAP[
-                                  CountriesOptionsOnline.list_of_results[
+                                  CountriesOptionsOnline[
                                     selectedIndexC
                                   ].toLowerCase()
                                 ][option - 1]

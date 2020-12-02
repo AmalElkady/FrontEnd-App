@@ -702,7 +702,7 @@ auth.signOut = function () {
 }
 ////////////////////////////// Home ////////////
 ///// ONLINE
-home.getAllCountriesOnline = function () {
+home.getAllCountriesOnline = function (SH, offset) {
 
 	// "allcountriesflag": true,
     // "searchlistid" : "all_countries_online",
@@ -712,7 +712,7 @@ home.getAllCountriesOnline = function () {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-
+console.log("SL, offset from okta ",SH, offset);
 					  return new Promise(  async (resolve, reject) => {				
 											try {
 												
@@ -728,7 +728,8 @@ home.getAllCountriesOnline = function () {
 																  data: {
 																	allcountriesflag: true,
 																     searchlistid : "all_countries_online",
-
+																	 scoreH:SH,
+																	 offset
 																  }
 																};
 	
@@ -738,7 +739,11 @@ home.getAllCountriesOnline = function () {
 												console.log("respo data from okta : ",response);
 												
 												   if(response){
-																	resolve(response);					 
+																	//resolve(response);	
+																	const mapedList =convertListToTwoArrays(response.list_of_results);
+																	console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
+																											   
+																   resolve(mapedList);						 
 												   } else {
 													   
 													   resolve({"message": "no response !"})
@@ -1665,6 +1670,7 @@ home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
 																   if(response){
 																	
 																	const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
+																	console.log("ReturnUsers okta : ",ReturnUsers);
 																	const mapedList =convertListToTwoArrays(ReturnUsers);
 													               console.log("usersArr, ScoreArr from okta country recent " ,mapedList);
 																								

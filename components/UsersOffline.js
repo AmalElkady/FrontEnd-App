@@ -53,6 +53,8 @@ export default function UsersOffline() {
     state => state.home.allCountriesOfflineUsers
   );
 
+  const [newUsers, setNewUsers] = useState([]);
+
   const AllCountriesOfflineUsersTimeScore = useSelector(
     state => state.home.allCountriesOfflineUsersTimeScore
   );
@@ -127,10 +129,15 @@ export default function UsersOffline() {
       if (searchState == "most recent") {
         if (AllCountriesOfflineUsers.length != 0) {
           //change usersPhotoUrl
-          mapUserPhotoUrl(
+          const AllCountriesOfflineUsersNew = mapUserPhotoUrl(
             AllCountriesOfflineUsers,
             photoReadSignedRequest.signedRequest
           );
+          console.log(
+            "AllCountriesOfflineUsers after change ",
+            AllCountriesOfflineUsersNew
+          );
+          setNewUsers(AllCountriesOfflineUsersNew);
         }
       }
     }
@@ -152,9 +159,9 @@ export default function UsersOffline() {
   };
   return (
     <>
-      {searchState == "most recent" && AllCountriesOfflineUsers.length != 0 && (
+      {searchState == "most recent" && newUsers.length != 0 && (
         <InfiniteScroll
-          dataLength={AllCountriesOfflineUsers.length}
+          dataLength={newUsers.length}
           height={300}
           next={handleScroll}
           hasMore={!endOfResultOf}
@@ -166,7 +173,7 @@ export default function UsersOffline() {
           }
         >
           <div className={classes.displayF}>
-            {AllCountriesOfflineUsers.map((option, index) => (
+            {newUsers.map((option, index) => (
               <UserCard
                 key={option.i}
                 user={option}
