@@ -90,6 +90,9 @@ export default function Cards() {
   const selectedOnlineUsersTimeScore = useSelector(
     state => state.home.selectedOnlineUsersTimeScore
   );
+
+  const [newSelectedOnlineUsers, setSelectedOnlineUsers] = useState([]);
+
   const currentIndexSelectedOnline = useSelector(
     state => state.home.currentIndexSelectedOnline
   );
@@ -293,6 +296,7 @@ export default function Cards() {
 
   useEffect(() => {
     if (SelectedOnlineUsers.length != 0) {
+      setSelectedOnlineUsers([]);
       dispatch(requestPhotoRead());
     }
   }, [SelectedOnlineUsers]);
@@ -318,10 +322,6 @@ export default function Cards() {
     if (photoReadSignedRequest != null) {
       if (searchState == "most recent") {
         if (CountryRecentActiveUsers.length != 0) {
-          console.log(
-            "countryRecentActiveUsers :on map ",
-            CountryRecentActiveUsers
-          );
           // Users based on Country
           setCountryRecentActiveUsers(
             mapUserPhotoUrl(
@@ -329,15 +329,7 @@ export default function Cards() {
               photoReadSignedRequest.signedRequest
             )
           );
-          console.log(
-            "countryRecentActiveUsersNew :on map ",
-            newCountryRecentActiveUsers
-          );
         } else if (CountryCityRecentActiveUsers.length != 0) {
-          console.log(
-            "countryCityRecentActiveUsers :on map ",
-            newCountryCityRecentActiveUsers
-          );
           // Users based on Country and city
           setCountryCityRecentActiveUsers(
             mapUserPhotoUrl(
@@ -355,9 +347,11 @@ export default function Cards() {
             CountryCitiesAgerangeSelectedOnline.length != 0 ||
             CountryCityAgerangeSelectedOnline.length != 0
           )
-            mapUserPhotoUrl(
-              SelectedOnlineUsers,
-              photoReadSignedRequest.signedRequest
+            setSelectedOnlineUsers(
+              mapUserPhotoUrl(
+                SelectedOnlineUsers,
+                photoReadSignedRequest.signedRequest
+              )
             );
         }
       }
@@ -716,32 +710,13 @@ export default function Cards() {
 
   return (
     <>
-      {/* {console.log(
-        // "countryRecentActiveUsers from render : ",
-        // CountryRecentActiveUsers,
-        // "countryCityRecentActiveUsers from render : ",
-        // CountryCityRecentActiveUsers,
-        // "end ",
-        // endOfResult
-        // "searchState",
-        // searchState
-        // "signedRequest #### ",
-        // photoReadSignedRequest?.signedRequest
-        // "AllCountriesSelectedOnline :",
-        // AllCountriesSelectedOnline
-        "endOfResult from render ",
-        endOfResult,
-        scoreLOnline,
-        OffsetOnline,
-        currentIndexSelectedOnline,
-        CountrySelectedOnline
-      )} */}
-
       {/* Display Online Users */}
       {searchState == "active" &&
       // Display online users searched by agerange
       AgerangeAllCountriesSelectedOnline.length != 0 ? (
-        SelectedOnlineUsers.length != 0 ? (
+        SelectedOnlineUsers.length != 0 &&
+        newSelectedOnlineUsers.length != 0 &&
+        selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollAgerange}
@@ -755,7 +730,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {SelectedOnlineUsers.map((option, index) => (
+              {newSelectedOnlineUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -769,7 +744,9 @@ export default function Cards() {
         )
       ) : // Display online users searched by country
       CountrySelectedOnline.length != 0 ? (
-        SelectedOnlineUsers.length != 0 ? (
+        SelectedOnlineUsers.length != 0 &&
+        newSelectedOnlineUsers.length != 0 &&
+        selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountry}
@@ -783,7 +760,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {SelectedOnlineUsers.map((option, index) => (
+              {newSelectedOnlineUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -797,7 +774,9 @@ export default function Cards() {
         )
       ) : // Display online users searched by country and city
       CountryCitySelectedOnline.length != 0 ? (
-        SelectedOnlineUsers.length != 0 ? (
+        SelectedOnlineUsers.length != 0 &&
+        newSelectedOnlineUsers.length != 0 &&
+        selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryCity}
@@ -811,7 +790,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {SelectedOnlineUsers.map((option, index) => (
+              {newSelectedOnlineUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -825,7 +804,9 @@ export default function Cards() {
         )
       ) : // Display online users searched by country and agerange only
       CountryCitiesAgerangeSelectedOnline.length != 0 ? (
-        SelectedOnlineUsers.length != 0 ? (
+        SelectedOnlineUsers.length != 0 &&
+        newSelectedOnlineUsers.length != 0 &&
+        selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryAgerange}
@@ -839,7 +820,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {SelectedOnlineUsers.map((option, index) => (
+              {newSelectedOnlineUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -853,7 +834,9 @@ export default function Cards() {
         )
       ) : // Display online users searched by country and city and agerange
       CountryCityAgerangeSelectedOnline.length != 0 ? (
-        SelectedOnlineUsers.length != 0 ? (
+        SelectedOnlineUsers.length != 0 &&
+        newSelectedOnlineUsers.length != 0 &&
+        selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryCityAgerange}
@@ -867,7 +850,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {SelectedOnlineUsers.map((option, index) => (
+              {newSelectedOnlineUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -885,12 +868,6 @@ export default function Cards() {
         ""
       )}
       {/* Display Most Recent Users */}
-      {console.log(
-        "newCountryRecentActiveUsers CountryRecentActiveUsers ",
-        newCountryCityRecentActiveUsers,
-        CountryCityRecentActiveUsers,
-        countryCityRecentActiveUsersTimescore
-      )}
       {searchState == "most recent" &&
         (newCountryRecentActiveUsers.length != 0 &&
         CountryRecentActiveUsers.length != 0 &&

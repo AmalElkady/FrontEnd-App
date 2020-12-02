@@ -141,7 +141,6 @@ export default function UserCard({ user, timeScore }) {
 
   return (
     <>
-      {console.log("userrrrrrrrr image ", user._)}
       <Card className={classes.root}>
         <CardMedia className={classes.media} image={user._} title="userPhoto" />
         <CardContent>
