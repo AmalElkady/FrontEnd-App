@@ -132,6 +132,9 @@ export default function Cards() {
   const CountryRecentActiveUsers = useSelector(
     state => state.home.countryRecentActiveUsers
   );
+  const [newCountryRecentActiveUsers, setCountryRecentActiveUsers] = useState(
+    []
+  );
 
   const countryRecentActiveUsersTimescore = useSelector(
     state => state.home.countryRecentActiveUsersTimescore
@@ -145,6 +148,11 @@ export default function Cards() {
   const countryCityRecentActiveUsersTimescore = useSelector(
     state => state.home.countryCityRecentActiveUsersTimescore
   );
+  const [
+    newCountryCityRecentActiveUsers,
+    setCountryCityRecentActiveUsers
+  ] = useState([]);
+
   // Cities
   const CountryCitiesOptionsOffline = useSelector(
     state => state.home.countryCitiesOffline
@@ -292,11 +300,13 @@ export default function Cards() {
   ///offline
   useEffect(() => {
     if (CountryRecentActiveUsers.length != 0) {
+      setCountryRecentActiveUsers([]);
       dispatch(requestPhotoRead());
     }
   }, [CountryRecentActiveUsers]);
 
   useEffect(() => {
+    setCountryCityRecentActiveUsers([]);
     if (CountryCityRecentActiveUsers.length != 0) {
       dispatch(requestPhotoRead());
     }
@@ -313,19 +323,27 @@ export default function Cards() {
             CountryRecentActiveUsers
           );
           // Users based on Country
-          mapUserPhotoUrl(
-            CountryRecentActiveUsers,
-            photoReadSignedRequest.signedRequest
+          setCountryRecentActiveUsers(
+            mapUserPhotoUrl(
+              CountryRecentActiveUsers,
+              photoReadSignedRequest.signedRequest
+            )
+          );
+          console.log(
+            "countryRecentActiveUsersNew :on map ",
+            newCountryRecentActiveUsers
           );
         } else if (CountryCityRecentActiveUsers.length != 0) {
           console.log(
             "countryCityRecentActiveUsers :on map ",
-            CountryCityRecentActiveUsers
+            newCountryCityRecentActiveUsers
           );
           // Users based on Country and city
-          mapUserPhotoUrl(
-            CountryCityRecentActiveUsers,
-            photoReadSignedRequest.signedRequest
+          setCountryCityRecentActiveUsers(
+            mapUserPhotoUrl(
+              CountryCityRecentActiveUsers,
+              photoReadSignedRequest.signedRequest
+            )
           );
         }
       } else if (searchState == "active") {
@@ -867,8 +885,16 @@ export default function Cards() {
         ""
       )}
       {/* Display Most Recent Users */}
+      {console.log(
+        "newCountryRecentActiveUsers CountryRecentActiveUsers ",
+        newCountryCityRecentActiveUsers,
+        CountryCityRecentActiveUsers,
+        countryCityRecentActiveUsersTimescore
+      )}
       {searchState == "most recent" &&
-        (CountryRecentActiveUsers.length != 0 ? (
+        (newCountryRecentActiveUsers.length != 0 &&
+        CountryRecentActiveUsers.length != 0 &&
+        countryCityRecentActiveUsersTimescore.length != 0 ? (
           <InfiniteScroll
             dataLength={CountryRecentActiveUsers.length}
             next={onScrollCountryRecentUsers}
@@ -882,7 +908,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {CountryRecentActiveUsers.map((option, index) => (
+              {newCountryRecentActiveUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
@@ -891,7 +917,8 @@ export default function Cards() {
               ))}
             </div>
           </InfiniteScroll>
-        ) : CountryCityRecentActiveUsers.length != 0 ? (
+        ) : CountryCityRecentActiveUsers.length != 0 &&
+          newCountryCityRecentActiveUsers != 0 ? (
           <InfiniteScroll
             dataLength={CountryCityRecentActiveUsers.length}
             next={onScrollCountryCityRecentUsers}
@@ -905,7 +932,7 @@ export default function Cards() {
             }
           >
             <div className={classes.displayF}>
-              {CountryCityRecentActiveUsers.map((option, index) => (
+              {newCountryCityRecentActiveUsers.map((option, index) => (
                 <UserCard
                   key={option.i}
                   user={option}
