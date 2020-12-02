@@ -44,6 +44,7 @@ export default function UsersOnline() {
     state => state.home.allCountriesSelectedOnlineUsersTimeScore
   );
 
+  const [newUsers, setNewUsers] = useState([]);
   const searchState = useSelector(state => state.home.searchState);
   const showMessage = useSelector(state => state.home.showMessage);
   const loader = useSelector(state => state.home.loader);
@@ -72,10 +73,20 @@ export default function UsersOnline() {
       if (searchState == "active") {
         if (AllCountriesSelectedOnlineUsers.length != 0) {
           //change usersPhotoUrl
-          mapUserPhotoUrl(
+          // mapUserPhotoUrl(
+          //   AllCountriesSelectedOnlineUsers,
+          //   photoReadSignedRequest.signedRequest
+          // );
+
+          const AllCountriesOnlineUsersNew = mapUserPhotoUrl(
             AllCountriesSelectedOnlineUsers,
             photoReadSignedRequest.signedRequest
           );
+          console.log(
+            "NewAllCountriesSelectedOnlineUsers after change ",
+            AllCountriesOnlineUsersNew
+          );
+          setNewUsers(AllCountriesOnlineUsersNew);
         }
       }
     }
@@ -127,9 +138,9 @@ export default function UsersOnline() {
   };
   return (
     <>
-      {searchState == "active" && AllCountriesSelectedOnlineUsers.length != 0 && (
+      {searchState == "active" && newUsers.length != 0 && (
         <InfiniteScroll
-          dataLength={AllCountriesSelectedOnlineUsers.length}
+          dataLength={newUsers.length}
           height={300}
           next={handleScroll}
           hasMore={!endOfResult}
@@ -141,7 +152,7 @@ export default function UsersOnline() {
           }
         >
           <div className={classes.displayF}>
-            {AllCountriesSelectedOnlineUsers.map((option, index) => (
+            {newUsers.map((option, index) => (
               <UserCard
                 key={option.i}
                 user={option}

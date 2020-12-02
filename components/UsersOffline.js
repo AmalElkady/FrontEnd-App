@@ -133,10 +133,6 @@ export default function UsersOffline() {
             AllCountriesOfflineUsers,
             photoReadSignedRequest.signedRequest
           );
-          console.log(
-            "AllCountriesOfflineUsers after change ",
-            AllCountriesOfflineUsersNew
-          );
           setNewUsers(AllCountriesOfflineUsersNew);
         }
       }
