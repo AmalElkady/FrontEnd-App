@@ -41,15 +41,16 @@ const initialHomeState = {
   allCountriesOnline: [],
   allCountriesOnlineCount: [],
 
-  countryCitiesOnline: [],
-  countryCitiesOnlineCount: [],
-
-  countryAgerangesOnline: [],
-
   agerangeCountriesOnline: [],
   agerangeCountriesOnlineCount: [],
 
+  countryCitiesOnline: [],
+  countryCitiesOnlineCount: [],
+
   countryCitiesAgerangeOnline: [],
+  countryCitiesAgerangeOnlineCount: [],
+
+  countryAgerangesOnline: [],
   countryCityAgerangesOnline: [],
 
   endOfResultOnCo: false, // for country list
@@ -228,11 +229,30 @@ const home = (state = initialHomeState, action) => {
         ]
       };
     }
-    case COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS:
+    case COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnlineCi = offset;
+        state.scoreLOnlineCi = SL;
+      } else {
+        state.OffsetOnlineCi = "0";
+        state.scoreLOnlineCi = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultOnCi = true;
+      }
       return {
         ...state,
-        countryCitiesAgerangeOnline: action.payload
+        countryCitiesAgerangeOnline: [
+          ...state.countryCitiesAgerangeOnline,
+          ...action.payload.usersArr
+        ],
+        countryCitiesAgerangeOnlineCount: [
+          ...state.countryCitiesAgerangeOnlineCount,
+          ...action.payload.scoreArr
+        ]
       };
+    }
     case COUNTRY_CITY_AGERANGES_ONLINE_SUCCESS:
       return {
         ...state,

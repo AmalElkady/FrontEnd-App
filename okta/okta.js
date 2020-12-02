@@ -922,7 +922,7 @@ home.getAgerangeCountriesOnline = function (agerange, SH, offset) {
 							  }).catch((err) => {console.log(err)});			
 							
 						}							
-home.getCountryCitiesAgerangeOnline = function (country,agerange) {
+home.getCountryCitiesAgerangeOnline = function (country,agerange, SH, offset) {
 
 							// "allcountriesflag": false,
 							// "searchlistid" : "${co}_${ageRange}_country_cities_agerange_online",
@@ -932,7 +932,7 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 							// "key":"",
 							// "scoreH":"",
 							// "offset":""
-							console.log("ageRange and country from okta ",agerange,country);
+							console.log("ageRange and country from okta ",agerange,country,SH, offset);
 												  return new Promise(  async (resolve, reject) => {				
 																		try {
 																			
@@ -948,7 +948,8 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 																							  data: {
 																								allcountriesflag: false,
 																								 searchlistid : `${country}_${agerange}_country_cities_agerange_online`,
-							
+																								 scoreH:SH,
+																								 offset
 																							  }
 																							};
 								
@@ -958,7 +959,11 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange) {
 																			console.log("respo data of cities from okta agerange and country : ",response);
 																			
 																			   if(response){
-																								resolve(response);					 
+																								//resolve(response);
+																								const mapedList =convertListToTwoArrays(response.list_of_results);
+																								console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
+																																		   
+																							   resolve(mapedList);						 
 																			   } else {
 																				   
 																				   resolve({"message": "no response !"})

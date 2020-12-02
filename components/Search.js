@@ -195,6 +195,9 @@ export default function Search() {
   const CountryCitiesAgerangeOptionsOnline = useSelector(
     state => state.home.countryCitiesAgerangeOnline
   );
+  const CountryCitiesAgerangeOptionsOnlineCount = useSelector(
+    state => state.home.countryCitiesAgerangeOnlineCount
+  );
 
   ////////// Offline
   // Countries
@@ -256,8 +259,10 @@ export default function Search() {
 
   //for Countries
   const handleMenuItemClickC = (event, index) => {
+    console.log("index c ", index);
     setSelectedIndexC(index);
     setAnchorElC(null);
+    console.log("selectedIndexC c ", selectedIndexC);
   };
 
   //for Cities
@@ -305,6 +310,7 @@ export default function Search() {
   }, [optionValue]);
 
   useEffect(() => {
+    console.log("selectedIndexC ", selectedIndexC);
     if (optionValue == "active") {
       if (selectedIndexC != -1 && selectedIndex == -1) {
         // Get Cities based on Country only first time
@@ -332,14 +338,18 @@ export default function Search() {
           dispatch(
             countryCitiesAgerangeOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              "",
+              0
             )
           );
         } else {
           dispatch(
             countryCitiesAgerangeOnline(
               AgerangeCountriesOptionsOnline[selectedIndexC],
-              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+              "",
+              0
             )
           );
         }
@@ -376,7 +386,9 @@ export default function Search() {
           dispatch(
             countryCitiesAgerangeOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex]
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              "",
+              0
             )
           );
         } else {
@@ -393,7 +405,9 @@ export default function Search() {
           dispatch(
             countryCitiesAgerangeOnline(
               AgerangeCountriesOptionsOnline[selectedIndexC],
-              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, "")
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+              "",
+              0
             )
           );
         }
@@ -492,6 +506,13 @@ export default function Search() {
     }
   };
   const handleScrollCitiesOnline = () => {
+    console.log(
+      "scoreLOnlineCi, OffsetOnlineCi before",
+      endOfResultOnCi,
+      scoreLOnlineCi,
+      OffsetOnlineCi
+    );
+
     if (!endOfResultOnCi) {
       console.log(
         "scoreLOnlineCi, OffsetOnlineCi",
@@ -499,14 +520,42 @@ export default function Search() {
         scoreLOnlineCi,
         OffsetOnlineCi
       );
-      // Get Cities online based on Country only (next options)
-      dispatch(
-        countryCitiesOnline(
-          CountriesOptionsOnline[selectedIndexC],
-          scoreLOnlineCi,
-          OffsetOnlineCi
-        )
-      );
+
+      if (CountryCitiesAgerangeOptionsOnline.length != 0) {
+        //get cities based on country and agerange
+        console.log("get cities based on country and agerange");
+        if (
+          CountryAgerangesOptionsOnline.list_of_results &&
+          AgerangeCountriesOptionsOnline.length == 0
+        ) {
+          dispatch(
+            countryCitiesAgerangeOnline(
+              CountriesOptionsOnline[selectedIndexC],
+              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              scoreLOnlineCi,
+              OffsetOnlineCi
+            )
+          );
+        } else {
+          dispatch(
+            countryCitiesAgerangeOnline(
+              AgerangeCountriesOptionsOnline[selectedIndexC],
+              ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
+              scoreLOnlineCi,
+              OffsetOnlineCi
+            )
+          );
+        }
+      } else {
+        // Get Cities online based on Country only (next options)
+        dispatch(
+          countryCitiesOnline(
+            CountriesOptionsOnline[selectedIndexC],
+            scoreLOnlineCi,
+            OffsetOnlineCi
+          )
+        );
+      }
     }
   };
 
@@ -648,9 +697,7 @@ export default function Search() {
           dispatch(
             countryCityAgerangeSelectedOnline(
               AgerangeCountriesOptionsOnline[selectedIndexC],
-              CountryCitiesAgerangeOptionsOnline.list_of_results[
-                selectedIndexCit
-              ],
+              CountryCitiesAgerangeOptionsOnline[selectedIndexCit],
               ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
               "",
               0
@@ -1047,16 +1094,10 @@ export default function Search() {
                     secondary={
                       AgerangeCountriesOptionsOnline.length == 0
                         ? selectedIndexC == -1
-                          ? // ? CountriesOptionsOnline.list_of_results[
-                            //     selectedIndexC + 1
-                            //   ]
-                            "Select Country"
+                          ? "Select Country onl"
                           : CountriesOptionsOnline[selectedIndexC]
                         : selectedIndexC == -1
-                        ? // ? AgerangeCountriesOptionsOnline.list_of_results[
-                          //     selectedIndexC + 1
-                          //   ]
-                          "Select Country"
+                        ? "Select Country age"
                         : AgerangeCountriesOptionsOnline[selectedIndexC]
                     }
                   />
@@ -1288,49 +1329,32 @@ export default function Search() {
                               ][
                                 CountryCitiesOptionsOnline[selectedIndexCit] - 1
                               ]
-                          : CountryCitiesAgerangeOptionsOnline.list_of_results
-                          ? setSelectedIndexC(-1)
                           : ""
-                        : CountryCitiesAgerangeOptionsOnline.list_of_results
-                        ? CountriesOptionsOnline
+                        : //else index!=0
+                        CountryCitiesAgerangeOptionsOnline.length != 0
+                        ? CountriesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
-                            ? // ? COUNTRY_CITY_MAP[
-                              //     CountriesOptionsOnline.list_of_results[
-                              //       selectedIndexC
-                              //     ].toLowerCase()
-                              //   ][
-                              //     CountryCitiesAgerangeOptionsOnline
-                              //       .list_of_results[selectedIndexCit + 1] - 1
-                              //   ]
-                              "Select City"
+                            ? "Select City"
                             : COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
-                                CountryCitiesAgerangeOptionsOnline
-                                  .list_of_results[selectedIndexCit] - 1
+                                CountryCitiesOptionsOnline[selectedIndexCit] - 1
                               ]
                           : AgerangeCountriesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
                             ? "Select City"
-                            : // ? COUNTRY_CITY_MAP[
-                              //     AgerangeCountriesOptionsOnline.list_of_results[
-                              //       selectedIndexC
-                              //     ].toLowerCase()
-                              //   ][
-                              //     CountryCitiesAgerangeOptionsOnline
-                              //       .list_of_results[selectedIndexCit + 1] - 1
-                              //   ]
-                              COUNTRY_CITY_MAP[
+                            : COUNTRY_CITY_MAP[
                                 AgerangeCountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
-                                CountryCitiesAgerangeOptionsOnline
-                                  .list_of_results[selectedIndexCit] - 1
+                                CountryCitiesAgerangeOptionsOnline[
+                                  selectedIndexCit
+                                ] - 1
                               ]
-                          : "Select City"
+                          : ""
                         : ""
                     }
                   />
@@ -1351,12 +1375,11 @@ export default function Search() {
               >
                 <InfiniteScroll
                   dataLength={
-                    // AgerangeCountriesOptionsOnline.length != 0
-                    //   ? AgerangeCountriesOptionsOnline.length
-                    //   : CountriesOptionsOnline.length != 0
-                    //   ? CountriesOptionsOnline.length
-                    //   : ""
-                    CountryCitiesOptionsOnline.length
+                    CountryCitiesAgerangeOptionsOnline.length != 0
+                      ? CountryCitiesAgerangeOptionsOnline.length
+                      : CountryCitiesOptionsOnline.length != 0
+                      ? CountryCitiesOptionsOnline.length
+                      : ""
                   }
                   next={handleScrollCitiesOnline}
                   height={100}
@@ -1434,40 +1457,36 @@ export default function Search() {
                           No Select
                         </Typography>
                       </MenuItem>
-                      {CountryCitiesAgerangeOptionsOnline.list_of_results?.map(
-                        (option, index) =>
-                          index % 2 === 0 && (
-                            <MenuItem
-                              key={option}
-                              value={option}
-                              //label={value}
-                              selected={index === selectedIndexCit}
-                              onClick={event =>
-                                handleMenuItemClickCit(event, index)
+                      {CountryCitiesAgerangeOptionsOnline?.map(
+                        (option, index) => (
+                          <MenuItem
+                            key={option}
+                            value={option}
+                            //label={value}
+                            selected={index === selectedIndexCit}
+                            onClick={event =>
+                              handleMenuItemClickCit(event, index)
+                            }
+                            className={classes.displayFlexSB}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {
+                                COUNTRY_CITY_MAP[
+                                  CountriesOptionsOnline[
+                                    selectedIndexC
+                                  ].toLowerCase()
+                                ][option - 1]
                               }
-                              className={classes.displayFlexSB}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
                             >
-                              <Typography variant="button" gutterBottom>
-                                {
-                                  COUNTRY_CITY_MAP[
-                                    CountriesOptionsOnline[
-                                      selectedIndexC
-                                    ].toLowerCase()
-                                  ][option - 1]
-                                }
-                              </Typography>
-                              <Typography
-                                variant="button"
-                                color="primary"
-                                gutterBottom
-                              >
-                                {
-                                  CountryCitiesAgerangeOptionsOnline
-                                    .list_of_results[index + 1]
-                                }
-                              </Typography>
-                            </MenuItem>
-                          )
+                              {CountryCitiesAgerangeOptionsOnlineCount[index]}
+                            </Typography>
+                          </MenuItem>
+                        )
                       )}
                     </div>
                   )}

@@ -512,12 +512,8 @@ export default function Cards() {
       } else {
         dispatch(
           countryCityAgerangeSelectedOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[
-              countrySelectedIndex
-            ],
-            CountryCitiesAgerangeOptionsOnline.list_of_results[
-              citySelectedIndex
-            ],
+            AgerangeCountriesOptionsOnline[countrySelectedIndex],
+            CountryCitiesAgerangeOptionsOnline[citySelectedIndex],
             ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
             scoreLOnline,
             OffsetOnline

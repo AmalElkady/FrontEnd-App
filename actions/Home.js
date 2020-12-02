@@ -128,10 +128,10 @@ export const fetchCountryCitiesOnlineSuccess = data => {
     payload: data
   };
 };
-export const countryCitiesAgerangeOnline = (country, agerange) => {
+export const countryCitiesAgerangeOnline = (country, agerange, SL, offset) => {
   return {
     type: COUNTRY_CITIES_AGERANGE_ONLINE,
-    payload: { country, agerange }
+    payload: { country, agerange, SL, offset }
   };
 };
 
