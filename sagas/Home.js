@@ -74,9 +74,9 @@ const getAgerangeCountriesOnline = async (agerange, SL, offset) =>
     .catch(error => error);
 
 // Cities
-const getCountryCitiesOnline = async country =>
+const getCountryCitiesOnline = async (country, SL, offset) =>
   await home
-    .getCountryCitiesOnline(country)
+    .getCountryCitiesOnline(country, SL, offset)
     .then(returnCities => returnCities)
     .catch(error => error);
 
@@ -248,10 +248,13 @@ function* AgerangeCountriesOnlineRequest({ payload }) {
 
 // Cities
 function* countryCitiesOnlineRequest({ payload }) {
+  const { country, SL, offset } = payload;
   try {
     const fetchedCountryCitiesOnline = yield call(
       getCountryCitiesOnline,
-      payload
+      country,
+      SL,
+      offset
     );
 
     yield put(fetchCountryCitiesOnlineSuccess(fetchedCountryCitiesOnline));

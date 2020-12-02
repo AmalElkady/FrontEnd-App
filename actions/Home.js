@@ -114,10 +114,11 @@ export const agerangeCountriesOnlineSuccess = data => {
 };
 
 /// Cities
-export const countryCitiesOnline = country => {
+export const countryCitiesOnline = (country, SL, offset) => {
+  console.log("SL, offset from action ", SL, offset);
   return {
     type: COUNTRY_CITIES_ONLINE,
-    payload: country
+    payload: { country, SL, offset }
   };
 };
 

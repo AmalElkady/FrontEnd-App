@@ -759,7 +759,7 @@ console.log("SL, offset from okta ",SH, offset);
 		
 	}
 
-home.getCountryCitiesOnline = function (country) {
+home.getCountryCitiesOnline = function ( country, SH, offset ) {
 
 	// "allcountriesflag": false,
     // "searchlistid" : "EG_country_cities_online",
@@ -769,7 +769,7 @@ home.getCountryCitiesOnline = function (country) {
     // "key":"",
     // "scoreH":"",
 	// "offset":""
-	console.log("country selected from okta ",country);
+	console.log("country selected from okta ", country, SH, offset );
 						  return new Promise(  async (resolve, reject) => {				
 												try {
 													
@@ -785,7 +785,8 @@ home.getCountryCitiesOnline = function (country) {
 																	  data: {
 																		allcountriesflag: false,
 																		 searchlistid : `${country}_country_cities_online`,
-	
+																		 scoreH:SH,
+																		 offset
 																	  }
 																	};
 		
@@ -795,7 +796,11 @@ home.getCountryCitiesOnline = function (country) {
 													console.log("respo data of cities from okta : ",response);
 													
 													   if(response){
-																		resolve(response);					 
+																		//resolve(response);			
+																		const mapedList =convertListToTwoArrays(response.list_of_results);
+																		console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
+																												   
+																	   resolve(mapedList);			 
 													   } else {
 														   
 														   resolve({"message": "no response !"})

@@ -188,6 +188,9 @@ export default function Search() {
   const CountryCitiesOptionsOnline = useSelector(
     state => state.home.countryCitiesOnline
   );
+  const CountryCitiesOptionsOnlineCount = useSelector(
+    state => state.home.countryCitiesOnlineCount
+  );
 
   const CountryCitiesAgerangeOptionsOnline = useSelector(
     state => state.home.countryCitiesAgerangeOnline
@@ -213,6 +216,12 @@ export default function Search() {
   const OffsetOfflineCo = useSelector(state => state.home.OffsetOfflineCo);
   const scoreLOfflineCo = useSelector(state => state.home.scoreLOfflineCo);
   const endOfResultCo = useSelector(state => state.home.endOfResultCo);
+
+  // for city list
+  const OffsetOnlineCi = useSelector(state => state.home.OffsetOnlineCi);
+  const scoreLOnlineCi = useSelector(state => state.home.scoreLOnlineCi);
+  const endOfResultOnCi = useSelector(state => state.home.endOfResultOnCi);
+
   // Cities
   const CountryCitiesOptionsOffline = useSelector(
     state => state.home.countryCitiesOffline
@@ -298,8 +307,10 @@ export default function Search() {
   useEffect(() => {
     if (optionValue == "active") {
       if (selectedIndexC != -1 && selectedIndex == -1) {
-        // Get Cities based on Country only
-        dispatch(countryCitiesOnline(CountriesOptionsOnline[selectedIndexC]));
+        // Get Cities based on Country only first time
+        dispatch(
+          countryCitiesOnline(CountriesOptionsOnline[selectedIndexC], "", 0)
+        );
 
         // Get Ageranges based on Country only
         if (CountriesOptionsOnline.length != 0) {
@@ -401,7 +412,7 @@ export default function Search() {
         dispatch(
           countryCityAgerangesOnline(
             CountriesOptionsOnline[selectedIndexC],
-            CountryCitiesOptionsOnline.list_of_results[selectedIndexCit]
+            CountryCitiesOptionsOnline[selectedIndexCit]
           )
         );
       }
@@ -480,6 +491,25 @@ export default function Search() {
       }
     }
   };
+  const handleScrollCitiesOnline = () => {
+    if (!endOfResultOnCi) {
+      console.log(
+        "scoreLOnlineCi, OffsetOnlineCi",
+        endOfResultOnCi,
+        scoreLOnlineCi,
+        OffsetOnlineCi
+      );
+      // Get Cities online based on Country only (next options)
+      dispatch(
+        countryCitiesOnline(
+          CountriesOptionsOnline[selectedIndexC],
+          scoreLOnlineCi,
+          OffsetOnlineCi
+        )
+      );
+    }
+  };
+
   // offline
   const handleScrollCountriesOffline = () => {
     if (!endOfResultCo) {
@@ -553,7 +583,7 @@ export default function Search() {
         dispatch(
           countryCitySelectedOnline(
             CountriesOptionsOnline[selectedIndexC],
-            CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
+            CountryCitiesOptionsOnline[selectedIndexCit],
             "",
             0
           )
@@ -608,7 +638,7 @@ export default function Search() {
           dispatch(
             countryCityAgerangeSelectedOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryCitiesOptionsOnline.list_of_results[selectedIndexCit],
+              CountryCitiesOptionsOnline[selectedIndexCit],
               CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
               "",
               0
@@ -1248,7 +1278,7 @@ export default function Search() {
                     primary="Cities"
                     secondary={
                       selectedIndex == -1
-                        ? CountryCitiesOptionsOnline.list_of_results
+                        ? CountryCitiesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
                             ? "select City"
                             : COUNTRY_CITY_MAP[
@@ -1256,9 +1286,7 @@ export default function Search() {
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
-                                CountryCitiesOptionsOnline.list_of_results[
-                                  selectedIndexCit
-                                ] - 1
+                                CountryCitiesOptionsOnline[selectedIndexCit] - 1
                               ]
                           : CountryCitiesAgerangeOptionsOnline.list_of_results
                           ? setSelectedIndexC(-1)
@@ -1321,121 +1349,129 @@ export default function Search() {
                   }
                 }}
               >
-                {selectedIndexC != -1 && selectedIndex == -1 && (
-                  <div>
-                    <Typography
-                      variant="h6"
-                      className={classes.padding}
-                      gutterBottom
-                    >
-                      ONLINE
-                    </Typography>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedIndexCit(-1);
-                        setAnchorElCit(null);
-                      }}
-                      className={classes.displayFlexSB}
-                    >
-                      <Typography variant="button" gutterBottom>
-                        No Select
+                <InfiniteScroll
+                  dataLength={
+                    // AgerangeCountriesOptionsOnline.length != 0
+                    //   ? AgerangeCountriesOptionsOnline.length
+                    //   : CountriesOptionsOnline.length != 0
+                    //   ? CountriesOptionsOnline.length
+                    //   : ""
+                    CountryCitiesOptionsOnline.length
+                  }
+                  next={handleScrollCitiesOnline}
+                  height={100}
+                  hasMore={!endOfResultOnCi}
+                  loader={<CircularProgress />}
+                >
+                  {selectedIndexC != -1 && selectedIndex == -1 && (
+                    <div>
+                      <Typography
+                        variant="h6"
+                        className={classes.padding}
+                        gutterBottom
+                      >
+                        ONLINE
                       </Typography>
-                    </MenuItem>
-                    {CountryCitiesOptionsOnline.list_of_results?.map(
-                      (option, index) =>
-                        index % 2 === 0 && (
-                          <MenuItem
-                            key={option}
-                            value={option}
-                            //label={value}
-                            selected={index === selectedIndexCit}
-                            onClick={event =>
-                              handleMenuItemClickCit(event, index)
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedIndexCit(-1);
+                          setAnchorElCit(null);
+                        }}
+                        className={classes.displayFlexSB}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          No Select
+                        </Typography>
+                      </MenuItem>
+                      {CountryCitiesOptionsOnline?.map((option, index) => (
+                        <MenuItem
+                          key={option}
+                          value={option}
+                          //label={value}
+                          selected={index === selectedIndexCit}
+                          onClick={event =>
+                            handleMenuItemClickCit(event, index)
+                          }
+                          className={classes.displayFlexSB}
+                        >
+                          <Typography variant="button" gutterBottom>
+                            {
+                              COUNTRY_CITY_MAP[
+                                CountriesOptionsOnline[
+                                  selectedIndexC
+                                ].toLowerCase()
+                              ][option - 1]
                             }
-                            className={classes.displayFlexSB}
+                          </Typography>
+                          <Typography
+                            variant="button"
+                            color="primary"
+                            gutterBottom
                           >
-                            <Typography variant="button" gutterBottom>
-                              {
-                                COUNTRY_CITY_MAP[
-                                  CountriesOptionsOnline[
-                                    selectedIndexC
-                                  ].toLowerCase()
-                                ][option - 1]
-                              }
-                            </Typography>
-                            <Typography
-                              variant="button"
-                              color="primary"
-                              gutterBottom
-                            >
-                              {
-                                CountryCitiesOptionsOnline.list_of_results[
-                                  index + 1
-                                ]
-                              }
-                            </Typography>
-                          </MenuItem>
-                        )
-                    )}
-                  </div>
-                )}
-                {selectedIndexC != -1 && selectedIndex != -1 && (
-                  <div>
-                    <Typography
-                      variant="h6"
-                      className={classes.padding}
-                      gutterBottom
-                    >
-                      ONLINE
-                    </Typography>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedIndexCit(-1);
-                        setAnchorElCit(null);
-                      }}
-                      className={classes.displayFlexSB}
-                    >
-                      <Typography variant="button" gutterBottom>
-                        No Select
+                            {CountryCitiesOptionsOnlineCount[index]}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </div>
+                  )}
+                  {selectedIndexC != -1 && selectedIndex != -1 && (
+                    <div>
+                      <Typography
+                        variant="h6"
+                        className={classes.padding}
+                        gutterBottom
+                      >
+                        ONLINE
                       </Typography>
-                    </MenuItem>
-                    {CountryCitiesAgerangeOptionsOnline.list_of_results?.map(
-                      (option, index) =>
-                        index % 2 === 0 && (
-                          <MenuItem
-                            key={option}
-                            value={option}
-                            //label={value}
-                            selected={index === selectedIndexCit}
-                            onClick={event =>
-                              handleMenuItemClickCit(event, index)
-                            }
-                            className={classes.displayFlexSB}
-                          >
-                            <Typography variant="button" gutterBottom>
-                              {
-                                COUNTRY_CITY_MAP[
-                                  CountriesOptionsOnline[
-                                    selectedIndexC
-                                  ].toLowerCase()
-                                ][option - 1]
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedIndexCit(-1);
+                          setAnchorElCit(null);
+                        }}
+                        className={classes.displayFlexSB}
+                      >
+                        <Typography variant="button" gutterBottom>
+                          No Select
+                        </Typography>
+                      </MenuItem>
+                      {CountryCitiesAgerangeOptionsOnline.list_of_results?.map(
+                        (option, index) =>
+                          index % 2 === 0 && (
+                            <MenuItem
+                              key={option}
+                              value={option}
+                              //label={value}
+                              selected={index === selectedIndexCit}
+                              onClick={event =>
+                                handleMenuItemClickCit(event, index)
                               }
-                            </Typography>
-                            <Typography
-                              variant="button"
-                              color="primary"
-                              gutterBottom
+                              className={classes.displayFlexSB}
                             >
-                              {
-                                CountryCitiesAgerangeOptionsOnline
-                                  .list_of_results[index + 1]
-                              }
-                            </Typography>
-                          </MenuItem>
-                        )
-                    )}
-                  </div>
-                )}
+                              <Typography variant="button" gutterBottom>
+                                {
+                                  COUNTRY_CITY_MAP[
+                                    CountriesOptionsOnline[
+                                      selectedIndexC
+                                    ].toLowerCase()
+                                  ][option - 1]
+                                }
+                              </Typography>
+                              <Typography
+                                variant="button"
+                                color="primary"
+                                gutterBottom
+                              >
+                                {
+                                  CountryCitiesAgerangeOptionsOnline
+                                    .list_of_results[index + 1]
+                                }
+                              </Typography>
+                            </MenuItem>
+                          )
+                      )}
+                    </div>
+                  )}
+                </InfiniteScroll>
               </Menu>
             </div>
           )}
