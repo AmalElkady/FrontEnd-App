@@ -19,7 +19,9 @@ import {
   resetEndRes,
   resetEndResUsers,
   resetStatesOffline,
-  resetStatesListOnline,
+  resetStatesListCountryOnline,
+  resetStatesListCityOnline,
+  resetStatesListAgerangeOnline,
   selectedAgerangeIndex,
   selectedCountryIndex,
   selectedCityIndex,
@@ -307,7 +309,7 @@ export default function Search() {
         : "";
     } else {
       // Get all Countries Online first time
-      dispatch(resetStatesListOnline());
+      dispatch(resetStatesListCountryOnline());
       CountriesOptionsOnline.length == 0
         ? dispatch(allCountriesOnline("", 0))
         : "";
@@ -324,6 +326,7 @@ export default function Search() {
         );
 
         // Get Ageranges based on Country only
+        dispatch(resetStatesListAgerangeOnline());
         if (CountriesOptionsOnline.length != 0) {
           dispatch(
             countryAgerangesOnline(
@@ -377,7 +380,7 @@ export default function Search() {
     if (optionValue == "active") {
       if (selectedIndexC == -1 && selectedIndex != -1) {
         // Get countries based on agerange
-        dispatch(resetStatesListOnline());
+        dispatch(resetStatesListCountryOnline());
         dispatch(
           agerangeCountriesOnline(
             ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
@@ -402,7 +405,7 @@ export default function Search() {
           );
         } else {
           //Get countries based on agerange
-          dispatch(resetStatesListOnline());
+          dispatch(resetStatesListCountryOnline());
           dispatch(
             agerangeCountriesOnline(
               ARRAY_OF_AGE_RANGE[selectedIndex].replace(/\s/g, ""),
@@ -432,6 +435,7 @@ export default function Search() {
         selectedIndexCit != -1 &&
         selectedIndex == -1
       ) {
+        dispatch(resetStatesListAgerangeOnline());
         dispatch(
           countryCityAgerangesOnline(
             CountriesOptionsOnline[selectedIndexC],

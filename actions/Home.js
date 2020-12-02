@@ -52,7 +52,9 @@ import {
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX,
   SET_AGE_SCORES,
-  RESET_STATES_LIST_ONLINE
+  RESET_STATES_LIST_COUNTRY_ONLINE,
+  RESET_STATES_LIST_AGERANGE_ONLINE,
+  RESET_STATES_LIST_CITY_ONLINE
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -428,9 +430,21 @@ export const resetStatesOffline = () => {
   };
 };
 
-export const resetStatesListOnline = () => {
+export const resetStatesListCountryOnline = () => {
   return {
-    type: RESET_STATES_LIST_ONLINE
+    type: RESET_STATES_LIST_COUNTRY_ONLINE
+  };
+};
+
+export const resetStatesListCityOnline = () => {
+  return {
+    type: RESET_STATES_LIST_CITY_ONLINE
+  };
+};
+
+export const resetStatesListAgerangeOnline = () => {
+  return {
+    type: RESET_STATES_LIST_AGERANGE_ONLINE
   };
 };
 

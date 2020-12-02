@@ -32,7 +32,9 @@ import {
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX,
   SET_AGE_SCORES,
-  RESET_STATES_LIST_ONLINE
+  RESET_STATES_LIST_COUNTRY_ONLINE,
+  RESET_STATES_LIST_AGERANGE_ONLINE,
+  RESET_STATES_LIST_CITY_ONLINE
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 
@@ -205,7 +207,7 @@ const home = (state = initialHomeState, action) => {
         ]
       };
     }
-    case COUNTRY_AGERANGES_ONLONE_SUCCESS:{
+    case COUNTRY_AGERANGES_ONLONE_SUCCESS: {
       if (action.payload.scoreArr.length >= state.limitCount) {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
         state.OffsetOnlineAge = offset;
@@ -219,7 +221,7 @@ const home = (state = initialHomeState, action) => {
       }
       return {
         ...state,
-        countryAgerangesOnline:  [
+        countryAgerangesOnline: [
           ...state.countryAgerangesOnline,
           ...action.payload.usersArr
         ],
@@ -227,7 +229,8 @@ const home = (state = initialHomeState, action) => {
           ...state.countryAgerangesOnlineCount,
           ...action.payload.scoreArr
         ]
-      };}
+      };
+    }
     case AGERANGE_COUNTRIES_ONLINE_SUCCESS: {
       if (action.payload.scoreArr.length >= state.limitCount) {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
@@ -715,16 +718,30 @@ const home = (state = initialHomeState, action) => {
         ...state,
         endOfResultOf: false
       };
-    case RESET_STATES_LIST_ONLINE:
-      console.log("rest states list online");
+    case RESET_STATES_LIST_COUNTRY_ONLINE:
+      console.log("rest states list country online");
       return {
         ...state,
         endOfResultOnCo: false, // for country list
         scoreLOnlineCo: "",
         OffsetonlineCo: 0
-        // endOfResultOnCi: false, // for city list
-        // scoreLOnlineCi: "",
-        // OffsetOnlineCi: 0
+      };
+    case RESET_STATES_LIST_AGERANGE_ONLINE:
+      console.log("rest states list agerange online");
+      return {
+        ...state,
+        endOfResultOnAge: false, // for age list
+        scoreLOnlineAge: "",
+        OffsetOnlineAge: 0
+      };
+
+    case RESET_STATES_LIST_CITY_ONLINE:
+      console.log("rest states list city online");
+      return {
+        ...state,
+        endOfResultOnCi: false, // for city list
+        scoreLOnlineCi: "",
+        OffsetOnlineCi: 0
       };
     case SHOW_MESSAGE: {
       return {
