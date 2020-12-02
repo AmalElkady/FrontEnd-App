@@ -167,6 +167,10 @@ export default function Search() {
     state => state.home.countryCityAgerangesOnline
   );
 
+  const CountryCityAgerangesOptionsOnlineCount = useSelector(
+    state => state.home.countryCityAgerangesOnlineCount
+  );
+
   // Countries
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
@@ -439,7 +443,9 @@ export default function Search() {
         dispatch(
           countryCityAgerangesOnline(
             CountriesOptionsOnline[selectedIndexC],
-            CountryCitiesOptionsOnline[selectedIndexCit]
+            CountryCitiesOptionsOnline[selectedIndexCit],
+            "",
+            0
           )
         );
       }
@@ -594,6 +600,14 @@ export default function Search() {
         }
       } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
         console.log("get agerange next option based on country and city");
+        dispatch(
+          countryCityAgerangesOnline(
+            CountriesOptionsOnline[selectedIndexC],
+            CountryCitiesOptionsOnline[selectedIndexCit],
+            scoreLOnlineAge,
+            OffsetOnlineAge
+          )
+        );
       }
     }
   };
@@ -868,12 +882,10 @@ export default function Search() {
                             ? "Select Age Range"
                             : CountryAgerangesOptionsOnline[selectedIndex]
                           : ARRAY_OF_AGE_RANGE[selectedIndex]
-                        : CountryCityAgerangesOptionsOnline.list_of_results
+                        : CountryCityAgerangesOptionsOnline.length !== 0
                         ? selectedIndex == -1
                           ? "Select Age Range"
-                          : CountryCityAgerangesOptionsOnline.list_of_results[
-                              selectedIndex
-                            ]
+                          : CountryCityAgerangesOptionsOnline[selectedIndex]
                         : ARRAY_OF_AGE_RANGE[selectedIndex]
                     }
                   />
@@ -994,8 +1006,17 @@ export default function Search() {
                 )}
 
                 {selectedIndexC != -1 && selectedIndexCit != -1 && (
-                  <div>
-                    {" "}
+                  <InfiniteScroll
+                    dataLength={
+                      CountryCityAgerangesOptionsOnline.length != 0
+                        ? CountryCityAgerangesOptionsOnline.length
+                        : 0
+                    }
+                    next={handleScrollAgerangeOnline}
+                    height={100}
+                    hasMore={!endOfResultOnAge}
+                    loader={<CircularProgress />}
+                  >
                     <Typography
                       variant="h6"
                       className={classes.padding}
@@ -1014,33 +1035,29 @@ export default function Search() {
                         No Select
                       </Typography>
                     </MenuItem>
-                    {CountryCityAgerangesOptionsOnline.list_of_results
-                      ? CountryCityAgerangesOptionsOnline.list_of_results?.map(
-                          (option, index) =>
-                            index % 2 == 0 && (
-                              <MenuItem
-                                className={`${classes.displayFlexSB} ${classes.width}`}
-                                key={option}
-                                selected={index === selectedIndex}
-                                onClick={event =>
-                                  handleMenuItemClick(event, index)
-                                }
+                    {CountryCityAgerangesOptionsOnline.length != 0
+                      ? CountryCityAgerangesOptionsOnline?.map(
+                          (option, index) => (
+                            <MenuItem
+                              className={`${classes.displayFlexSB} ${classes.width}`}
+                              key={option}
+                              selected={index === selectedIndex}
+                              onClick={event =>
+                                handleMenuItemClick(event, index)
+                              }
+                            >
+                              <Typography variant="button" gutterBottom>
+                                {option}
+                              </Typography>
+                              <Typography
+                                variant="button"
+                                color="primary"
+                                gutterBottom
                               >
-                                <Typography variant="button" gutterBottom>
-                                  {option}
-                                </Typography>
-                                <Typography
-                                  variant="button"
-                                  color="primary"
-                                  gutterBottom
-                                >
-                                  {
-                                    CountryCityAgerangesOptionsOnline
-                                      .list_of_results[index + 1]
-                                  }
-                                </Typography>
-                              </MenuItem>
-                            )
+                                {CountryCityAgerangesOptionsOnlineCount[index]}
+                              </Typography>
+                            </MenuItem>
+                          )
                         )
                       : ARRAY_OF_AGE_RANGE.map((option, index) => (
                           <MenuItem
@@ -1054,7 +1071,7 @@ export default function Search() {
                             </Typography>
                           </MenuItem>
                         ))}
-                  </div>
+                  </InfiniteScroll>
                 )}
               </Menu>
             </div>

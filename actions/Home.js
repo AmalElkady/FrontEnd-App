@@ -72,10 +72,10 @@ export const countryAgerangesOnlineSuccess = data => {
   };
 };
 
-export const countryCityAgerangesOnline = (country, city) => {
+export const countryCityAgerangesOnline = (country, city, SL, offset) => {
   return {
     type: COUNTRY_CITY_AGERANGES_ONLINE,
-    payload: { country, city }
+    payload: { country, city, SL, offset }
   };
 };
 
@@ -443,6 +443,7 @@ export const resetStatesListCityOnline = () => {
 };
 
 export const resetStatesListAgerangeOnline = () => {
+  console.log("rest age from action");
   return {
     type: RESET_STATES_LIST_AGERANGE_ONLINE
   };
