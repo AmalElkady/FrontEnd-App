@@ -261,6 +261,7 @@ export const SET_AGE_SCORES = "set_age_scores";
 export const RESET_STATES = "reset_states";
 export const RESET_STATES_ONLINE = "reset_states_online";
 export const RESET_STATES_OFFLINE = "reset_states_offline";
+export const RESET_STATES_LIST_ONLINE = "reset_states_list_online";
 export const RESET_END_RES = "reset_end_res"; //All Online
 export const RESET_END_RES_OF = "reset_end_res"; //All OFfline
 export const RESET_END_RES_USERS = "reset_end_res_users"; //end all Users Online

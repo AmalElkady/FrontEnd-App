@@ -31,7 +31,8 @@ import {
   SELECTED_AGERANGE_INDEX,
   SELECTED_COUNTRY_INDEX,
   SELECTED_CITY_INDEX,
-  SET_AGE_SCORES
+  SET_AGE_SCORES,
+  RESET_STATES_LIST_ONLINE
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 
@@ -42,7 +43,10 @@ const initialHomeState = {
 
   countryCitiesOnline: [],
   countryAgerangesOnline: [],
+
   agerangeCountriesOnline: [],
+  agerangeCountriesOnlineCount: [],
+
   countryCitiesAgerangeOnline: [],
   countryCityAgerangesOnline: [],
 
@@ -159,7 +163,6 @@ const home = (state = initialHomeState, action) => {
       }
       return {
         ...state,
-        allCountriesOnline: action.payload,
         allCountriesOnline: [
           ...state.allCountriesOnline,
           ...action.payload.usersArr
@@ -180,12 +183,30 @@ const home = (state = initialHomeState, action) => {
         ...state,
         countryAgerangesOnline: action.payload
       };
-    case AGERANGE_COUNTRIES_ONLINE_SUCCESS:
+    case AGERANGE_COUNTRIES_ONLINE_SUCCESS: {
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnlineCo = offset;
+        state.scoreLOnlineCo = SL;
+      } else {
+        state.OffsetOnlineCo = "0";
+        state.scoreLOnlineCo = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultOnCo = true;
+      }
       return {
         ...state,
-        agerangeCountriesOnline: action.payload
+        agerangeCountriesOnline: [
+          ...state.agerangeCountriesOnline,
+          ...action.payload.usersArr
+        ],
+        agerangeCountriesOnlineCount: [
+          ...state.agerangeCountriesOnlineCount,
+          ...action.payload.scoreArr
+        ]
       };
-
+    }
     case COUNTRY_CITIES_AGERANGE_ONLINE_SUCCESS:
       return {
         ...state,
@@ -517,7 +538,7 @@ const home = (state = initialHomeState, action) => {
         searchState: "most recent"
       };
     }
-    case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS:
+    case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
 
       if (action.payload.usersArr.length === 0) {
@@ -537,6 +558,7 @@ const home = (state = initialHomeState, action) => {
         scoreHOfflineUsersS: SL,
         searchState: "most recent"
       };
+    }
     case SELECTED_AGERANGE_INDEX:
       return {
         ...state,
@@ -628,6 +650,17 @@ const home = (state = initialHomeState, action) => {
       return {
         ...state,
         endOfResultOf: false
+      };
+    case RESET_STATES_LIST_ONLINE:
+      console.log("rest states list online");
+      return {
+        ...state,
+        endOfResultOnCo: false, // for country list
+        scoreLOnlineCo: "",
+        OffsetonlineCo: 0
+        // endOfResultOnCi: false, // for city list
+        // scoreLOnlineCi: "",
+        // OffsetOnlineCi: 0
       };
     case SHOW_MESSAGE: {
       return {
