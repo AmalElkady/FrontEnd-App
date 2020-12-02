@@ -56,10 +56,10 @@ import {
 } from "../constants/ActionTypes";
 
 // Age Range
-export const countryAgerangesOnline = country => {
+export const countryAgerangesOnline = (country, SL, offset) => {
   return {
     type: COUNTRY_AGERANGES_ONLONE,
-    payload: country
+    payload: { country, SL, offset }
   };
 };
 

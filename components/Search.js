@@ -157,6 +157,9 @@ export default function Search() {
   const CountryAgerangesOptionsOnline = useSelector(
     state => state.home.countryAgerangesOnline
   );
+  const CountryAgerangesOptionsOnlineCount = useSelector(
+    state => state.home.countryAgerangesOnlineCount
+  );
 
   const CountryCityAgerangesOptionsOnline = useSelector(
     state => state.home.countryCityAgerangesOnline
@@ -178,6 +181,15 @@ export default function Search() {
   const OffsetOnlineCo = useSelector(state => state.home.OffsetOnlineCo);
   const scoreLOnlineCo = useSelector(state => state.home.scoreLOnlineCo);
   const endOfResultOnCo = useSelector(state => state.home.endOfResultOnCo);
+  // for city list online
+  const OffsetOnlineCi = useSelector(state => state.home.OffsetOnlineCi);
+  const scoreLOnlineCi = useSelector(state => state.home.scoreLOnlineCi);
+  const endOfResultOnCi = useSelector(state => state.home.endOfResultOnCi);
+
+  //for agerange list online
+  const OffsetOnlineAge = useSelector(state => state.home.OffsetOnlineAge);
+  const scoreLOnlineAge = useSelector(state => state.home.scoreLOnlineAge);
+  const endOfResultOnAge = useSelector(state => state.home.endOfResultOnAge);
 
   //users
   const AllCountriesSelectedOnline = useSelector(
@@ -220,11 +232,6 @@ export default function Search() {
   const scoreLOfflineCo = useSelector(state => state.home.scoreLOfflineCo);
   const endOfResultCo = useSelector(state => state.home.endOfResultCo);
 
-  // for city list
-  const OffsetOnlineCi = useSelector(state => state.home.OffsetOnlineCi);
-  const scoreLOnlineCi = useSelector(state => state.home.scoreLOnlineCi);
-  const endOfResultOnCi = useSelector(state => state.home.endOfResultOnCi);
-
   // Cities
   const CountryCitiesOptionsOffline = useSelector(
     state => state.home.countryCitiesOffline
@@ -259,10 +266,8 @@ export default function Search() {
 
   //for Countries
   const handleMenuItemClickC = (event, index) => {
-    console.log("index c ", index);
     setSelectedIndexC(index);
     setAnchorElC(null);
-    console.log("selectedIndexC c ", selectedIndexC);
   };
 
   //for Cities
@@ -321,7 +326,11 @@ export default function Search() {
         // Get Ageranges based on Country only
         if (CountriesOptionsOnline.length != 0) {
           dispatch(
-            countryAgerangesOnline(CountriesOptionsOnline[selectedIndexC])
+            countryAgerangesOnline(
+              CountriesOptionsOnline[selectedIndexC],
+              "",
+              0
+            )
           );
         }
       }
@@ -332,13 +341,13 @@ export default function Search() {
         selectedIndexCit == -1
       ) {
         if (
-          CountryAgerangesOptionsOnline.list_of_results &&
+          CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
           dispatch(
             countryCitiesAgerangeOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              CountryAgerangesOptionsOnline[selectedIndex],
               "",
               0
             )
@@ -380,13 +389,13 @@ export default function Search() {
       // Get cities based on agerange and country
       else if (selectedIndexC != -1 && selectedIndex != -1) {
         if (
-          CountryAgerangesOptionsOnline.list_of_results &&
+          CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
           dispatch(
             countryCitiesAgerangeOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              CountryAgerangesOptionsOnline[selectedIndex],
               "",
               0
             )
@@ -490,7 +499,7 @@ export default function Search() {
       OffsetOnlineCo
     );
     if (!endOfResultOnCo) {
-      // Get countries Offline (next options)
+      // Get countries online (next options)
       if (AgerangeCountriesOptionsOnline.length != 0) {
         console.log("get next AgerangeCountriesOptionsOnline");
         dispatch(
@@ -525,13 +534,13 @@ export default function Search() {
         //get cities based on country and agerange
         console.log("get cities based on country and agerange");
         if (
-          CountryAgerangesOptionsOnline.list_of_results &&
+          CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
           dispatch(
             countryCitiesAgerangeOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              CountryAgerangesOptionsOnline[selectedIndex],
               scoreLOnlineCi,
               OffsetOnlineCi
             )
@@ -555,6 +564,32 @@ export default function Search() {
             OffsetOnlineCi
           )
         );
+      }
+    }
+  };
+
+  const handleScrollAgerangeOnline = () => {
+    console.log(
+      "scoreLOnlineCo, OffsetOnlineCo",
+      endOfResultOnAge,
+      scoreLOnlineAge,
+      OffsetOnlineAge
+    );
+    if (!endOfResultOnAge) {
+      // Get countries online (next options)
+      if (selectedIndexC != -1 && selectedIndexCit == -1) {
+        console.log("get agerange next option based on country only");
+        if (CountriesOptionsOnline.length != 0) {
+          dispatch(
+            countryAgerangesOnline(
+              CountriesOptionsOnline[selectedIndexC],
+              scoreLOnlineAge,
+              OffsetOnlineAge
+            )
+          );
+        }
+      } else if (selectedIndexC != -1 && selectedIndexCit != -1) {
+        console.log("get agerange next option based on country and city");
       }
     }
   };
@@ -649,13 +684,13 @@ export default function Search() {
         dispatch(selectedCountryIndex(selectedIndexC));
         dispatch(selectedAgerangeIndex(selectedIndex));
         if (
-          CountryAgerangesOptionsOnline.list_of_results &&
+          CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
           dispatch(
             countryCitiesAgerangeSelectedOnline(
               CountriesOptionsOnline[selectedIndexC],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              CountryAgerangesOptionsOnline[selectedIndex],
               "",
               0
             )
@@ -681,14 +716,14 @@ export default function Search() {
         dispatch(selectedAgerangeIndex(selectedIndex));
         dispatch(selectedCityIndex(selectedIndexCit));
         if (
-          CountryAgerangesOptionsOnline.list_of_results &&
+          CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
           dispatch(
             countryCityAgerangeSelectedOnline(
               CountriesOptionsOnline[selectedIndexC],
               CountryCitiesOptionsOnline[selectedIndexCit],
-              CountryAgerangesOptionsOnline.list_of_results[selectedIndex],
+              CountryAgerangesOptionsOnline[selectedIndex],
               "",
               0
             )
@@ -824,12 +859,10 @@ export default function Search() {
                           ? "Select Age Range"
                           : ARRAY_OF_AGE_RANGE[selectedIndex]
                         : selectedIndexCit == -1
-                        ? CountryAgerangesOptionsOnline.list_of_results
+                        ? CountryAgerangesOptionsOnline.length != 0
                           ? selectedIndex == -1
                             ? "Select Age Range"
-                            : CountryAgerangesOptionsOnline.list_of_results[
-                                selectedIndex
-                              ]
+                            : CountryAgerangesOptionsOnline[selectedIndex]
                           : ARRAY_OF_AGE_RANGE[selectedIndex]
                         : CountryCityAgerangesOptionsOnline.list_of_results
                         ? selectedIndex == -1
@@ -876,11 +909,18 @@ export default function Search() {
                     ))}
                   </div>
                 )}
+
                 {selectedIndexC != -1 && selectedIndexCit == -1 && (
                   <div>
                     {" "}
-                    {CountryAgerangesOptionsOnline.list_of_results ? (
-                      <div>
+                    {CountryAgerangesOptionsOnline.length != 0 ? (
+                      <InfiniteScroll
+                        dataLength={CountryAgerangesOptionsOnline.length}
+                        next={handleScrollAgerangeOnline}
+                        height={100}
+                        hasMore={!endOfResultOnAge}
+                        loader={<CircularProgress />}
+                      >
                         <Typography
                           variant="h6"
                           className={classes.padding}
@@ -899,34 +939,26 @@ export default function Search() {
                             No Select
                           </Typography>
                         </MenuItem>
-                        {CountryAgerangesOptionsOnline.list_of_results?.map(
-                          (option, index) =>
-                            index % 2 == 0 && (
-                              <MenuItem
-                                className={`${classes.displayFlexSB} ${classes.width}`}
-                                key={option}
-                                selected={index === selectedIndex}
-                                onClick={event =>
-                                  handleMenuItemClick(event, index)
-                                }
-                              >
-                                <Typography variant="button" gutterBottom>
-                                  {option}
-                                </Typography>
-                                <Typography
-                                  variant="button"
-                                  color="primary"
-                                  gutterBottom
-                                >
-                                  {
-                                    CountryAgerangesOptionsOnline
-                                      .list_of_results[index + 1]
-                                  }
-                                </Typography>
-                              </MenuItem>
-                            )
-                        )}
-                      </div>
+                        {CountryAgerangesOptionsOnline?.map((option, index) => (
+                          <MenuItem
+                            className={`${classes.displayFlexSB} ${classes.width}`}
+                            key={option}
+                            selected={index === selectedIndex}
+                            onClick={event => handleMenuItemClick(event, index)}
+                          >
+                            <Typography variant="button" gutterBottom>
+                              {option}
+                            </Typography>
+                            <Typography
+                              variant="button"
+                              color="primary"
+                              gutterBottom
+                            >
+                              {CountryAgerangesOptionsOnlineCount[index]}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                      </InfiniteScroll>
                     ) : (
                       <div>
                         <MenuItem

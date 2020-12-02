@@ -51,6 +51,8 @@ const initialHomeState = {
   countryCitiesAgerangeOnlineCount: [],
 
   countryAgerangesOnline: [],
+  countryAgerangesOnlineCount: [],
+
   countryCityAgerangesOnline: [],
 
   endOfResultOnCo: false, // for country list
@@ -59,6 +61,9 @@ const initialHomeState = {
   endOfResultOnCi: false, // for city list
   scoreLOnlineCi: "",
   OffsetOnlineCi: 0,
+  endOfResultOnAge: false, //for agerange list
+  scoreLOnlineAge: "",
+  OffsetOnlineAge: 0,
 
   // online selected
   allCountriesSelectedOnline: [],
@@ -200,11 +205,29 @@ const home = (state = initialHomeState, action) => {
         ]
       };
     }
-    case COUNTRY_AGERANGES_ONLONE_SUCCESS:
+    case COUNTRY_AGERANGES_ONLONE_SUCCESS:{
+      if (action.payload.scoreArr.length >= state.limitCount) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+        state.OffsetOnlineAge = offset;
+        state.scoreLOnlineAge = SL;
+      } else {
+        state.OffsetOnlineAge = "0";
+        state.scoreLOnlineAge = "0";
+      }
+      if (action.payload.usersArr.length == 0) {
+        state.endOfResultOnAge = true;
+      }
       return {
         ...state,
-        countryAgerangesOnline: action.payload
-      };
+        countryAgerangesOnline:  [
+          ...state.countryAgerangesOnline,
+          ...action.payload.usersArr
+        ],
+        countryAgerangesOnlineCount: [
+          ...state.countryAgerangesOnlineCount,
+          ...action.payload.scoreArr
+        ]
+      };}
     case AGERANGE_COUNTRIES_ONLINE_SUCCESS: {
       if (action.payload.scoreArr.length >= state.limitCount) {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);

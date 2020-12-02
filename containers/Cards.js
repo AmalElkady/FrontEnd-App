@@ -462,15 +462,13 @@ export default function Cards() {
     ) {
       // Get online users other options
       if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
+        CountryAgerangesOptionsOnline.length != 0 &&
+        AgerangeCountriesOptionsOnline.length == 0
       ) {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
             CountriesOptionsOnline[countrySelectedIndex],
-            CountryAgerangesOptionsOnline.list_of_results[
-              selectedAgerangeIndex
-            ],
+            CountryAgerangesOptionsOnline[selectedAgerangeIndex],
             scoreLOnline,
             OffsetOnline
           )
@@ -478,9 +476,7 @@ export default function Cards() {
       } else {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[
-              countrySelectedIndex
-            ],
+            AgerangeCountriesOptionsOnline[countrySelectedIndex],
             ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
             scoreLOnline,
             OffsetOnline
@@ -495,16 +491,14 @@ export default function Cards() {
     ) {
       // Get online users other options
       if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
+        CountryAgerangesOptionsOnline.length != 0 &&
+        AgerangeCountriesOptionsOnline.length == 0
       ) {
         dispatch(
           countryCityAgerangeSelectedOnline(
             CountriesOptionsOnline[countrySelectedIndex],
             CountryCitiesOptionsOnline[citySelectedIndex],
-            CountryAgerangesOptionsOnline.list_of_results[
-              selectedAgerangeIndex
-            ],
+            CountryAgerangesOptionsOnline[selectedAgerangeIndex],
             scoreLOnline,
             OffsetOnline
           )
@@ -633,15 +627,13 @@ export default function Cards() {
   const handleScrollCountryAgerange = () => {
     if (CountryCitiesAgerangeSelectedOnline.length == 1) {
       if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
+        CountryAgerangesOptionsOnline.length != 0 &&
+        AgerangeCountriesOptionsOnline.length == 0
       ) {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
             CountriesOptionsOnline[countrySelectedIndex],
-            CountryAgerangesOptionsOnline.list_of_results[
-              selectedAgerangeIndex
-            ],
+            CountryAgerangesOptionsOnline[selectedAgerangeIndex],
             scoreLOnline,
             OffsetOnline
           )
@@ -649,9 +641,7 @@ export default function Cards() {
       } else {
         dispatch(
           countryCitiesAgerangeSelectedOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[
-              countrySelectedIndex
-            ],
+            AgerangeCountriesOptionsOnline[countrySelectedIndex],
             ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
             scoreLOnline,
             OffsetOnline
@@ -672,16 +662,14 @@ export default function Cards() {
   const handleScrollCountryCityAgerange = () => {
     if (CountryCityAgerangeSelectedOnline.length == 1) {
       if (
-        CountryAgerangesOptionsOnline.list_of_results &&
-        !AgerangeCountriesOptionsOnline.list_of_results
+        CountryAgerangesOptionsOnline.length != 0 &&
+        AgerangeCountriesOptionsOnline.length == 0
       ) {
         dispatch(
           countryCityAgerangeSelectedOnline(
             CountriesOptionsOnline[countrySelectedIndex],
             CountryCitiesOptionsOnline[citySelectedIndex],
-            CountryAgerangesOptionsOnline.list_of_results[
-              selectedAgerangeIndex
-            ],
+            CountryAgerangesOptionsOnline[selectedAgerangeIndex],
             scoreLOnline,
             OffsetOnline
           )
@@ -689,12 +677,8 @@ export default function Cards() {
       } else {
         dispatch(
           countryCityAgerangeSelectedOnline(
-            AgerangeCountriesOptionsOnline.list_of_results[
-              countrySelectedIndex
-            ],
-            CountryCitiesAgerangeOptionsOnline.list_of_results[
-              citySelectedIndex
-            ],
+            AgerangeCountriesOptionsOnline[countrySelectedIndex],
+            CountryCitiesAgerangeOptionsOnline[citySelectedIndex],
             ARRAY_OF_AGE_RANGE[selectedAgerangeIndex].replace(/\s/g, ""),
             scoreLOnline,
             OffsetOnline

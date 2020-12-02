@@ -49,9 +49,9 @@ import {
 import { home } from "../okta/okta";
 
 // Age-Range
-const getCountryAgerangesOnline = async country =>
+const getCountryAgerangesOnline = async (country, SL, offset) =>
   await home
-    .getCountryAgerangesOnline(country)
+    .getCountryAgerangesOnline(country, SL, offset)
     .then(returnAgeranges => returnAgeranges)
     .catch(error => error);
 
@@ -189,10 +189,13 @@ const getCountryCityRecentActiveUsers = async (country, city, SH, SL, offset) =>
 
 // Age-Range
 function* countryAgerangesOnlineRequest({ payload }) {
+  const { country, SL, offset } = payload;
   try {
     const fetchedCountryAgerangesOnline = yield call(
       getCountryAgerangesOnline,
-      payload
+      country,
+      SL,
+      offset
     );
     yield put(countryAgerangesOnlineSuccess(fetchedCountryAgerangesOnline));
   } catch (error) {
