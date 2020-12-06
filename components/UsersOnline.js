@@ -72,19 +72,9 @@ export default function UsersOnline() {
     if (photoReadSignedRequest != null) {
       if (searchState == "active") {
         if (AllCountriesSelectedOnlineUsers.length != 0) {
-          //change usersPhotoUrl
-          // mapUserPhotoUrl(
-          //   AllCountriesSelectedOnlineUsers,
-          //   photoReadSignedRequest.signedRequest
-          // );
-
           const AllCountriesOnlineUsersNew = mapUserPhotoUrl(
             AllCountriesSelectedOnlineUsers,
             photoReadSignedRequest.signedRequest
-          );
-          console.log(
-            "NewAllCountriesSelectedOnlineUsers after change ",
-            AllCountriesOnlineUsersNew
           );
           setNewUsers(AllCountriesOnlineUsersNew);
         }

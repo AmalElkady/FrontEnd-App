@@ -303,8 +303,8 @@ export default function Cards() {
 
   ///offline
   useEffect(() => {
+    setCountryRecentActiveUsers([]);
     if (CountryRecentActiveUsers.length != 0) {
-      setCountryRecentActiveUsers([]);
       dispatch(requestPhotoRead());
     }
   }, [CountryRecentActiveUsers]);
@@ -533,15 +533,6 @@ export default function Cards() {
 
   // offline
   const onScrollCountryRecentUsers = () => {
-    console.log(
-      "endOfResultUsersOfS OffsetOfline scroll onsearch",
-      endOfResultUsersOfS,
-      scoreHOfflineUsersS,
-      OffsetOflineUsersS,
-      countrySelectedIndex,
-      ageScoreL,
-      CountriesOptionsOffline[countrySelectedIndex]
-    );
     if (!endOfResultUsersOfS) {
       dispatch(
         countryRecentActiveUsers(
@@ -555,12 +546,6 @@ export default function Cards() {
   };
 
   const onScrollCountryCityRecentUsers = () => {
-    console.log(
-      "endOfResultUsersOfS OffsetOfline scroll onsearch",
-      endOfResultUsersOfS,
-      scoreHOfflineUsersS,
-      OffsetOflineUsersS
-    );
     if (!endOfResultUsersOfS) {
       dispatch(
         countryCityRecentActiveUsers(
@@ -869,9 +854,9 @@ export default function Cards() {
       )}
       {/* Display Most Recent Users */}
       {searchState == "most recent" &&
-        (newCountryRecentActiveUsers.length != 0 &&
-        CountryRecentActiveUsers.length != 0 &&
-        countryCityRecentActiveUsersTimescore.length != 0 ? (
+        (CountryRecentActiveUsers.length != 0 &&
+        countryRecentActiveUsersTimescore.length != 0 &&
+        newCountryRecentActiveUsers.length != 0 ? (
           <InfiniteScroll
             dataLength={CountryRecentActiveUsers.length}
             next={onScrollCountryRecentUsers}

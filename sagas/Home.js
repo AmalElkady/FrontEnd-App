@@ -236,7 +236,6 @@ function* fetchAllCountriesOnlineRequest({ payload }) {
 
 function* AgerangeCountriesOnlineRequest({ payload }) {
   const { agerange, SL, offset } = payload;
-  console.log("SL, offset from saga ", agerange, SL, offset);
   try {
     const fetchedAgerangeCountriesOnline = yield call(
       getAgerangeCountriesOnline,
@@ -466,7 +465,6 @@ function* photoReadRequest() {
 //Offline
 function* fetchAllCountriesOfflineRequest({ payload }) {
   const { SL, offset } = payload;
-  console.log("offline options from saga ", SL, offset);
   try {
     const fetchedCountriesOffline = yield call(getOfflineCountries, SL, offset);
     yield put(allCountriesOfflineSuccess(fetchedCountriesOffline));
@@ -477,7 +475,6 @@ function* fetchAllCountriesOfflineRequest({ payload }) {
 
 function* fetchAllCountriesOfflineScrollRequest({ payload }) {
   const { SL, offset } = payload;
-  console.log("offline options from saga ", SL, offset);
   try {
     const fetchedCountriesOffline = yield call(
       getOfflineCountriesScroll,
@@ -492,17 +489,12 @@ function* fetchAllCountriesOfflineScrollRequest({ payload }) {
 
 function* fetchAllCountriesOfflineUsersRequest({ payload }) {
   const { country, SL, offset } = payload;
-  console.log("offline all users from saga ", country, SL, offset);
   try {
     const fetchedCountriesOfflineUsers = yield call(
       getOfflineCountriesAllUsers,
       country,
       SL,
       offset
-    );
-    console.log(
-      "fetchedALLCountriesOfflineUsers : ",
-      fetchedCountriesOfflineUsers
     );
     yield put(allCountriesOfflineUsersSuccess(fetchedCountriesOfflineUsers));
   } catch (error) {
@@ -512,17 +504,12 @@ function* fetchAllCountriesOfflineUsersRequest({ payload }) {
 
 function* countryCitiesOfflineRequest({ payload }) {
   const { country, SL, offset } = payload;
-  console.log("country Offline from saga ", payload);
   try {
     const fetchedCountryCitiesOffline = yield call(
       getCountryCitiesOffline,
       country,
       SL,
       offset
-    );
-    console.log(
-      "returned cities offline from saga ",
-      fetchedCountryCitiesOffline
     );
     yield put(fetchCountryCitiesOfflineSuccess(fetchedCountryCitiesOffline));
   } catch (error) {
@@ -532,7 +519,6 @@ function* countryCitiesOfflineRequest({ payload }) {
 
 function* countryRecentActiveUsersRequest({ payload }) {
   const { country, SL, SH, offset } = payload;
-  console.log("country recent user from saga ", payload);
   try {
     const fetchedCountryRecentActiveUsers = yield call(
       getCountryRecentActiveUsers,
@@ -540,10 +526,6 @@ function* countryRecentActiveUsersRequest({ payload }) {
       SL,
       SH,
       offset
-    );
-    console.log(
-      "return recent user from saga ",
-      fetchedCountryRecentActiveUsers
     );
     yield put(
       fetchCountryRecentActiveUsersSuccess(fetchedCountryRecentActiveUsers)
@@ -555,7 +537,6 @@ function* countryRecentActiveUsersRequest({ payload }) {
 
 function* countryCityRecentActiveUsersRequest({ payload }) {
   const { country, city, SL, SH, offset } = payload;
-  console.log("country city recent user from saga ", payload);
   try {
     const fetchedCountryCityRecentActiveUsers = yield call(
       getCountryCityRecentActiveUsers,
@@ -564,10 +545,6 @@ function* countryCityRecentActiveUsersRequest({ payload }) {
       SL,
       SH,
       offset
-    );
-    console.log(
-      "return recent user from saga ",
-      fetchedCountryCityRecentActiveUsers
     );
     yield put(
       fetchCountryCityRecentActiveUsersSuccess(

@@ -1,5 +1,4 @@
 export const mapUserPhotoUrl = (usersArr, signedRequest) => {
-  console.log("usersArr Url ", usersArr);
   if (signedRequest != null && usersArr.length != 0) {
     const newUsersArr = usersArr.map((e, i) => {
       if (!e._.includes("MP/")) {

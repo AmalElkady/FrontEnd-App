@@ -102,7 +102,6 @@ export const fetchCountriesOnlineSuccess = data => {
   };
 };
 export const agerangeCountriesOnline = (agerange, SL, offset) => {
-  console.log("SL, offset from action ", SL, offset);
   return {
     type: AGERANGE_COUNTRIES_ONLINE,
     payload: { agerange, SL, offset }
@@ -118,7 +117,6 @@ export const agerangeCountriesOnlineSuccess = data => {
 
 /// Cities
 export const countryCitiesOnline = (country, SL, offset) => {
-  console.log("SL, offset from action ", SL, offset);
   return {
     type: COUNTRY_CITIES_ONLINE,
     payload: { country, SL, offset }
@@ -279,7 +277,6 @@ export const requestPhotoReadSuccess = data => {
 /// most recent
 
 export const allCountriesOffline = (SL, offset) => {
-  console.log("ALL_COUNTRIES_OFFLINE from action ,", SL, offset);
   return {
     type: ALL_COUNTRIES_OFFLINE,
     payload: { SL, offset }
@@ -287,7 +284,6 @@ export const allCountriesOffline = (SL, offset) => {
 };
 
 export const allCountriesOfflineSuccess = data => {
-  console.log("ALL_COUNTRIES_OFFLINE_SUCCESS from action ");
   return {
     type: ALL_COUNTRIES_OFFLINE_SUCCESS,
     payload: data
@@ -295,7 +291,6 @@ export const allCountriesOfflineSuccess = data => {
 };
 
 export const allCountriesOfflineScroll = (SL, offset) => {
-  console.log("ALL_COUNTRIES_OFFLINE_Scroll from action ,", SL, offset);
   return {
     type: ALL_COUNTRIES_OFFLINE_SCROLL,
     payload: { SL, offset }
@@ -303,7 +298,6 @@ export const allCountriesOfflineScroll = (SL, offset) => {
 };
 
 export const allCountriesOfflineScrollSuccess = data => {
-  console.log("ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS from action ");
   return {
     type: ALL_COUNTRIES_OFFLINE_SCROLL_SUCCESS,
     payload: data
@@ -311,7 +305,6 @@ export const allCountriesOfflineScrollSuccess = data => {
 };
 
 export const allCountriesOfflineUsers = (country, SL, offset) => {
-  console.log("ALL_COUNTRIES_OFFLINEUsers from action ", country, SL, offset);
   return {
     type: ALL_COUNTRIES_OFFLINE_USERS,
     payload: { country, SL, offset }
@@ -319,7 +312,6 @@ export const allCountriesOfflineUsers = (country, SL, offset) => {
 };
 
 export const allCountriesOfflineUsersSuccess = data => {
-  console.log("ALL_COUNTRIES_OFFLINE_USERS_SUCCESS from action ", data);
   return {
     type: ALL_COUNTRIES_OFFLINE_USERS_SUCCESS,
     payload: data
@@ -327,7 +319,6 @@ export const allCountriesOfflineUsersSuccess = data => {
 };
 
 export const countryCitiesOffline = (country, SL, offset) => {
-  console.log("COUNTRY_CITIES_OFFLINE from action ", country, SL, offset);
   return {
     type: COUNTRY_CITIES_OFFLINE,
     payload: { country, SL, offset }
@@ -335,7 +326,6 @@ export const countryCitiesOffline = (country, SL, offset) => {
 };
 
 export const fetchCountryCitiesOfflineSuccess = data => {
-  console.log("COUNTRY_CITIES_OFFLINE_SUCCESS from action ");
   return {
     type: COUNTRY_CITIES_OFFLINE_SUCCESS,
     payload: data
@@ -343,13 +333,6 @@ export const fetchCountryCitiesOfflineSuccess = data => {
 };
 
 export const countryRecentActiveUsers = (country, SL, SH, offset) => {
-  console.log(
-    "country_recent_active_users from action :",
-    country,
-    SL,
-    SH,
-    offset
-  );
   return {
     type: COUNTRY_RECENT_ACTIVE_USERS,
     payload: { country, SL, SH, offset }
@@ -357,7 +340,6 @@ export const countryRecentActiveUsers = (country, SL, SH, offset) => {
 };
 
 export const fetchCountryRecentActiveUsersSuccess = data => {
-  console.log("COUNTRY_RECENT_ACTIVE_USERS_SUCCESS from action :", data);
   return {
     type: COUNTRY_RECENT_ACTIVE_USERS_SUCCESS,
     payload: data
@@ -450,7 +432,6 @@ export const resetStatesListCityOnline = () => {
 };
 
 export const resetStatesListAgerangeOnline = () => {
-  console.log("rest age from action");
   return {
     type: RESET_STATES_LIST_AGERANGE_ONLINE
   };

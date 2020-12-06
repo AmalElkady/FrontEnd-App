@@ -712,7 +712,6 @@ home.getAllCountriesOnline = function (SH, offset) {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-console.log("SL, offset from okta ",SH, offset);
 					  return new Promise(  async (resolve, reject) => {				
 											try {
 												
@@ -735,13 +734,10 @@ console.log("SL, offset from okta ",SH, offset);
 	
 												let responseX = await callAxios(options);
 												let response = responseX.data;
-
-												console.log("respo data from okta : ",response);
 												
 												   if(response){
 																	//resolve(response);	
 																	const mapedList =convertListToTwoArrays(response.list_of_results);
-																	console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																											   
 																   resolve(mapedList);						 
 												   } else {
@@ -769,7 +765,6 @@ home.getCountryCitiesOnline = function ( country, SH, offset ) {
     // "key":"",
     // "scoreH":"",
 	// "offset":""
-	console.log("country selected from okta ", country, SH, offset );
 						  return new Promise(  async (resolve, reject) => {				
 												try {
 													
@@ -793,12 +788,10 @@ home.getCountryCitiesOnline = function ( country, SH, offset ) {
 													let responseX = await callAxios(options);
 													let response = responseX.data;
 	
-													console.log("respo data of cities from okta : ",response);
 													
 													   if(response){
 																		//resolve(response);			
 																		const mapedList =convertListToTwoArrays(response.list_of_results);
-																		console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																												   
 																	   resolve(mapedList);			 
 													   } else {
@@ -825,7 +818,7 @@ home.getCountryAgerangesOnline = function ( country, SH, offset) {
 			// "key":"",
 			// "scoreH":"",
 			// "offset":""
-			console.log("country selected for ageRange from okta ", country, SH, offset);
+			
 								  return new Promise(  async (resolve, reject) => {				
 														try {
 															
@@ -849,12 +842,9 @@ home.getCountryAgerangesOnline = function ( country, SH, offset) {
 															let responseX = await callAxios(options);
 															let response = responseX.data;
 			
-															console.log("respo data of ageRange from okta : ",response);
-															
 															   if(response){
 																				//resolve(response);	
 																				const mapedList =convertListToTwoArrays(response.list_of_results);
-																	console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																											   
 																   resolve(mapedList);				 
 															   } else {
@@ -881,7 +871,7 @@ home.getAgerangeCountriesOnline = function (agerange, SH, offset) {
 					// "key":"",
 					// "scoreH":"",
 					// "offset":""
-					console.log("ageRange from okta ",agerange, SH, offset);
+				
 										  return new Promise(  async (resolve, reject) => {				
 																try {
 																	
@@ -905,12 +895,10 @@ home.getAgerangeCountriesOnline = function (agerange, SH, offset) {
 																	let responseX = await callAxios(options);
 																	let response = responseX.data;
 					
-																	console.log("respo data of countries from okta agerange : ",response);
 																	
 																	   if(response){
 																						//resolve(response);
 																						const mapedList =convertListToTwoArrays(response.list_of_results);
-																	console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																											   
 																   resolve(mapedList);						 
 																	   } else {
@@ -937,7 +925,7 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange, SH, offset) {
 							// "key":"",
 							// "scoreH":"",
 							// "offset":""
-							console.log("ageRange and country from okta ",agerange,country,SH, offset);
+						
 												  return new Promise(  async (resolve, reject) => {				
 																		try {
 																			
@@ -961,12 +949,9 @@ home.getCountryCitiesAgerangeOnline = function (country,agerange, SH, offset) {
 																			let responseX = await callAxios(options);
 																			let response = responseX.data;
 							
-																			console.log("respo data of cities from okta agerange and country : ",response);
-																			
 																			   if(response){
 																								//resolve(response);
 																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																																		   
 																							   resolve(mapedList);						 
 																			   } else {
@@ -994,7 +979,7 @@ home.getCountryCityAgerangesOnline = function (country,city, SH, offset) {
 									// "key":"",
 									// "scoreH":"",
 									// "offset":""
-									console.log("city and country from okta ",city,country,SH,offset);
+									
 														  return new Promise(  async (resolve, reject) => {				
 																				try {
 																					
@@ -1018,12 +1003,10 @@ home.getCountryCityAgerangesOnline = function (country,city, SH, offset) {
 																					let responseX = await callAxios(options);
 																					let response = responseX.data;
 									
-																					console.log("respo data of ageranges from okta city and country : ",response);
 																					
 																					   if(response){
 																										//resolve(response);
 																										const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta all countries online " ,mapedList);
 																																		   
 																							   resolve(mapedList);		
 																														 
@@ -1051,7 +1034,7 @@ home.getAllCountriesSelectedOnline = function (SH,offset) {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-									console.log("AllCountriesSelectedOnline from okta offset ,",SH,offset);
+								
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1075,11 +1058,9 @@ home.getAllCountriesSelectedOnline = function (SH,offset) {
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo data of all_countries_selected_online from all countries : ",response);
 																							
 																							if(response){
 																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta all countries selected " ,mapedList);
 																								
 																								resolve(mapedList);
 																									 
@@ -1108,7 +1089,7 @@ home.getAgerangeAllCountriesSelectedOnline = function (ageRange,SH,offset) {
 													// "key":"",
 													// "scoreH":"",
 													// "offset":""
-																					console.log("agerangeAllCountriesSelectedOnline from okta ",ageRange,SH,offset);
+																				
 																												  return new Promise(  async (resolve, reject) => {				
 																																		try {
 																																			
@@ -1133,11 +1114,9 @@ home.getAgerangeAllCountriesSelectedOnline = function (ageRange,SH,offset) {
 																																			let responseX = await callAxios(options);
 																																			let response = responseX.data;
 																							
-																																			console.log("respo data of agerange_all_countries_selected_online from okta : ",response);
-																																			
+																																		
 																																			if(response){
 																																				const mapedList =convertListToTwoArrays(response.list_of_results);
-																																				console.log("usersArr, ScoreArr from okta all countries selected " ,mapedList);
 																																				
 																																				resolve(mapedList);
 																																					 
@@ -1167,9 +1146,7 @@ home.getCountrySelectedOnline = function (country,SH,offset) {
 													// "key":"",
 													// "scoreH":"",
 													// "offset":""
-																					console.log("countrySelectedOnline from okta ",country,
-																					SH,
-																					offset);
+																				
 																												  return new Promise(  async (resolve, reject) => {				
 																																		try {
 																																			
@@ -1194,12 +1171,10 @@ home.getCountrySelectedOnline = function (country,SH,offset) {
 																																			let responseX = await callAxios(options);
 																																			let response = responseX.data;
 																							
-																																			console.log("respo data of ${co}_country_selected_online from okta : ",response);
 																																			
 																																			if(response){
 																																				
 																																				const mapedList =convertListToTwoArrays(response.list_of_results);
-																																				console.log("usersArr, ScoreArr from okta country selected " ,mapedList);
 																																				
 																																				resolve(mapedList);
 																																					 
@@ -1230,7 +1205,7 @@ home.getCountryCitySelectedOnline = function (country,city, SH, offset) {
 	// "key":"",
 	// "scoreH":"",
 	// "offset":""
-									console.log("CountryCitySelectedOnline from okta ",country,city, SH, offset);
+									
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1255,12 +1230,10 @@ home.getCountryCitySelectedOnline = function (country,city, SH, offset) {
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo data of ${co}_${ci}country_selected_online from okta : ",response);
 																							
 																							if(response){
 																								
 																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta country selected " ,mapedList);
 																								
 																								resolve(mapedList);
 																									 
@@ -1292,7 +1265,7 @@ home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange, SH, of
 	// "key":"",
 	// "scoreH":"",
 	// "offset":""
-									console.log("CountryCitiesAgerangeSelectedOnline from okta ",country,ageRange, SH, offset);
+								
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1316,12 +1289,10 @@ home.getCountryCitiesAgerangeSelectedOnline = function (country,ageRange, SH, of
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo data of ${co}_${agerange}_country_cities_agerange_selected_online from okta : ",response);
 																							
 																							if(response){
 																									
 																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta country selected " ,mapedList);
 																								
 																								resolve(mapedList);
 																									 
@@ -1354,7 +1325,7 @@ home.getCountryCityAgerangeSelectedOnline = function (country,city,ageRange, SH,
 	// "key":"",
 	// "scoreH":"",
 	// "offset":""
-									console.log("CountryCityAgerangeSelectedOnline from okta ",country,city,ageRange, SH, offset);
+								
 																  return new Promise(  async (resolve, reject) => {				
 																						try {
 																							
@@ -1378,12 +1349,9 @@ home.getCountryCityAgerangeSelectedOnline = function (country,city,ageRange, SH,
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo data of ${co}_${ci}_${ageRange}_country_city_agerange_selected_online from okta : ",response);
-																							
 																							if(response){
 																									
 																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								console.log("usersArr, ScoreArr from okta country city agerange selected " ,mapedList);
 																								
 																								resolve(mapedList);
 																									 
@@ -1440,15 +1408,13 @@ home.getselectedsearchprofiles =(searchlistid,SH,offset)=>{
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo data of users from all searchlistid : ",response);
 																							
 																							   if(response){
 
 																								const ReturnUsers=mapUserPhotoPath(response.list_of_results,searchlistid);
 																								//console.log("ReturnUsers map Path in okta : ",ReturnUsers);
 																								const mapedList =convertListToTwoArrays(ReturnUsers);
-														                                        console.log("usersArr, timeScoreArr from okta" ,mapedList);
-
+														     
 																										resolve(mapedList);					 
 																							   } else {
 																								   
@@ -1525,7 +1491,6 @@ home.getAllCountriesOffline = function (SH, offset) {
     // "key":"",
     // "scoreH":"",
     // "offset":""
-console.log("all offline countries ",SH, offset);
 					  return new Promise(  async (resolve, reject) => {				
 											try {
 												
@@ -1549,13 +1514,11 @@ console.log("all offline countries ",SH, offset);
 												let responseX = await callAxios(options);
 												let response = responseX.data;
 
-												console.log("respo all_countries_offline data from okta : ",response);
 												
 												   if(response){
 																	//resolve(response);	
 												     const mapedList =convertListToTwoArrays(response.list_of_results);
-													 console.log("usersArr, ScoreArr from okta all countries offline " ,mapedList);
-																								
+													 											
 													resolve(mapedList);				 
 												   } else {
 													   
@@ -1573,11 +1536,10 @@ console.log("all offline countries ",SH, offset);
 }
 
 home.getAllCountriesOfflineUsers = function (country,SL,offset) {
-	console.log("getAllCountriesOfflineUsers from okta",country,SL,offset)
+	
 						  return new Promise(  async (resolve, reject) => {				
 												try {
 													let users= await home.getCountryRecentActiveUsers(country,"",SL,offset);
-													console.log(`respo all_countries_offline_Users data from okta :${country} `,users);
 													
 													   if(users){
 														// const mapedList =convertListToTwoArrays(users);
@@ -1610,7 +1572,6 @@ home.getCountryCitiesOffline = function (country, SH, offset ) {
 		// "key":"",
 		// "scoreH":"",
 		// "offset":""
-		console.log("country selected for cities offline from okta ", country, SH, offset );
 							  return new Promise(  async (resolve, reject) => {				
 													try {
 														
@@ -1634,12 +1595,9 @@ home.getCountryCitiesOffline = function (country, SH, offset ) {
 														let responseX = await callAxios(options);
 														let response = responseX.data;
 		
-														console.log("respo data of cities offline from okta : ",response);
-														
 														   if(response){
 																		//	resolve(response);
 																		const mapedList =convertListToTwoArrays(response.list_of_results);
-													 console.log("usersArr, ScoreArr from okta all countries offline " ,mapedList);
 																								
 													resolve(mapedList);						 
 														   } else {
@@ -1665,7 +1623,7 @@ home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
     // "scoreH":"",
     // "scoreL":"",
     // "offset":""
-				console.log("country selected for recent_active_users from okta SH ",country, SL,SH,offset);
+			
 									  return new Promise(  async (resolve, reject) => {				
 															try {
 																
@@ -1691,18 +1649,16 @@ home.getCountryRecentActiveUsers = function (country,SL,SH,offset) {
 																let responseX = await callAxios(options);
 																let response = responseX.data;
 				
-																console.log("respo data of recent_active_users offline from okta : ",response);
 																
 																   if(response){
 																	
 																	const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
-																	console.log("ReturnUsers okta : ",ReturnUsers);
+																	
 																	const mapedList =convertListToTwoArrays(ReturnUsers);
-													               console.log("usersArr, ScoreArr from okta country recent " ,mapedList);
+													            
 																								
 													                resolve(mapedList);	
-																	//console.log("ReturnUsers okta : ",ReturnUsers);
-																	//resolve(ReturnUsers);					 
+																						 
 																   } else {
 																	   
 																	   resolve({"message": "no response !"})
@@ -1725,7 +1681,7 @@ home.getCountryCityRecentActiveUsers = function (country,city,SH,SL,offset) {
 						// "scoreH":"",
 						// "scoreL":"",
 						// "offset":""
-									console.log("country selected and city for recent_active_users from okta ",country ,city,SL,SH,offset);
+									
 														  return new Promise(  async (resolve, reject) => {				
 																				try {
 																					
@@ -1750,15 +1706,11 @@ home.getCountryCityRecentActiveUsers = function (country,city,SH,SL,offset) {
 																					let responseX = await callAxios(options);
 																					let response = responseX.data;
 									
-																					console.log("respo data of recent_active_users offline from okta : ",response);
-																					
 																					   if(response){
 																						
 																						const ReturnUsers=mapUserPhotoPath(response.list_of_results,country);
 																						const mapedList =convertListToTwoArrays(ReturnUsers);
-																						console.log("usersArr, ScoreArr from okta country recent " ,mapedList);
-																													 
-																						 resolve(mapedList);	
+																					    resolve(mapedList);	
 																						
 																						resolve(ReturnUsers);					 
 																					   } else {

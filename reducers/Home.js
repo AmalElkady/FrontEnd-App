@@ -673,7 +673,6 @@ const home = (state = initialHomeState, action) => {
         // allCountriesOfflineUsersTimeScore: []
       };
     case RESET_STATES_ONLINE:
-      console.log("rest state online");
       return {
         ...state,
         selectedOnlineUsers: [],
@@ -691,7 +690,6 @@ const home = (state = initialHomeState, action) => {
         countryCityAgerangeSelectedOnlineCount: []
       };
     case RESET_STATES_OFFLINE:
-      console.log("rest state Offline");
       return {
         ...state,
         scoreHOfflineUsersS: "", // for offline users search
@@ -705,41 +703,39 @@ const home = (state = initialHomeState, action) => {
         countryCityRecentActiveUsersTimescore: []
       };
     case RESET_END_RES_USERS:
-      console.log("rest end users");
       return {
         ...state,
         endOfResultUsers: false
       };
     case RESET_END_RES_USERS_OF:
-      console.log("rest end users of");
       return {
         ...state,
         endOfResultUsersOf: false
       };
 
     case RESET_END_RES:
-      console.log("rest end");
       return {
         ...state,
         endOfResult: false
       };
 
     case RESET_END_RES_OF:
-      console.log("rest end Of");
       return {
         ...state,
         endOfResultOf: false
       };
     case RESET_STATES_LIST_COUNTRY_ONLINE:
-      console.log("rest states list country online");
       return {
         ...state,
         endOfResultOnCo: false, // for country list
         scoreLOnlineCo: "",
-        OffsetonlineCo: 0
+        OffsetonlineCo: 0,
+        agerangeCountriesOnline: [],
+        agerangeCountriesOnlineCount: [],
+        allCountriesOnline: [],
+        allCountriesOnlineCount: []
       };
     case RESET_STATES_LIST_AGERANGE_ONLINE:
-      console.log("rest states list agerange online");
       return {
         ...state,
         endOfResultOnAge: false, // for age list
@@ -748,12 +744,16 @@ const home = (state = initialHomeState, action) => {
       };
 
     case RESET_STATES_LIST_CITY_ONLINE:
-      console.log("rest states list city online");
       return {
         ...state,
         endOfResultOnCi: false, // for city list
         scoreLOnlineCi: "",
-        OffsetOnlineCi: 0
+        OffsetOnlineCi: 0,
+        countryCitiesOnline: [],
+        countryCitiesOnlineCount: [],
+
+        countryCitiesAgerangeOnline: [],
+        countryCitiesAgerangeOnlineCount: []
       };
     case SHOW_MESSAGE: {
       return {
