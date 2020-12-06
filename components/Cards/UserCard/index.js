@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -84,6 +85,14 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     right: ".5rem",
     bottom: "-1rem"
+  },
+  onlineFlag: {
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
+    backgroundColor: "#04a304",
+    marginRight: ".5rem",
+    display: "inline-block"
   }
   ////
 }));
@@ -123,6 +132,7 @@ Fade.propTypes = {
 export default function UserCard({ user, timeScore }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
+  const searchState = useSelector(state => state.home.searchState);
 
   ////// modal
   const [open, setOpen] = React.useState(false);
@@ -145,6 +155,9 @@ export default function UserCard({ user, timeScore }) {
         <CardMedia className={classes.media} image={user._} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
+            {searchState == "active" && (
+              <div className={classes.onlineFlag}></div>
+            )}
             {user.n}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
