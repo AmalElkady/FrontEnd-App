@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import Router from "next/router";
 import Button from "@material-ui/core/Button";
+import { getCookie } from "../util/session";
+import base64url from "base64url";
 import {
   NotificationContainer,
   NotificationManager
@@ -12,6 +14,7 @@ import IntlMessages from "../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
 import "react-phone-input-2/lib/style.css";
 import { DropzoneArea } from "material-ui-dropzone";
+import ModalUpload from "../components/Modals/modalUpload";
 
 //sendResetToken ===> mpUpload
 //changePassword ===> mpUploadClear
@@ -34,7 +37,8 @@ import {
   showAuthLoader,
   mpUpload,
   mpUploadClear,
-  userSignOut
+  userSignOut,
+  checkMpUpload
 } from "../actions/Auth";
 
 class VerifyEmail extends React.Component {
@@ -48,6 +52,20 @@ class VerifyEmail extends React.Component {
   componentDidMount() {
     // let x = document.getElementsByClassName("MuiDropzoneArea-root");
     // x[0].style.minHeight = "20px";
+    let token = getCookie("access_token");
+    let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
+    console.log("token  ", tokenUserData);
+
+    // check if token.profile include MPA only dispatch action of checkMpUpload
+    if (
+      `${tokenUserData.profile}`.includes("MPA") &&
+      !`${tokenUserData.profile}`.includes("MP")
+    ) {
+      this.props.checkMpUpload();
+    }
+
+    // if ok change token
+    // else model to ask upload new image redirect to the MpUpload component
   }
 
   componentDidUpdate() {
@@ -76,93 +94,102 @@ class VerifyEmail extends React.Component {
     const { showMessage, loader, alertMessage } = this.props;
     return (
       <>
-        <Button
-          variant="contained"
-          onClick={() => {
-            this.props.showAuthLoader();
-            this.props.userSignOut();
-          }}
-          color="primary"
-        >
-          <IntlMessages id="appModule.signOut" />
-        </Button>
+        {this.props.checkMpFlag && (
+          <div>
+            <Button
+              variant="contained"
+              onClick={() => {
+                this.props.showAuthLoader();
+                this.props.userSignOut();
+              }}
+              color="primary"
+            >
+              <IntlMessages id="appModule.signOut" />
+            </Button>
 
-        <div
-          style={{ minHeight: "705px" }}
-          className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
-        >
-          <div className="app-login-main-content">
-            <div className="app-logo-content d-flex align-items-center justify-content-center">
-              <Link href="/">
-                <a>
-                  {" "}
-                  <img
-                    src="../static/images/gila.png"
-                    alt="App"
-                    title="App"
-                  />{" "}
-                </a>
-              </Link>
-            </div>
+            <div
+              style={{ minHeight: "705px" }}
+              className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
+            >
+              <div className="app-login-main-content">
+                <div className="app-logo-content d-flex align-items-center justify-content-center">
+                  <Link href="/">
+                    <a>
+                      {" "}
+                      <img
+                        src="../static/images/gila.png"
+                        alt="App"
+                        title="App"
+                      />{" "}
+                    </a>
+                  </Link>
+                </div>
 
-            <div className="app-login-content">
-              <div className="app-login-header">
-                <h1>
-                  {" "}
-                  <IntlMessages id="appModule.uploadMP" />{" "}
-                </h1>
-              </div>
-
-              <div className="app-login-form">
-                <form>
-                  <DropzoneArea
-                    acceptedFiles={["image/*"]}
-                    dropzoneText={"Drop Photo"}
-                    filesLimit={1}
-                    maxFileSize={3000000}
-                    showPreviews={true}
-                    showPreviewsInDropzone={false}
-                    getFileRemovedMessage={removedFile => {
-                      return `File ${removedFile} was removed`;
-                    }}
-                    //getDropRejectMessage={}
-                    getFileAddedMessage={addedFile => {
-                      return `File ${addedFile} was added`;
-                    }}
-                    onChange={files => {
-                      if (files[0]) {
-                        this.setState({ file: files[0] });
-                      }
-                    }}
-                  />
-
-                  <div className="mb-3 d-flex align-items-center justify-content-between">
-                    <Grid container style={{ paddingTop: "25px" }} spacing={12}>
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          this.props.showAuthLoader();
-                          this.props.mpUpload({ file });
-                        }}
-                        color="primary"
-                      >
-                        <IntlMessages id="appModule.submit" />
-                      </Button>{" "}
-                    </Grid>
+                <div className="app-login-content">
+                  <div className="app-login-header">
+                    <h1>
+                      {" "}
+                      <IntlMessages id="appModule.uploadMP" />{" "}
+                    </h1>
                   </div>
-                </form>
+
+                  <div className="app-login-form">
+                    <form>
+                      <DropzoneArea
+                        acceptedFiles={["image/*"]}
+                        dropzoneText={"Drop Photo"}
+                        filesLimit={1}
+                        maxFileSize={3000000}
+                        showPreviews={true}
+                        showPreviewsInDropzone={false}
+                        getFileRemovedMessage={removedFile => {
+                          return `File ${removedFile} was removed`;
+                        }}
+                        //getDropRejectMessage={}
+                        getFileAddedMessage={addedFile => {
+                          return `File ${addedFile} was added`;
+                        }}
+                        onChange={files => {
+                          if (files[0]) {
+                            this.setState({ file: files[0] });
+                          }
+                        }}
+                      />
+
+                      <div className="mb-3 d-flex align-items-center justify-content-between">
+                        <Grid
+                          container
+                          style={{ paddingTop: "25px" }}
+                          spacing={12}
+                        >
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              this.props.showAuthLoader();
+                              this.props.mpUpload({ file });
+                            }}
+                            color="primary"
+                          >
+                            <IntlMessages id="appModule.submit" />
+                          </Button>{" "}
+                        </Grid>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
+
+              {loader && (
+                <div className="loader-view">
+                  <CircularProgress />
+                </div>
+              )}
+              {showMessage && NotificationManager.error(alertMessage)}
+              <NotificationContainer />
             </div>
           </div>
-
-          {loader && (
-            <div className="loader-view">
-              <CircularProgress />
-            </div>
-          )}
-          {showMessage && NotificationManager.error(alertMessage)}
-          <NotificationContainer />
-        </div>
+        )}
+        {!this.props.checkMpFlag && <ModalUpload></ModalUpload>}
       </>
     );
   }
@@ -175,7 +202,8 @@ const mapStateToProps = ({ auth }) => {
     showMessage,
     authUser,
     mpUpload,
-    mpUploadFlag
+    mpUploadFlag,
+    checkMpFlag
   } = auth;
   return {
     loader,
@@ -183,7 +211,8 @@ const mapStateToProps = ({ auth }) => {
     showMessage,
     authUser,
     mpUpload,
-    mpUploadFlag
+    mpUploadFlag,
+    checkMpFlag
   };
 };
 
@@ -192,5 +221,6 @@ export default connect(mapStateToProps, {
   mpUploadClear,
   hideMessage,
   showAuthLoader,
-  userSignOut
+  userSignOut,
+  checkMpUpload
 })(VerifyEmail);

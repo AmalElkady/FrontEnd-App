@@ -19,6 +19,8 @@ import {
   SIGNUP_USER_SUCCESS,
   MP_UPLOAD_SUCCESS,
   MP_UPLOAD,
+  CHECK_MP_UPLOAD,
+  CHECK_MP_UPLOAD_SUCCESS,
   ADD_PROFILEL2,
   ADD_PROFILEL2_SUCCESS,
   SUBSCRIBE,
@@ -30,7 +32,8 @@ import {
   SEND_VERIFICATION_CODE,
   RESEND_VERIFICATION_TO_PHONE,
   CLEAR_AUTH_STATE,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
+  RESET_CHECK_MP_UPLOAD_FLAG
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -226,5 +229,24 @@ export const hideMessage = () => {
 export const hideAuthLoader = () => {
   return {
     type: ON_HIDE_LOADER
+  };
+};
+
+export const checkMpUpload = () => {
+  return {
+    type: CHECK_MP_UPLOAD
+  };
+};
+
+export const checkMpUploadSuccess = data => {
+  return {
+    type: CHECK_MP_UPLOAD_SUCCESS,
+    payload: data
+  };
+};
+
+export const resetCheckMpUpload = () => {
+  return {
+    type: RESET_CHECK_MP_UPLOAD_FLAG
   };
 };

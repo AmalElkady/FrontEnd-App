@@ -379,6 +379,45 @@ auth.uploadMainProfilePhoto = function (file) {
 	
 }
 
+auth.checkMPUploadphoto=function(){
+	return new Promise(  async (resolve, reject) => {				
+			try {
+				
+				//http:// /api/checkmpupload
+				const tokenValue = getCookie("access_token",false);
+				let optionsCheck = {
+							  url: '/checkmpupload',
+							  method: 'POST',
+							  headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json;charset=UTF-8',
+								'Authorization': "Bearer " + tokenValue
+							  }
+							};		
+
+				let checkMPUploadResponse = await callAxios(optionsCheck);
+				
+				console.log("DATA TO CHECK",checkMPUploadResponse.data);
+				console.log("DATA TO CHECK 2",checkMPUploadResponse.data.code);
+				if(checkMPUploadResponse.data.code == "CHECKMPUPLOAD_4" || checkMPUploadResponse.data.code == "CHECKMPUPLOAD_9") {
+					
+					resolve(false);
+				} else {
+	                resolve(true);
+				}
+				
+
+			}catch(err) {
+				console.log(err);
+				resolve({"message": err});
+			}									
+ 
+						
+}).catch((err) => {console.log(err)});			
+
+
+	
+}
 
 
 auth.addUpdateProfileLayer2 = function (addUpdateFlag,nationality,tpercent,workd,title,education,bio) {

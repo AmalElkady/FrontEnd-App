@@ -23,7 +23,8 @@ import {
   SEND_RESET_TOKEN,
   SEND_VERIFICATION_CODE,
   RESEND_VERIFICATION_TO_PHONE,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
+  CHECK_MP_UPLOAD
 } from "../constants/ActionTypes";
 
 import {
@@ -38,7 +39,8 @@ import {
   userPasswordChangeSuccess,
   userSendVerificationCodeSuccess,
   clearPersistedAuthState,
-  showTimer
+  showTimer,
+  checkMpUploadSuccess
 } from "../actions/Auth";
 
 import {
@@ -83,6 +85,12 @@ const createUserWithPhonePasswordRequest = async (
 const uploadMainProfilePhotoRequest = async file =>
   await auth
     .uploadMainProfilePhoto(file)
+    .then(uploadMessage => uploadMessage)
+    .catch(error => error);
+
+const checkMpUploadReq = async () =>
+  await auth
+    .checkMPUploadphoto()
     .then(uploadMessage => uploadMessage)
     .catch(error => error);
 
@@ -243,6 +251,15 @@ function* uploadMainProfilePhoto({ payload }) {
     } else {
       yield put(mpUploadSuccess());
     }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
+function* checkMpUploadRequest() {
+  try {
+    const checkResponse = yield call(checkMpUploadReq);
+    yield put(checkMpUploadSuccess(checkResponse));
   } catch (error) {
     yield put(showAuthMessage(error));
   }
@@ -480,6 +497,10 @@ export function* uploadMPPhoto() {
   yield takeEvery(MP_UPLOAD, uploadMainProfilePhoto);
 }
 
+export function* checkMpUpload() {
+  yield takeEvery(CHECK_MP_UPLOAD, checkMpUploadRequest);
+}
+
 export function* addUserProfileL2() {
   yield takeEvery(ADD_PROFILEL2, addProfileLayer2);
 }
@@ -543,6 +564,7 @@ export default function* rootSaga() {
     //        fork(signInWithFacebook),
     //        fork(signInWithTwitter),
     //        fork(signInWithGithub),
-    fork(signOutUser)
+    fork(signOutUser),
+    fork(checkMpUpload)
   ]);
 }

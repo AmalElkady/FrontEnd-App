@@ -23,7 +23,9 @@ import {
   RESET_TOKEN_SUCCESS,
   VERIFICATION_CODE_SUCCESS,
   PASSWORD_CHANGE_SUCCESS,
-  CLEAR_AUTH_STATE
+  CLEAR_AUTH_STATE,
+  CHECK_MP_UPLOAD_SUCCESS,
+  RESET_CHECK_MP_UPLOAD_FLAG
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -40,6 +42,7 @@ const INIT_STATE = {
   phoneVerified: false,
   stepFlag: false,
   mpUploadFlag: false,
+  checkMpFlag: false,
   subFlag: false,
   gender: "",
   phone: "",
@@ -80,6 +83,20 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loader: false,
         mpUploadFlag: true
+      };
+    }
+
+    case CHECK_MP_UPLOAD_SUCCESS: {
+      return {
+        ...state,
+        loader: false,
+        checkMpFlag: action.payload
+      };
+    }
+    case RESET_CHECK_MP_UPLOAD_FLAG: {
+      return {
+        ...state,
+        checkMpFlag: true
       };
     }
 

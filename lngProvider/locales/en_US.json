@@ -182,6 +182,8 @@
   "appModule.sendMessage": "Send",
   "appModule.yourMessage": "Your Message",
   "appModule.search": "Search",
+  "appModule.uploadNewPhoto": "Upload New Photo",
+  "appModule.uploadNewPhotoMessage": "There is problem in upload your photo",
 
   "chart.area": "Area Graph",
   "chart.bar": "Bar Graph",
