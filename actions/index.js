@@ -4,3 +4,4 @@ export * from "./Contact";
 export * from "./Mail";
 export * from "./Auth";
 export * from "./Home";
+export * from "./Profile";

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
+import Router from "next/router";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -30,6 +31,7 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "20%",
+    cursor: "pointer",
     margin: "1.5rem",
     "@media only screen and (min-width: 1099px) ": {
       maxWidth: "20%"
@@ -151,7 +153,12 @@ export default function UserCard({ user, timeScore }) {
 
   return (
     <>
-      <Card className={classes.root}>
+      <Card
+        className={classes.root}
+        onClick={() => {
+          Router.push({ pathname: "/home/profile", query: user });
+        }}
+      >
         <CardMedia className={classes.media} image={user._} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">

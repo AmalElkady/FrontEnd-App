@@ -11,6 +11,7 @@ import Contact from "./Contact";
 import Mail from "./Mail";
 import Auth from "./Auth";
 import Home from "./Home";
+import Profile from "./Profile";
 
 const MIGRATION_DEBUG = false;
 
@@ -79,5 +80,6 @@ export default history =>
     mail: Mail,
     home: Home,
     // home: persist(homePersistConfig, Home),
+    profile: Profile,
     auth: persist(authPersistConfig, Auth)
   });

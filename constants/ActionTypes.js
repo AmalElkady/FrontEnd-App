@@ -274,3 +274,8 @@ export const RESET_END_RES = "reset_end_res"; //All Online
 export const RESET_END_RES_OF = "reset_end_res"; //All OFfline
 export const RESET_END_RES_USERS = "reset_end_res_users"; //end all Users Online
 export const RESET_END_RES_USERS_OF = "reset_end_res_users_of"; //end all Users ofline
+
+/// User Profile
+
+export const READ_PROFILE_L2 = "read_profile_l2";
+export const READ_PROFILE_L2_SUCCESS = "read_profile_l2_success";
