@@ -15,7 +15,13 @@ body {
     weight: $font-weight-base;
   }
   height: 100%;
-  //overflow: hidden;
+  background-image: url("http://localhost:3000/static/images/backgrounds/main_Background_PC-01.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media (max-width: 700px) {
+    background-image: url("http://localhost:3000/static/images/backgrounds/main_Background_mobile.svg");
+  }
 }
 
 body.ios-mobile-view-height {

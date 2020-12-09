@@ -636,6 +636,8 @@
   "martialM.3": "Widowed",
   "martialM.4": "Married",
 
+  "nationality.EG": "Egyption",
+
   "education.1": "No formal education",
   "education.2": "High School",
   "education.3": "Bachelor",
@@ -652,6 +654,8 @@
   "workd.9": "Transportation",
   "workd.10": "Science",
   "workd.100": "other",
+
+  "co.1": "Egypt",
 
   "gb.1": "London",
   "gb.2": "Cambridge",

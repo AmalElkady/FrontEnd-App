@@ -181,6 +181,9 @@ export const ARRAY_OF_YEARS = [
 //COUNTRY_CITY_MAP = new Map();
 //COUNTRY_CITY_MAP['EG'] = [<IntlMessages id="eg.1" />,<IntlMessages id="eg.2" />];
 
+export const COUNTRY_MAP = new Map();
+COUNTRY_MAP["EG"] = <IntlMessages id="co.1" />;
+
 export const COUNTRY_CITY_MAP = new Map();
 COUNTRY_CITY_MAP["eg"] = [
   <IntlMessages id="eg.1" />,

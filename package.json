@@ -97,6 +97,7 @@
     "react-swipeable-views": "^0.13.3",
     "react-tap-event-plugin": "^3.0.3",
     "react-text-mask": "^5.4.3",
+    "react-world-flags": "^1.4.0",
     "reactstrap": "^8.0.0",
     "recharts": "^1.6.2",
     "recompose": "^0.30.0",

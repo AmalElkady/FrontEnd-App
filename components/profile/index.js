@@ -8,12 +8,14 @@ export default function Profile() {
   const [aboutInfo, setAboutInfo] = useState({});
   useEffect(() => {
     if (router.query) {
+      console.log("router.query ", router.query);
       setProfileCard({
         co: router.query.co,
         ci: router.query.ci,
         n: router.query.n,
         photo: router.query._,
-        b: router.query.b
+        b: router.query.b,
+        timeScore: router.query.timeScore
       });
       setAboutInfo({
         id: router.query.i,
@@ -26,11 +28,11 @@ export default function Profile() {
 
   return (
     <>
-      <ProfileCard mainInfo={profileCard} />
-      <br />
-      <br />
-      {aboutInfo.id && <About aboutInfo={aboutInfo} />}
-      <br />
+      <div className="profile-container">
+        <ProfileCard mainInfo={profileCard} />
+
+        {aboutInfo.id && <About aboutInfo={aboutInfo} />}
+      </div>
     </>
   );
 }

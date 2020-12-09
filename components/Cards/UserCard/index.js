@@ -156,6 +156,7 @@ export default function UserCard({ user, timeScore }) {
       <Card
         className={classes.root}
         onClick={() => {
+          user.timeScore = timeScore;
           Router.push({ pathname: "/home/profile", query: user });
         }}
       >

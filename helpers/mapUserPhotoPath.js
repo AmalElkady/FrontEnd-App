@@ -19,6 +19,8 @@ export const mapUserPhotoPath = (userArr, co_ci_v) => {
     ci.length == 1
       ? (va = co_ci_v.substring(5, 7).replace(/_/, ""))
       : (va = co_ci_v.substring(6, 8).replace(/_/, ""));
+
+    co_ci_v = co + "_" + ci + "_" + va;
     newUsersArr = userArr.map((e, i) => {
       if (i % 2 == 0) {
         e = JSON.parse(e);
