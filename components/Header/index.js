@@ -201,11 +201,11 @@ class Header extends React.Component {
             </IconButton>
           )}
 
-          <Link href="/">
+          {/* <Link href="/">
             <a className="app-logo mr-2 d-none d-sm-block">
               <img src="../../static/images/gila.png" alt="Gila" title="Gila" />
             </a>
-          </Link>
+          </Link> */}
 
           {/* <SearchBox
             styleName="d-none d-lg-block"

@@ -10,8 +10,11 @@
 
 .app-main-header {
   //z-index: 1302 !important;
-  background-color: $light-gray !important;
-  //background-image: url("../../static/images/backgrounds/Main_Header_Background_PC.png");
+  background-color: $secondary !important;
+  // background-image: url("http://localhost:3000/static/images/backgrounds/Main_Header_Background_PC.png");
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
   color: $white !important;
 
   .ellipse-shape {

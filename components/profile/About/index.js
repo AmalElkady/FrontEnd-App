@@ -47,7 +47,7 @@ export default function About({ aboutInfo }) {
             </Typography>
           </div>
 
-          <div className="d-flex margin-TB">
+          <div className="margin-TB d-flex-m">
             <div className="d-flex profile-about-subSec">
               <div className="profile-icon">
                 <img src="../../../static/images/icons/profile/Education_Icons.svg" />
@@ -66,23 +66,21 @@ export default function About({ aboutInfo }) {
             </div>
           </div>
 
-          <div className="d-flex margin-TB">
-            <div className="d-flex profile-about-subSec">
-              <div className="profile-icon">
-                <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
-              </div>
-              <Typography variant="body1" gutterBottom>
-                {l2Data.profile.bio}
-              </Typography>
+          <div className="margin-TB d-flex">
+            <div className="profile-icon-2">
+              <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
             </div>
-            <div className="d-flex profile-about-subSec">
-              <div className="profile-icon profile-icon-2 ">
-                <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
-              </div>
-              <Typography variant="body1" gutterBottom>
-                <IntlMessages id={`workd.${l2Data.profile.workd}`} />
-              </Typography>
+            <Typography variant="body1" gutterBottom>
+              <IntlMessages id={`workd.${l2Data.profile.workd}`} />
+            </Typography>
+          </div>
+          <div className="margin-TB d-flex">
+            <div className="profile-icon-2">
+              <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
             </div>
+            <Typography variant="body1" gutterBottom>
+              {l2Data.profile.bio}
+            </Typography>
           </div>
         </div>
       )}

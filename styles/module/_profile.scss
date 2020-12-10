@@ -180,15 +180,17 @@
 ///
 .profile-container {
   display: flex;
+  justify-content: center;
   @media (max-width: 700px) {
     display: block;
   }
 }
 .profile-card {
-  margin-right: 1rem;
+  width: 35%;
+  margin: 0 5rem 0 0;
   @media (max-width: 700px) {
-    margin-bottom: 2rem;
-    margin-right: 0;
+    margin: 0rem;
+    width: 100%;
   }
 }
 .profile-about {
@@ -197,7 +199,16 @@
     padding-top: 0;
   }
 }
-.card-img {
+.online-flag {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #04a304;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+.card-container-img {
   position: relative;
 }
 .card-img-icon {
@@ -205,14 +216,25 @@
   position: absolute;
   bottom: 1rem;
   justify-content: space-between;
-  left: 0.6rem;
-  width: 90%;
+  left: 6rem;
+  @media (max-width: 700px) {
+    left: 0.5rem;
+  }
   img {
     cursor: pointer;
   }
 }
+.card-img {
+  height: 30rem;
+  @media (max-width: 700px) {
+    height: 20rem;
+  }
+  img {
+    height: 100%;
+  }
+}
 .card-info {
-  background-color: #d3316e;
+  background-color: $secondary;
   border-radius: 0 0 2rem 2rem;
   color: white;
   padding: 1rem 0 1rem 0.4rem;
@@ -225,23 +247,19 @@
   padding: 0.5rem;
 }
 .profile-icon {
-  width: 12%;
-  margin: 0rem 0.5rem;
-  @media (max-width: 700px) {
-    width: 20%;
-  }
+  width: 22%;
+  margin: 0rem 0.5rem 0 0.2rem;
 }
 .profile-icon-2 {
-  width: 13%;
-  @media (max-width: 700px) {
-    width: 50%;
-  }
+  width: 12%;
+  margin-right: 0.4rem;
 }
 .profile-icon-flag {
-  width: 6%;
-  margin: 0rem 0.6rem;
+  width: 8%;
+  margin: 0.6rem 0.8rem 0;
   @media (max-width: 700px) {
     width: 9%;
+    margin: 0.6rem 0.6rem 0;
   }
 }
 
@@ -258,12 +276,32 @@
   margin: 0.8rem 0;
 }
 
+.d-flex-m {
+  @media (max-width: 700px) {
+    display: flex;
+  }
+}
+
 .profile-about-subSec {
   width: 50%;
+  margin-bottom: 0.8rem;
+  @media (max-width: 700px) {
+    margin-bottom: 0;
+  }
 }
 .profile-about,
 .card-info {
   p {
     font-weight: bold !important;
+  }
+}
+.profile-about {
+  p {
+    padding-top: 0.8rem;
+    font-size: 1.2rem;
+    @media (max-width: 700px) {
+      padding-top: 0.4rem;
+      font-size: 1rem;
+    }
   }
 }
