@@ -14,6 +14,7 @@ export default function Profile() {
         n: router.query.n,
         photo: router.query._,
         b: router.query.b,
+        gd: router.query.gd,
         m: router.query.m,
         timeScore: router.query.timeScore
       });

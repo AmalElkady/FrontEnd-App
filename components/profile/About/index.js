@@ -46,7 +46,6 @@ export default function About({ aboutInfo }) {
               <IntlMessages id={`nationality.${l2Data.profile.nationality}`} />
             </Typography>
           </div>
-
           <div className="margin-TB d-flex-m">
             <div className="d-flex profile-about-subSec">
               <div className="profile-icon">

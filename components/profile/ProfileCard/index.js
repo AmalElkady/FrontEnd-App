@@ -4,7 +4,11 @@ import IntlMessages from "../../../util/IntlMessages";
 import Typography from "@material-ui/core/Typography";
 import Flag from "react-world-flags";
 import moment from "moment";
-import { COUNTRY_MAP, COUNTRY_CITY_MAP } from "../../../util/data";
+import {
+  COUNTRY_MAP,
+  COUNTRY_CITY_MAP,
+  ARRAYS_OF_MARTIAL_STATUS
+} from "../../../util/data";
 
 export default function ProfileCard({ mainInfo }) {
   const searchState = useSelector(state => state.home.searchState);
@@ -58,6 +62,11 @@ export default function ProfileCard({ mainInfo }) {
             {mainInfo.ci
               ? COUNTRY_CITY_MAP[mainInfo.co.toLowerCase()][mainInfo.ci - 1]
               : ""}
+          </Typography>
+        </div>
+        <div className="d-flex">
+          <Typography variant="body1" className="card-h-row" gutterBottom>
+            {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][mainInfo.m]}
           </Typography>
         </div>
       </div>
