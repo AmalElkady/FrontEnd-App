@@ -99,4 +99,37 @@ profile.readProfileL2 = function(id, co, ci, va) {
   });
 };
 
+profile.readMyProfile = function(params) {
+  console.log("from profile service my profile ", params);
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/readmyprofile?profile=${params}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response) {
+        console.log("data of my profile from service ", response);
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { profile };

@@ -279,3 +279,6 @@ export const RESET_END_RES_USERS_OF = "reset_end_res_users_of"; //end all Users 
 
 export const READ_PROFILE_L2 = "read_profile_l2";
 export const READ_PROFILE_L2_SUCCESS = "read_profile_l2_success";
+
+export const READ_MY_PROFILE = "read_my_profile";
+export const READ_MY_PROFILE_SUCCESS = "read_my_profile_success";

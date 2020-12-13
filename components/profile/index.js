@@ -8,13 +8,13 @@ export default function Profile() {
   const [aboutInfo, setAboutInfo] = useState({});
   useEffect(() => {
     if (router.query) {
-      console.log("router.query ", router.query);
       setProfileCard({
         co: router.query.co,
         ci: router.query.ci,
         n: router.query.n,
         photo: router.query._,
         b: router.query.b,
+        m: router.query.m,
         timeScore: router.query.timeScore
       });
       setAboutInfo({

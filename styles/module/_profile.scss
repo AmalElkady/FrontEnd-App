@@ -217,7 +217,13 @@
   bottom: 1rem;
   justify-content: space-between;
   left: 6rem;
-  @media (max-width: 700px) {
+  @media (min-width: 800px) and(max-width: 1200px) {
+    left: 8%;
+  }
+  @media (min-width: 500px) and(max-width: 800px) {
+    left: 6%;
+  }
+  @media (max-width: 500px) {
     left: 0.5rem;
   }
   img {

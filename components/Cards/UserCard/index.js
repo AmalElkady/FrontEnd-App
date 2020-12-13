@@ -153,13 +153,7 @@ export default function UserCard({ user, timeScore }) {
 
   return (
     <>
-      <Card
-        className={classes.root}
-        onClick={() => {
-          user.timeScore = timeScore;
-          Router.push({ pathname: "/home/profile", query: user });
-        }}
-      >
+      <Card className={classes.root}>
         <CardMedia className={classes.media} image={user._} title="userPhoto" />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
@@ -202,7 +196,14 @@ export default function UserCard({ user, timeScore }) {
             {/* <ChatBubbleIcon /> */}
             <ChatIcon />
           </IconButton>
-          <IconButton className={classes.iconBtn} aria-label="View Profile">
+          <IconButton
+            className={classes.iconBtn}
+            onClick={() => {
+              user.timeScore = timeScore;
+              Router.push({ pathname: "/home/profile", query: user });
+            }}
+            aria-label="View Profile"
+          >
             {/* <VisibilityIcon /> */}
             <ViewProIcon />
           </IconButton>

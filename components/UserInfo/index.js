@@ -5,6 +5,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { userSignOut } from "../../actions/Auth";
 import { resetStates } from "../../actions/Home";
+import { readMyProfile } from "../../actions/Profile";
 import IntlMessages from "../../util/IntlMessages";
 
 class UserInfo extends React.Component {
@@ -52,7 +53,13 @@ class UserInfo extends React.Component {
             }
           }}
         >
-          <MenuItem onClick={this.handleRequestClose}>
+          <MenuItem
+            onClick={() => {
+              //this.handleRequestClose
+              this.props.readMyProfile("L1");
+              this.props.readMyProfile("L2");
+            }}
+          >
             <i className="zmdi zmdi-account zmdi-hc-fw mr-2" />
             <IntlMessages id="popup.profile" />
           </MenuItem>
@@ -81,4 +88,8 @@ const mapStateToProps = ({ settings, auth }) => {
   const { locale } = settings;
   return { locale, auth };
 };
-export default connect(mapStateToProps, { userSignOut, resetStates })(UserInfo);
+export default connect(mapStateToProps, {
+  userSignOut,
+  resetStates,
+  readMyProfile
+})(UserInfo);

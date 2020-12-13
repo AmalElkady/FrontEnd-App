@@ -38,6 +38,7 @@ import {
   RESET_STATES_LIST_CITY_ONLINE
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
+import { addUserGender } from "../helpers/addUserGender";
 
 const initialHomeState = {
   //online dropdown
@@ -332,6 +333,7 @@ const home = (state = initialHomeState, action) => {
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      action.payload.usersArr = addUserGender(action.payload.usersArr);
 
       if (
         action.payload.usersArr.length == 0 &&
@@ -375,6 +377,7 @@ const home = (state = initialHomeState, action) => {
     }
     case SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      action.payload.usersArr = addUserGender(action.payload.usersArr);
       if (action.payload.usersArr.length == 0) {
         if (
           state.agerangeAllCountriesSelectedOnline.length > 1 ||
@@ -545,6 +548,7 @@ const home = (state = initialHomeState, action) => {
     }
     case ALL_COUNTRIES_OFFLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      action.payload.usersArr = addUserGender(action.payload.usersArr);
 
       if (
         action.payload.usersArr.length === 0
@@ -594,6 +598,7 @@ const home = (state = initialHomeState, action) => {
     }
     case COUNTRY_RECENT_ACTIVE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      action.payload.usersArr = addUserGender(action.payload.usersArr);
 
       if (action.payload.usersArr.length === 0) {
         state.endOfResultUsersOfS = true;
@@ -614,6 +619,7 @@ const home = (state = initialHomeState, action) => {
     }
     case COUNTRY_CITY_RECENT_ACTIVE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      action.payload.usersArr = addUserGender(action.payload.usersArr);
 
       if (action.payload.usersArr.length === 0) {
         state.endOfResultUsersOfS = true;
