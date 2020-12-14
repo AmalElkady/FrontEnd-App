@@ -172,8 +172,11 @@ profile.updateProfileL1 = function(martial) {
       let response = responseX.data;
 
       if (response) {
-        console.log("data of update L1 profile from service ", response);
-        resolve(response);
+        console.log(
+          "data of update L1 profile from service ",
+          response.response
+        );
+        resolve(response.response);
       } else {
         resolve({ message: "no response !" });
       }

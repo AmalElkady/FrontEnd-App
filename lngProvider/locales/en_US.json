@@ -592,6 +592,9 @@
   "dashboard.application": "Application",
   "dashboard.weekly": "Weekly",
 
+  "updateProfile.martial": "Your Martial status :",
+  "updateProfile.update": "Update",
+
   "inputLabel.birthday": "Birthday",
   "inputLabel.city": "City",
   "inputLabel.martial": "Martial status",

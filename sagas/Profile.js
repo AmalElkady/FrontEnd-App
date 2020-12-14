@@ -63,7 +63,7 @@ function* readMyProfileRequest({ payload }) {
 function* updateProfileL1Request({ payload }) {
   try {
     const returnedData = yield call(updateL1Profile, payload);
-    yield put(updateProfileL1Success(returnedData));
+    yield put(updateProfileL1Success(returnedData, payload));
   } catch (error) {
     yield put(showProfileMessage(error));
   }
@@ -99,7 +99,7 @@ export function* updateProfileL1() {
   yield takeEvery(UPDATE_PROFILE_L1, updateProfileL1Request);
 }
 export function* updateProfileL2() {
-  yield takeEvery(UPDATE_PROFILE_L1, updateProfileL2Request);
+  yield takeEvery(UPDATE_PROFILE_L2, updateProfileL2Request);
 }
 
 export default function* rootSaga() {

@@ -57,6 +57,7 @@ export default function Profile() {
     if (
       photoReadSignedRequest != null &&
       myProfileL1Data != null &&
+      myProfileL1Data.profile &&
       router.query.flag == "readMe"
     ) {
       setEditedPhoto(
