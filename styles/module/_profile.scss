@@ -311,3 +311,28 @@
     }
   }
 }
+
+.p-relative {
+  position: relative;
+}
+.edit-icon,
+.edit-icon-large {
+  color: white !important;
+  position: absolute !important;
+}
+.edit-icon {
+  background-color: #b82559cf !important;
+  bottom: 0.2rem;
+  width: 2rem;
+  height: 2rem;
+  @media (max-width: 500px) {
+    right: 0.1rem;
+  }
+}
+.edit-icon-large {
+  background-color: #d61f5f !important;
+  bottom: 0.1rem;
+  width: 3rem;
+  height: 3rem;
+  right: 1rem;
+}

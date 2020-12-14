@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import IntlMessages from "../../../util/IntlMessages";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import { readProfileL2, readMyProfile } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -80,6 +82,14 @@ export default function About({ aboutInfo }) {
             <Typography variant="body1" gutterBottom>
               {disData.bio}
             </Typography>
+          </div>
+          {/* ////// Edit Icon */}
+          <div className="p-relative margin-TB">
+            {router.query.flag == "readMe" && (
+              <IconButton aria-label="Edit" className="edit-icon-large">
+                <EditIcon></EditIcon>
+              </IconButton>
+            )}
           </div>
         </div>
       )}

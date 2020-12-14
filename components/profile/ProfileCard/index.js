@@ -1,6 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import IntlMessages from "../../../util/IntlMessages";
+import { useRouter } from "next/router";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import Flag from "react-world-flags";
 import moment from "moment";
@@ -12,6 +15,7 @@ import {
 
 export default function ProfileCard({ mainInfo }) {
   const searchState = useSelector(state => state.home.searchState);
+  const router = useRouter();
   return (
     <div className="profile-card">
       <div className="card-container-img">
@@ -65,8 +69,17 @@ export default function ProfileCard({ mainInfo }) {
           </Typography>
         </div>
         <div className="d-flex">
-          <Typography variant="body1" className="card-h-row" gutterBottom>
+          <Typography
+            variant="body1"
+            className="card-h-row p-relative"
+            gutterBottom
+          >
             {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][mainInfo.m]}
+            {router.query.flag == "readMe" && (
+              <IconButton aria-label="Edit" className="edit-icon">
+                <EditIcon fontSize="small"></EditIcon>
+              </IconButton>
+            )}
           </Typography>
         </div>
       </div>
