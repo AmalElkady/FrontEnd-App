@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import Router from "next/router";
@@ -151,6 +151,12 @@ export default function UserCard({ user, timeScore }) {
     setlickLove(!clickLove);
   };
 
+  useEffect(() => {
+    if (user) {
+      user.flag = "read";
+    }
+  }, []);
+
   return (
     <>
       <Card className={classes.root}>
@@ -200,7 +206,7 @@ export default function UserCard({ user, timeScore }) {
             className={classes.iconBtn}
             onClick={() => {
               user.timeScore = timeScore;
-              Router.push({ pathname: "/home/profile", query: user });
+              Router.push({ pathname: `/home/profile`, query: user });
             }}
             aria-label="View Profile"
           >

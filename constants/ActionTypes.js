@@ -281,4 +281,5 @@ export const READ_PROFILE_L2 = "read_profile_l2";
 export const READ_PROFILE_L2_SUCCESS = "read_profile_l2_success";
 
 export const READ_MY_PROFILE = "read_my_profile";
-export const READ_MY_PROFILE_SUCCESS = "read_my_profile_success";
+export const READ_MY_PROFILE_L1_SUCCESS = "read_my_profile_l1_success";
+export const READ_MY_PROFILE_L2_SUCCESS = "read_my_profile_l2_success";

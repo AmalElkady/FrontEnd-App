@@ -1,12 +1,12 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   readProfileL2Success,
-  readMyProfileSuccess,
+  readMyProfileL1Success,
+  readMyProfileL2Success,
   showProfileMessage
 } from "../actions/Profile";
 import { READ_PROFILE_L2, READ_MY_PROFILE } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
-
 const readProfileL2 = async (id, co, ci, va) =>
   await profile
     .readProfileL2(id, co, ci, va)
@@ -29,10 +29,13 @@ function* readProfileL2Request({ payload }) {
   }
 }
 function* readMyProfileRequest({ payload }) {
-  console.log("from saga ", payload);
   try {
     const returnedData = yield call(readMyProfile, payload);
-    yield put(readMyProfileSuccess(returnedData));
+    if (payload == "L1") {
+      yield put(readMyProfileL1Success(returnedData));
+    } else {
+      yield put(readMyProfileL2Success(returnedData));
+    }
   } catch (error) {
     yield put(showProfileMessage(error));
   }

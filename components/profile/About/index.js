@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import IntlMessages from "../../../util/IntlMessages";
 import Typography from "@material-ui/core/Typography";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Widget from "../../../components/Widget/index";
-import { aboutList } from "../../../app/socialApps/Profile/data";
-import AboutItem from "./AboutItem";
-import { readProfileL2 } from "../../../actions/Profile";
+import { readProfileL2, readMyProfile } from "../../../actions/Profile";
 import Flag from "react-world-flags";
 
 export default function About({ aboutInfo }) {
-  //const router = useRouter();
-  // const [aboutL, setAboutList] = useState({});
+  const router = useRouter();
   const l2Data = useSelector(state => state.profile.profileL2Data);
-  const [value, setValue] = useState(0);
+  const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
+  const [disData, setDisData] = useState(null);
   const dispatch = useDispatch();
-
-  const handleChange = (event, value) => {
-    setValue(value);
-  };
-
   useEffect(() => {
-    dispatch(
-      readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
-    );
-  }, []);
+    setDisData(null);
+    if (router.query.flag == "read") {
+      dispatch(
+        readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
+      );
+    } else if (router.query.flag == "readMe") {
+      dispatch(readMyProfile("L2"));
+    }
+  }, [router.query]);
 
   useEffect(() => {
     if (l2Data != null) {
-      console.log("l2Data ", l2Data);
+      setDisData(l2Data.profile);
     }
   }, [l2Data]);
+  useEffect(() => {
+    if (myProfileDataL2 != null) {
+      setDisData(JSON.parse(myProfileDataL2.profile));
+    }
+  }, [myProfileDataL2]);
 
   return (
     <>
-      {l2Data != null && (
+      {disData != null && (
         <div className="profile-about">
           <div className="profile-nat d-flex margin-TB">
             <div className="profile-icon-flag">
-              <Flag code={l2Data.profile.nationality} />
+              <Flag code={disData.nationality} />
             </div>
             <Typography variant="body1" gutterBottom>
-              <IntlMessages id={`nationality.${l2Data.profile.nationality}`} />
+              <IntlMessages id={`nationality.${disData.nationality}`} />
             </Typography>
           </div>
           <div className="margin-TB d-flex-m">
@@ -52,7 +52,7 @@ export default function About({ aboutInfo }) {
                 <img src="../../../static/images/icons/profile/Education_Icons.svg" />
               </div>
               <Typography variant="body1" gutterBottom>
-                <IntlMessages id={`education.${l2Data.profile.education}`} />
+                <IntlMessages id={`education.${disData.education}`} />
               </Typography>
             </div>
             <div className="d-flex profile-about-subSec">
@@ -60,7 +60,7 @@ export default function About({ aboutInfo }) {
                 <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
               </div>
               <Typography variant="body1" gutterBottom>
-                {l2Data.profile.title}
+                {disData.title}
               </Typography>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function About({ aboutInfo }) {
               <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
             </div>
             <Typography variant="body1" gutterBottom>
-              <IntlMessages id={`workd.${l2Data.profile.workd}`} />
+              <IntlMessages id={`workd.${disData.workd}`} />
             </Typography>
           </div>
           <div className="margin-TB d-flex">
@@ -78,45 +78,11 @@ export default function About({ aboutInfo }) {
               <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
             </div>
             <Typography variant="body1" gutterBottom>
-              {l2Data.profile.bio}
+              {disData.bio}
             </Typography>
           </div>
         </div>
       )}
     </>
-    // <Widget styleName="jr-card-full jr-card-tabs-right jr-card-profile">
-    //   <div className="card-header">
-    //     <h4 className="card-title mb-0">About</h4>
-    //   </div>
-    //   <div className="jr-tabs-classic">
-    //     <Tabs className="jr-tabs-up" value={value} onChange={handleChange}>
-    //       <Tab className="jr-tabs-label" label="Overview" />
-    //       <Tab className="jr-tabs-label" label="Work" />
-    //       <Tab className="jr-tabs-label" label="Education" />
-    //     </Tabs>
-    //     <div className="jr-tabs-content jr-task-list">
-    //       <div className="row">
-    //         {value === 0 &&
-    //           aboutList.map((about, index) => (
-    //             <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-    //               <AboutItem data={about} />
-    //             </div>
-    //           ))}
-    //         {value === 1 &&
-    //           aboutList.map((about, index) => (
-    //             <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-    //               <AboutItem data={about} />
-    //             </div>
-    //           ))}
-    //         {value === 2 &&
-    //           aboutList.map((about, index) => (
-    //             <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-    //               <AboutItem data={about} />
-    //             </div>
-    //           ))}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </Widget>
   );
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
-import { mapUserPhotoPath } from "../helpers/mapUserPhotoPath";
+import base64url from "base64url";
 import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
 
 const profile = {};
@@ -120,6 +120,21 @@ profile.readMyProfile = function(params) {
 
       if (response) {
         console.log("data of my profile from service ", response);
+        if (params == "L1") {
+          let tokenUserData = JSON.parse(
+            base64url.decode(tokenValue.split(".")[1])
+          );
+          response.profile.L1 = JSON.parse(response.profile.L1);
+          response.profile.MP =
+            response.profile.L1.country +
+            "_" +
+            response.profile.L1.city +
+            "_" +
+            response.profile.L1.varea +
+            "/" +
+            tokenUserData.id +
+            response.profile.MP;
+        }
         resolve(response);
       } else {
         resolve({ message: "no response !" });
@@ -131,5 +146,4 @@ profile.readMyProfile = function(params) {
     console.log(err);
   });
 };
-
 export { profile };

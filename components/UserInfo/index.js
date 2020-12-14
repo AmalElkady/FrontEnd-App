@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "react-redux";
+import Router from "next/router";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { userSignOut } from "../../actions/Auth";
@@ -55,9 +56,11 @@ class UserInfo extends React.Component {
         >
           <MenuItem
             onClick={() => {
-              //this.handleRequestClose
-              this.props.readMyProfile("L1");
-              this.props.readMyProfile("L2");
+              Router.push({
+                pathname: `/home/profile`,
+                query: { flag: "readMe" }
+              });
+              this.handleRequestClose();
             }}
           >
             <i className="zmdi zmdi-account zmdi-hc-fw mr-2" />
