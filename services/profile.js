@@ -146,4 +146,43 @@ profile.readMyProfile = function(params) {
     console.log(err);
   });
 };
+
+profile.updateProfileL1 = function(martial) {
+  // "martial": "2"
+
+  console.log("from profile service update profile L1 ", martial);
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/addupdateprofile?update=L1`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          martial
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response) {
+        console.log("data of update L1 profile from service ", response);
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { profile };

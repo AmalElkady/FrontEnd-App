@@ -2,6 +2,7 @@ import {
   READ_PROFILE_L2_SUCCESS,
   READ_MY_PROFILE_L1_SUCCESS,
   READ_MY_PROFILE_L2_SUCCESS,
+  UPDATE_PROFILE_L1_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -9,6 +10,7 @@ const initialProfileState = {
   profileL2Data: null,
   myProfileDataL1: null,
   myProfileDataL2: null,
+  returnUpdateMessage:null,
   showMessage: false,
   loader: false,
   alertMessage: ""
@@ -32,6 +34,12 @@ const home = (state = initialProfileState, action) => {
       return {
         ...state,
         myProfileDataL2: action.payload
+      };
+    }
+    case UPDATE_PROFILE_L1_SUCCESS: {
+      return {
+        ...state,
+        returnUpdateMessage: action.payload
       };
     }
     case SHOW_MESSAGE: {
