@@ -286,3 +286,6 @@ export const READ_MY_PROFILE_L2_SUCCESS = "read_my_profile_l2_success";
 
 export const UPDATE_PROFILE_L1 = "update_profile_l1";
 export const UPDATE_PROFILE_L1_SUCCESS = "update_profile_l1_success";
+
+export const UPDATE_PROFILE_L2 = "update_profile_l2";
+export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";

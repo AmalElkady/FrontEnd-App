@@ -5,7 +5,9 @@ import {
   READ_MY_PROFILE_L1_SUCCESS,
   READ_MY_PROFILE_L2_SUCCESS,
   UPDATE_PROFILE_L1,
-  UPDATE_PROFILE_L1_SUCCESS
+  UPDATE_PROFILE_L1_SUCCESS,
+  UPDATE_PROFILE_L2,
+  UPDATE_PROFILE_L2_SUCCESS
 } from "../constants/ActionTypes";
 
 export const readProfileL2 = (id, co, ci, va) => {
@@ -52,6 +54,20 @@ export const updateProfileL1 = martial => {
 export const updateProfileL1Success = data => {
   return {
     type: UPDATE_PROFILE_L1_SUCCESS,
+    payload: data
+  };
+};
+
+export const updateProfileL2 = (na, tpercent, title, workd, edu, bio) => {
+  return {
+    type: UPDATE_PROFILE_L2,
+    payload: { na, tpercent, title, workd, edu, bio }
+  };
+};
+
+export const updateProfileL2Success = data => {
+  return {
+    type: UPDATE_PROFILE_L2_SUCCESS,
     payload: data
   };
 };

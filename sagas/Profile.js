@@ -4,12 +4,14 @@ import {
   readMyProfileL1Success,
   readMyProfileL2Success,
   updateProfileL1Success,
+  updateProfileL2Success,
   showProfileMessage
 } from "../actions/Profile";
 import {
   READ_PROFILE_L2,
   READ_MY_PROFILE,
-  UPDATE_PROFILE_L1
+  UPDATE_PROFILE_L1,
+  UPDATE_PROFILE_L2
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -27,6 +29,12 @@ const readMyProfile = async params =>
 const updateL1Profile = async martial =>
   await profile
     .updateProfileL1(martial)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const updateL2Profile = async (na, tpercent, title, workd, edu, bio) =>
+  await profile
+    .updateProfileL2(na, tpercent, title, workd, edu, bio)
     .then(returnData => returnData)
     .catch(error => error);
 /////
@@ -61,6 +69,24 @@ function* updateProfileL1Request({ payload }) {
   }
 }
 
+function* updateProfileL2Request({ payload }) {
+  const { na, tpercent, title, workd, edu, bio } = payload;
+  try {
+    const returnedData = yield call(
+      updateL2Profile,
+      na,
+      tpercent,
+      title,
+      workd,
+      edu,
+      bio
+    );
+    yield put(updateProfileL2Success(returnedData));
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -72,11 +98,15 @@ export function* readMyProfileData() {
 export function* updateProfileL1() {
   yield takeEvery(UPDATE_PROFILE_L1, updateProfileL1Request);
 }
+export function* updateProfileL2() {
+  yield takeEvery(UPDATE_PROFILE_L1, updateProfileL2Request);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(readProfileL2Data),
     fork(readMyProfileData),
-    fork(updateProfileL1)
+    fork(updateProfileL1),
+    fork(updateProfileL2)
   ]);
 }

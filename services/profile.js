@@ -185,4 +185,60 @@ profile.updateProfileL1 = function(martial) {
   });
 };
 
+profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
+  // "nationality": "",
+  //  "tpercent": "",
+  //  "title" :  "",
+  //  "workd": "",
+  //  "education": "",
+  //  "bio": ""
+
+  console.log(
+    "from profile service update profile L2 ",
+    na,
+    tpercent,
+    title,
+    workd,
+    edu,
+    bio
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/addupdateprofile?update=L2`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          nationality: na,
+          tpercent,
+          title,
+          workd,
+          education: edu,
+          bio
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response) {
+        console.log("data of update L2 profile from service ", response);
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { profile };
