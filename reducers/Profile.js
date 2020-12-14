@@ -4,6 +4,7 @@ import {
   READ_MY_PROFILE_L2_SUCCESS,
   UPDATE_PROFILE_L1_SUCCESS,
   UPDATE_PROFILE_L2_SUCCESS,
+  READ_MY_PHOTOS_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -12,6 +13,7 @@ const initialProfileState = {
   myProfileDataL1: null,
   myProfileDataL2: null,
   userMartial: null,
+  myPhotoSigned: null,
   returnUpdateMessage: null,
   showMessage: false,
   loader: false,
@@ -52,6 +54,13 @@ const home = (state = initialProfileState, action) => {
       return {
         ...state,
         returnUpdateMessage: action.payload
+      };
+    }
+    case READ_MY_PHOTOS_SUCCESS: {
+      state.myProfileDataL1.profile.MP = action.payload.signedRequest;
+      return {
+        ...state,
+        myPhotoSigned: action.payload.signedRequest
       };
     }
     case SHOW_MESSAGE: {

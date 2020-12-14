@@ -8,6 +8,8 @@ import {
   UPDATE_PROFILE_L1_SUCCESS,
   UPDATE_PROFILE_L2,
   UPDATE_PROFILE_L2_SUCCESS,
+  READ_MY_PHOTOS,
+  READ_MY_PHOTOS_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -53,7 +55,6 @@ export const updateProfileL1 = martial => {
 };
 
 export const updateProfileL1Success = (data, martial) => {
-  console.log("from success ", martial);
   return {
     type: UPDATE_PROFILE_L1_SUCCESS,
     payload: { data, martial }
@@ -70,6 +71,20 @@ export const updateProfileL2 = (na, tpercent, title, workd, edu, bio) => {
 export const updateProfileL2Success = data => {
   return {
     type: UPDATE_PROFILE_L2_SUCCESS,
+    payload: data
+  };
+};
+
+export const readMyPhotos = params => {
+  return {
+    type: READ_MY_PHOTOS,
+    payload: params
+  };
+};
+
+export const readMyPhotosSuccess = data => {
+  return {
+    type: READ_MY_PHOTOS_SUCCESS,
     payload: data
   };
 };

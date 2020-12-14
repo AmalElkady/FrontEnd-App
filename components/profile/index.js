@@ -5,7 +5,7 @@ import { getCookie } from "../../util/session";
 import base64url from "base64url";
 import ProfileCard from "./ProfileCard";
 import About from "./About";
-import { readMyProfile } from "../../actions/Profile";
+import { readMyProfile, readMyPhotos } from "../../actions/Profile";
 import { requestPhotoRead } from "../../actions/Home";
 import { mapUserPhotoUrl } from "../../helpers/mapUserPhotoUrl";
 
@@ -13,11 +13,8 @@ export default function Profile() {
   const router = useRouter();
   const [profileCard, setProfileCard] = useState({});
   const [aboutInfo, setAboutInfo] = useState({});
-  const [editedPhoto, setEditedPhoto] = useState(null);
   const myProfileL1Data = useSelector(state => state.profile.myProfileDataL1);
-  const photoReadSignedRequest = useSelector(
-    state => state.home.photoReadSignedRequest
-  );
+  const myPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
   const dispatch = useDispatch();
   useEffect(() => {
     if (router.query) {
@@ -41,7 +38,6 @@ export default function Profile() {
           va: router.query.va
         });
       } else if (router.query.flag == "readMe") {
-        setEditedPhoto(null);
         dispatch(readMyProfile("L1"));
       }
     }
@@ -49,35 +45,18 @@ export default function Profile() {
 
   useEffect(() => {
     if (myProfileL1Data != null && router.query.flag == "readMe") {
-      dispatch(requestPhotoRead());
+      dispatch(readMyPhotos(0));
     }
   }, [myProfileL1Data]);
-
   useEffect(() => {
-    if (
-      photoReadSignedRequest != null &&
-      myProfileL1Data != null &&
-      myProfileL1Data.profile &&
-      router.query.flag == "readMe"
-    ) {
-      setEditedPhoto(
-        mapUserPhotoUrl(
-          myProfileL1Data.profile.MP,
-          photoReadSignedRequest.signedRequest
-        )
-      );
-    }
-  }, [photoReadSignedRequest]);
-
-  useEffect(() => {
-    if (editedPhoto != null) {
+    if (myPhotoSigned != null) {
       let token = getCookie("access_token");
       let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
       setProfileCard({
         co: myProfileL1Data.profile.L1.country,
         ci: myProfileL1Data.profile.L1.city,
         n: myProfileL1Data.profile.L1.profile,
-        photo: editedPhoto,
+        photo: myPhotoSigned,
         b: myProfileL1Data.profile.L1.birth,
         gd: myProfileL1Data.profile.L1.gender,
         m: myProfileL1Data.profile.L1.martial
@@ -89,7 +68,7 @@ export default function Profile() {
         va: myProfileL1Data.profile.L1.varea
       });
     }
-  }, [editedPhoto]);
+  }, [myPhotoSigned]);
 
   return (
     <>

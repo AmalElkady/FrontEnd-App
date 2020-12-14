@@ -289,3 +289,6 @@ export const UPDATE_PROFILE_L1_SUCCESS = "update_profile_l1_success";
 
 export const UPDATE_PROFILE_L2 = "update_profile_l2";
 export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";
+
+export const READ_MY_PHOTOS = "read_my_photo";
+export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";

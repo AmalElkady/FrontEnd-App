@@ -121,20 +121,41 @@ profile.readMyProfile = function(params) {
       if (response) {
         console.log("data of my profile from service ", response);
         if (params == "L1") {
-          let tokenUserData = JSON.parse(
-            base64url.decode(tokenValue.split(".")[1])
-          );
           response.profile.L1 = JSON.parse(response.profile.L1);
-          response.profile.MP =
-            response.profile.L1.country +
-            "_" +
-            response.profile.L1.city +
-            "_" +
-            response.profile.L1.varea +
-            "/" +
-            tokenUserData.id +
-            response.profile.MP;
         }
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+profile.readMyPhotos = function(params) {
+  console.log("from profile service my photo ", params);
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/readmyphotos?photo=${params}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response) {
+        console.log("data of my profile from service ", response);
         resolve(response);
       } else {
         resolve({ message: "no response !" });

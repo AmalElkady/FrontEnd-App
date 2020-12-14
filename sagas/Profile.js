@@ -5,13 +5,15 @@ import {
   readMyProfileL2Success,
   updateProfileL1Success,
   updateProfileL2Success,
+  readMyPhotosSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
   READ_PROFILE_L2,
   READ_MY_PROFILE,
   UPDATE_PROFILE_L1,
-  UPDATE_PROFILE_L2
+  UPDATE_PROFILE_L2,
+  READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -23,6 +25,12 @@ const readProfileL2 = async (id, co, ci, va) =>
 const readMyProfile = async params =>
   await profile
     .readMyProfile(params)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const readMyPhotos = async params =>
+  await profile
+    .readMyPhotos(params)
     .then(returnData => returnData)
     .catch(error => error);
 
@@ -87,6 +95,15 @@ function* updateProfileL2Request({ payload }) {
   }
 }
 
+function* readMyPhotosRequest({ payload }) {
+  try {
+    const returnedData = yield call(readMyPhotos, payload);
+    yield put(readMyPhotosSuccess(returnedData));
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -101,12 +118,16 @@ export function* updateProfileL1() {
 export function* updateProfileL2() {
   yield takeEvery(UPDATE_PROFILE_L2, updateProfileL2Request);
 }
+export function* readMyPhoto() {
+  yield takeEvery(READ_MY_PHOTOS, readMyPhotosRequest);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(readProfileL2Data),
     fork(readMyProfileData),
     fork(updateProfileL1),
-    fork(updateProfileL2)
+    fork(updateProfileL2),
+    fork(readMyPhoto)
   ]);
 }
