@@ -167,20 +167,29 @@ export default function ProfileCard({ mainInfo }) {
           <div className="card-img">
             <img src={mainInfo.photo} alt="main photo" />
           </div>
-          {searchState == "active" && <div className="online-flag"></div>}
-          <div className="card-img-icon">
-            <div className="card-icon">
-              <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
+          {router.query.flag == "read" && (
+            <div className="card-img-icon">
+              <div className="card-icon">
+                <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
+              </div>
+              <div className="card-icon">
+                <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
+              </div>
             </div>
-            <div className="card-icon">
-              <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
-            </div>
-          </div>
+          )}
+          {router.query.flag == "readMe" && (
+            // <div className="margin-TB">
+            <IconButton aria-label="Edit" className="edit-icon-large">
+              <EditIcon></EditIcon>
+            </IconButton>
+            // </div>
+          )}
         </div>
-        <div className="card-info">
+        <div className="card-info linear-g ">
           <div className="d-flex">
             <Typography variant="body1" className="card-h-row" gutterBottom>
-              {mainInfo.n}
+              {searchState == "active" && <div className="online-flag"></div>}
+              <IntlMessages id="Profile.online" />
             </Typography>
             <div className="card-h-row d-flex">
               <div className="profile-icon-flag-2">
@@ -191,15 +200,20 @@ export default function ProfileCard({ mainInfo }) {
               </Typography>
             </div>
           </div>
+
           <div className="d-flex">
-            <Typography variant="body1" className="card-h-row" component="p">
+            <Typography variant="body1" className="card-h-row" gutterBottom>
+              {mainInfo.n}
+            </Typography>
+            {/* <Typography variant="body1" className="card-h-row" component="p">
               {mainInfo.b != ""
                 ? `${moment().diff(mainInfo.b, "years")} Years Old`
                 : `${moment().diff(
                     mainInfo.timeScore.substring(0, 8),
                     "years"
                   )} Years Old`}
-            </Typography>
+            </Typography> */}
+
             <Typography
               variant="body1"
               className="d-flex card-h-row"
@@ -214,6 +228,14 @@ export default function ProfileCard({ mainInfo }) {
             </Typography>
           </div>
           <div className="d-flex">
+            <Typography variant="body1" className="card-h-row" component="p">
+              {mainInfo.b != ""
+                ? `${moment().diff(mainInfo.b, "years")} Years Old`
+                : `${moment().diff(
+                    mainInfo.timeScore.substring(0, 8),
+                    "years"
+                  )} Years Old`}
+            </Typography>
             <Typography
               variant="body1"
               className="card-h-row p-relative"

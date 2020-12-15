@@ -89,12 +89,13 @@ const useStyles = makeStyles(theme => ({
     bottom: "-1rem"
   },
   onlineFlag: {
-    width: "10px",
-    height: "10px",
+    width: "1rem",
+    height: "1rem",
     borderRadius: "50%",
     backgroundColor: "#04a304",
     marginRight: ".5rem",
-    display: "inline-block"
+    display: "inline-block",
+    boxShadow: "1px 0px 10px #046104"
   }
   ////
 }));

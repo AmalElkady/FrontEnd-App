@@ -592,6 +592,7 @@
   "dashboard.application": "Application",
   "dashboard.weekly": "Weekly",
 
+  "Profile.online": "Online",
   "updateProfile.martial": "Your Martial status :",
   "updateProfile.update": "Update",
 
@@ -639,7 +640,7 @@
   "martialM.3": "Widowed",
   "martialM.4": "Married",
 
-  "nationality.EG": "Egyption",
+  "nationality.EG": "Egyptian",
 
   "education.1": "No formal education",
   "education.2": "High School",

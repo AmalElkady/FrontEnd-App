@@ -174,7 +174,7 @@ class Header extends React.Component {
 
     return (
       <AppBar
-        className={`app-main-header ${
+        className={`app-main-header linear-g ${
           navigationStyle === HORIZONTAL_NAVIGATION &&
           horizontalNavPosition === BELOW_THE_HEADER
             ? "app-main-header-top"

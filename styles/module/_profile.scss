@@ -200,13 +200,13 @@
   }
 }
 .online-flag {
-  width: 10px;
-  height: 10px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background-color: #04a304;
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  box-shadow: 1px 0px 10px #046104;
 }
 .card-container-img {
   position: relative;
@@ -237,17 +237,28 @@
   }
   img {
     height: 100%;
+    border-radius: 2rem 2rem 0 0;
   }
 }
-.card-info {
+.linear-g {
   background-color: $secondary;
+  background-image: linear-gradient(to right, #b72051, #e61f5f) !important;
+}
+.card-info {
   border-radius: 0 0 2rem 2rem;
   color: white;
   padding: 1rem 0 1rem 0.4rem;
 }
 .card-icon {
-  width: 18%;
+  width: 22%;
 }
+.card-icon ~ span {
+  margin-top: 0.5rem;
+  @media (max-width: 500px) {
+    margin-top: 0.1rem;
+  }
+}
+
 .card-h-row {
   width: 45%;
   padding: 0.5rem;
@@ -331,7 +342,7 @@
 }
 .edit-icon-large {
   background-color: #d61f5f !important;
-  bottom: 0.1rem;
+  bottom: 1rem;
   width: 3rem;
   height: 3rem;
   right: 1rem;
