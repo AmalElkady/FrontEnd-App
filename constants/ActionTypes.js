@@ -292,3 +292,5 @@ export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";
 
 export const READ_MY_PHOTOS = "read_my_photo";
 export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";
+
+export const OPEN_MODAL = "open_modal";

@@ -10,6 +10,7 @@ import {
   UPDATE_PROFILE_L2_SUCCESS,
   READ_MY_PHOTOS,
   READ_MY_PHOTOS_SUCCESS,
+  OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -61,17 +62,24 @@ export const updateProfileL1Success = (data, martial) => {
   };
 };
 
-export const updateProfileL2 = (na, tpercent, title, workd, edu, bio) => {
+export const updateProfileL2 = (
+  nationality,
+  tpercent,
+  title,
+  workd,
+  education,
+  bio
+) => {
   return {
     type: UPDATE_PROFILE_L2,
-    payload: { na, tpercent, title, workd, edu, bio }
+    payload: { nationality, tpercent, title, workd, education, bio }
   };
 };
 
-export const updateProfileL2Success = data => {
+export const updateProfileL2Success = (data, L2Data) => {
   return {
     type: UPDATE_PROFILE_L2_SUCCESS,
-    payload: data
+    payload: { data, L2Data }
   };
 };
 
@@ -86,6 +94,13 @@ export const readMyPhotosSuccess = data => {
   return {
     type: READ_MY_PHOTOS_SUCCESS,
     payload: data
+  };
+};
+
+export const openModal = flag => {
+  return {
+    type: OPEN_MODAL,
+    payload: flag
   };
 };
 

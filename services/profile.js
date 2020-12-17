@@ -1,7 +1,6 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
 import base64url from "base64url";
-import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
 
 const profile = {};
 
@@ -155,7 +154,6 @@ profile.readMyPhotos = function(params) {
       let response = responseX.data;
 
       if (response) {
-        console.log("data of my profile from service ", response);
         resolve(response);
       } else {
         resolve({ message: "no response !" });
@@ -170,8 +168,6 @@ profile.readMyPhotos = function(params) {
 
 profile.updateProfileL1 = function(martial) {
   // "martial": "2"
-
-  console.log("from profile service update profile L1 ", martial);
 
   return new Promise(async (resolve, reject) => {
     try {
@@ -193,10 +189,6 @@ profile.updateProfileL1 = function(martial) {
       let response = responseX.data;
 
       if (response) {
-        console.log(
-          "data of update L1 profile from service ",
-          response.response
-        );
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -216,17 +208,6 @@ profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
   //  "workd": "",
   //  "education": "",
   //  "bio": ""
-
-  console.log(
-    "from profile service update profile L2 ",
-    na,
-    tpercent,
-    title,
-    workd,
-    edu,
-    bio
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -252,7 +233,6 @@ profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
       let response = responseX.data;
 
       if (response) {
-        console.log("data of update L2 profile from service ", response);
         resolve(response);
       } else {
         resolve({ message: "no response !" });

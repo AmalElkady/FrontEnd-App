@@ -78,18 +78,18 @@ function* updateProfileL1Request({ payload }) {
 }
 
 function* updateProfileL2Request({ payload }) {
-  const { na, tpercent, title, workd, edu, bio } = payload;
+  const { nationality, tpercent, title, workd, education, bio } = payload;
   try {
     const returnedData = yield call(
       updateL2Profile,
-      na,
+      nationality,
       tpercent,
       title,
       workd,
-      edu,
+      education,
       bio
     );
-    yield put(updateProfileL2Success(returnedData));
+    yield put(updateProfileL2Success(returnedData, payload));
   } catch (error) {
     yield put(showProfileMessage(error));
   }

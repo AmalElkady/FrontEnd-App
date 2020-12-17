@@ -14,9 +14,7 @@ import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useSpring, animated } from "react-spring/web.cjs";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import Select from "@material-ui/core/Select";
 import { styled } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
@@ -161,163 +159,156 @@ export default function ProfileCard({ mainInfo }) {
   ///
   return (
     <>
-      {console.log("from render ", returnUpdateMessage)}
-      <div className="profile-card">
-        <div className="card-container-img">
-          <div className="card-img">
-            <img src={mainInfo.photo} alt="main photo" />
-          </div>
-          {router.query.flag == "read" && (
-            <div className="card-img-icon">
-              <div className="card-icon">
-                <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
+      {/* {console.log("from render ", returnUpdateMessage)} */}
+      {mainInfo && (
+        <div className="profile-card">
+          <div className="card-container-img">
+            <div className="card-img">
+              <img src={mainInfo.photo} alt="main photo" />
+            </div>
+            {router.query.flag == "read" && (
+              <div className="card-img-icon">
+                <div className="card-icon">
+                  <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
+                </div>
+                <div className="card-icon">
+                  <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
+                </div>
               </div>
-              <div className="card-icon">
-                <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
+            )}
+            {router.query.flag == "readMe" && (
+              <IconButton aria-label="Edit" className="edit-icon-large">
+                <EditIcon></EditIcon>
+              </IconButton>
+            )}
+          </div>
+          <div className="card-info linear-g ">
+            <div className="d-flex">
+              <Typography variant="body1" className="card-h-row" gutterBottom>
+                {searchState == "active" && <div className="online-flag"></div>}
+                <IntlMessages id="Profile.online" />
+              </Typography>
+              <div className="card-h-row d-flex">
+                <div className="profile-icon-flag-2">
+                  <Flag code={mainInfo.co} />
+                </div>
+                <Typography variant="body1" gutterBottom>
+                  {COUNTRY_MAP[mainInfo.co]}
+                </Typography>
               </div>
             </div>
-          )}
-          {router.query.flag == "readMe" && (
-            // <div className="margin-TB">
-            <IconButton aria-label="Edit" className="edit-icon-large">
-              <EditIcon></EditIcon>
-            </IconButton>
-            // </div>
-          )}
-        </div>
-        <div className="card-info linear-g ">
-          <div className="d-flex">
-            <Typography variant="body1" className="card-h-row" gutterBottom>
-              {searchState == "active" && <div className="online-flag"></div>}
-              <IntlMessages id="Profile.online" />
-            </Typography>
-            <div className="card-h-row d-flex">
-              <div className="profile-icon-flag-2">
-                <Flag code={mainInfo.co} />
-              </div>
-              <Typography variant="body1" gutterBottom>
-                {COUNTRY_MAP[mainInfo.co]}
+
+            <div className="d-flex">
+              <Typography variant="body1" className="card-h-row" gutterBottom>
+                {mainInfo.n}
               </Typography>
-            </div>
-          </div>
-
-          <div className="d-flex">
-            <Typography variant="body1" className="card-h-row" gutterBottom>
-              {mainInfo.n}
-            </Typography>
-            {/* <Typography variant="body1" className="card-h-row" component="p">
-              {mainInfo.b != ""
-                ? `${moment().diff(mainInfo.b, "years")} Years Old`
-                : `${moment().diff(
-                    mainInfo.timeScore.substring(0, 8),
-                    "years"
-                  )} Years Old`}
-            </Typography> */}
-
-            <Typography
-              variant="body1"
-              className="d-flex card-h-row"
-              component="p"
-            >
-              <div className="card-icon">
-                <img src="../../../static/images/icons/profile/Location_Icon.svg" />
-              </div>
-              {mainInfo.ci
-                ? COUNTRY_CITY_MAP[mainInfo.co.toLowerCase()][mainInfo.ci - 1]
-                : ""}
-            </Typography>
-          </div>
-          <div className="d-flex">
-            <Typography variant="body1" className="card-h-row" component="p">
-              {mainInfo.b != ""
-                ? `${moment().diff(mainInfo.b, "years")} Years Old`
-                : `${moment().diff(
-                    mainInfo.timeScore.substring(0, 8),
-                    "years"
-                  )} Years Old`}
-            </Typography>
-            <Typography
-              variant="body1"
-              className="card-h-row p-relative"
-              gutterBottom
-            >
-              {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
-              {router.query.flag == "readMe" && (
-                <IconButton
-                  aria-label="Edit"
-                  onClick={handleOpen}
-                  className="edit-icon"
-                >
-                  <EditIcon fontSize="small"></EditIcon>
-                </IconButton>
-              )}
-            </Typography>
-          </div>
-        </div>
-      </div>
-
-      {/*  */}
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <form className={classes.positionR} noValidate autoComplete="off">
-              <Typography variant="body1" gutterBottom>
-                <IntlMessages id="updateProfile.martial" />
-                {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
-              </Typography>
-              <StyledFormControl style={{ minWidth: "149px" }}>
-                <InputLabel id="martial-label">
-                  <IntlMessages id="inputLabel.martial" />
-                </InputLabel>
-                <Select
-                  labelId="martial-label"
-                  id="martial"
-                  value={martial}
-                  onChange={handleChange}
-                  name="martial"
-                  style={{ marginRight: "35px" }}
-                >
-                  {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd].map((value, i) => (
-                    <MenuItem
-                      key={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
-                      value={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
-                      control={<Radio />}
-                      label={value}
-                    >
-                      {value}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </StyledFormControl>
-
-              <Button
-                className={classes.positionA}
-                onClick={() => {
-                  handleOnUpdate();
-                  returnUpdateMessage == "true" ? handleClose() : "";
-                }}
-                variant="contained"
-                color="primary"
+              <Typography
+                variant="body1"
+                className="d-flex card-h-row"
+                component="p"
               >
-                <IntlMessages id="updateProfile.update" />
-              </Button>
-            </form>
+                <div className="card-icon">
+                  <img src="../../../static/images/icons/profile/Location_Icon.svg" />
+                </div>
+                {mainInfo.ci
+                  ? COUNTRY_CITY_MAP[mainInfo.co.toLowerCase()][mainInfo.ci - 1]
+                  : ""}
+              </Typography>
+            </div>
+            <div className="d-flex">
+              <Typography variant="body1" className="card-h-row" component="p">
+                {mainInfo.b != ""
+                  ? `${moment().diff(mainInfo.b, "years")} Years Old`
+                  : `${moment().diff(
+                      mainInfo.timeScore.substring(0, 8),
+                      "years"
+                    )} Years Old`}
+              </Typography>
+              <Typography
+                variant="body1"
+                className="card-h-row p-relative"
+                gutterBottom
+              >
+                {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
+                {router.query.flag == "readMe" && (
+                  <IconButton
+                    aria-label="Edit"
+                    onClick={handleOpen}
+                    className="edit-icon"
+                  >
+                    <EditIcon fontSize="small"></EditIcon>
+                  </IconButton>
+                )}
+              </Typography>
+            </div>
           </div>
-        </Fade>
-      </Modal>
+        </div>
+      )}
       {/*  */}
-      {console.log("showMessage ", showMessage)}
+      {mainInfo && (
+        <Modal
+          aria-labelledby="spring-modal-title"
+          aria-describedby="spring-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <form className={classes.positionR} noValidate autoComplete="off">
+                <Typography variant="body1" gutterBottom>
+                  <IntlMessages id="updateProfile.martial" />
+                  {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
+                </Typography>
+                <StyledFormControl style={{ minWidth: "149px" }}>
+                  <InputLabel id="martial-label">
+                    <IntlMessages id="inputLabel.martial" />
+                  </InputLabel>
+                  <Select
+                    labelId="martial-label"
+                    id="martial"
+                    value={martial}
+                    onChange={handleChange}
+                    name="martial"
+                    style={{ marginRight: "35px" }}
+                  >
+                    {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd].map((value, i) => (
+                      <MenuItem
+                        key={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
+                        value={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
+                        control={<Radio />}
+                        label={value}
+                      >
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </StyledFormControl>
+
+                <Button
+                  className={classes.positionA}
+                  onClick={() => {
+                    handleOnUpdate();
+                    returnUpdateMessage == "true" ? handleClose() : "";
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  <IntlMessages id="updateProfile.update" />
+                </Button>
+              </form>
+            </div>
+          </Fade>
+        </Modal>
+      )}
+      {/*  */}
+
+      {/* {console.log("showMessage ", showMessage)} */}
       {showMessage &&
         NotificationManager.success(
           "Marital status updated successfully",

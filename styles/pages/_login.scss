@@ -59,6 +59,7 @@
   @include border-radius(10px);
   font-size: 14px;
   overflow: hidden;
+  margin: 1rem;
 }
 
 .app-login-content {
@@ -72,6 +73,10 @@
   }
 }
 
+.app-login-content-2 {
+  padding: 35px 35px 20px;
+  width: 100%;
+}
 .app-login-header {
   margin-bottom: 30px;
 }

@@ -179,6 +179,7 @@
   "appModule.signOut": "Signout",
   "appModule.uploadMP": "Upload your profile picture",
   "appModule.profileL2Add": "Complete profile information",
+  "appModule.profileL2Update": "Update Your information",
   "appModule.sendMessage": "Send",
   "appModule.yourMessage": "Your Message",
   "appModule.search": "Search",

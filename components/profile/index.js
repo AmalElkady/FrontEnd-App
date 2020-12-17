@@ -18,8 +18,6 @@ export default function Profile() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (router.query) {
-      setProfileCard({});
-      setAboutInfo({});
       if (router.query.flag == "read") {
         setProfileCard({
           co: router.query.co,
@@ -49,7 +47,7 @@ export default function Profile() {
     }
   }, [myProfileL1Data]);
   useEffect(() => {
-    if (myPhotoSigned != null) {
+    if (myPhotoSigned != null && router.query.flag == "readMe") {
       let token = getCookie("access_token");
       let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
       setProfileCard({
@@ -69,12 +67,10 @@ export default function Profile() {
       });
     }
   }, [myPhotoSigned]);
-
   return (
     <>
       <div className="profile-container">
         {profileCard.co && <ProfileCard mainInfo={profileCard} />}
-
         {aboutInfo.id && <About aboutInfo={aboutInfo} />}
       </div>
     </>
