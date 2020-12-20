@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { resetCheckMpUpload } from "../../actions/Auth";
 import { openModal, updateProfileL2 } from "../../actions/Profile";
-import { COUNTRY_CODE_TO_NAME_MAP, ARRAY_OF_WORKD } from "../../util/data";
+import {
+  COUNTRY_CODE_TO_NAME_MAP,
+  ARRAY_OF_WORKD,
+  ARRAYS_OF_TPERCENT,
+  ARRAYS_OF_TPERCENT_VALUES
+} from "../../util/data";
 
 ///Modal
 import PropTypes from "prop-types";
@@ -92,11 +97,15 @@ export default function ModalUploadL2({ data }) {
   const country = useSelector(state => state.auth.country);
   const gender = useSelector(state => state.auth.gender);
   useEffect(() => {
+    console.log("first dataaaaa ", data);
     setNationality(data.nationality);
     setEdu(data.education);
     setWorkd(data.workd);
     setTitle(data.title);
     setBio(data.bio);
+    if (data.tpercent) {
+      setTpercent(data.tpercent);
+    }
   }, []);
   useEffect(() => {
     if (OpenModal) {
@@ -184,44 +193,65 @@ export default function ModalUploadL2({ data }) {
                     </Grid>
                   </Grid>
                   {/* tPercent */}
+                  {!gender && (
+                    <Grid
+                      container
+                      spacing={12}
+                      style={{
+                        minWidth: "149px",
+                        paddingTop: "9px",
+                        paddingBottom: "9px"
+                      }}
+                    >
+                      <Grid item xs={12}>
+                        <InputLabel id="tpercent-label">
+                          <IntlMessages id="inputLabel.tpercent" />
+                        </InputLabel>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StyledFormControl style={{ minWidth: "149px" }}>
+                          <Select
+                            labelId="tpercent-label"
+                            id="tpercent"
+                            value={tpercent}
+                            onChange={event => {
+                              setTpercent(event.target.value);
+                            }}
+                            name="tpercent"
+                          >
+                            {ARRAYS_OF_TPERCENT.map((value, i) => (
+                              <MenuItem
+                                key={ARRAYS_OF_TPERCENT_VALUES[i]}
+                                value={ARRAYS_OF_TPERCENT_VALUES[i]}
+                                control={<Radio />}
+                                label={value}
+                              >
+                                {value}
+                              </MenuItem>
+                            ))}
 
-                  {/* {!gender && <Grid container spacing={12} style={{ minWidth: "149px", paddingTop:"9px",paddingBottom:"9px"}}>
-						<Grid item xs={12}>
-							<InputLabel id="tpercent-label"><IntlMessages id="inputLabel.tpercent"/></InputLabel>
-						</Grid>
-						<Grid item xs={12}>
-						  <StyledFormControl style={{ minWidth: "149px" }}>
-								<Select
-								  labelId="tpercent-label"
-								  id="tpercent"
-								  value={tpercent}
-								  onChange={handleChange}
-								  name="tpercent"
-								>
-	
+                            {/* <MenuItem
+                              key={1}
+                              value={1}
+                              control={<Radio />}
+                              label={"With no conditions"}
+                            >
+                              {"With no conditions"}
+                            </MenuItem>
 
-												  <MenuItem
-													key={1}
-													value={1}
-													control={<Radio />}
-													label={"With no conditions"}>
-														{"With no conditions"}
-												  </MenuItem>
-	
-												  <MenuItem
-													key={2}
-													value={2}
-													control={<Radio />}
-													label={"With conditions"}>
-														{"With conditions"}
-												  </MenuItem>
-												  
-												
-								</Select>
-							</StyledFormControl>
-						</Grid>
-					</Grid> }
- */}
+                            <MenuItem
+                              key={2}
+                              value={2}
+                              control={<Radio />}
+                              label={"With conditions"}
+                            >
+                              {"With conditions"}
+                            </MenuItem> */}
+                          </Select>
+                        </StyledFormControl>
+                      </Grid>
+                    </Grid>
+                  )}
 
                   <Grid
                     container

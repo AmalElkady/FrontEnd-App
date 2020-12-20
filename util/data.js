@@ -19,6 +19,14 @@ export const ARRAYS_OF_MARTIAL_STATUS = [
   ]
 ];
 
+export const ARRAYS_OF_TPERCENT_VALUES = [0, 1, 2, 3];
+export const ARRAYS_OF_TPERCENT = [
+  <IntlMessages id="tprecent.1" />,
+  <IntlMessages id="tprecent.2" />,
+  <IntlMessages id="tprecent.3" />,
+  <IntlMessages id="tprecent.4" />
+];
+
 export const ARRAY_OF_DAYS = [
   "01",
   "02",

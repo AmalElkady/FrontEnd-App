@@ -1,1 +1,18 @@
-{}
+{
+  "appModule.loginSuccessfully": "تسجيل الدخول بنجاح",
+
+  "appModule.regsiter": "انشاء حساب",
+
+  "appModule.forgotPasswordHeader": "هل نسيت كلمة السر ؟",
+  "appModule.resendResetToken": "إعادة إرسال الرمز",
+  "appModule.resetPasswordAgain": "إعادة تحديث كلمةالسر",
+  "appModule.verifyPhone": "التحقق من رقم الهاتف",
+  "appModule.verificationCode": "رمز التحقق",
+  "appModule.resendVerificationCode": "إعادة إرسال الرمز للهاتف",
+  "appModule.signOut": "تسجيل الخروج",
+  "appModule.uploadMP": "أضف صورتك",
+  "appModule.profileL2Add": "أكمل بيانات الحساب",
+  "appModule.signIn": "تسجيل الدخول",
+  "appModule.login": "تسجيل الدخول",
+  "appModule.forgotPassword": "نسيت رقمك السري؟"
+}

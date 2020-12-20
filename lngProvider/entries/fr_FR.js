@@ -1,11 +1,20 @@
 import appLocaleData from "react-intl/locale-data/fr";
-import saMessages from "../locales/fr_FR.json";
-
-const saLang = {
+import frMessages from "../locales/fr_FR.json";
+import frHMessages from "../locales/dataHome/fr_FR.json";
+import frPMessages from "../locales/dataPrivacy/fr_FR.json";
+import frProMessages from "../locales/dataProfile/fr_FR.json";
+import frSMessages from "../locales/dataSetting/fr_FR.json";
+import frSubMessages from "../locales/dataSubscribe/fr_FR.json";
+const frLang = {
   messages: {
-    ...saMessages
+    ...frMessages,
+    ...frHMessages,
+    ...frPMessages,
+    ...frProMessages,
+    ...frSMessages,
+    ...frSubMessages
   },
   locale: "fr-FR",
   data: appLocaleData
 };
-export default saLang;
+export default frLang;

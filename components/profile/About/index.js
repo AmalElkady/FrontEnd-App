@@ -5,6 +5,7 @@ import IntlMessages from "../../../util/IntlMessages";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
+import { ARRAYS_OF_TPERCENT } from "../../../util/data";
 import {
   readProfileL2,
   readMyProfile,
@@ -47,6 +48,7 @@ export default function About({ aboutInfo }) {
 
   return (
     <>
+      {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
           <div className="profile-nat d-flex margin-TB">
@@ -57,6 +59,18 @@ export default function About({ aboutInfo }) {
               <IntlMessages id={`nationality.${disData.nationality}`} />
             </Typography>
           </div>
+          {disData.tprecent && (
+            <div className="d-flex margin-TB">
+              <div className="profile-icon-2">
+                <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
+              </div>
+              <span>{disData.tprecent}</span>
+              <Typography variant="body1" gutterBottom>
+                {ARRAYS_OF_TPERCENT[disData.tprecent]}
+                {/* <IntlMessages id={`nationality.${disData.tprecent}`} /> */}
+              </Typography>
+            </div>
+          )}
           <div className="margin-TB d-flex-m">
             <div className="d-flex profile-about-subSec">
               <div className="profile-icon">

@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Grid from '@material-ui/core/Grid';
 import Link from "next/link"
-import {COUNTRY_CODE_TO_NAME_MAP} from '../util/data';
+import {COUNTRY_CODE_TO_NAME_MAP,ARRAYS_OF_TPERCENT,ARRAYS_OF_TPERCENT_VALUES} from '../util/data';
 import Router from "next/router"
 import IntlMessages from '../util/IntlMessages';
 import { styled } from '@material-ui/core/styles';
@@ -166,9 +166,18 @@ componentDidMount () {
 								  onChange={handleChange}
 								  name="tpercent"
 								>
-	
+						  
+						  {ARRAYS_OF_TPERCENT.map((value,i) => (
+																  <MenuItem
+																	key={ARRAYS_OF_TPERCENT_VALUES[i]}
+																	value={ARRAYS_OF_TPERCENT_VALUES[i]}
+																	control={<Radio />}
+																	label={value}>
+																		{value}
+																  </MenuItem>
+																))}
 
-												  <MenuItem
+												  {/* <MenuItem
 													key={1}
 													value={1}
 													control={<Radio />}
@@ -182,7 +191,7 @@ componentDidMount () {
 													control={<Radio />}
 													label={"With conditions"}>
 														{"With conditions"}
-												  </MenuItem>
+												  </MenuItem> */}
 												  
 												
 								</Select>
