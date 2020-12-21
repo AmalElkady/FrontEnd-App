@@ -6,6 +6,10 @@
   padding: 0 5px !important;
   @extend %jr-menu-icon;
   margin-right: 15px;
+  width: 5% !important;
+  @media screen and (max-width: 575px) {
+    width: 16% !important;
+  }
 }
 
 .app-main-header {
@@ -16,6 +20,9 @@
   // background-repeat: no-repeat;
   // background-size: cover;
   color: $white !important;
+  @media screen and (max-width: 575px) {
+    position: relative;
+  }
 
   .ellipse-shape {
     position: absolute;
@@ -64,9 +71,11 @@
 }
 
 .app-logo {
-  width: 40px;
+  width: 8%;
   @media screen and (max-width: 575px) {
     display: block !important;
+    width: 25%;
+    margin: auto 7rem auto 1rem !important;
   }
 }
 
@@ -157,7 +166,19 @@
 }
 
 .header-notifications {
-  margin-bottom: 0;
+  margin: auto !important;
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+
+  @media screen and (max-width: 575px) {
+    position: absolute;
+    bottom: -4rem;
+    left: 0rem;
+    background-color: $secondary;
+    background-image: linear-gradient(to right, #b72051, #e61f5f) !important;
+    width: 100%;
+  }
 
   & li {
     vertical-align: middle;
@@ -361,6 +382,7 @@
     color: $white;
     font-size: 20px !important;
     padding: 6px;
+    width: 4rem;
   }
 
   & .icon-alert {
