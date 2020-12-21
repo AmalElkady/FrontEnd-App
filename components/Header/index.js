@@ -181,7 +181,7 @@ class Header extends React.Component {
             : ""
         }`}
       >
-        <div class="header-curve"></div>
+        <div class="header-curve-main"></div>
         <Toolbar className="app-toolbar" disableGutters={false}>
           {/* {navigationStyle === HORIZONTAL_NAVIGATION ? (
             <div

@@ -10,7 +10,7 @@ export default Page(() => (
       <title>Home</title>
     </Head>
     <div className="app-wrapper">
-      <UploadImage />
+      {/* <UploadImage /> */}
       <br />
       <Search />
       <br />
