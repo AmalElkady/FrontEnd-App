@@ -179,6 +179,7 @@
   width: 40%;
   display: flex;
   justify-content: space-around;
+  min-height: 70px;
   @media screen and (max-width: 575px) {
     position: absolute;
     bottom: -4rem;
