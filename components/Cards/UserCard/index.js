@@ -9,7 +9,7 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
-import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../../../util/data";
+import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE,COUNTRY_MAP } from "../../../util/data";
 import { red } from "@material-ui/core/colors";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -27,11 +27,15 @@ import { useSpring, animated } from "react-spring/web.cjs";
 import TextField from "@material-ui/core/TextField";
 import IntlMessages from "../../../util/IntlMessages";
 import Button from "@material-ui/core/Button";
+import Flag from "react-world-flags";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "20%",
     cursor: "pointer",
+    borderRadius: "3rem",
+    border: "2.5px solid #d91f5b",
     margin: "1.5rem",
     "@media only screen and (min-width: 1099px) ": {
       maxWidth: "20%"
@@ -45,7 +49,8 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "90%", // 16:9
+    position:"relative"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -60,10 +65,44 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     backgroundColor: red[500]
   },
+  cardContent:{
+    position: "absolute",
+    bottom: 0,
+    backgroundImage: "linear-gradient(to top, white, transparent)",
+    width: "100%",
+    color: "#d61f5f",
+    paddingBottom: "0 !important",
+    height: "7rem",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    justifyContent: "flex-end"
+
+  },
+  iconsContainer:{
+     //   backgroundColor: #d61f5f;
+    justifyContent: "space-around",
+    padding: "1rem 2rem"
+
+  },
   iconBtn: {
-    width: "30%",
+    width: "25%",
     padding: 0
   },
+  dFlex:{
+  display: "flex",
+    justifyContent: "space-between"
+  },
+  rowW:{
+      width: "35%",
+  },
+  rowP:{
+padding: "0 .5rem .5rem 0"
+  }
+,
+fontW:{
+fontWeight: "600",
+},
   ///modal
   modal: {
     display: "flex",
@@ -160,48 +199,67 @@ export default function UserCard({ user, timeScore }) {
 
   return (
     <>
-      <Card className={classes.root}>
-        <CardMedia className={classes.media} image={user._} title="userPhoto" />
-        <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
+      <Card className={`${classes.root} linear-g-r` }>
+        <CardMedia className={classes.media} image={user._} title="userPhoto">
+          <CardContent className={classes.cardContent}>
+          <div className={classes.dFlex}>
+          <Typography variant="body1"component="p" className={classes.fontW}>
             {searchState == "active" && (
               <div className={classes.onlineFlag}></div>
             )}
             {user.n}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+
+            <div className={`${classes.rowW} d-flex`}>
+                <div className="profile-icon-flag-2">
+                  <Flag code={user.co} />
+                </div>
+                <Typography variant="body1" gutterBottom  className={classes.fontW}>
+                  {COUNTRY_MAP[user.co]}
+                </Typography>
+              </div>
+          </div>
+          <div className={classes.dFlex}>
+          <Typography variant="body1" component="p" className={classes.rowP+" "+classes.fontW }>
             {user.b
-              ? `${moment().diff(user.b, "years")} Years Old`
-              : `${moment().diff(
+              ?<>
+               {moment().diff(user.b, "years")} <IntlMessages id="appModule.age" />
+               </>
+              : (
+                <>
+                {moment().diff(
                   timeScore.substring(0, 8),
                   "years"
-                )} Years Old`}
+                )} <IntlMessages id="appModule.age" />
+                </>
+              )
+                }
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {user.co}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body1" className={`${classes.rowW} ${classes.rowP} ${classes.fontW} d-flex`} component="p">
+          <div className="profile-icon-flag-2" style={{width: "12%"}}>
+                  <img src="../../../static/images/icons/Location_Icon_2.svg" />
+                </div>
             {user.ci
               ? COUNTRY_CITY_MAP[user.co.toLowerCase()][user.ci - 1]
               : ""}
           </Typography>
+          </div>
         </CardContent>
-        <CardActions disableSpacing>
+        </CardMedia>
+      
+        <CardActions disableSpacing className={`${classes.iconsContainer} linear-g-r`}>
           <IconButton
             className={classes.iconBtn}
             aria-label="Love"
             // onClick={handleClickLove}
           >
             {/* <FavoriteIcon /> */}
-            <LoveIcon />
-          </IconButton>
-          <IconButton
-            className={classes.iconBtn}
-            aria-label="Send Message"
-            onClick={handleOpen}
-          >
-            {/* <ChatBubbleIcon /> */}
-            <ChatIcon />
+            {/* <LoveIcon /> */}
+                    {/* <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" /> */}
+                    <img
+                      src="../../../static/images/icons/standard/Love_Icon_Standard.svg"
+                      alt="Love Icon"
+                    />
           </IconButton>
           <IconButton
             className={classes.iconBtn}
@@ -212,7 +270,24 @@ export default function UserCard({ user, timeScore }) {
             aria-label="View Profile"
           >
             {/* <VisibilityIcon /> */}
-            <ViewProIcon />
+            {/* <ViewProIcon /> */}
+              <img
+                      src="../../../static/images/icons/Profile_Icon.svg"
+                      alt="Notifications"
+                    />
+          </IconButton>
+
+          <IconButton
+            className={classes.iconBtn}
+            aria-label="Send Message"
+            onClick={handleOpen}
+          >
+            {/* <ChatBubbleIcon /> */}
+            {/* <ChatIcon /> */}
+              <img
+                      src="../../../static/images/icons/standard/Messages_Icon_Standard.svg"
+                      alt="Notifications"
+                    />
           </IconButton>
         </CardActions>
       </Card>

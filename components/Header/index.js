@@ -278,7 +278,7 @@ class Header extends React.Component {
                 </DropdownMenu>
               </Dropdown>
             </li> */}
- <div class="header-curve"></div>
+            <div class="header-curve"></div>
 
             {/* love not */}
             <li className="list-inline-item app-tour">

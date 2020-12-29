@@ -5,6 +5,7 @@
   "appModule.name": "اسم",
   "appModule.phone": "هاتف",
   "appModule.designation": "تعيين",
+  "appModule.age":"سنه",
 
   "inputLabel.birthday": "تاريخ الميلاد",
   "inputLabel.martial": "الحالة الإجتماعية",
