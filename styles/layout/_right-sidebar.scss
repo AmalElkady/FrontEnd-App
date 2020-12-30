@@ -110,7 +110,7 @@
   top: 30%;
   right: 0;
   z-index: 1500;
-  background-color: map-get($purple, base);
+  background-color: $secondary;
   @include border-left-radius($border-radius);
   @include box-shadow(1px 1px 4px rgba($black, 0.5));
   color: $white;
@@ -120,6 +120,10 @@
   .color-theme .jr-btn {
     padding: 10px 15px !important;
   }
+}
+.search-icon {
+  width: 3rem;
+  padding: 0 !important;
 }
 
 .side-nav-option .sidenav-dir {

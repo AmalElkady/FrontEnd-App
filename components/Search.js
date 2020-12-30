@@ -790,7 +790,7 @@ export default function Search() {
   };
   return (
     <>
-      <Card className={classes.root}>
+      <Card className={`${classes.root} linear-g`}>
         <FormControl component="fieldset" className={classes.margin}>
           <FormLabel component="legend">Select Your option </FormLabel>
           <RadioGroup
@@ -1759,7 +1759,7 @@ export default function Search() {
                 onSearch();
               }}
               variant="contained"
-              color="primary"
+              className="linear-g-r search-btn"
             >
               <IntlMessages id="appModule.search" />
             </Button>

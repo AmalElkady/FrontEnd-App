@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import SideNavOption from "./SideNavOption";
+import Search from "../../components/Search";
 import {
   changeDirection,
   setDarkTheme,
@@ -59,9 +60,16 @@ class Customizer extends React.Component {
   render() {
     const { themeColor, darkTheme, isDirectionRTL } = this.props;
     return (
-      <div className="theme-option">
-        <IconButton onClick={this.toggleCustomizer.bind(this)}>
-          <i className="zmdi zmdi-settings zmdi-hc-spin text-white" />
+      <div className="theme-option linear-g ">
+        <IconButton
+          className="search-icon"
+          onClick={this.toggleCustomizer.bind(this)}
+        >
+          {/* <i className="zmdi zmdi-settings zmdi-hc-spin text-white" /> */}
+          <img
+            src="../../static/images/icons/Search_Icon.svg"
+            alt="Notifications"
+          />
         </IconButton>
         <Drawer
           className="app-sidebar-content right-sidebar"
@@ -71,16 +79,16 @@ class Customizer extends React.Component {
         >
           <div className="color-theme">
             <div className="color-theme-header">
-              <h3 className="color-theme-title">Service Panel </h3>
+              {/* <h3 className="color-theme-title">Service Panel </h3> */}
 
               <IconButton className="icon-btn" onClick={this.closeCustomizer}>
                 <i className="zmdi zmdi-close text-white" />
               </IconButton>
             </div>
             <div className="color-theme-body">
-              <h3>Light Sidenav</h3>
-              <ul className="color-option">
-                {/* /////// */}
+              <Search />
+              {/* <h3>Light Sidenav</h3> */}
+              {/* <ul className="color-option">
                 <li>
                   <span
                     onClick={this.handleThemeColor.bind(this, MAIN_THEME)}
@@ -88,8 +96,6 @@ class Customizer extends React.Component {
                       "active"}`}
                   />
                 </li>
-
-                {/* //////// */}
                 <li>
                   <span
                     onClick={this.handleThemeColor.bind(this, INDIGO)}
@@ -148,8 +154,8 @@ class Customizer extends React.Component {
                   />
                 </li>
               </ul>
-              <h3>Dark Sidenav</h3>
-              <ul className="color-option cr-op-dark-sidebar">
+              <h3>Dark Sidenav</h3> */}
+              {/* <ul className="color-option cr-op-dark-sidebar">
                 <li>
                   <span
                     onClick={this.handleThemeColor.bind(this, DARK_INDIGO)}
@@ -225,10 +231,10 @@ class Customizer extends React.Component {
                     onChange={this.handleDarkTheme}
                   />
                 </div>
-              </div>
-              <div className="mt-3">
+              </div> */}
+              {/* <div className="mt-3">
                 <SideNavOption closeCustomizer={this.closeCustomizer} />
-              </div>
+              </div> */}
             </div>
           </div>
         </Drawer>
