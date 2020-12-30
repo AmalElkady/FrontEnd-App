@@ -14,5 +14,11 @@
   "appModule.profileL2Add": "أكمل بيانات الحساب",
   "appModule.signIn": "تسجيل الدخول",
   "appModule.login": "تسجيل الدخول",
-  "appModule.forgotPassword": "نسيت رقمك السري؟"
+  "appModule.forgotPassword": "نسيت رقمك السري؟",
+  "appModule.submit": "ارسال",
+  "appModule.changePhone": "تغير رقم الهاتف",
+  "appModule.changeYourPhone": "تغير رقم هاتفك",
+  "inputLabel.changePhone": "رقم هاتفك",
+  "appModule.change": "تغير",
+  "appModule.cancel": "الغاء"
 }

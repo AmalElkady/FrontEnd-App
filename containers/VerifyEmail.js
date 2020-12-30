@@ -9,6 +9,7 @@ import {
   NotificationContainer,
   NotificationManager
 } from "react-notifications";
+import ModalChangePhone from "../components/Modals/modalChangePhone";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Link from "next/link";
 import IntlMessages from "../util/IntlMessages";
@@ -29,6 +30,7 @@ import {
   userSignOut
 } from "../actions/Auth";
 
+import { openModal } from "../actions/Profile";
 class VerifyEmail extends React.Component {
   constructor() {
     super();
@@ -58,9 +60,10 @@ class VerifyEmail extends React.Component {
       timeReturned,
       phoneVerified,
       phone,
-      country
+      country,
+      OpenModal
     } = this.props; //phoneVerified
-
+    // const OpenModal = this.props.openModal;
     console.log("timeReturned verify ", timeReturned);
 
     return (
@@ -103,6 +106,17 @@ class VerifyEmail extends React.Component {
                   <IntlMessages id="appModule.verifyPhone" />{" "}
                 </h1>
                 <h1> {`+${country} ${phone}`} </h1>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    // this.props.showAuthLoader();
+                    this.props.openModal(true);
+                  }}
+                  color="primary"
+                  className="linear-g-r float-r"
+                >
+                  <IntlMessages id="appModule.changePhone" />
+                </Button>
               </div>
 
               <div className="app-login-form">
@@ -150,6 +164,7 @@ class VerifyEmail extends React.Component {
               </div>
             </div>
           </div>
+          {OpenModal && <ModalChangePhone data={phone}></ModalChangePhone>}
 
           {loader && (
             <div className="loader-view">
@@ -164,7 +179,7 @@ class VerifyEmail extends React.Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, profile }) => {
   const {
     loader,
     alertMessage,
@@ -175,6 +190,8 @@ const mapStateToProps = ({ auth }) => {
     phone,
     country
   } = auth;
+  const { openModal } = profile;
+  const OpenModal = openModal;
   return {
     loader,
     alertMessage,
@@ -183,7 +200,8 @@ const mapStateToProps = ({ auth }) => {
     timeReturned,
     phoneVerified,
     phone,
-    country
+    country,
+    OpenModal
   };
 };
 
@@ -192,5 +210,6 @@ export default connect(mapStateToProps, {
   resendVerificationToPhone,
   hideMessage,
   showAuthLoader,
-  userSignOut
+  userSignOut,
+  openModal
 })(VerifyEmail);

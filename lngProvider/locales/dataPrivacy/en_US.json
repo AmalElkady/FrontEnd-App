@@ -26,5 +26,18 @@
   "appModule.back": "Back",
   "appModule.allStepsCompleted": "All steps completed",
   "appModule.reset": "Reset",
-  "appModule.loginSuccessfully": "Login Successfully"
+  "appModule.loginSuccessfully": "Login Successfully",
+  "appModule.hvAccount": "Have an account",
+  "appModule.createAccount": "Create an account",
+  "appModule.resetPasswordPageHeader": "Enter your phone & reset your password",
+  "appModule.token": "Reset Code",
+  "appModule.submit": "Submit",
+  "appModule.changePhone": "change phone",
+  "appModule.changeYourPhone": "Change your phone",
+  "appModule.change": "Change",
+  "appModule.cancel": "Cancel",
+  "inputLabel.changePhone": "Your phone number",
+  "appModule.resetPasswordSuccess": "Password Changed Successfully, Go To Login Page",
+  "appModule.tokenSent": "Check Your Phone For Reset Code",
+  "appModule.resetPasswordAgain": "Reset Password Again"
 }

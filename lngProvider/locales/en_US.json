@@ -150,15 +150,6 @@
   "appModule.signInDiffAccount": "Sign in using different account",
   "appModule.rememberMe": "Remember me",
 
-  "appModule.hvAccount": "Have an account",
-  "appModule.createAccount": "Create an account",
-  "appModule.resetPasswordPageHeader": "Enter your phone & reset your password",
-  "appModule.token": "Reset Code",
-  "appModule.submit": "Submit",
-  "appModule.resetPasswordSuccess": "Password Changed Successfully, Go To Login Page",
-  "appModule.tokenSent": "Check Your Phone For Reset Code",
-  "appModule.resetPasswordAgain": "Reset Password Again",
-
   "chart.area": "Area Graph",
   "chart.bar": "Bar Graph",
   "chart.composed": "Composed Graph",
