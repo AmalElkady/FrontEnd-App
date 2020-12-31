@@ -24,7 +24,8 @@ import {
   SEND_VERIFICATION_CODE,
   RESEND_VERIFICATION_TO_PHONE,
   CHANGE_PASSWORD,
-  CHECK_MP_UPLOAD
+  CHECK_MP_UPLOAD,
+  CHANGE_PHONE_BEFORE_VERIF
 } from "../constants/ActionTypes";
 
 import {
@@ -40,7 +41,8 @@ import {
   userSendVerificationCodeSuccess,
   clearPersistedAuthState,
   showTimer,
-  checkMpUploadSuccess
+  checkMpUploadSuccess,
+  changeUserPhoneBeforeVerifSuccess
 } from "../actions/Auth";
 
 import {
@@ -81,6 +83,18 @@ const createUserWithPhonePasswordRequest = async (
     )
     .then(authUser => authUser)
     .catch(error => error);
+    
+const changePhoneUserBeforeVerif = async ( newPhone,
+  phonecountrycode,
+  countryiso2,
+  newCity)=>
+    await auth
+      .changeUserPhoneBeforeVerif( newPhone,
+        phonecountrycode,
+        countryiso2,
+        newCity)
+      .then(uploadMessage => uploadMessage)
+      .catch(error => error);
 
 const uploadMainProfilePhotoRequest = async file =>
   await auth
@@ -228,6 +242,8 @@ function* createUserWithPhonePassword({ payload }) {
           authUser: "access_token",
           phone,
           country: `${country}`,
+          countryiso2,
+          city,
           name: signUpUser.n,
           birth: signUpUser.b,
           martial: signUpUser.m,
@@ -372,6 +388,29 @@ function* changePasswordWithTokenForUserPhone({ payload }) {
       localStorage.removeItem("hw");
       yield put(userPasswordChangeSuccess(true));
       yield put(clearPersistedAuthState());
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
+function* changeUserPhoneBeforeVerifRequest({ payload }) {
+  console.log("from saga")
+  const { newPhone, phonecountrycode, countryiso2, newCity } = payload;
+  try {
+    const returnData = yield call(
+      changePhoneUserBeforeVerif,
+      newPhone,
+      phonecountrycode,
+      countryiso2,
+      newCity
+    );
+     console.log("returnData from data",returnData)
+    if (returnData.message) {
+      yield put(showAuthMessage(returnData.message));
+    } else {
+     
+      yield put(changeUserPhoneBeforeVerifSuccess(true));
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -525,6 +564,10 @@ export function* changeUserPasswordWithToken() {
   yield takeEvery(CHANGE_PASSWORD, changePasswordWithTokenForUserPhone);
 }
 
+export function* changeUserPhoneBeforeVerif() {
+  yield takeEvery(CHANGE_PHONE_BEFORE_VERIF, changeUserPhoneBeforeVerifRequest);
+}
+
 //export function* signInWithGoogle() {
 //    yield takeEvery(SIGNIN_GOOGLE_USER, signInUserWithGoogle);
 //}
@@ -565,6 +608,7 @@ export default function* rootSaga() {
     //        fork(signInWithTwitter),
     //        fork(signInWithGithub),
     fork(signOutUser),
-    fork(checkMpUpload)
+    fork(checkMpUpload),
+    fork(changeUserPhoneBeforeVerif)
   ]);
 }

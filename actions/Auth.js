@@ -33,7 +33,10 @@ import {
   RESEND_VERIFICATION_TO_PHONE,
   CLEAR_AUTH_STATE,
   CHANGE_PASSWORD,
-  RESET_CHECK_MP_UPLOAD_FLAG
+  RESET_CHECK_MP_UPLOAD_FLAG,
+  CHANGE_PHONE_BEFORE_VERIF,
+  CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
+  RESET_PHONE_CHANGE_FLAG
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -61,6 +64,26 @@ export const sendResetToken = resetTokenSend => {
   return {
     type: SEND_RESET_TOKEN,
     payload: resetTokenSend
+  };
+};
+
+export const changeUserPhoneBeforeVerif = (
+  newPhone,
+  phonecountrycode,
+  countryiso2,
+  newCity
+) => {
+  console.log("from action")
+  return {
+    type: CHANGE_PHONE_BEFORE_VERIF,
+    payload: { newPhone, phonecountrycode, countryiso2, newCity }
+  };
+};
+
+export const changeUserPhoneBeforeVerifSuccess = returnData => {
+  return {
+    type: CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
+    payload: returnData
   };
 };
 
@@ -134,6 +157,13 @@ export const userCreateClear = () => {
     type: CREATE_USER_CLEAR
   };
 };
+
+export const resetPhonechangeFlag = () => {
+  return {
+    type: RESET_PHONE_CHANGE_FLAG
+  };
+};
+
 
 export const stepFlagClear = () => {
   return {

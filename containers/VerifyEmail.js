@@ -61,10 +61,12 @@ class VerifyEmail extends React.Component {
       phoneVerified,
       phone,
       country,
+      city,
+      countryiso2,
       OpenModal
     } = this.props; //phoneVerified
     // const OpenModal = this.props.openModal;
-    console.log("timeReturned verify ", timeReturned);
+    //console.log("timeReturned verify ", timeReturned);
 
     return (
       <>
@@ -164,7 +166,7 @@ class VerifyEmail extends React.Component {
               </div>
             </div>
           </div>
-          {OpenModal && <ModalChangePhone data={phone}></ModalChangePhone>}
+          {OpenModal && <ModalChangePhone phone={phone} country={country}city={city} countryiso2={countryiso2}></ModalChangePhone>}
 
           {loader && (
             <div className="loader-view">
@@ -188,7 +190,9 @@ const mapStateToProps = ({ auth, profile }) => {
     timeReturned,
     phoneVerified,
     phone,
-    country
+    country,
+    city,
+    countryiso2
   } = auth;
   const { openModal } = profile;
   const OpenModal = openModal;
@@ -201,6 +205,8 @@ const mapStateToProps = ({ auth, profile }) => {
     phoneVerified,
     phone,
     country,
+    city,
+    countryiso2,
     OpenModal
   };
 };

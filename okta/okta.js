@@ -226,7 +226,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 												
 												
 													await tokenManagerOperations.setTokenAndValidate("access_token",response.token);
-													resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender});
+													resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country,"countryiso2":newUser.countryiso2, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender});
 											
 											
 											} else {
@@ -418,6 +418,65 @@ auth.checkMPUploadphoto=function(){
 
 	
 }
+
+auth.changeUserPhoneBeforeVerif = function (newPhone,
+	phonecountrycode,
+	countryiso2,
+	newCity) {
+     console.log("from okta",newPhone,
+	phonecountrycode,
+	countryiso2,
+	newCity)
+
+		  return new Promise(  async (resolve, reject) => {				
+					try {
+						
+						const tokenValue = getCookie("access_token",false);
+						let options = {
+									  url: '/changeuserloginphonebeforeverification',
+									  method: 'POST',
+									  headers: {
+										'Accept': 'application/json',
+										'Content-Type': 'application/json;charset=UTF-8',
+										'Authorization': "Bearer " + tokenValue
+									  },
+									  data: {newPhone,
+										phonecountrycode,
+										countryiso2,
+										newCity}
+									};
+
+						let responseX = await callAxios(options);
+						let response =	responseX.data;
+						
+										console.log("response of change phone ",response);
+										if(response.response && response.token){
+											
+															 let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));															 
+						
+															 
+															tokenManagerOperations.setTokenAndValidate("access_token",response.token);
+
+											resolve(true);
+									
+									
+									} else {
+										resolve({"message": response.code});
+									}
+										
+								
+
+
+					}catch(err) {
+						console.log(err);
+						resolve({"message": err});
+					}									
+		  
+								
+}).catch((err) => {console.log(err)});			
+
+}
+
 
 
 auth.addUpdateProfileLayer2 = function (addUpdateFlag,nationality,tpercent,workd,title,education,bio) {
@@ -663,15 +722,15 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,co
 
 auth.changePasswordWithTokenForUserPhone = function (token,password,hw) {
 
-//{
-//	"token" : "963109",
-//	"uid": {
-//        "iv": "L%jdi##1M9*s@47&",
-//        "encryptedData": "7b2570752cff489a6904a4d138cbd3cd46c0397ef3f518521a9dc13c43cfed2c7851f2f78d95d1e4989896b6a7450ada"
-//    },
-//	"pass" : "Password#1234567"	
-//}	
-	
+		//{
+		//	"token" : "963109",
+		//	"uid": {
+		//        "iv": "L%jdi##1M9*s@47&",
+		//        "encryptedData": "7b2570752cff489a6904a4d138cbd3cd46c0397ef3f518521a9dc13c43cfed2c7851f2f78d95d1e4989896b6a7450ada"
+		//    },
+		//	"pass" : "Password#1234567"	
+		//}	
+			
 			      return new Promise(  async (resolve, reject) => {				
 											
 								if(token && password && hw) {

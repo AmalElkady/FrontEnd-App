@@ -25,7 +25,9 @@ import {
   PASSWORD_CHANGE_SUCCESS,
   CLEAR_AUTH_STATE,
   CHECK_MP_UPLOAD_SUCCESS,
-  RESET_CHECK_MP_UPLOAD_FLAG
+  RESET_CHECK_MP_UPLOAD_FLAG,
+  CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
+  RESET_PHONE_CHANGE_FLAG
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -36,6 +38,7 @@ const INIT_STATE = {
   timeReturnedVal: 0,
   tokenSent: false,
   passwordChanged: false,
+  phoneChangedBefore: false,
   initURL: "",
   authUser: null,
   authStateCleared: false,
@@ -47,6 +50,7 @@ const INIT_STATE = {
   gender: "",
   phone: "",
   country: "",
+  city:"",
   countryiso2: "",
   name: "",
   birth: "",
@@ -63,6 +67,7 @@ export default (state = INIT_STATE, action) => {
         phone: action.payload.phone,
         country: action.payload.country,
         countryiso2: action.payload.countryiso2,
+        city:action.payload.city,
         name: action.payload.name,
         birth: action.payload.birth,
         martial: action.payload.martial,
@@ -115,6 +120,12 @@ export default (state = INIT_STATE, action) => {
         authUser: null
       };
     }
+  case RESET_PHONE_CHANGE_FLAG:{
+     return {
+        ...state,
+        phoneChangedBefore: false
+      };
+  }
 
     case STEP_FLAG_CLEAR: {
       return {
@@ -152,6 +163,13 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loader: false,
         phoneVerified: action.payload
+      };
+    }
+    case CHANGE_PHONE_BEFORE_VERIF_SUCCESS: {
+      return {
+        ...state,
+        loader: false,
+        phoneChangedBefore: action.payload
       };
     }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { resetCheckMpUpload } from "../../actions/Auth";
+import { changeUserPhoneBeforeVerif,resetPhonechangeFlag } from "../../actions/Auth";
 import { openModal, updateProfileL2 } from "../../actions/Profile";
 import {
   COUNTRY_CODE_TO_NAME_MAP,
@@ -30,6 +30,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Radio from "@material-ui/core/Radio";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 const useStyles = makeStyles(theme => ({
   ///modal
   modal: {
@@ -81,7 +82,7 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function ModalChangePhone({ data }) {
+export default function ModalChangePhone({ phone,country,countryiso2,city }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -92,17 +93,27 @@ export default function ModalChangePhone({ data }) {
   const [City, setCity] = useState("");
 
   const OpenModal = useSelector(state => state.profile.openModal);
-  const country = useSelector(state => state.auth.country);
+  const phoneChangedBefore = useSelector(state => state.auth.phoneChangedBefore);
 
   useEffect(() => {
-    console.log("first dataaaaa ", data);
-    // setPhone(data.phone);
+    console.log("first dataaaaa ", phone,country,countryiso2);
+    console.log("first dataaaaa countryiso2",countryiso2,city);
+    setCity(city);
+    setPhone(phone);
   }, []);
   useEffect(() => {
     if (OpenModal) {
       handleOpen();
     }
   }, [OpenModal]);
+
+  useEffect(() => {
+    if (phoneChangedBefore) {
+        NotificationManager.success('Your phone changed successfully', 'Success');
+       dispatch(resetPhonechangeFlag());
+      handleClose();
+    }
+  }, [phoneChangedBefore]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -115,6 +126,16 @@ export default function ModalChangePhone({ data }) {
     setOpen(false);
     dispatch(openModal(false));
   };
+
+ const handleChangeCity = (event) => {
+     console.log("")
+    setCity(event.target.value);
+  };
+
+   const handleChangePhone = (value) => {
+    setPhone(value);
+  };
+
   const StyledFormControl = styled(FormControl)({
     formControl: {
       margin: 2,
@@ -150,10 +171,9 @@ export default function ModalChangePhone({ data }) {
                 <h2>
                   <IntlMessages id="appModule.changeYourPhone" />
                 </h2>
-                {/* <h2> {`+${country} ${phone}`} </h2> */}
                 <h2>
                   {" "}
-                  01004059778
+                  {`+${country} ${phone}`}
                   <IconButton
                     aria-label="Edit"
                     onClick={handleOpenEdit}
@@ -215,17 +235,19 @@ export default function ModalChangePhone({ data }) {
                             "mr",
                             "af"
                           ]}
-                          countryCodeEditable={false}
-                          country={"eg"}
+                         countryCodeEditable={true}
+                        disableCountryCode={true}
+                          country={countryiso2}
                           value={Phone}
                           placeholder={""}
-                          readonly={"readonly"}
-                          //   onChange={(value, country, e, formattedValue) => {
-                          //     this.setState({ countrySign: country.dialCode });
-                          //     this.setState({
-                          //       phoneSign: value.slice(country.dialCode.length)
-                          //     });
-                          //   }}
+                            onChange={(value, country, e, formattedValue) => {
+                            //   this.setState({ countrySign: country.dialCode });
+                            //   this.setState({
+                            //     phoneSign: value.slice(country.dialCode.length)
+                            //   });
+                            console.log("valueee ",value);
+                              handleChangePhone(value);
+                            }}
                         />
                       </Grid>
                       <Grid
@@ -240,19 +262,19 @@ export default function ModalChangePhone({ data }) {
                           <Select
                             labelId="city-label"
                             id="city"
-                            // value={city}
-                            //onChange={handleChange}
+                            value={City}
+                            onChange={handleChangeCity}
                             name="city"
                           >
-                            {/* {COUNTRY_CITY_MAP[this.state.countryiso2].map((value,i) => (
+                            {COUNTRY_CITY_MAP[countryiso2].map((value,i) => (
                                                 <MenuItem
-                                                  key={COUNTRY_CITY_MAP_VALUE[this.state.countryiso2][i]}
-                                                  value={COUNTRY_CITY_MAP_VALUE[this.state.countryiso2][i]}
+                                                  key={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
+                                                  value={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
                                                   control={<Radio />}
                                                   label={value}>
                                                       {value}
                                                 </MenuItem>
-                                              ))} */}
+                                              ))}
                           </Select>
                         </StyledFormControl>
                       </Grid>
@@ -273,10 +295,15 @@ export default function ModalChangePhone({ data }) {
                       <Button
                         variant="contained"
                         onClick={() => {
-                          // console.log(nationality);
-                          // dispatch(
-                          // );
-                          handleClose();
+                           console.log("change phone");
+                           console.log("city ",City);
+                           console.log("phone ",Phone);
+                            console.log("country ",country);
+                            console.log("countryiso2 ",countryiso2);
+
+                          dispatch(
+                              changeUserPhoneBeforeVerif(Phone,country,countryiso2.toUpperCase(),City)
+                          );
                         }}
                         color="primary"
                         className="linear-g-r"

@@ -79,9 +79,9 @@ export default ComposedComponent =>
 
       if (this.props.isLoggedIn == false && !this.props.login) {
         //	 return <div><script>setTimeout(function() {window.location = "http://localhost:3000/"}, 1500)</script></div>
-        return <ComponentVerify {...this.props} />;
+        //return <ComponentVerify {...this.props} />;
         // return <ComposedComponent {...this.props} />;
-        //return <ComponentAutoLogout {...this.props} />;
+        return <ComponentAutoLogout {...this.props} />;
       } else if (this.props.isLoggedIn == false && this.props.login) {
         //return <ComponentAutoSignIn {...this.props} />
         return (

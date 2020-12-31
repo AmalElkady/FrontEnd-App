@@ -80,7 +80,9 @@ export const SIGNIN_USER_SUCCESS = "signin_user_success";
 export const SIGNOUT_USER = "signout_user";
 export const SIGNOUT_USER_SUCCESS = "signout_user_success";
 export const INIT_URL = "init_url";
-
+export const CHANGE_PHONE_BEFORE_VERIF = "change_phone_before_verif";
+export const CHANGE_PHONE_BEFORE_VERIF_SUCCESS = "change_phone_before_verif_success";
+export const RESET_PHONE_CHANGE_FLAG="reset_phone_change_flag";
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";

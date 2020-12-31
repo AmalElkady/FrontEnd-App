@@ -61,13 +61,14 @@ class SignUp extends React.Component {
     }
     if (this.props.authUser !== null) {
 	    
-		NotificationManager.success('Profile created successfuly, you will be redirected to login', 'Success');
+		NotificationManager.success('Profile created successfully, you will be redirected to verification phone', 'Success');
 		this.props.userCreateClear();
 		this.props.showAuthLoader();
 		
 		setTimeout(() => {
-		   this.props.hideAuthLoader()
-		   Router.replace('/signin');
+		   this.props.hideAuthLoader();
+		  // Router.replace('/signin');
+		   Router.replace('/verifyemail');
      }, 300);
     }
   }

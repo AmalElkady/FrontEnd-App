@@ -42,6 +42,8 @@ const authPersistConfig = {
     "authUser",
     "phone",
     "country",
+    "city",
+ "countryiso2",
     "name",
     "birth",
     "martial",
