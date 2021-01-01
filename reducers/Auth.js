@@ -45,7 +45,7 @@ const INIT_STATE = {
   phoneVerified: false,
   stepFlag: false,
   mpUploadFlag: false,
-  checkMpFlag: false,
+  checkMpFlag: true,
   subFlag: false,
   gender: "",
   phone: "",
@@ -166,10 +166,15 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case CHANGE_PHONE_BEFORE_VERIF_SUCCESS: {
+      newPhone, phonecountrycode, countryiso2, newCity
       return {
         ...state,
         loader: false,
-        phoneChangedBefore: action.payload
+        phoneChangedBefore: action.payload.returnData,
+        phone:  action.payload.newPhone,
+       country:action.payload.phonecountrycode ,
+      city:action.payload.newCity,
+      countryiso2: action.payload.countryiso2,
       };
     }
 

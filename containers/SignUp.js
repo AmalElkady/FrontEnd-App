@@ -31,6 +31,7 @@ import {
   userSignUp,
   userCreateClear,
   hideAuthLoader,
+  userSignIn
 } from '../actions/Auth';
 
 class SignUp extends React.Component {
@@ -67,8 +68,14 @@ class SignUp extends React.Component {
 		
 		setTimeout(() => {
 		   this.props.hideAuthLoader();
+		    Router.replace('/signin');
+		   this.props.userSignIn({
+                          phone: this.state.phone,
+                          password:this.state.password,
+                          country: this.state.country
+                        });
 		  // Router.replace('/signin');
-		   Router.replace('/verifyemail');
+		   //Router.replace('/verifyemail');
      }, 300);
     }
   }
@@ -420,5 +427,6 @@ export default connect(mapStateToProps, {
   userCreateClear,
   hideMessage,
   showAuthLoader,
-  hideAuthLoader
+  hideAuthLoader,
+  userSignIn
 })(SignUp);

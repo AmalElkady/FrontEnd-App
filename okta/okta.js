@@ -251,17 +251,9 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 }
 
 auth.uploadMainProfilePhoto = function (file) {
-
-		
 			      return new Promise(  async (resolve, reject) => {				
-						
-						
-						console.log(file);
-						
-						
+					  
 						if(file) {
-
-						console.log(file.size);
 							try {
 								
 								//http:// /api/checkmpupload
@@ -299,38 +291,36 @@ auth.uploadMainProfilePhoto = function (file) {
 								    		if(checkUploadRequestResponse.data.code) {
 								    			resolve({"message": checkUploadRequestResponse.data.code});
 								    		} else if(checkUploadRequestResponse.data.signedRequest) {
-												
-												console.log(checkUploadRequestResponse.data.signedRequest);
 												//upload file axios
 												//file
-												let regx = /(?<=\/)(.*)(?=\?Content-Type=)/g
-												let newName = `${checkUploadRequestResponse.data.signedRequest}`.match(regx)[0].split("/")[5]
+														//let regx = /(?<=\/)(.*)(?=\?Content-Type=)/g
+														//let newName = `${checkUploadRequestResponse.data.signedRequest}`.match(regx)[0].split("/")[5]
 												
 											    //let newName = `${checkUploadRequestResponse.data.signedRequest}`.match(regx)[0].split("/s3-profile-photos.s3.me-south-1.amazonaws.com/")[1]
-												const myNewFile = new File([file], newName, {type: file.type});
+												// const myNewFile = new File([file], newName, {type: file.type});
 												
-												console.log(newName);
-												console.log("new file ", myNewFile);
+												// console.log(newName);
+												// console.log("new file ", myNewFile);
 												
 												//let textData = await myNewFile.__proto__.__proto__.text();
 												//console.log("new file ", textData);
 												
-												 		let bodyFormData = new FormData();
-												 		bodyFormData.set('image', myNewFile, newName);
+												 		// let bodyFormData = new FormData();
+												 		// bodyFormData.set('image', myNewFile, newName);
 												 		//bodyFormData.append('name', fileName)
 
 													
 												 	//console.log("bodyFormData \n", bodyFormData);
-												 	const uploadImageRequest = {
-												 			method: 'PUT',
-												 			url: checkUploadRequestResponse.data.signedRequest,
-												 			content: bodyFormData,
-												 		 	headers: {
-												 		 		'content-type': 'multipart/form-data'//file.type
-												 		 	}
-												 		}
+												 	// const uploadImageRequest = {
+												 	// 		method: 'PUT',
+												 	// 		url: checkUploadRequestResponse.data.signedRequest,
+												 	// 		content: bodyFormData,
+												 	// 	 	headers: {
+												 	// 	 		'content-type': 'multipart/form-data'//file.type
+												 	// 	 	}
+												 	// 	}
 												 	
-												 	console.log(uploadImageRequest);													
+												 	// console.log(uploadImageRequest);													
 												 	//let imageUploadResult = await callAxios(uploadImageRequest);
 													
 													//    const UploadOptions = {
@@ -338,17 +328,39 @@ auth.uploadMainProfilePhoto = function (file) {
 													//				"Content-Type": myNewFile.type
 													//			  }
 													//			};
-													let imageUploadResult = await axios.put(checkUploadRequestResponse.data.signedRequest, myNewFile, uploadImageRequest);
+													//let imageUploadResult = await axios.put(checkUploadRequestResponse.data.signedRequest, myNewFile, uploadImageRequest);
 													
-													console.log(imageUploadResult);
-													
-													if(imageUploadResult.data.message){
-												    resolve({"message": imageUploadResult.data.message});
-												    }else{
-														optionsCheck.url = "/checkmpupload";
+												//let imageUploadResult = await uploadFileToS3(checkUploadRequestResponse.data.signedRequest,file);
+                                                   const formData = new FormData();
+    Object.keys(checkUploadRequestResponse.data.signedRequest.fields).forEach(key => {
+      formData.append(key, checkUploadRequestResponse.data.signedRequest.fields[key]);
+    });
+    // Actual file has to be appended last.
+    formData.append("file", file);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", checkUploadRequestResponse.data.signedRequest.url, true);
+    xhr.send(formData);
+    xhr.onload = async function() {
+     if(this.status === 204 ){
+		 console.log("trueeeeeeee 204");
+    		optionsCheck.url = "/checkmpupload";
 														await callAxios(optionsCheck);
 														resolve(true);
-													}
+	 } else{
+		 reject(this.responseText);
+	 }
+    };
+         
+												
+													// console.log("imageUploadResult ",imageUploadResult);
+													
+													// if(imageUploadResult.data.message){
+												    // resolve({"message": imageUploadResult.data.message});
+												    // }else{
+													// 	optionsCheck.url = "/checkmpupload";
+													// 	await callAxios(optionsCheck);
+													// 	resolve(true);
+													// }
 													//when resolve true refresh page (MPUpload)
 													//when resolve true in create user refresh page (SignUp)
 													

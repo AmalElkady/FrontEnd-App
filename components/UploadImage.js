@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Resizer from "react-image-file-resizer";
 import ReactCrop from "react-image-crop";
 import UserCard from "./Cards/UserCard";
-
+import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../util/IntlMessages";
+import {mpUpload,showAuthLoader}from "../actions/Auth";
+import {
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,8 +21,9 @@ const useStyles = makeStyles(theme => ({
     margin: "2rem auto"
   }
 }));
-export default function UploadImage() {
+export default function UploadImage({fileInput}) {
   const classes = useStyles();
+   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [displayFile, setDisplayFile] = useState(null);
   /////////
@@ -27,6 +34,7 @@ export default function UploadImage() {
   const [croppedImageFile, setCroppedImageFile] = useState(null);
   const [imageRef, setImageRef] = useState(null);
   const [selectImg, setSelectedImg] = useState(null);
+  const [finalImg, setFinalImg] = useState(null);
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 575) {
@@ -46,8 +54,12 @@ export default function UploadImage() {
     window.addEventListener("resize", handleResize);
   });
 
-  const onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
+ useEffect(() => {
+onSelectFile(fileInput);
+  },[]);
+
+
+  const onSelectFile = fileInput => {
       setCrop(null);
       setFileSrc(null);
       setCroppedImageUrl(null);
@@ -55,8 +67,7 @@ export default function UploadImage() {
       setSelectedImg(null);
       const reader = new FileReader();
       reader.addEventListener("load", () => setFileSrc(reader.result));
-      reader.readAsDataURL(e.target.files[0]);
-    }
+      reader.readAsDataURL(fileInput);
   };
 
   const onImageLoaded = image => {
@@ -173,20 +184,21 @@ export default function UploadImage() {
 
   const onChange = async file => {
     const image = await resizeFile(file);
-    console.log("rom onchange 2 ", image);
+    const finalFile = new File([image], fileInput.name, {
+          type: "image/jpeg",
+          lastModified: Date.now()
+        });   
+    console.log("final image after resize", finalFile);
+    setFinalImg(finalFile);
   };
-
   return (
     <>
-      <br />
-      <br />
       {croppedImageUrl && (
         <div style={{ width: "30%" }}>
           {" "}
           <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
         </div>
       )}
-      <br />
       {fileSrc && (
         <ReactCrop
           id="crop-container"
@@ -199,11 +211,30 @@ export default function UploadImage() {
           ref={myRef}
         />
       )}
-      <br />
-      <br />
-      <br />
+           <Grid
+                          container
+                          style={{ paddingTop: "25px" }}
+                          spacing={12}
+                        >
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              dispatch(showAuthLoader());
+                               console.log("onSubmit ",finalImg,finalImg.size);
+                               if(finalImg.size<=3500 ||finalImg.size>=32000 ){
+                                 NotificationManager.error(<IntlMessages id="upload.error" />)
+
+                               }else{
+                               dispatch(mpUpload(finalImg))
+                               }
+                            }}
+                            color="primary"
+                          >
+                            <IntlMessages id="appModule.submit" />
+                          </Button>{" "}
+                        </Grid>
       {/* {displayFile && <img src={displayFile} alt="" />} */}
-      <label htmlFor="upload-photo">
+      {/* <label htmlFor="upload-photo">
         <input
           style={{ display: "none" }}
           id="upload-photo"
@@ -216,7 +247,7 @@ export default function UploadImage() {
         <Button color="primary" variant="contained" component="span">
           Upload Image
         </Button>
-      </label>
+      </label> */}
     </>
   );
 }

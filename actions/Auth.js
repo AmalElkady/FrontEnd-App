@@ -80,10 +80,10 @@ export const changeUserPhoneBeforeVerif = (
   };
 };
 
-export const changeUserPhoneBeforeVerifSuccess = returnData => {
+export const changeUserPhoneBeforeVerifSuccess = (returnData,newPhone, phonecountrycode, countryiso2, newCity) => {
   return {
     type: CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
-    payload: returnData
+    payload: {returnData,newPhone, phonecountrycode, countryiso2, newCity}
   };
 };
 

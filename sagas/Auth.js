@@ -257,10 +257,11 @@ function* createUserWithPhonePassword({ payload }) {
 }
 
 function* uploadMainProfilePhoto({ payload }) {
-  const { file } = payload;
+  console.log("from saga img payload ",payload)
+ // const { file } = payload;
 
   try {
-    const photoUploadS3 = yield call(uploadMainProfilePhotoRequest, file);
+    const photoUploadS3 = yield call(uploadMainProfilePhotoRequest, payload);
 
     if (photoUploadS3.message) {
       yield put(showAuthMessage(photoUploadS3.message));
@@ -410,7 +411,7 @@ function* changeUserPhoneBeforeVerifRequest({ payload }) {
       yield put(showAuthMessage(returnData.message));
     } else {
      
-      yield put(changeUserPhoneBeforeVerifSuccess(true));
+      yield put(changeUserPhoneBeforeVerifSuccess(true,newPhone, phonecountrycode, countryiso2, newCity));
     }
   } catch (error) {
     yield put(showAuthMessage(error));

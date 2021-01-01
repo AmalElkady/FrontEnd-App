@@ -15,6 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import "react-phone-input-2/lib/style.css";
 import { DropzoneArea } from "material-ui-dropzone";
 import ModalUpload from "../components/Modals/modalUpload";
+import UploadImage from "../components/UploadImage"
 
 //sendResetToken ===> mpUpload
 //changePassword ===> mpUploadClear
@@ -54,8 +55,6 @@ class VerifyEmail extends React.Component {
     // x[0].style.minHeight = "20px";
     let token = getCookie("access_token");
     let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
-    console.log("token  ", tokenUserData);
-
     // check if token.profile include MPA only dispatch action of checkMpUpload
     if (
       `${tokenUserData.profile}`.includes("MPA") &&
@@ -155,14 +154,14 @@ class VerifyEmail extends React.Component {
                           }
                         }}
                       />
-
                       <div className="mb-3 d-flex align-items-center justify-content-between">
                         <Grid
                           container
                           style={{ paddingTop: "25px" }}
                           spacing={12}
                         >
-                          <Button
+                         {file&&<UploadImage fileInput={file}/>}
+                          {/* <Button
                             variant="contained"
                             onClick={() => {
                               this.props.showAuthLoader();
@@ -171,7 +170,7 @@ class VerifyEmail extends React.Component {
                             color="primary"
                           >
                             <IntlMessages id="appModule.submit" />
-                          </Button>{" "}
+                          </Button>{" "} */}
                         </Grid>
                       </div>
                     </form>

@@ -39,5 +39,8 @@
   "inputLabel.changePhone": "Your phone number",
   "appModule.resetPasswordSuccess": "Password Changed Successfully, Go To Login Page",
   "appModule.tokenSent": "Check Your Phone For Reset Code",
-  "appModule.resetPasswordAgain": "Reset Password Again"
+  "appModule.resetPasswordAgain": "Reset Password Again",
+
+
+  "upload.error":"The size of the image must be from 3.5 KB to 32 KB"
 }

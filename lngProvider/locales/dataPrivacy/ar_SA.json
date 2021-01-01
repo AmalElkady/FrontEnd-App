@@ -20,5 +20,6 @@
   "appModule.changeYourPhone": "تغير رقم هاتفك",
   "inputLabel.changePhone": "رقم هاتفك",
   "appModule.change": "تغير",
-  "appModule.cancel": "الغاء"
+  "appModule.cancel": "الغاء",
+  "upload.error":"حجم الصورة يجب أن يكون من 3.5 كيلو بايت إلى 32 كيلو بايت"
 }
