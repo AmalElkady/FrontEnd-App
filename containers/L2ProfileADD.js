@@ -106,7 +106,8 @@ componentDidMount () {
     return (
 	
 	<>
-				<Button variant="contained" onClick={() => {
+	 <div className="container">
+				{/* <Button variant="contained" onClick={() => {
                     
 					this.props.showAuthLoader();
                     this.props.userSignOut();
@@ -114,14 +115,27 @@ componentDidMount () {
                   }} color="primary">
                     <IntlMessages
                       id="appModule.signOut"/>
-                  </Button>
+                  </Button> */}
 	
       <div
+	  
         className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-        <div className="app-login-main-content">
-          <div className="app-logo-content d-flex align-items-center justify-content-center">
+		<div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+		<Button
+          variant="contained"
+          onClick={() => {
+            this.props.showAuthLoader();
+            this.props.userSignOut();
+          }}
+          color="primary"
+          className="linear-g-r out-btn-1"
+        >
+          <IntlMessages id="appModule.signOut" />
+        </Button>
+		
+          <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
             <Link href="/">
-                    <a> <img src="../static/images/gila.png"
+                    <a> <img src="../static/images/Gila_Final_Logo_White.svg"
                      alt="App" title="App"/> </a>
             </Link>
           </div>
@@ -141,7 +155,7 @@ componentDidMount () {
 						<Grid item xs={12}>
 							<PhoneInput
 							  countryCodeEditable={false}
-							  disableCountryCode={true}
+							 disableCountryCode={true}
 							  country={COUNTRY_CODE_TO_NAME_MAP[this.state.nationality] || COUNTRY_CODE_TO_NAME_MAP[country] || COUNTRY_CODE_TO_NAME_MAP["+"+country]}
 							  value={this.state.nationality}
 							  placeholder={'Choose Country'}
@@ -170,7 +184,7 @@ componentDidMount () {
 						  {ARRAYS_OF_TPERCENT.map((value,i) => (
 																  <MenuItem
 																	key={ARRAYS_OF_TPERCENT_VALUES[i]}
-																	value={ARRAYS_OF_TPERCENT_VALUES[i]}
+																	value={ARRAYS_OF_TPERCENT_VALUES[i]+1}
 																	control={<Radio />}
 																	label={value}>
 																		{value}
@@ -266,7 +280,7 @@ componentDidMount () {
 										    let v = parseInt(`${value.props.id}`.split(".")[1]);
 											return  <MenuItem
 													key={v}
-													value={v}
+													value={v+1}
 													control={<Radio />}
 													label={value}>
 														{value}
@@ -284,7 +298,7 @@ componentDidMount () {
 				
 			<Grid container spacing={12} style={{ paddingBottom:"9px"}}>
 			
-						<Grid item xs={6} style={{ width: "100%", paddingRight: "18px"}}>
+						<Grid item xs={6} style={{ minWidth: "149px", paddingRight: "18px"}}>
 							<TextField
 							  type="text"
 							  onChange={handleChange}
@@ -302,7 +316,7 @@ componentDidMount () {
 	
 				<Grid container spacing={12} style={{paddingTop:"9px",paddingBottom:"9px"}}>
 						<Grid container spacing={12}>
-							<InputLabel id="bio-label"><IntlMessages id="inputLabel.bio"/></InputLabel>
+							<InputLabel id="bio-label"  style={{marginBottom: ".5rem"}}><IntlMessages id="inputLabel.bio"/></InputLabel>
 						</Grid>
 						<Grid container spacing={12}>
 
@@ -313,7 +327,7 @@ componentDidMount () {
 							  defaultValue={bio}
 							  rowsMin={3}
 							  name="bio"
-							  style={{width: "100%"}}
+							  style={{minWidth: "99%"}}
 							/>
 					
 						</Grid>
@@ -325,14 +339,14 @@ componentDidMount () {
                   <Button variant="contained" onClick={() => {
 					  this.props.showAuthLoader();
                       this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
-					 // console.log(country);
+					 //console.log(country);
 					//   console.log(nationality);
 					//   console.log(tpercent);
 					//   console.log(workd);
 					//   console.log(title);
 					//   console.log(education);
 					//   console.log(bio);
-                  }} color="primary">
+                  }} color="primary" className="linear-g-r">
                     <IntlMessages
                       id="appModule.submit"/>
                   </Button>
@@ -354,7 +368,7 @@ componentDidMount () {
         {showMessage && NotificationManager.error(alertMessage)}
         <NotificationContainer/>
       </div>
-	  
+	  </div>
 	 </>
     )
   }

@@ -21,11 +21,12 @@ const useStyles = makeStyles(theme => ({
     margin: "2rem auto"
   }
 }));
-export default function UploadImage({fileInput}) {
+export default function UploadImage({}) {
   const classes = useStyles();
    const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [displayFile, setDisplayFile] = useState(null);
+   const MainPhotoSelected = useSelector(state => state.auth.mainPhotoSelected);
   /////////
   const [crop, setCrop] = useState(null);
   let myRef = React.createRef();
@@ -55,10 +56,8 @@ export default function UploadImage({fileInput}) {
   });
 
  useEffect(() => {
-onSelectFile(fileInput);
-  },[]);
-
-
+onSelectFile(MainPhotoSelected);
+  },[MainPhotoSelected]);
   const onSelectFile = fileInput => {
       setCrop(null);
       setFileSrc(null);
@@ -184,7 +183,7 @@ onSelectFile(fileInput);
 
   const onChange = async file => {
     const image = await resizeFile(file);
-    const finalFile = new File([image], fileInput.name, {
+    const finalFile = new File([image], MainPhotoSelected.name, {
           type: "image/jpeg",
           lastModified: Date.now()
         });   
@@ -194,9 +193,9 @@ onSelectFile(fileInput);
   return (
     <>
       {croppedImageUrl && (
-        <div style={{ width: "30%" }}>
+        <div style={{ width: "30%",marginBottom:"1rem",borderRadius:"1rem",boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.75)" }}>
           {" "}
-          <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
+          <img alt="Crop" style={{ maxWidth: "100%",borderRadius:"1rem" }} src={croppedImageUrl} />
         </div>
       )}
       {fileSrc && (
@@ -229,6 +228,7 @@ onSelectFile(fileInput);
                                }
                             }}
                             color="primary"
+                             className="linear-g-r"
                           >
                             <IntlMessages id="appModule.submit" />
                           </Button>{" "}

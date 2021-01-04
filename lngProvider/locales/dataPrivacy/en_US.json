@@ -15,7 +15,7 @@
   "appModule.resendResetToken": "Resend Code",
   "appModule.verifyPhone": "Verify Your Phone",
   "appModule.verificationCode": "Verification Code",
-  "appModule.resendVerificationCode": "Send Code To My Phone",
+  "appModule.resendVerificationCode": "Send Code To Phone",
   "appModule.uploadNewPhoto": "Upload New Photo",
   "appModule.uploadNewPhotoMessage": "There is problem in upload your photo",
 
@@ -41,6 +41,18 @@
   "appModule.tokenSent": "Check Your Phone For Reset Code",
   "appModule.resetPasswordAgain": "Reset Password Again",
 
+  "subscription.sub":"Subscripe",
+  "subscription.free":"Free Limited Subscription",
+  "subscription.1month":"1 Months Subscription",
+  "subscription.3month":"3 Months Subscription",
+  "subscription.freeOption":"- Can't start conversation",
+  "subscription.1monthOption1":"- Unlimited Direct Messages",
+  "subscription.1monthOption2":"- High reachability",
+  "subscription.3monthOption1":"- Unlimited Direct Messages",
+  "subscription.3monthOption2":"- High reachability",
+  "subscription.trial":"3 Days Trial",
+  "subscription.1monthCost":"80 EGP",
+  "subscription.3monthCost":"200 EGP",
 
   "upload.error":"The size of the image must be from 3.5 KB to 32 KB"
 }

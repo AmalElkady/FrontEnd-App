@@ -36,8 +36,8 @@
   "inputLabel.title": "Your work title",
   "inputLabel.bio": "Write about yourself",
 
-  "inputGender.female": "Female",
-  "inputGender.male": "Male",
+  "inputGender.female": " Female",
+  "inputGender.male": " Male",
 
   "month.january": "January",
   "month.february": "February",

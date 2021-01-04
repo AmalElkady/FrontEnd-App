@@ -83,6 +83,7 @@ export const INIT_URL = "init_url";
 export const CHANGE_PHONE_BEFORE_VERIF = "change_phone_before_verif";
 export const CHANGE_PHONE_BEFORE_VERIF_SUCCESS = "change_phone_before_verif_success";
 export const RESET_PHONE_CHANGE_FLAG="reset_phone_change_flag";
+export const MAIN_PHOTO_SELECTED="main_photo_selected"
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";

@@ -39,7 +39,8 @@ import {
   mpUpload,
   mpUploadClear,
   userSignOut,
-  checkMpUpload
+  checkMpUpload,
+  mainPhotoSelected
 } from "../actions/Auth";
 
 class VerifyEmail extends React.Component {
@@ -94,8 +95,8 @@ class VerifyEmail extends React.Component {
     return (
       <>
         {this.props.checkMpFlag && (
-          <div>
-            <Button
+          <div className="container">
+            {/* <Button
               variant="contained"
               onClick={() => {
                 this.props.showAuthLoader();
@@ -104,19 +105,34 @@ class VerifyEmail extends React.Component {
               color="primary"
             >
               <IntlMessages id="appModule.signOut" />
-            </Button>
+            </Button> */}
 
             <div
-              style={{ minHeight: "705px" }}
+              // style={{ minHeight: "705px" }}
               className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
             >
-              <div className="app-login-main-content">
-                <div className="app-logo-content d-flex align-items-center justify-content-center">
+              <div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+
+         <Button
+          variant="contained"
+          onClick={() => {
+            this.props.showAuthLoader();
+            this.props.userSignOut();
+          }}
+          color="primary"
+          className="linear-g-r out-btn-1"
+        >
+          <IntlMessages id="appModule.signOut" />
+        </Button>
+		
+
+
+                <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
                   <Link href="/">
                     <a>
                       {" "}
                       <img
-                        src="../static/images/gila.png"
+                        src="../static/images/Gila_Final_Logo_White.svg"
                         alt="App"
                         title="App"
                       />{" "}
@@ -133,13 +149,13 @@ class VerifyEmail extends React.Component {
                   </div>
 
                   <div className="app-login-form">
-                    <form>
+                    <form  className={file?"drag drag-h":"drag"}>
                       <DropzoneArea
                         acceptedFiles={["image/*"]}
                         dropzoneText={"Drop Photo"}
                         filesLimit={1}
                         maxFileSize={3000000}
-                        showPreviews={true}
+                        // showPreviews={true}
                         showPreviewsInDropzone={false}
                         getFileRemovedMessage={removedFile => {
                           return `File ${removedFile} was removed`;
@@ -150,6 +166,7 @@ class VerifyEmail extends React.Component {
                         }}
                         onChange={files => {
                           if (files[0]) {
+                            this.props.mainPhotoSelected(files[0])
                             this.setState({ file: files[0] });
                           }
                         }}
@@ -160,7 +177,7 @@ class VerifyEmail extends React.Component {
                           style={{ paddingTop: "25px" }}
                           spacing={12}
                         >
-                         {file&&<UploadImage fileInput={file}/>}
+                         {file&&<UploadImage/>}
                           {/* <Button
                             variant="contained"
                             onClick={() => {
@@ -221,5 +238,6 @@ export default connect(mapStateToProps, {
   hideMessage,
   showAuthLoader,
   userSignOut,
-  checkMpUpload
+  checkMpUpload,
+  mainPhotoSelected
 })(VerifyEmail);

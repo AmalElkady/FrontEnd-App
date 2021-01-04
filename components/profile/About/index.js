@@ -59,15 +59,14 @@ export default function About({ aboutInfo }) {
               <IntlMessages id={`nationality.${disData.nationality}`} />
             </Typography>
           </div>
-          {disData.tprecent && (
+          {disData.tpercent && (
             <div className="d-flex margin-TB">
               <div className="profile-icon-2">
                 <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
               </div>
-              <span>{disData.tprecent}</span>
               <Typography variant="body1" gutterBottom>
-                {ARRAYS_OF_TPERCENT[disData.tprecent]}
-                {/* <IntlMessages id={`nationality.${disData.tprecent}`} /> */}
+                {ARRAYS_OF_TPERCENT[disData.tpercent]}
+                {/* <IntlMessages id={`nationality.${disData.tpercent}`} /> */}
               </Typography>
             </div>
           )}
@@ -95,7 +94,7 @@ export default function About({ aboutInfo }) {
               <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
             </div>
             <Typography variant="body1" gutterBottom>
-              <IntlMessages id={`workd.${disData.workd}`} />
+              <IntlMessages id={`workd.${disData.workd-1}`} />
             </Typography>
           </div>
           <div className="margin-TB d-flex">

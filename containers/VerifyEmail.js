@@ -70,30 +70,30 @@ class VerifyEmail extends React.Component {
 
     return (
       <>
-        <Button
+      <div className="container">
+        {timeReturned && <Timer />}
+
+        <div
+          className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
+        >
+          <div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+           <Button
           variant="contained"
           onClick={() => {
             this.props.showAuthLoader();
             this.props.userSignOut();
           }}
           color="primary"
+          className="linear-g-r out-btn-1"
         >
           <IntlMessages id="appModule.signOut" />
         </Button>
-
-        {timeReturned && <Timer />}
-
-        <div
-          style={{ minHeight: "705px" }}
-          className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
-        >
-          <div className="app-login-main-content">
-            <div className="app-logo-content d-flex align-items-center justify-content-center">
+            <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
               <Link href="/">
                 <a>
                   {" "}
                   <img
-                    src="../static/images/gila.png"
+                    src="../static/images/Gila_Final_Logo_White.svg"
                     alt="App"
                     title="App"
                   />{" "}
@@ -135,20 +135,9 @@ class VerifyEmail extends React.Component {
                     className="mt-0 mb-2"
                   />
 
-                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                  {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
                     <Grid container style={{ paddingTop: "7px" }} spacing={12}>
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          this.props.showAuthLoader();
-                          this.props.sendVerificationCode({ verificationCode });
-                        }}
-                        color="primary"
-                      >
-                        <IntlMessages id="appModule.submit" />
-                      </Button>{" "}
-                    </Grid>
-
+                    <Grid item xs={9} className="m-s" >
                     <Button
                       variant="contained"
                       onClick={() => {
@@ -156,12 +145,28 @@ class VerifyEmail extends React.Component {
                         this.props.resendVerificationToPhone();
                       }}
                       color="primary"
+                      className="linear-g"
                       disabled={timeReturned ? disabled : ""}
                     >
                       <IntlMessages id="appModule.resendVerificationCode" />
                     </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.props.showAuthLoader();
+                          this.props.sendVerificationCode({ verificationCode });
+                        }}
+                        color="primary"
+                        className="linear-g"
+                      >
+                        <IntlMessages id="appModule.submit" />
+                      </Button>{" "}
+                   </Grid>
+                     </Grid>
                     {phoneVerified && window.location.reload()}
-                  </div>
+                  {/* </div> */}
                 </form>
               </div>
             </div>
@@ -175,6 +180,7 @@ class VerifyEmail extends React.Component {
           )}
           {showMessage && NotificationManager.error(alertMessage)}
           <NotificationContainer />
+        </div>
         </div>
       </>
     );

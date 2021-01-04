@@ -40,6 +40,11 @@
   max-width: 680px;
   width: 94%;
   margin: 0 auto;
+ @media screen and (max-width: 575px) {
+    width: 100%;
+    order: 2;
+      margin: 2rem auto
+  }
 
   & .loader-view {
     position: absolute;
@@ -58,8 +63,11 @@
   @include box-shadow($shadow);
   @include border-radius(10px);
   font-size: 14px;
-  overflow: hidden;
+  //overflow: hidden;
   margin: 1rem;
+   @media screen and (max-width: 575px) {
+       margin: auto 1.5rem;
+  }
 }
 
 .app-login-content {
@@ -78,7 +86,7 @@
   width: 100%;
 }
 .app-login-header {
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
 }
 
 .app-login-content .form-control {
@@ -105,6 +113,7 @@
   @media screen and (max-width: 575px) {
     width: 100%;
     order: 1;
+    border-radius: 10px 10px 0 0;
   }
 }
 .app-logo-content img {
@@ -138,4 +147,3 @@
     margin-bottom: 0;
   }
 }
-

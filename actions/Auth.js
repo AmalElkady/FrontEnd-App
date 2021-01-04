@@ -36,7 +36,8 @@ import {
   RESET_CHECK_MP_UPLOAD_FLAG,
   CHANGE_PHONE_BEFORE_VERIF,
   CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
-  RESET_PHONE_CHANGE_FLAG
+  RESET_PHONE_CHANGE_FLAG,
+  MAIN_PHOTO_SELECTED
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -119,6 +120,15 @@ export const userSignUp = user => {
     payload: user
   };
 };
+
+
+export const mainPhotoSelected = photo => {
+  return {
+    type: MAIN_PHOTO_SELECTED,
+    payload: photo
+  };
+};
+
 
 export const mpUpload = imageToUpload => {
   return {

@@ -17,6 +17,7 @@ import { styled } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { Male, Female } from "react-gender";
 
 import {ARRAY_OF_YEARS ,ARRAY_OF_MONTHS, ARRAY_OF_DAYS, COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE, ARRAYS_OF_MARTIAL_STATUS, ARRAYS_OF_MARTIAL_STATUS_VALUES} from '../util/data';
 
@@ -40,7 +41,7 @@ class SignUp extends React.Component {
     this.state = {
       firstname: '',
 	  lastname: '',
-	  gender: '0',
+	  gender: '5',
 	  martial: '',
 	  country: '20',
 	  countryiso2: 'eg',
@@ -68,14 +69,14 @@ class SignUp extends React.Component {
 		
 		setTimeout(() => {
 		   this.props.hideAuthLoader();
-		    Router.replace('/signin');
+		    //Router.replace('/signin');
 		   this.props.userSignIn({
                           phone: this.state.phone,
                           password:this.state.password,
                           country: this.state.country
                         });
-		  // Router.replace('/signin');
-		   //Router.replace('/verifyemail');
+		   Router.replace('/home/content');
+		  // Router.replace('/verifyemail');
      }, 300);
     }
   }
@@ -137,9 +138,9 @@ class SignUp extends React.Component {
       <div
         className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
         <div className="app-login-main-content">
-          <div className="app-logo-content d-flex align-items-center justify-content-center">
+          <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
             <Link href="/">
-                    <a> <img src="../static/images/gila.png"
+                    <a> <img src="../static/images/Gila_Final_Logo_White.svg"
                      alt="App" title="App"/> </a>
             </Link>
           </div>
@@ -152,8 +153,8 @@ class SignUp extends React.Component {
             <div className="app-login-form">
               <form method="post" action="/">
        
-				<Grid container spacing={12} style={{ minWidth: "149px"}}>
-				    <Grid item xs={3} style={{ minWidth: "149px", paddingRight: "7px" }}>
+				<Grid container spacing={12} >
+				    <Grid item xs={6} className="grid-width-1" >
 						<TextField
 						  type="text"
 						  label={<IntlMessages id="inputLabel.firstName"/>}
@@ -164,7 +165,7 @@ class SignUp extends React.Component {
 						  className="mt-2 mb-2"
 						/>
 					</Grid>
-					<Grid item xs={3} style={{ minWidth: "149px", paddingRight: "7px"}}>
+					<Grid item xs={6} className="grid-width-1"  >
 						<TextField
 						  type="text"
 						  label={<IntlMessages id="inputLabel.surName"/>}
@@ -195,8 +196,8 @@ class SignUp extends React.Component {
 						<FormControl component="fieldset">
 						  <FormLabel component="legend"><IntlMessages id="inputLabel.gender"/></FormLabel>
 						  <RadioGroup aria-label="gender" name="gender" value={gender} onChange={handleChange}>
-							<FormControlLabel value="0" control={<Radio />} label={<IntlMessages id="inputGender.female"/>} />
-							<FormControlLabel value="1" control={<Radio />} label={<IntlMessages id="inputGender.male"/>} />
+							<FormControlLabel style={{marginBottom:"0.5rem"}} value="0" control={<Radio />} label={<> <Female color="#d61f5f" width="1.5rem"  height="3rem"/> <IntlMessages id="inputGender.female"/></>} />
+							<FormControlLabel value="1" control={<Radio />} label={<> <Male color="#d61f5f"  width="1.5rem"  height="3rem"/><IntlMessages id="inputGender.male"/></>} />
 						  </RadioGroup>
 						</FormControl>
 					</Grid>
@@ -209,10 +210,10 @@ class SignUp extends React.Component {
 				</Grid>
 				
 				
-				<Grid container spacing={3}>
+				<Grid container spacing={12}>
 				
-				  <Grid item xs={3} sm={3} style={{ minWidth: "90px", paddingRight: "18px"}}>{/*min-width: 76px*/}
-				  <StyledFormControl style={{ minWidth: "90px" }}>
+				  <Grid item xs={3} className="grid-width-2">
+				   <StyledFormControl className="sub-select">
 					<InputLabel id="day-label"><IntlMessages id="inputLabel.day"/></InputLabel>
 					<Select
 					  labelId="day-label"
@@ -234,11 +235,11 @@ class SignUp extends React.Component {
 									
 					</Select>
 					</StyledFormControl>
-					</Grid>
+				</Grid>
 					
 					
-					<Grid item xs={3} sm={3} style={{ minWidth: "90px", paddingRight: "18px"}}>
-					<StyledFormControl style={{ minWidth: "90px" }}>
+			  <Grid item xs={3} className="grid-width-2">
+					<StyledFormControl className="sub-select" >
 					<InputLabel id="month-label"><IntlMessages id="inputLabel.month"/></InputLabel>
 					<Select
 					  labelId="month-label"
@@ -260,11 +261,11 @@ class SignUp extends React.Component {
 									
 					</Select>
 					</StyledFormControl>
-					</Grid>
+			 </Grid>
 					
 					
-					<Grid item xs={3} sm={3} style={{ minWidth: "90px", paddingLeft: "18px"}}>
-					<StyledFormControl style={{ minWidth: "90px" }}>
+			  <Grid item xs={3} className="grid-width-2">
+					<StyledFormControl className="sub-select">
 					<InputLabel id="year-label"><IntlMessages id="inputLabel.year"/></InputLabel>
 					<Select
 					  labelId="year-label"
@@ -286,16 +287,16 @@ class SignUp extends React.Component {
 									
 					</Select>					
 				  </StyledFormControl>
-			      </Grid>
+			 </Grid>
 				
-				</Grid>
+			</Grid>
 				
 
 			<Grid container spacing={12}>
 			
-						<Grid item xs={3} style={{ minWidth: "90px", paddingRight: "18px"}}>
+						<Grid item xs={3} className="grid-width-1">
 							
-											  <StyledFormControl style={{ minWidth: "90px" }}>
+											  <StyledFormControl  className="sub-select">
 												<InputLabel id="city-label"><IntlMessages id="inputLabel.city"/></InputLabel>
 												<Select
 												  labelId="city-label"
@@ -320,9 +321,10 @@ class SignUp extends React.Component {
 						
 						</Grid>
 						
-						<Grid item xs={3}  style={{ minWidth: "149px", paddingLeft: "18px"}}>
+						<Grid item xs={3} className="grid-width-1" >
 						
-											  <StyledFormControl style={{ minWidth: "149px" }}>
+									{(this.state.gender==0||this.state.gender==1)&&		  
+									<StyledFormControl  className="sub-select">
 												<InputLabel id="martial-label"><IntlMessages id="inputLabel.martial"/></InputLabel>
 												<Select
 												  labelId="martial-label"
@@ -330,7 +332,7 @@ class SignUp extends React.Component {
 												  value={martial}
 												  onChange={handleChange}
 												  name="martial"
-												  style={{marginRight: "35px"}}
+												  
 												>
 												
 														{ARRAYS_OF_MARTIAL_STATUS[this.state.gender].map((value,i) => (
@@ -345,16 +347,16 @@ class SignUp extends React.Component {
 																
 												</Select>
 												</StyledFormControl>
-												
-						</Grid>						
+									}
+					</Grid>					
 			</Grid>				
 
 
 		
 		
-			<Grid container spacing={12} style={{ minWidth: "149px"}}>
+			<Grid container spacing={12}>
 			
-						<Grid item xs={6} style={{ minWidth: "90px", paddingRight: "18px"}}>
+						<Grid item xs={6} className="grid-width-1" >
 							<TextField
 							  type="password"
 							  onChange={(event) => this.setState({password: event.target.value})}
@@ -366,7 +368,7 @@ class SignUp extends React.Component {
 							/>
 						</Grid>
 						
-						<Grid item xs={6}  style={{ minWidth: "90px", paddingRight: "18px"}}>
+						<Grid item xs={6} className="grid-width-1" >
 							<TextField
 							  type="password"
 							  onChange={(event) => this.setState({password_confirm: event.target.value})}
@@ -381,19 +383,22 @@ class SignUp extends React.Component {
 			
 			
 			
+			{/* d-flex align-items-center justify-content-between */}
 			
-                <div className="mb-3 d-flex align-items-center justify-content-between">
+                <div className="mb-3">
                   <Button variant="contained" onClick={() => {
 					  if(password != password_confirm){ NotificationManager.error("Password Mismatch")}
                       else { this.props.showAuthLoader();
                       this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }
-                  }} color="primary">
+                  }} color="primary" className="linear-g">
                     <IntlMessages
                       id="appModule.regsiter"/>
                   </Button>
+				<div>	
                   <Link href="/signin">
-                    <a className="a-underLine"><IntlMessages id="signUp.alreadyMember"/></a>
+                    <a className="a-underLine" style={{float: "right"}}><IntlMessages id="signUp.alreadyMember"/></a>
                   </Link>
+				  </div>
                 </div>
 				
 

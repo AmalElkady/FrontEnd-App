@@ -11,9 +11,15 @@ import Button from "@material-ui/core/Button";
 import IntlMessages from "../util/IntlMessages";
 import Box from "@material-ui/core/Box";
 import Router from "next/router";
+import Grid from '@material-ui/core/Grid';
 
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
+
 
 import {
   hideMessage,
@@ -58,10 +64,12 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
-    width: "50%",
-    height: "50%",
-    margin: "auto"
+    width: "100%",
+    margin: "auto",
+    position:"relative" ,
+    marginTop:"5rem",
+    padding: "0 1rem",
+    textAlign:"center"
   }
 }));
 
@@ -85,7 +93,7 @@ export default function Subscribe() {
     }
   });
 
-  const onSubmit = () => {
+  const onSubscribe = () => {
     showAuthLoader();
     dispatch(userAddSubscribe(selectedValue));
   };
@@ -107,140 +115,206 @@ export default function Subscribe() {
   const handleChangeIndex = index => {
     setValue(index);
   };
+  const handleChange2 = (event) => {
+    setValue(event.target.value);
+  };
+
+
 
   return (
     <>
-      <Button
+     <div className="container">
+
+      <div className={classes.root}> 
+ <Button
+          variant="contained"
+          onClick={() => {
+            this.props.showAuthLoader();
+            this.props.userSignOut();
+          }}
+          color="primary"
+          className="linear-g-r out-btn-1"
+        >
+          <IntlMessages id="appModule.signOut" />
+        </Button>
+		
+ 
+ 
+ 
+ 
+ 
+ <FormControl component="fieldset" style={{minWidth:"70%"}}>
+      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange2}>
+        <FormControlLabel value="0" className={selectedValue === "0"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="0"  checked={selectedValue === "0"}  onChange={handleChangeSub} className="d-none"/>} label={
+<>
+<Grid container spacing={12} >
+				    <Grid item xs={9}>
+            <Grid item xs={12}>
+            <h2 style={{color:"white"}}>
+            <IntlMessages id="subscription.free"/>
+            </h2>
+            </Grid>
+             <Grid item xs={12}>
+                    <p style={{color:"white"}}>
+                   <IntlMessages id="subscription.freeOption"/>
+                    </p>
+					      </Grid>  
+					</Grid>
+					<Grid item xs={3} className="d-f-reverse">
+
+           <img style={{width:"100%"}} src="../static/images/icons/Free_Subscription_icon.svg"
+                     alt="free" title="free"/> 
+					</Grid>
+				</Grid>
+
+    <Grid container spacing={12} style={{marginTop: "1rem"}} >
+				   <Button
+           disabled={selectedValue === "0"?false:true}
+        variant="contained"
+       onClick={() => {
+                onSubscribe();
+              }}
+        color="primary"
+        className={selectedValue === "0"?"btn-sub-active":"btn-sub-non-active"}
+      >
+        <IntlMessages id="subscription.sub" />
+      </Button>
+				</Grid>    
+</>
+        } />
+
+        <FormControlLabel value="1"  className={selectedValue === "1"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="1"  checked={selectedValue === "1"} onChange={handleChangeSub} className="d-none"/>}
+         label={
+          
+       <>
+       <div style={{position:"relative"}}>
+        <div className="best-v">
+        <img style={{width:"100%"}} src="../static/images/icons/Best_Value_Icon.svg"
+                     alt="free" title="free"/> 
+        </div>
+       <Grid container spacing={12} style={{borderBottom: ".1px solid #ffffff4d"}} >
+
+        <Grid item xs={9}>
+				      <Grid item xs={12} className="grid-s-1">
+                    <h3 style={{color:"white"}}>
+                    <IntlMessages id="subscription.trial"/>
+                   
+                    </h3>
+					    </Grid>
+              <Grid item xs={12} className="grid-s-1">
+                 <img style={{width:"10%"}} src="../static/images/icons/plus.svg"
+                     alt="plus" title="plus"/> 
+					     </Grid>
+               <Grid item xs={12}>
+                    <h2 style={{color:"white"}}>
+                    <IntlMessages id="subscription.3month"/>
+                    </h2>
+					      </Grid>
+
+               <Grid item xs={12}>
+                    <p style={{color:"white"}}>
+                   <IntlMessages id="subscription.1monthOption1"/>
+                    <br/>
+                    <IntlMessages id="subscription.1monthOption2"/>
+                    </p>
+					      </Grid>  
+            
+				</Grid>  
+				
+        <Grid item xs={3} className="d-f-reverse">
+           <img style={{width:"100%"}} src="../static/images/icons/Active_Gila_icon.svg"
+                     alt="active_gila" title="active_gila"/> 
+					</Grid>
+			</Grid>
+      <Grid container spacing={12} style={{marginTop: "1rem"}} >
+           <Grid item xs={4} style={{padding: ".5rem"}} >
+            <h2 style={{color:"white"}}>
+            <IntlMessages id="subscription.3monthCost"/>
+            </h2>
+          </Grid>
+           <Grid item xs={8} style={{padding: ".5rem"}} >
+				   <Button
+            disabled={selectedValue === "1"?false:true}
         variant="contained"
         onClick={() => {
-          showAuthLoader();
-          dispatch(userSignOut());
-        }}
+                onSubscribe();
+              }}
         color="primary"
-      >
-        <IntlMessages id="appModule.signOut" />
-      </Button>
+        className={selectedValue === "1"?"btn-sub-active":"btn-sub-non-active"}
+        style={{width: "100%"}} 
+           >
+        <IntlMessages id="subscription.sub" />
+           </Button>
+			</Grid>    
+      </Grid>
+</div>
 
-      <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            {/*FREE  */}
+</>
+        } >
+        </FormControlLabel>
+        <FormControlLabel value="2"  className={selectedValue === "2"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="2"   checked={selectedValue === "2"} onChange={handleChangeSub} className="d-none"/>} label={
+        <>  
+   <Grid container spacing={12} style={{borderBottom: ".1px solid #ffffff4d"}} >
 
-            <Tab
-              label={
-                <FormControlLabel
-                  value="0"
-                  control={
-                    <Radio
-                      checked={selectedValue === "0"}
-                      onChange={handleChangeSub}
-                      color="primary"
-                      value="0"
-                      name="radio-button-demo"
-                      inputProps={{ "aria-label": "Free" }}
-                    />
-                  }
-                  label="Free"
-                />
-              }
-              {...a11yProps(0)}
-            />
+        <Grid item xs={9}>
+				      <Grid item xs={12} className="grid-s-1">
+                    <h3 style={{color:"white"}}>
+                    <IntlMessages id="subscription.trial"/>
+                    </h3>
+					    </Grid>
+             <Grid item xs={12} className="grid-s-1">
+                 <img style={{width:"10%"}} src="../static/images/icons/plus.svg"
+                     alt="plus" title="plus"/> 
+					     </Grid>
+               <Grid item xs={12}>
+                    <h2 style={{color:"white"}}>
+                    <IntlMessages id="subscription.1month"/>
+                    </h2>
+					      </Grid>
 
-            {/* 1 MONTH */}
-
-            <Tab
-              label={
-                <FormControlLabel
-                  value="1"
-                  control={
-                    <Radio
-                      checked={selectedValue === "1"}
-                      onChange={handleChangeSub}
-                      color="primary"
-                      value="1"
-                      name="radio-button-demo"
-                      inputProps={{ "aria-label": "1 Month" }}
-                    />
-                  }
-                  label="1 Month"
-                />
-              }
-              {...a11yProps(1)}
-            />
-
-            {/* 3 MONTH */}
-            <Tab
-              label={
-                <FormControlLabel
-                  value="2"
-                  control={
-                    <Radio
-                      checked={selectedValue === "2"}
-                      onChange={handleChangeSub}
-                      color="primary"
-                      value="2"
-                      name="radio-button-demo"
-                      inputProps={{ "aria-label": "3 Months" }}
-                    />
-                  }
-                  label="3 Months"
-                />
-              }
-              {...a11yProps(2)}
-            />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            Free
-            {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
-            <Button
-              variant="contained"
-              onClick={() => {
-                onSubmit();
+               <Grid item xs={12}>
+                    <p style={{color:"white"}}>
+                    <IntlMessages id="subscription.1monthOption1"/>
+                    <br/>
+                    <IntlMessages id="subscription.1monthOption2"/>
+                    </p>
+					      </Grid>  
+            
+				</Grid>  
+				
+        <Grid item xs={3} className="d-f-reverse">
+           <img style={{width:"100%"}} src="../static/images/icons/Active_Gila_icon.svg"
+                     alt="active_gile" title="active_gile"/> 
+					</Grid>
+			</Grid>
+      <Grid container spacing={12} style={{marginTop: "1rem"}} >
+           <Grid item xs={4} style={{padding: ".5rem"}} >
+            <h2 style={{color:"white"}}>
+            <IntlMessages id="subscription.1monthCost"/>
+            </h2>
+          </Grid>
+           <Grid item xs={8} style={{padding: ".5rem"}} >
+				   <Button
+        variant="contained"
+         disabled={selectedValue === "2"?false:true}
+      onClick={() => {
+                onSubscribe();
               }}
-              color="primary"
-            >
-              <IntlMessages id="appModule.submit" />
-            </Button>
-            {/* </div> */}
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            1 Month
-            <Button
-              variant="contained"
-              onClick={() => {
-                onSubmit();
-              }}
-              color="primary"
-            >
-              <IntlMessages id="appModule.submit" />
-            </Button>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            3 Months
-            <Button
-              variant="contained"
-              onClick={() => {
-                onSubmit();
-              }}
-              color="primary"
-            >
-              <IntlMessages id="appModule.submit" />
-            </Button>
-          </TabPanel>
-        </SwipeableViews>
+        color="primary"
+       className={selectedValue === "2"?"btn-sub-active":"btn-sub-non-active"}
+        style={{width: "100%"}} 
+           >
+        <IntlMessages id="subscription.sub" />
+           </Button>
+			</Grid>    
+      </Grid>
+</>
+        } />
+      </RadioGroup>
+    </FormControl>
+
+
+      </div>
       </div>
     </>
   );

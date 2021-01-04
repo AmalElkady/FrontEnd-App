@@ -21,5 +21,18 @@
   "inputLabel.changePhone": "رقم هاتفك",
   "appModule.change": "تغير",
   "appModule.cancel": "الغاء",
-  "upload.error":"حجم الصورة يجب أن يكون من 3.5 كيلو بايت إلى 32 كيلو بايت"
+  "upload.error":"حجم الصورة يجب أن يكون من 3.5 كيلو بايت إلى 32 كيلو بايت",
+
+  "subscription.sub":"اشترك",
+  "subscription.free":"اشتراك محدود مجاني",
+  "subscription.1month":"اشتراك شهر واحد",
+  "subscription.3month":"اشتراك ثلاثه اشهور",
+  "subscription.freeOption":"لا يمكنك بدأ محادثه -",
+  "subscription.1monthOption1":"رسائل مباشرة غير محدودة -",
+  "subscription.1monthOption2":"قابلية عالية للوصول -",
+  "subscription.3monthOption1":"رسائل مباشرة غير محدودة -",
+  "subscription.3monthOption2":"قابلية عالية للوصول -",
+  "subscription.trial":"ثلاثه ايام تجريبيه",
+  "subscription.1monthCost":"80 EGP",
+  "subscription.3monthCost":"200 EGP"
 }

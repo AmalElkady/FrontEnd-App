@@ -27,7 +27,8 @@ import {
   CHECK_MP_UPLOAD_SUCCESS,
   RESET_CHECK_MP_UPLOAD_FLAG,
   CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
-  RESET_PHONE_CHANGE_FLAG
+  RESET_PHONE_CHANGE_FLAG,
+  MAIN_PHOTO_SELECTED
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -42,6 +43,7 @@ const INIT_STATE = {
   initURL: "",
   authUser: null,
   authStateCleared: false,
+  mainPhotoSelected:null,
   phoneVerified: false,
   stepFlag: false,
   mpUploadFlag: false,
@@ -81,6 +83,13 @@ export default (state = INIT_STATE, action) => {
         loader: false,
         stepFlag: true
       };
+    }
+
+    case MAIN_PHOTO_SELECTED:{
+      return{
+        ...state,
+      mainPhotoSelected:action.payload
+      }
     }
 
     case MP_UPLOAD_SUCCESS: {
