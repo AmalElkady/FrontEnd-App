@@ -306,4 +306,9 @@ export const CHANGE_USER_LOGIN_PHONE_SUCCESS="change_user_login_phone_success";
 export const VERIFY_USER_LOGIN_PHONE_CHANGE="verify_user_login_phone_change";
 export const VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS="verify_user_login_phone_change_success";
 
+
+export const READ_MY_PHONE_AND_PW_DATA="read_my_phone_and_pw_data";
+export const READ_MY_PHONE_AND_PW_DATA_SUCCESS="read_my_phone_and_pw_data_success";
+
+
 export const OPEN_MODAL = "open_modal";

@@ -16,6 +16,8 @@ import {
   CHANGE_USER_LOGIN_PHONE_SUCCESS,
   VERIFY_USER_LOGIN_PHONE_CHANGE,
   VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
+  READ_MY_PHONE_AND_PW_DATA,
+  READ_MY_PHONE_AND_PW_DATA_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -109,6 +111,20 @@ export const verifyUserLoginPhoneChange = (verifyCode) => {
 export const verifyUserLoginPhoneChangeSuccess = data => {
   return {
     type: VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
+    payload: data
+  };
+};
+
+
+export const readMyPhoneAndPwData = () => {
+  return {
+    type: READ_MY_PHONE_AND_PW_DATA
+  };
+};
+
+export const readMyPhoneAndPwDataSuccess = data => {
+  return {
+    type: READ_MY_PHONE_AND_PW_DATA_SUCCESS,
     payload: data
   };
 };

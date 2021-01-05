@@ -13,6 +13,7 @@ import {
   changeMyPassword,
   changeUserLoginPhone,
   verifyUserLoginPhoneChange,
+  readMyPhoneAndPwData,
   openModal
 } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -62,7 +63,8 @@ export default function About({ aboutInfo }) {
                               console.log("on change pass ");
                               //dispatch(changeMyPassword("Password#123","Password#1234"));
                               //dispatch(changeUserLoginPhone("01220304050","Password#1234"));
-                             dispatch(verifyUserLoginPhoneChange("337265"))
+                             //dispatch(verifyUserLoginPhoneChange("337265"))
+                             //dispatch(readMyPhoneAndPwData());
                             }}
                             color="primary"
                              className="linear-g-r"

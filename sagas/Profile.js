@@ -9,6 +9,7 @@ import {
   changeMyPasswordSuccess,
   changeUserLoginPhoneSuccess,
   verifyUserLoginPhoneChangeSuccess,
+  readMyPhoneAndPwDataSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -19,6 +20,7 @@ import {
   CHANGE_MY_PASSWORD,
   CHANGE_USER_LOGIN_PHONE,
   VERIFY_USER_LOGIN_PHONE_CHANGE,
+  READ_MY_PHONE_AND_PW_DATA,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -68,7 +70,13 @@ const verifyUserPhoneChange = async (verifyCode) =>
   await profile
     .verifyUserLoginPhoneChange(verifyCode)
     .then(returnData => returnData)
-    .catch(error => error);            
+    .catch(error => error);  
+
+const readPhoneAndPwData = async () =>
+  await profile
+    .readMyPhoneAndMyPwData()
+    .then(returnData => returnData)
+    .catch(error => error);      
 /////
 function* readProfileL2Request({ payload }) {
   const { id, co, ci, va } = payload;
@@ -172,6 +180,22 @@ function* verifyUserLoginPhoneChangeRequest({ payload }) {
   }
 }
 
+
+function* readMyPhoneAndPwDataRequest() {
+  try {
+    const returnedData = yield call(readPhoneAndPwData);
+    if(returnData.message){
+    yield put(showProfileMessage(returnData.message));
+    }else{
+      yield put(readMyPhoneAndPwDataSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
+
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -201,6 +225,10 @@ export function* verifyUserLoginPhoneChange() {
   yield takeEvery(VERIFY_USER_LOGIN_PHONE_CHANGE, verifyUserLoginPhoneChangeRequest);
 }
 
+export function* readMyPhoneAndPwData() {
+  yield takeEvery(READ_MY_PHONE_AND_PW_DATA, readMyPhoneAndPwDataRequest);
+}
+
 
 
 export default function* rootSaga() {
@@ -212,6 +240,7 @@ export default function* rootSaga() {
     fork(readMyPhoto),
     fork(changeMyPassword),
     fork(changeUserLoginPhone),
-    fork(verifyUserLoginPhoneChange)
+    fork(verifyUserLoginPhoneChange),
+    fork(readMyPhoneAndPwData)
   ]);
 }
