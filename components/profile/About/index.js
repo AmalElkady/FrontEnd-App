@@ -14,6 +14,7 @@ import {
   changeUserLoginPhone,
   verifyUserLoginPhoneChange,
   readMyPhoneAndPwData,
+  readMyPaymentAndSub,
   openModal
 } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -65,6 +66,7 @@ export default function About({ aboutInfo }) {
                               //dispatch(changeUserLoginPhone("01220304050","Password#1234"));
                              //dispatch(verifyUserLoginPhoneChange("337265"))
                              //dispatch(readMyPhoneAndPwData());
+                             //dispatch(readMyPaymentAndSub(true,0,10));
                             }}
                             color="primary"
                              className="linear-g-r"

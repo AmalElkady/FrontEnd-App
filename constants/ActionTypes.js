@@ -310,5 +310,7 @@ export const VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS="verify_user_login_phone_cha
 export const READ_MY_PHONE_AND_PW_DATA="read_my_phone_and_pw_data";
 export const READ_MY_PHONE_AND_PW_DATA_SUCCESS="read_my_phone_and_pw_data_success";
 
+export const READ_MY_PAYMENTS_AND_SUB="read_my_payments_and_sub";
+export const READ_MY_PAYMENTS_AND_SUB_SUCCESS="read_my_payments_and_sub_success";
 
 export const OPEN_MODAL = "open_modal";

@@ -9,6 +9,7 @@ import {
   CHANGE_USER_LOGIN_PHONE_SUCCESS,
   VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
   READ_MY_PHONE_AND_PW_DATA_SUCCESS,
+  READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -25,6 +26,7 @@ const initialProfileState = {
   loginPhoneChanged:false,
   verifyLoginPhoneChanged:false,
   myPhoneAndPwData:null,
+  myPaymentsAndSub:null,
   openModal: false,
   showMessage: false,
   loader: false,
@@ -79,6 +81,12 @@ const home = (state = initialProfileState, action) => {
       return {
         ...state,
         myPhoneAndPwData: action.payload
+      };
+    }
+    case READ_MY_PAYMENTS_AND_SUB_SUCCESS:{
+       return {
+        ...state,
+        myPaymentsAndSub: action.payload
       };
     }
     case CHANGE_MY_PASSWORD_SUCCESS:{

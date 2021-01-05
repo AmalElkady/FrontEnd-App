@@ -10,6 +10,7 @@ import {
   changeUserLoginPhoneSuccess,
   verifyUserLoginPhoneChangeSuccess,
   readMyPhoneAndPwDataSuccess,
+  readMyPaymentAndSubSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -21,6 +22,7 @@ import {
   CHANGE_USER_LOGIN_PHONE,
   VERIFY_USER_LOGIN_PHONE_CHANGE,
   READ_MY_PHONE_AND_PW_DATA,
+  READ_MY_PAYMENTS_AND_SUB,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -76,7 +78,13 @@ const readPhoneAndPwData = async () =>
   await profile
     .readMyPhoneAndMyPwData()
     .then(returnData => returnData)
-    .catch(error => error);      
+    .catch(error => error);  
+
+const readPaymentsAndSub = async (count,start,end) =>
+  await profile
+    .readMyPaymentsAndSub(count,start,end)
+    .then(returnData => returnData)
+    .catch(error => error);       
 /////
 function* readProfileL2Request({ payload }) {
   const { id, co, ci, va } = payload;
@@ -195,6 +203,21 @@ function* readMyPhoneAndPwDataRequest() {
 }
 
 
+function* readMyPaymentsAndSubRequest({ payload }) {
+  const {count,start,end}=payload;
+  console.log("count,start,end saga ",count,start,end)
+  try {
+    const returnedData = yield call(readPaymentsAndSub,count,start,end);
+    if(returnData.message){
+    yield put(showProfileMessage(returnData.message));
+    }else{
+      yield put(readMyPaymentAndSubSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 
 ///////
 export function* readProfileL2Data() {
@@ -229,6 +252,10 @@ export function* readMyPhoneAndPwData() {
   yield takeEvery(READ_MY_PHONE_AND_PW_DATA, readMyPhoneAndPwDataRequest);
 }
 
+export function* readMyPaymentsAndSub() {
+  yield takeEvery(READ_MY_PAYMENTS_AND_SUB, readMyPaymentsAndSubRequest);
+}
+
 
 
 export default function* rootSaga() {
@@ -241,6 +268,7 @@ export default function* rootSaga() {
     fork(changeMyPassword),
     fork(changeUserLoginPhone),
     fork(verifyUserLoginPhoneChange),
-    fork(readMyPhoneAndPwData)
+    fork(readMyPhoneAndPwData),
+    fork(readMyPaymentsAndSub)
   ]);
 }

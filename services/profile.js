@@ -393,5 +393,46 @@ profile.readMyPhoneAndMyPwData=function() {
 
 
 
+profile.readMyPaymentsAndSub=function(count,start,end) {
+  // "count": "true",
+	// "start": 0,
+	// "end": 10
+  console.log("from service read payments ",count,start,end)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/readmypaymentsandsub`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+        count,start,end
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+        console.log("response read my payments and sub ",response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+
+
+
 
 export { profile };

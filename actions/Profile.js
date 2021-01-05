@@ -18,6 +18,8 @@ import {
   VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
   READ_MY_PHONE_AND_PW_DATA,
   READ_MY_PHONE_AND_PW_DATA_SUCCESS,
+  READ_MY_PAYMENTS_AND_SUB,
+  READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -125,6 +127,20 @@ export const readMyPhoneAndPwData = () => {
 export const readMyPhoneAndPwDataSuccess = data => {
   return {
     type: READ_MY_PHONE_AND_PW_DATA_SUCCESS,
+    payload: data
+  };
+};
+
+export const readMyPaymentAndSub = (count,start,end) => {
+  return {
+    type: READ_MY_PAYMENTS_AND_SUB,
+    payload: {count,start,end}
+  };
+};
+
+export const readMyPaymentAndSubSuccess = data => {
+  return {
+    type: READ_MY_PAYMENTS_AND_SUB_SUCCESS,
     payload: data
   };
 };
