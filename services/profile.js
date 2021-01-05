@@ -433,15 +433,14 @@ profile.readMyPaymentsAndSub=function(count,start,end) {
 
 
 
-profile.requestPhotouploadPP=function(file) {
+profile.requestPhotouploadPP=function(file,photoNum) {
   // "filetype" : "/png"
-
   console.log("from service rrequestPhotouploadPP ",file)
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
       const options = {
-        url: `/requestphotoupload?photo=1`,
+        url: `/requestphotoupload?photo=${photoNum}`,
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -449,7 +448,8 @@ profile.requestPhotouploadPP=function(file) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-       	filetype : "/png"
+       	filetype :file.type,
+        filesize :file.size
         }
       };
 
@@ -457,6 +457,57 @@ profile.requestPhotouploadPP=function(file) {
       let response = responseX.data;
 
         console.log("response requestPhotouploadPP",response);
+      if (response.signedRequest) {
+                    const formData = new FormData();
+                Object.keys(response.signedRequest.fields).forEach(key => {
+                  formData.append(key, response.signedRequest[key]);
+                });
+                // Actual file has to be appended last.
+                formData.append("file", file);
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", response.signedRequest.url, true);
+                xhr.send(formData);
+                xhr.onload = async function() {
+                if(this.status === 204 ){
+                console.log("trueeeeeeee pp 204");
+                      resolve(true);
+                 } else{
+                reject(this.responseText);
+                 }
+                };
+       // resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+
+
+profile.requestRemovePhotoPP=function(photoNum) {
+  console.log("from service requestRemovePhotoPP ",photoNum)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/requestremovephoto?photo=${photoNum}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+        console.log("response requestRemovePhotoPP",response);
       if (response) {
         resolve(response);
       } else {
@@ -469,6 +520,7 @@ profile.requestPhotouploadPP=function(file) {
     console.log(err);
   });
 };
+
 
 
 

@@ -16,6 +16,7 @@ import {
   readMyPhoneAndPwData,
   readMyPaymentAndSub,
   ppUpload,
+  ppRemove,
   openModal
 } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -68,7 +69,8 @@ export default function About({ aboutInfo }) {
                              //dispatch(verifyUserLoginPhoneChange("337265"))
                              //dispatch(readMyPhoneAndPwData());
                              //dispatch(readMyPaymentAndSub(true,0,10));
-                             //dispatch(ppUpload("image file"));
+                             //dispatch(ppUpload("image file",photoNum));
+                             //dispatch(ppRemove(photoNum));
                             }}
                             color="primary"
                              className="linear-g-r"

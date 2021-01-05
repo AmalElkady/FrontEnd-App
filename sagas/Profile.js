@@ -12,6 +12,7 @@ import {
   readMyPhoneAndPwDataSuccess,
   readMyPaymentAndSubSuccess,
   ppUploadSuccess,
+  ppRemoveSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -25,6 +26,7 @@ import {
   READ_MY_PHONE_AND_PW_DATA,
   READ_MY_PAYMENTS_AND_SUB,
   REQUEST_PHOTO_UPLOAD_PP,
+  REQUEST_REMOVE_PHOTO_PP,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -82,11 +84,18 @@ const readPhoneAndPwData = async () =>
     .then(returnData => returnData)
     .catch(error => error);  
 
-const photoUploadPP = async (file) =>
+const photoUploadPP = async (file,photoNum) =>
   await profile
-    .requestPhotouploadPP(file)
+    .requestPhotouploadPP(file,photoNum)
     .then(returnData => returnData)
     .catch(error => error); 
+
+const photoRemovePP = async (photoNum) =>
+  await profile
+    .requestRemovePhotoPP(photoNum)
+    .then(returnData => returnData)
+    .catch(error => error); 
+
 
 const readPaymentsAndSub = async (count,start,end) =>
   await profile
@@ -227,13 +236,28 @@ function* readMyPaymentsAndSubRequest({ payload }) {
 }
 
 function* requestPhotoUploadPPRequest({ payload }) {
-  console.log("pp file saga ",payload)
+  const {file,photoNum}=payload;
+  console.log("pp file saga ",file,photoNum)
   try {
-    const returnedData = yield call(photoUploadPP,payload);
+    const returnedData = yield call(photoUploadPP,file,photoNum);
     if(returnData.message){
     yield put(showProfileMessage(returnData.message));
     }else{
       yield put(ppUploadSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
+function* requestRemovePhotoPPRequest({payload}) {
+  console.log("pp remove file saga ",payload)
+  try {
+    const returnedData = yield call(photoRemovePP,payload);
+    if(returnData.message){
+    yield put(showProfileMessage(returnData.message));
+    }else{
+      yield put(ppRemoveSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -281,6 +305,10 @@ export function* requestPhotoUploadPP() {
   yield takeEvery(REQUEST_PHOTO_UPLOAD_PP, requestPhotoUploadPPRequest);
 }
 
+export function* requestRemovePhotoPP() {
+  yield takeEvery(REQUEST_REMOVE_PHOTO_PP,requestRemovePhotoPPRequest);
+}
+
 
 export default function* rootSaga() {
   yield all([
@@ -294,6 +322,7 @@ export default function* rootSaga() {
     fork(verifyUserLoginPhoneChange),
     fork(readMyPhoneAndPwData),
     fork(readMyPaymentsAndSub),
-    fork(requestPhotoUploadPP)
+    fork(requestPhotoUploadPP),
+    fork(requestRemovePhotoPP)
   ]);
 }

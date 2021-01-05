@@ -316,4 +316,7 @@ export const READ_MY_PAYMENTS_AND_SUB_SUCCESS="read_my_payments_and_sub_success"
 export const REQUEST_PHOTO_UPLOAD_PP="request_photo_upload_pp";
 export const REQUEST_PHOTO_UPLOAD_PP_SUCCESS="request_photo_upload_pp_success";
 
+export const REQUEST_REMOVE_PHOTO_PP="request_remove_photo_pp";
+export const REQUEST_REMOVE_PHOTO_PP_SUCCESS="request_remove_photo_pp_success";
+
 export const OPEN_MODAL = "open_modal";

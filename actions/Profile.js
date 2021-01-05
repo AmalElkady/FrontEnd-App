@@ -22,6 +22,8 @@ import {
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   REQUEST_PHOTO_UPLOAD_PP,
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
+  REQUEST_REMOVE_PHOTO_PP,
+  REQUEST_REMOVE_PHOTO_PP_SUCCESS, 
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -155,7 +157,7 @@ export const updateProfileL2 = (
   workd,
   education,
   bio
-) => {
+  ) => {
   return {
     type: UPDATE_PROFILE_L2,
     payload: { nationality, tpercent, title, workd, education, bio }
@@ -170,10 +172,10 @@ export const updateProfileL2Success = (data, L2Data) => {
 };
 
 
-export const ppUpload = file => {
+export const ppUpload = (file,photoNum) => {
   return {
     type: REQUEST_PHOTO_UPLOAD_PP,
-    payload: file
+    payload: {file,photoNum}
   };
 };
 
@@ -184,6 +186,20 @@ export const ppUploadSuccess = data => {
   };
 };
 
+
+export const ppRemove = (photoNum) => {
+  return {
+    type: REQUEST_REMOVE_PHOTO_PP,
+    payload: photoNum
+  };
+};
+
+export const ppRemoveSuccess = data => {
+  return {
+    type: REQUEST_REMOVE_PHOTO_PP_SUCCESS,
+    payload: data
+  };
+};
 
 
 export const readMyPhotos = params => {

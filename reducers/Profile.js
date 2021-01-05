@@ -11,6 +11,7 @@ import {
   READ_MY_PHONE_AND_PW_DATA_SUCCESS,
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
+  REQUEST_REMOVE_PHOTO_PP_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -26,6 +27,7 @@ const initialProfileState = {
   passwordChanged:false,
   loginPhoneChanged:false,
   photoUploadPP:false,
+  photoRemovePP:false,
   verifyLoginPhoneChanged:false,
   myPhoneAndPwData:null,
   myPaymentsAndSub:null,
@@ -83,6 +85,12 @@ const home = (state = initialProfileState, action) => {
        return {
         ...state,
         photoUploadPP: action.payload
+      };
+    }
+    case REQUEST_REMOVE_PHOTO_PP_SUCCESS:{
+      return {
+        ...state,
+        photoRemovePP: action.payload
       };
     }
     case READ_MY_PHONE_AND_PW_DATA_SUCCESS:{
