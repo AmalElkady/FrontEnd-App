@@ -10,6 +10,7 @@ import {
   VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
   READ_MY_PHONE_AND_PW_DATA_SUCCESS,
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
+  REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -24,6 +25,7 @@ const initialProfileState = {
   returnUpdateMessage: null,
   passwordChanged:false,
   loginPhoneChanged:false,
+  photoUploadPP:false,
   verifyLoginPhoneChanged:false,
   myPhoneAndPwData:null,
   myPaymentsAndSub:null,
@@ -75,6 +77,12 @@ const home = (state = initialProfileState, action) => {
       return {
         ...state,
         myPhotoSigned: action.payload.signedRequest
+      };
+    }
+    case REQUEST_PHOTO_UPLOAD_PP_SUCCESS:{
+       return {
+        ...state,
+        photoUploadPP: action.payload
       };
     }
     case READ_MY_PHONE_AND_PW_DATA_SUCCESS:{

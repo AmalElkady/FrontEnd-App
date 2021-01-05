@@ -20,6 +20,8 @@ import {
   READ_MY_PHONE_AND_PW_DATA_SUCCESS,
   READ_MY_PAYMENTS_AND_SUB,
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
+  REQUEST_PHOTO_UPLOAD_PP,
+  REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -166,6 +168,23 @@ export const updateProfileL2Success = (data, L2Data) => {
     payload: { data, L2Data }
   };
 };
+
+
+export const ppUpload = file => {
+  return {
+    type: REQUEST_PHOTO_UPLOAD_PP,
+    payload: file
+  };
+};
+
+export const ppUploadSuccess = data => {
+  return {
+    type: REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
+    payload: data
+  };
+};
+
+
 
 export const readMyPhotos = params => {
   return {

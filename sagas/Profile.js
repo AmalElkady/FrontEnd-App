@@ -11,6 +11,7 @@ import {
   verifyUserLoginPhoneChangeSuccess,
   readMyPhoneAndPwDataSuccess,
   readMyPaymentAndSubSuccess,
+  ppUploadSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -23,6 +24,7 @@ import {
   VERIFY_USER_LOGIN_PHONE_CHANGE,
   READ_MY_PHONE_AND_PW_DATA,
   READ_MY_PAYMENTS_AND_SUB,
+  REQUEST_PHOTO_UPLOAD_PP,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -79,6 +81,12 @@ const readPhoneAndPwData = async () =>
     .readMyPhoneAndMyPwData()
     .then(returnData => returnData)
     .catch(error => error);  
+
+const photoUploadPP = async (file) =>
+  await profile
+    .requestPhotouploadPP(file)
+    .then(returnData => returnData)
+    .catch(error => error); 
 
 const readPaymentsAndSub = async (count,start,end) =>
   await profile
@@ -218,6 +226,20 @@ function* readMyPaymentsAndSubRequest({ payload }) {
   }
 }
 
+function* requestPhotoUploadPPRequest({ payload }) {
+  console.log("pp file saga ",payload)
+  try {
+    const returnedData = yield call(photoUploadPP,payload);
+    if(returnData.message){
+    yield put(showProfileMessage(returnData.message));
+    }else{
+      yield put(ppUploadSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 
 ///////
 export function* readProfileL2Data() {
@@ -255,7 +277,9 @@ export function* readMyPhoneAndPwData() {
 export function* readMyPaymentsAndSub() {
   yield takeEvery(READ_MY_PAYMENTS_AND_SUB, readMyPaymentsAndSubRequest);
 }
-
+export function* requestPhotoUploadPP() {
+  yield takeEvery(REQUEST_PHOTO_UPLOAD_PP, requestPhotoUploadPPRequest);
+}
 
 
 export default function* rootSaga() {
@@ -269,6 +293,7 @@ export default function* rootSaga() {
     fork(changeUserLoginPhone),
     fork(verifyUserLoginPhoneChange),
     fork(readMyPhoneAndPwData),
-    fork(readMyPaymentsAndSub)
+    fork(readMyPaymentsAndSub),
+    fork(requestPhotoUploadPP)
   ]);
 }
