@@ -245,4 +245,43 @@ profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
   });
 };
 
+
+profile.changePassword = function(oldPassword,newPassword) {
+    //  "oldPassword" : "{{password}}",
+    //     "newPassword" : "NewPassword#123"
+  console.log("from change password service ",oldPassword,newPassword);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/changepassword`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          oldPassword,
+          newPassword
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response.response) {
+        console.log("response of change password ",response);
+        resolve(response.response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { profile };

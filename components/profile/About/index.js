@@ -6,9 +6,11 @@ import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import { ARRAYS_OF_TPERCENT } from "../../../util/data";
+import Button from "@material-ui/core/Button";
 import {
   readProfileL2,
   readMyProfile,
+  changeMyPassword,
   openModal
 } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -51,6 +53,19 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
+
+                      <Button
+                            variant="contained"
+                            onClick={() => {
+                              console.log("on change pass ");
+                              dispatch(changeMyPassword("Password#123","Password#1234"));
+                            }}
+                            color="primary"
+                             className="linear-g-r"
+                          >
+                            chnage password
+                          </Button>
+
           <div className="profile-nat d-flex margin-TB">
             <div className="profile-icon-flag">
               <Flag code={disData.nationality} />

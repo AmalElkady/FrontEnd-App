@@ -6,6 +6,7 @@ import {
   updateProfileL1Success,
   updateProfileL2Success,
   readMyPhotosSuccess,
+  changeMyPasswordSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -13,6 +14,7 @@ import {
   READ_MY_PROFILE,
   UPDATE_PROFILE_L1,
   UPDATE_PROFILE_L2,
+  CHANGE_MY_PASSWORD,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -45,6 +47,12 @@ const updateL2Profile = async (na, tpercent, title, workd, edu, bio) =>
     .updateProfileL2(na, tpercent, title, workd, edu, bio)
     .then(returnData => returnData)
     .catch(error => error);
+
+const changePassword = async (oldPassword,newPassword) =>
+  await profile
+    .changePassword(oldPassword,newPassword)
+    .then(returnData => returnData)
+    .catch(error => error);    
 /////
 function* readProfileL2Request({ payload }) {
   const { id, co, ci, va } = payload;
@@ -104,6 +112,21 @@ function* readMyPhotosRequest({ payload }) {
   }
 }
 
+function* changeMyPasswordRequest({ payload }) {
+  const {oldPassword,newPassword}=payload;
+  console.log("oldPassword,newPassword saga ",oldPassword,newPassword)
+  try {
+    const returnedData = yield call(changePassword, oldPassword,newPassword);
+    if(returnData.message){
+    yield put(changeMyPasswordSuccess(false));
+    }else{
+      yield put(changeMyPasswordSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -121,6 +144,10 @@ export function* updateProfileL2() {
 export function* readMyPhoto() {
   yield takeEvery(READ_MY_PHOTOS, readMyPhotosRequest);
 }
+export function* changeMyPassword() {
+  yield takeEvery(CHANGE_MY_PASSWORD, changeMyPasswordRequest);
+}
+
 
 export default function* rootSaga() {
   yield all([
@@ -128,6 +155,7 @@ export default function* rootSaga() {
     fork(readMyProfileData),
     fork(updateProfileL1),
     fork(updateProfileL2),
-    fork(readMyPhoto)
+    fork(readMyPhoto),
+    fork(changeMyPassword)
   ]);
 }

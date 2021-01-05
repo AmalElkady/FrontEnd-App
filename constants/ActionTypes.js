@@ -296,4 +296,7 @@ export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";
 export const READ_MY_PHOTOS = "read_my_photo";
 export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";
 
+export const CHANGE_MY_PASSWORD="change_my_password";
+export const CHANGE_MY_PASSWORD_SUCCESS="change_my_password_success";
+
 export const OPEN_MODAL = "open_modal";

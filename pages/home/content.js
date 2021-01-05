@@ -10,8 +10,6 @@ export default Page(() => (
       <title>Home</title>
     </Head>
     <div className="app-wrapper">
-      {/* <UploadImage /> */}
-      <br />
       {/* <Search /> */}
       <br />
       <Cards />

@@ -10,6 +10,8 @@ import {
   UPDATE_PROFILE_L2_SUCCESS,
   READ_MY_PHOTOS,
   READ_MY_PHOTOS_SUCCESS,
+  CHANGE_MY_PASSWORD,
+  CHANGE_MY_PASSWORD_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -61,6 +63,23 @@ export const updateProfileL1Success = (data, martial) => {
     payload: { data, martial }
   };
 };
+
+export const changeMyPassword = (oldPassword,newPassword) => {
+  console.log("oldPassword,newPassword action ",oldPassword,newPassword)
+  return {
+    type: CHANGE_MY_PASSWORD,
+    payload: {oldPassword,newPassword}
+  };
+};
+
+export const changeMyPasswordSuccess = data => {
+  return {
+    type: CHANGE_MY_PASSWORD_SUCCESS,
+    payload: data
+  };
+};
+
+
 
 export const updateProfileL2 = (
   nationality,
