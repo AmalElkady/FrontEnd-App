@@ -299,4 +299,11 @@ export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";
 export const CHANGE_MY_PASSWORD="change_my_password";
 export const CHANGE_MY_PASSWORD_SUCCESS="change_my_password_success";
 
+export const CHANGE_USER_LOGIN_PHONE="change_user_login_phone";
+export const CHANGE_USER_LOGIN_PHONE_SUCCESS="change_user_login_phone_success";
+
+
+export const VERIFY_USER_LOGIN_PHONE_CHANGE="verify_user_login_phone_change";
+export const VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS="verify_user_login_phone_change_success";
+
 export const OPEN_MODAL = "open_modal";

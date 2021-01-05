@@ -284,4 +284,81 @@ profile.changePassword = function(oldPassword,newPassword) {
   });
 };
 
+
+profile.changeUserLoginPhone = function(newPhone,password) {
+    	// "newPhone" : "{{newphone}}",
+	    // "password" : "{{password}}"
+    console.log("from change phone service ",newPhone,password);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/changeuserloginphone`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+         newPhone,password
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response.response) {
+        console.log("response of change phone ",response);
+        resolve(response.response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+profile.verifyUserLoginPhoneChange=function(verifyTokenCode) {
+    		//"verifyTokenCode" : "742036"
+
+    console.log("from verify change phone service ",verifyTokenCode);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/verifyuserphonechange`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+        verifyTokenCode
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      if (response.response) {
+        console.log("response of verify change phone ",response);
+        resolve(response.response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+
+
 export { profile };

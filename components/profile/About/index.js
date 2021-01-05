@@ -11,6 +11,8 @@ import {
   readProfileL2,
   readMyProfile,
   changeMyPassword,
+  changeUserLoginPhone,
+  verifyUserLoginPhoneChange,
   openModal
 } from "../../../actions/Profile";
 import Flag from "react-world-flags";
@@ -58,12 +60,14 @@ export default function About({ aboutInfo }) {
                             variant="contained"
                             onClick={() => {
                               console.log("on change pass ");
-                              dispatch(changeMyPassword("Password#123","Password#1234"));
+                              //dispatch(changeMyPassword("Password#123","Password#1234"));
+                              //dispatch(changeUserLoginPhone("01220304050","Password#1234"));
+                             dispatch(verifyUserLoginPhoneChange("337265"))
                             }}
                             color="primary"
                              className="linear-g-r"
                           >
-                            chnage password
+                            change phone
                           </Button>
 
           <div className="profile-nat d-flex margin-TB">

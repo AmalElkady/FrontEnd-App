@@ -6,6 +6,8 @@ import {
   UPDATE_PROFILE_L2_SUCCESS,
   READ_MY_PHOTOS_SUCCESS,
   CHANGE_MY_PASSWORD_SUCCESS,
+  CHANGE_USER_LOGIN_PHONE_SUCCESS,
+  VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -19,6 +21,8 @@ const initialProfileState = {
   myPhotoSigned: null,
   returnUpdateMessage: null,
   passwordChanged:false,
+  loginPhoneChanged:false,
+  verifyLoginPhoneChanged:false,
   openModal: false,
   showMessage: false,
   loader: false,
@@ -73,6 +77,18 @@ const home = (state = initialProfileState, action) => {
        return {
         ...state,
         passwordChanged: action.payload
+      };
+    }
+    case CHANGE_USER_LOGIN_PHONE_SUCCESS:{
+       return {
+        ...state,
+        loginPhoneChanged: action.payload
+      };
+    }
+    case  VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS:{
+     return {
+        ...state,
+        verifyLoginPhoneChanged: action.payload
       };
     }
     case OPEN_MODAL: {

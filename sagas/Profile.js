@@ -7,6 +7,8 @@ import {
   updateProfileL2Success,
   readMyPhotosSuccess,
   changeMyPasswordSuccess,
+  changeUserLoginPhoneSuccess,
+  verifyUserLoginPhoneChangeSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -15,6 +17,8 @@ import {
   UPDATE_PROFILE_L1,
   UPDATE_PROFILE_L2,
   CHANGE_MY_PASSWORD,
+  CHANGE_USER_LOGIN_PHONE,
+  VERIFY_USER_LOGIN_PHONE_CHANGE,
   READ_MY_PHOTOS
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
@@ -52,7 +56,19 @@ const changePassword = async (oldPassword,newPassword) =>
   await profile
     .changePassword(oldPassword,newPassword)
     .then(returnData => returnData)
-    .catch(error => error);    
+    .catch(error => error);  
+ 
+const changeUserPhone = async (newPhone,password) =>
+  await profile
+    .changeUserLoginPhone(newPhone,password)
+    .then(returnData => returnData)
+    .catch(error => error);  
+
+const verifyUserPhoneChange = async (verifyCode) =>
+  await profile
+    .verifyUserLoginPhoneChange(verifyCode)
+    .then(returnData => returnData)
+    .catch(error => error);            
 /////
 function* readProfileL2Request({ payload }) {
   const { id, co, ci, va } = payload;
@@ -127,6 +143,35 @@ function* changeMyPasswordRequest({ payload }) {
   }
 }
 
+function* changeUserLoginPhoneRequest({ payload }) {
+  const {newPhone,password}=payload;
+  console.log("oldPassword,newPassword saga ",newPhone,password)
+  try {
+    const returnedData = yield call(changeUserPhone, newPhone,password);
+    if(returnData.message){
+    yield put(changeUserLoginPhoneSuccess(false));
+    }else{
+      yield put(changeUserLoginPhoneSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
+function* verifyUserLoginPhoneChangeRequest({ payload }) {
+  console.log("verify from saga ",payload)
+  try {
+    const returnedData = yield call(verifyUserPhoneChange, payload);
+    if(returnData.message){
+    yield put(verifyUserLoginPhoneChangeSuccess(false));
+    }else{
+      yield put(verifyUserLoginPhoneChangeSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -148,6 +193,15 @@ export function* changeMyPassword() {
   yield takeEvery(CHANGE_MY_PASSWORD, changeMyPasswordRequest);
 }
 
+export function* changeUserLoginPhone() {
+  yield takeEvery(CHANGE_USER_LOGIN_PHONE, changeUserLoginPhoneRequest);
+}
+
+export function* verifyUserLoginPhoneChange() {
+  yield takeEvery(VERIFY_USER_LOGIN_PHONE_CHANGE, verifyUserLoginPhoneChangeRequest);
+}
+
+
 
 export default function* rootSaga() {
   yield all([
@@ -156,6 +210,8 @@ export default function* rootSaga() {
     fork(updateProfileL1),
     fork(updateProfileL2),
     fork(readMyPhoto),
-    fork(changeMyPassword)
+    fork(changeMyPassword),
+    fork(changeUserLoginPhone),
+    fork(verifyUserLoginPhoneChange)
   ]);
 }
