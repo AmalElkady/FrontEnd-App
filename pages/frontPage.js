@@ -26,6 +26,20 @@ const useStyles = makeStyles(theme => ({
   btnShadw: {
     boxShadow: "3px 5px 9px rgba(221, 221, 221, 0.5)"
   },
+  dropdownL:{
+        right: "13rem !important",
+    "@media only screen and (max-width: 575px)": {
+      right: "0 !important"
+    }
+  },
+  mainLogo:{
+        marginLeft: "1rem",
+"@media only screen and (max-width: 575px)": {
+      margin: "2rem",
+      maxWidth:"50%",
+      flexBasis:"50%"
+    }
+  },
   posRight: {
     display: "flex",
     justifyContent: "end"
@@ -57,9 +71,9 @@ export default Page(() => {
     <ThemeProvider theme={createMuiTheme(mainTheme)}>
       <div className="intro-bg">
         <div className="bg-layout">
-          <Grid container className={classes.gridSpace1}>
-            <Grid item sm={8}></Grid>
-            <Grid item sm={1} className={classes.posRight}>
+          <Grid container spacing={12}>
+            <Grid item xs={10}></Grid>
+            {/* <Grid item xs={1}>
               <Button
                 onClick={() => {
                   Router.replace("/signin");
@@ -70,8 +84,8 @@ export default Page(() => {
               >
                 <IntlMessages id="appModule.login" />
               </Button>
-            </Grid>
-            <Grid item sm={1} className={classes.posRight}>
+            </Grid> */}
+            {/* <Grid item xs={1}>
               <Button
                 onClick={() => {
                   Router.replace("/signup");
@@ -82,8 +96,8 @@ export default Page(() => {
               >
                 <IntlMessages id="appModule.regsiter" />
               </Button>
-            </Grid>
-            <Grid item sm={1} className={classes.posRight}>
+            </Grid> */}
+            <Grid item xs={2}>
               <Dropdown
                 className="quick-menu"
                 isOpen={langSwitcher}
@@ -99,7 +113,7 @@ export default Page(() => {
                   </IconButton>
                 </DropdownToggle>
 
-                <DropdownMenu right className="w-50">
+                <DropdownMenu className={`w-50 ${classes.dropdownL}`}>
                   <LanguageSwitcher
                     switchLanguage={switchLanguage}
                     handleRequestClose={handleRequestClose}
@@ -108,38 +122,13 @@ export default Page(() => {
               </Dropdown>
             </Grid>
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid container className={classes.gridSpace2}>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={2}>
-              <img src="../static/images/gila 6-1.png" />
-            </Grid>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={8}>
-              <Grid container>
-                <Grid item xs={12}>
-                  <Typography
-                    variant="h1"
-                    className={`${classes.fontcolor} ${classes.fontfam}`}
-                    component="h2"
-                    gutterBottom
-                  >
-                    WELCOME
-                  </Typography>
-                </Grid>
-                <Grid item xs="7">
-                  <Typography
-                    className={`${classes.fontcolor} ${classes.fontCenter}`}
-                    variant="h5"
-                    gutterBottom
-                  >
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quos blanditiis tenetur Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Quos blanditiis tenetur Quos
-                    blanditiis tenetur Lorem ipsum dolor sit amet
-                  </Typography>
-                </Grid>
-              </Grid>
+          <Grid container spacing={12}>
+            <Grid item xs={5} className={classes.mainLogo}>
+            {/* <div > */}
+            {/* style={{width:"100%"}} */}
+             <img src="../static/images/Gila_logo_front_page.svg"
+                     alt="Gila" title="Gila"/> 
+            {/* </div> */}
             </Grid>
           </Grid>
         </div>

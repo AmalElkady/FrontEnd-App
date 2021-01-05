@@ -1,10 +1,16 @@
 .intro-bg {
-  background-image: url("https://cdn.catholic.com/wp-content/uploads/AdobeStock_135906090-900x900.jpeg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  //background-image: url("https://cdn.catholic.com/wp-content/uploads/AdobeStock_135906090-900x900.jpeg");
+  background-image: url("http://localhost:3000/static/images/backgrounds/Signup_page_header_pc-01.svg"), url("http://localhost:3000/static/images/backgrounds/background-img.jpg");
+  
+  background-position: left, center top;
+  background-repeat: no-repeat,  no-repeat;
+  background-size: 100%,cover;
   width: 100%;
   height: 100%;
+  @media screen and (max-width: 575px) {
+        background-image: url("http://localhost:3000/static/images/backgrounds/Signup_page_header_Mobile.svg"), url("http://localhost:3000/static/images/backgrounds/background-img.jpg");
+         background-position: left top, center top;
+    }
 }
 
 .bg-layout {
@@ -13,7 +19,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
 img {

@@ -436,7 +436,7 @@
     display: block;
     visibility: hidden;
     left: auto !important;
-    right: 0 !important;
+    right: 0 ;
     opacity: 0;
     transform: translate3d(0px, 100px, 0px) !important;
     @include transition(all 200ms linear 0ms);
