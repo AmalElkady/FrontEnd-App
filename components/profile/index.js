@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getCookie } from "../../util/session";
 import base64url from "base64url";
 import ProfileCard from "./ProfileCard";
+import Grid from '@material-ui/core/Grid';
 import About from "./About";
 import { readMyProfile, readMyPhotos } from "../../actions/Profile";
 import { requestPhotoRead } from "../../actions/Home";
@@ -70,8 +71,14 @@ export default function Profile() {
   return (
     <>
       <div className="profile-container">
+      <Grid container spacing={12}> 
+				<Grid item xs={6} className="profile-Grid-container">
         {profileCard.co && <ProfileCard mainInfo={profileCard} />}
+        </Grid>
+        <Grid item xs={6} className="profile-Grid-container">
         {aboutInfo.id && <About aboutInfo={aboutInfo} />}
+        </Grid>
+        </Grid>
       </div>
     </>
   );
