@@ -28,7 +28,9 @@ import {
   RESET_CHECK_MP_UPLOAD_FLAG,
   CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
   RESET_PHONE_CHANGE_FLAG,
-  MAIN_PHOTO_SELECTED
+  MAIN_PHOTO_SELECTED,
+  SWITCH_FORM,
+  SWITCH_FORM_2,
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -49,6 +51,8 @@ const INIT_STATE = {
   mpUploadFlag: false,
   checkMpFlag: true,
   subFlag: false,
+  formSwitchFlag:false,
+  formSwitchFlag2:false,
   gender: "",
   phone: "",
   country: "",
@@ -308,6 +312,19 @@ export default (state = INIT_STATE, action) => {
         timeReturnedVal: 0,
         timeReturned: false,
         loader: false
+      };
+    }
+    case SWITCH_FORM:{
+      return {
+        ...state,
+        formSwitchFlag:action.payload,
+        formSwitchFlag2:false
+      };
+    }
+     case SWITCH_FORM_2:{
+      return {
+        ...state,
+        formSwitchFlag2:action.payload
       };
     }
 

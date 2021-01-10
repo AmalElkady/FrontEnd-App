@@ -56,18 +56,36 @@
     z-index: 2;
   }
 }
-
+.app-register-container{
+  margin-top:-15rem;
+   @media screen and (max-width: 575px) {
+     margin-top:-6rem;
+  }
+}
+.app-login-container-2{
+  margin-top:8rem;
+}
 .app-login-main-content {
   @include display-flex();
   background-color: $white;
   @include box-shadow($shadow);
   @include border-radius(10px);
   font-size: 14px;
+  border-radius: 1rem;
   //overflow: hidden;
   margin: 1rem;
    @media screen and (max-width: 575px) {
        margin: auto 1.5rem;
   }
+}
+.app-login-main-content-2{
+  background-color:#ffffffab;
+      width: 85%;
+   @media screen and (max-width: 575px) {
+     width:100%;
+       margin: 0;
+  }
+
 }
 
 .app-login-content {
@@ -146,4 +164,42 @@
   & p {
     margin-bottom: 0;
   }
+}
+
+.logo-form{
+  width: 20%;
+    position: absolute;
+    top: -3rem;
+    right:-2rem;
+     & img{
+       transform: rotateZ(-35deg)
+     }
+    @media screen and (max-width: 575px) {
+    top: -2rem;
+    right:-1rem;
+  }
+}
+
+.gender-selected{
+  & svg:nth-child(1){
+    color: rgba(0, 0, 0, 0.54)
+  }
+  & svg:nth-child(2){
+     color:#d61f5f; 
+  }
+}
+.login-form{
+  @media only screen and (max-width: 575px){
+      margin: 2rem !important;
+      max-width:100% !important;
+      flex-basis:100% !important
+    }
+}
+.main-logo{
+   margin: 1rem !important;
+      @media only screen and (max-width: 575px){
+      margin: 2rem !important;
+      max-width:50% !important;
+      flex-basis:50% !important;
+    }
 }

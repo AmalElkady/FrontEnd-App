@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch} from "react-redux";
 import { Grid } from "@material-ui/core";
 import Router from "next/router";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,13 @@ import mainTheme from "../containers/themes/mainTheme";
 import { makeStyles } from "@material-ui/core/styles";
 import IntlMessages from "../util/IntlMessages";
 
+import SignIn from "../containers/SignIn"
+import SignUp from "../containers/SignUp"
+import ForgotPassword from "../containers/ForgotPassword"
+
 import Page from "../hoc/defaultPage";
+
+import {formSwitch} from "../actions/Auth"
 
 const useStyles = makeStyles(theme => ({
   gridSpace1: {
@@ -40,6 +46,14 @@ const useStyles = makeStyles(theme => ({
       flexBasis:"50%"
     }
   },
+    loginForm:{
+        //marginLeft: "1rem",
+"@media only screen and (max-width: 575px)": {
+      margin: "2rem",
+      maxWidth:"100%",
+      flexBasis:"100%"
+    }
+  },
   posRight: {
     display: "flex",
     justifyContent: "end"
@@ -58,8 +72,68 @@ const useStyles = makeStyles(theme => ({
 
 export default Page(() => {
   const classes = useStyles();
+     const dispatch = useDispatch();
   const locale = useSelector(state => state.settings.locale);
   const [langSwitcher, setLangSwitcher] = useState(false);
+  const formSwitchFlag = useSelector(state => state.auth.formSwitchFlag);
+  const formSwitchFlag2 = useSelector(state => state.auth.formSwitchFlag2);
+ // const [formSwitch, setLangSwitcher] = useState(false);
+
+  useEffect(() => {
+if(window.location.href=="http://localhost:3000/")  {
+if(formSwitchFlag){
+      console.log("back done 2",formSwitchFlag)
+      history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+        dispatch(formSwitch(false))
+
+    };
+
+     //dispatch(formSwitch(false))
+      // window.addEventListener("popstate", e => {
+      //   console.log("popstate ");
+  // Nope, go back to your page
+ // this.props.history.go(1);
+//});
+      //  window.history.forward();
+      //  disableBack();
+      //  dispatch(formSwitch(false))
+  }
+else{
+  window.onpopstate = function () {
+         window.location.hash
+         // window.history.back();
+    };
+    //  window.addEventListener("popstate", e => {
+    //     console.log("popstate ");
+    // window.history.back();
+//});
+  //history.popState(null, null, location.href);
+    // window.onpopstate = function () {
+    //     history.go(1);
+    //     dispatch(formSwitch(false))
+    // };
+}
+}
+    //  window.onload=function(){
+    //     console.log("back done 1",formSwitchFlag)
+    //    if(formSwitchFlag){
+    //       console.log("back done 2",formSwitchFlag)
+    //    window.history.forward();
+    //    disableBack();
+    //    dispatch(formSwitch(false))
+    //    }
+    //  }
+    // window.onbeforeunload = function() { 
+    //   console.log("back done 1")
+    //    //window.history.forward(); 
+    //   return null
+    //    };
+  });
+
+
+
 
   const onLangSwitcherSelect = event => {
     setLangSwitcher(!langSwitcher);
@@ -97,7 +171,7 @@ export default Page(() => {
                 <IntlMessages id="appModule.regsiter" />
               </Button>
             </Grid> */}
-            <Grid item xs={2}>
+            <Grid item xs={2} className="lang-container">
               <Dropdown
                 className="quick-menu"
                 isOpen={langSwitcher}
@@ -129,6 +203,15 @@ export default Page(() => {
              <img src="../static/images/Gila_logo_front_page.svg"
                      alt="Gila" title="Gila"/> 
             {/* </div> */}
+            </Grid>
+          </Grid>
+           <Grid container spacing={12}>
+           <Grid item xs={4} className="">
+            </Grid>
+            <Grid item xs={8} className={classes.loginForm}>
+           {!formSwitchFlag  && <SignIn/>}
+          {formSwitchFlag && <SignUp/>}
+          {/* {formSwitchFlag2 &&<ForgotPassword/>} */}
             </Grid>
           </Grid>
         </div>

@@ -11,7 +11,7 @@ import {
 import IntlMessages from "../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
-import { hideMessage, showAuthLoader, userSignIn } from "../actions/Auth";
+import { hideMessage, showAuthLoader, userSignIn,formSwitch,formSwitch2 } from "../actions/Auth";
 
 import { toggleCollapsedNav } from "../actions/Setting";
 import PhoneInput from "react-phone-input-2";
@@ -54,17 +54,17 @@ class SignIn extends React.Component {
     const { showMessage, loader, alertMessage, phone, country } = this.props;
     return (
       <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-        <div className="app-login-main-content">
-          <div className="app-logo-content d-flex align-items-center justify-content-center">
+        <div className="app-login-main-content app-login-main-content-2">
+          {/* <div className="app-logo-content d-flex align-items-center justify-content-center">
             <Link href="/">
               <a>
                 <img src="../static/images/gila.png" alt="App" title="App" />
               </a>
             </Link>
-          </div>
+          </div> */}
 
-          <div className="app-login-content">
-            <div className="app-login-header mb-4">
+          <div className="app-login-content-2">
+            <div className="app-login-header">
               <Grid container spacing={12}>
                 <InputLabel id="phone-label" style={{ paddingBottom: "7px" }}>
                   <IntlMessages id="appModule.phone" />
@@ -127,10 +127,12 @@ class SignIn extends React.Component {
                     }
                     defaultValue={password}
                     margin="normal"
-                    className="mt-1 my-sm-3"
+                    className="mt-1 my-sm-3 to-right"
                   />
 
-                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                  {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
+                   <Grid container spacing={12}>
+                    <Grid item xs={12}>
                     <Button
                       onClick={() => {
                         this.props.showAuthLoader();
@@ -143,22 +145,29 @@ class SignIn extends React.Component {
                       }}
                       variant="contained"
                       color="primary"
+                      style={{width:"100%"}}
+                      className="linear-g-r"
                     >
                       <IntlMessages id="appModule.signIn" />
                     </Button>
-
-                    <Link href="/signup">
-                      <a className="a-underLine">
+                     </Grid>
+                      <Grid item xs={12} style={{textAlign:"center",margin: "1rem"}}>
+                    {/* <Link onClick={()=>{this.props.formSwitch(true)}}> */}
+                      <a className="a-underLine-none" onClick={()=>{this.props.formSwitch(true)}} >
                         <IntlMessages id="signIn.signUp" />
                       </a>
-                    </Link>
-                  </div>
-
+                    {/* </Link> */}
+                  {/* </div> */}
+                      </Grid>
+                      <Grid item xs={12} style={{textAlign:"center"}}>
                   <Link href="/forgotpassword">
-                    <a className="a-underLine">
+                  {/* onClick={()=>{this.props.formSwitch2(true)}} */}
+                    <a className="a-underLine-none">
                       <IntlMessages id="appModule.forgotPassword" />
                     </a>
                   </Link>
+                  </Grid>
+                 </Grid> 
                 </fieldset>
               </form>
             </div>
@@ -188,5 +197,7 @@ export default connect(mapStateToProps, {
   userSignIn,
   hideMessage,
   showAuthLoader,
-  toggleCollapsedNav
+  toggleCollapsedNav,
+  formSwitch,
+  formSwitch2
 })(SignIn);

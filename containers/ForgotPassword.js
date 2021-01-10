@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Router from "next/router";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import Timer from "../components/Timer";
 import {
   NotificationContainer,
@@ -15,12 +16,14 @@ import IntlMessages from "../util/IntlMessages";
 import { COUNTRY_CODE_TO_NAME_MAP } from "../util/data";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import Grid from '@material-ui/core/Grid';
 
 import {
   hideMessage,
   showAuthLoader,
   sendResetToken,
-  changePassword
+  changePassword,
+  formSwitch2
 } from "../actions/Auth";
 
 class ForgotPassword extends React.Component {
@@ -87,24 +90,55 @@ class ForgotPassword extends React.Component {
     return (
       <>
         {/* timer */}
-        {timeReturned && <Timer />}
+        {/* {timeReturned && <Timer />} */}
+<div className="intro-bg">
+        <div className="bg-layout">
+ <Grid container spacing={12}>
+            <Grid item xs={10}></Grid>
+            <Grid item xs={2} className="lang-container">
+              {/* <Dropdown
+                className="quick-menu"
+                isOpen={langSwitcher}
+                toggle={() => onLangSwitcherSelect(event)}
+              >
+                <DropdownToggle
+                  className="d-inline-block"
+                  tag="span"
+                  data-toggle="dropdown"
+                >
+                  <IconButton className={`icon-btn`}>
+                    <i className={`flag flag-24 flag-${locale.icon}`} />
+                  </IconButton>
+                </DropdownToggle>
+
+                <DropdownMenu className={`w-50 ${classes.dropdownL}`}>
+                  <LanguageSwitcher
+                    switchLanguage={switchLanguage}
+                    handleRequestClose={handleRequestClose}
+                  />
+                </DropdownMenu>
+              </Dropdown> */}
+            </Grid>
+          </Grid>
+          <Grid container spacing={12}>
+            <Grid item xs={5} className="main-logo">
+            {/* <div > */}
+            {/* style={{width:"100%"}} */}
+             <img src="../static/images/Gila_logo_front_page.svg"
+                     alt="Gila" title="Gila"/> 
+            {/* </div> */}
+            </Grid>
+          </Grid>
+           <Grid container spacing={12}>
+           <Grid item xs={4} className="">
+            </Grid>
+            <Grid item xs={8} className="login-form">
+
 
         <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-          <div className="app-login-main-content">
-            <div className="app-logo-content d-flex align-items-center justify-content-center">
-              <Link href="/">
-                <a>
-                  {" "}
-                  <img
-                    src="../static/images/gila.png"
-                    alt="App"
-                    title="App"
-                  />{" "}
-                </a>
-              </Link>
-            </div>
-
-            <div className="app-login-content">
+          <div className="app-login-main-content app-login-main-content-2" style={{
+               position: "relative"}}>
+            <div className="app-login-content app-login-content-2 ">
               <div className="app-login-header">
                 <h1>
                   {" "}
@@ -118,6 +152,7 @@ class ForgotPassword extends React.Component {
                     <IntlMessages id="appModule.resetPasswordPageHeader" />
                   </h2>
                 )}
+                  
                 {authStateCleared && (
                   <h2>
                     <IntlMessages id="appModule.resetPasswordSuccess" />
@@ -214,7 +249,9 @@ class ForgotPassword extends React.Component {
                           //add resendResetToken To Link To Change State
                         }}
                         color="primary"
-                        disabled={{ timeReturned }}
+                      //  disabled={{ timeReturned }}
+                      style={{width: "100%"}}
+                      className="linear-g-r"
                       >
                         <IntlMessages id="appModule.resetPassword" />
                       </Button>
@@ -264,7 +301,9 @@ class ForgotPassword extends React.Component {
               </div>
             </div>
           </div>
-
+          </div>
+          </Grid>
+           </Grid>
           {loader && (
             <div className="loader-view">
               <CircularProgress />
@@ -273,6 +312,8 @@ class ForgotPassword extends React.Component {
           {showMessage && NotificationManager.error(alertMessage)}
           <NotificationContainer />
         </div>
+        </div>
+
       </>
     );
   }
@@ -307,5 +348,6 @@ export default connect(mapStateToProps, {
   sendResetToken,
   changePassword,
   hideMessage,
-  showAuthLoader
+  showAuthLoader,
+  formSwitch2
 })(ForgotPassword);

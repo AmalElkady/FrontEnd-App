@@ -5,7 +5,7 @@
   "signIn.error": "Invalid phone or password!",
   "signUp.success": "Account successfully created",
   "signUp.error": "Right",
-  "signIn.signUp": "Create an account",
+  "signIn.signUp": "Sign Up for love gila",
   "signIn.connectWith": "or connect with",
   "signUp.alreadyMember": "I am already a member",
   "appModule.signin": "Sign In",
@@ -18,6 +18,8 @@
   "appModule.resendVerificationCode": "Send Code To Phone",
   "appModule.uploadNewPhoto": "Upload New Photo",
   "appModule.uploadNewPhotoMessage": "There is problem in upload your photo",
+  "appModule.forgotPassword": "Forgot your password ?",
+  
 
   "appModule.uploadMP": "Upload your profile picture",
   "appModule.profileL2Add": "Complete profile information",

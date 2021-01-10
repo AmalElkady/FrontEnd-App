@@ -37,7 +37,9 @@ import {
   CHANGE_PHONE_BEFORE_VERIF,
   CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
   RESET_PHONE_CHANGE_FLAG,
-  MAIN_PHOTO_SELECTED
+  MAIN_PHOTO_SELECTED,
+  SWITCH_FORM,
+  SWITCH_FORM_2,
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -288,5 +290,20 @@ export const checkMpUploadSuccess = data => {
 export const resetCheckMpUpload = () => {
   return {
     type: RESET_CHECK_MP_UPLOAD_FLAG
+  };
+};
+
+
+export const formSwitch = (value) => {
+  return {
+    type: SWITCH_FORM,
+    payload:value
+  };
+};
+
+export const formSwitch2 = (value) => {
+  return {
+    type: SWITCH_FORM_2,
+    payload:value
   };
 };

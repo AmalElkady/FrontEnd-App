@@ -13,7 +13,8 @@ h6,
 .h6 {
   font-weight: $headings-font-weight;
   margin: 0 0 $headings-margin-bottom;
-  color: $headings-color;
+  //color: $headings-color;
+  color:$secondary
 }
 
 [class*="text-"] h1,

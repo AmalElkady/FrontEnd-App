@@ -120,7 +120,7 @@ componentDidMount () {
       <div
 	  
         className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-		<div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+		<div className="app-login-main-content app-login-main-content-2" style={{position:"relative" ,marginTop:"5rem"}}>
 		<Button
           variant="contained"
           onClick={() => {
@@ -133,14 +133,18 @@ componentDidMount () {
           <IntlMessages id="appModule.signOut" />
         </Button>
 		
-          <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
+          {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
             <Link href="/">
                     <a> <img src="../static/images/Gila_Final_Logo_White.svg"
                      alt="App" title="App"/> </a>
             </Link>
-          </div>
+          </div> */}
+           <div className="logo-form">
+            <img  src="../static/images/Gila_Final_Logo_form.svg"
+                     alt="App" title="App"/>
+            </div>
 
-          <div className="app-login-content">
+          <div className="app-login-content app-login-content-2">
             <div className="app-login-header">
               <h2><IntlMessages id="appModule.profileL2Add"/></h2>
             </div>
@@ -169,10 +173,10 @@ componentDidMount () {
 
 		  {!gender && <Grid container spacing={12} style={{ minWidth: "149px", paddingTop:"9px",paddingBottom:"9px"}}>
 						<Grid item xs={12}>
-							<InputLabel id="tpercent-label"><IntlMessages id="inputLabel.tpercent"/></InputLabel>
 						</Grid>
 						<Grid item xs={12}>
-						  <StyledFormControl style={{ minWidth: "149px" }}>
+						  <StyledFormControl className="to-right" style={{ minWidth: "149px" }}>
+							<InputLabel id="tpercent-label"><IntlMessages id="inputLabel.tpercent"/></InputLabel>
 								<Select
 								  labelId="tpercent-label"
 								  id="tpercent"
@@ -220,7 +224,7 @@ componentDidMount () {
 							<InputLabel id="education-label"><IntlMessages id="inputLabel.education"/></InputLabel>
 						</Grid>
 						<Grid item xs={12}>
-						  <StyledFormControl style={{ minWidth: "149px" }}>
+						  <StyledFormControl className="to-right" style={{ minWidth: "100%"}}>
 								<Select
 								  labelId="education-label"
 								  id="education"
@@ -266,7 +270,7 @@ componentDidMount () {
 							<InputLabel id="workd-label"><IntlMessages id="inputLabel.workd"/></InputLabel>
 						</Grid>
 						<Grid item xs={12}>
-						  <StyledFormControl style={{ minWidth: "149px" }}>
+						  <StyledFormControl className="to-right" style={{ minWidth: "100%"}}>
 								<Select
 								  labelId="workd-label"
 								  id="workd"
@@ -298,7 +302,7 @@ componentDidMount () {
 				
 			<Grid container spacing={12} style={{ paddingBottom:"9px"}}>
 			
-						<Grid item xs={6} style={{ minWidth: "149px", paddingRight: "18px"}}>
+						<Grid item xs={6} style={{ minWidth: "100%"}}>
 							<TextField
 							  type="text"
 							  onChange={handleChange}
@@ -308,6 +312,7 @@ componentDidMount () {
 							  margin="normal"
 							  name="title"
 							  style={{width: "100%"}}
+							  className="to-right"
 							/>
 						</Grid>
 						

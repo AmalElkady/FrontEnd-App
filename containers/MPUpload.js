@@ -111,7 +111,7 @@ class VerifyEmail extends React.Component {
               // style={{ minHeight: "705px" }}
               className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
             >
-              <div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+              <div className="app-login-main-content app-login-main-content-2" style={{position:"relative" ,marginTop:"5rem"}}>
 
          <Button
           variant="contained"
@@ -127,7 +127,7 @@ class VerifyEmail extends React.Component {
 		
 
 
-                <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
+                {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
                   <Link href="/">
                     <a>
                       {" "}
@@ -138,9 +138,13 @@ class VerifyEmail extends React.Component {
                       />{" "}
                     </a>
                   </Link>
-                </div>
+                </div> */}
+                 <div className="logo-form">
+            <img  src="../static/images/Gila_Final_Logo_form.svg"
+                     alt="App" title="App"/>
+            </div>
 
-                <div className="app-login-content">
+                <div className="app-login-content app-login-content-2">
                   <div className="app-login-header">
                     <h1>
                       {" "}

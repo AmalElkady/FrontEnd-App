@@ -321,15 +321,15 @@
       }
     }
 
-    &:after {
-      right: auto;
-      left: 8px;
-    }
+    // &:after {
+    //   right: auto;
+    //   left: 8px;
+    // }
 
-    &:before {
-      right: auto;
-      left: 8px;
-    }
+    // &:before {
+    //   right: auto;
+    //   left: 8px;
+    // }
   }
 
   & .messages-list .badge {
@@ -354,8 +354,12 @@
 
 .rtl .quick-menu {
   & .dropdown-menu {
-    right: auto !important;
-    left: 0 !important;
+    // right: auto !important;
+    // left: 0 !important;
+      right: 13rem !important;
+    @media only screen and (max-width: 575px){
+      right: 0 !important;
+    }
   }
 }
 
@@ -1608,4 +1612,61 @@
 .rtl .jr-user-fnd-content .jr-badge {
   right: auto;
   left: 10px;
+}
+
+// front page 
+.rtl .bg-layout
+{
+  direction:ltr;
+  & .lang-container{
+    text-align:left;
+  }
+  & .app-login-main-content-2{
+    direction:rtl;
+  }
+}
+
+// forms
+
+.rtl .logo-form{
+    width: 20%;
+    position: absolute;
+    left: -2rem;
+    top: -3rem;
+    right:unset;
+     & img{
+       transform: rotateZ(35deg)
+     }
+    @media screen and (max-width: 575px) {
+    top: -2rem;
+    left:-1rem;
+  }
+}
+.rtl .react-tel-input .form-control{
+  text-align:left;
+  direction:ltr;
+  padding-left:1rem;
+}
+.rtl .react-tel-input .flag-dropdown ,.rtl .react-tel-input .selected-flag{
+      border-radius: 0 3px 3px 0px;
+}
+.rtl .react-tel-input .selected-flag .flag{
+      right: 5px;
+}
+.rtl .react-tel-input .selected-flag .arrow{
+      left: -1.5rem;
+}
+
+.rtl .to-right{  
+  & label{
+right:0;
+  }
+ & svg{
+   right:unset;
+   left:0;
+ }
+}
+
+.rtl .out-btn-1{
+  right:1rem;
 }

@@ -32,7 +32,8 @@ import {
   userSignUp,
   userCreateClear,
   hideAuthLoader,
-  userSignIn
+  userSignIn,
+  formSwitch
 } from '../actions/Auth';
 
 class SignUp extends React.Component {
@@ -70,6 +71,7 @@ class SignUp extends React.Component {
 		setTimeout(() => {
 		   this.props.hideAuthLoader();
 		    //Router.replace('/signin');
+			console.log("login direct")
 		   this.props.userSignIn({
                           phone: this.state.phone,
                           password:this.state.password,
@@ -136,16 +138,16 @@ class SignUp extends React.Component {
 	
     return (
       <div
-        className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
-        <div className="app-login-main-content">
-          <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
+        className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3 app-register-container">
+        <div className="app-login-main-content app-login-main-content-2">
+          {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
             <Link href="/">
                     <a> <img src="../static/images/Gila_Final_Logo_White.svg"
                      alt="App" title="App"/> </a>
             </Link>
-          </div>
+          </div> */}
 
-          <div className="app-login-content">
+          <div className="app-login-content app-login-content-2">
             <div className="app-login-header">
               <h2><IntlMessages id="appModule.createAccount"/></h2>
             </div>
@@ -162,7 +164,7 @@ class SignUp extends React.Component {
 						  fullWidth
 						  defaultValue={firstname}
 						  margin="normal"
-						  className="mt-2 mb-2"
+						  className="mt-2 mb-2 to-right"
 						/>
 					</Grid>
 					<Grid item xs={6} className="grid-width-1"  >
@@ -173,13 +175,13 @@ class SignUp extends React.Component {
 						  fullWidth
 						  defaultValue={lastname}
 						  margin="normal"
-						  className="mt-2 mb-4"
+						  className="mt-2 mb-2 to-right"
 						/>
 					</Grid>
 				</Grid>
 				
 				<Grid container spacing={12}>
-					<Grid container spacing={12}>
+					<Grid container spacing={12} style={{ marginTop: "1rem"}}>
 						<InputLabel id="phone-label"  style={{ paddingBottom: "7px"}} ><IntlMessages id="appModule.phone"/></InputLabel>
 						<PhoneInput
 						  onlyCountries={['gb', 'us', 'fr','de','eg','ma','sa','dz','bh','kw','tn','ae','my','mr','af']}
@@ -196,8 +198,8 @@ class SignUp extends React.Component {
 						<FormControl component="fieldset">
 						  <FormLabel component="legend"><IntlMessages id="inputLabel.gender"/></FormLabel>
 						  <RadioGroup aria-label="gender" name="gender" value={gender} onChange={handleChange}>
-							<FormControlLabel style={{marginBottom:"0.5rem"}} value="0" control={<Radio />} label={<> <Female color="#d61f5f" width="1.5rem"  height="3rem"/> <IntlMessages id="inputGender.female"/></>} />
-							<FormControlLabel value="1" control={<Radio />} label={<> <Male color="#d61f5f"  width="1.5rem"  height="3rem"/><IntlMessages id="inputGender.male"/></>} />
+							<FormControlLabel style={{marginBottom:"0.5rem"}} value="0" className="gender-selected" control={<Radio />} label={<> <Female color="#d61f5f" width="1.5rem"  height="3rem"/> <IntlMessages id="inputGender.female"/></>} />
+							<FormControlLabel value="1" className="gender-selected" control={<Radio />} label={<> <Male color="#d61f5f"  width="1.5rem"  height="3rem"/><IntlMessages id="inputGender.male"/></>} />
 						  </RadioGroup>
 						</FormControl>
 					</Grid>
@@ -213,7 +215,7 @@ class SignUp extends React.Component {
 				<Grid container spacing={12}>
 				
 				  <Grid item xs={3} className="grid-width-2">
-				   <StyledFormControl className="sub-select">
+				   <StyledFormControl className="sub-select to-right">
 					<InputLabel id="day-label"><IntlMessages id="inputLabel.day"/></InputLabel>
 					<Select
 					  labelId="day-label"
@@ -239,7 +241,7 @@ class SignUp extends React.Component {
 					
 					
 			  <Grid item xs={3} className="grid-width-2">
-					<StyledFormControl className="sub-select" >
+					<StyledFormControl className="sub-select to-right" >
 					<InputLabel id="month-label"><IntlMessages id="inputLabel.month"/></InputLabel>
 					<Select
 					  labelId="month-label"
@@ -265,7 +267,7 @@ class SignUp extends React.Component {
 					
 					
 			  <Grid item xs={3} className="grid-width-2">
-					<StyledFormControl className="sub-select">
+					<StyledFormControl className="sub-select to-right">
 					<InputLabel id="year-label"><IntlMessages id="inputLabel.year"/></InputLabel>
 					<Select
 					  labelId="year-label"
@@ -296,7 +298,7 @@ class SignUp extends React.Component {
 			
 						<Grid item xs={3} className="grid-width-1">
 							
-											  <StyledFormControl  className="sub-select">
+											  <StyledFormControl  className="sub-select to-right">
 												<InputLabel id="city-label"><IntlMessages id="inputLabel.city"/></InputLabel>
 												<Select
 												  labelId="city-label"
@@ -324,7 +326,7 @@ class SignUp extends React.Component {
 						<Grid item xs={3} className="grid-width-1" >
 						
 									{(this.state.gender==0||this.state.gender==1)&&		  
-									<StyledFormControl  className="sub-select">
+									<StyledFormControl  className="sub-select to-right">
 												<InputLabel id="martial-label"><IntlMessages id="inputLabel.martial"/></InputLabel>
 												<Select
 												  labelId="martial-label"
@@ -364,7 +366,7 @@ class SignUp extends React.Component {
 							  fullWidth
 							  defaultValue={password}
 							  margin="normal"
-							  className="mt-0 mb-4"
+							  className="mt-0 mb-3 to-right"
 							/>
 						</Grid>
 						
@@ -376,7 +378,7 @@ class SignUp extends React.Component {
 							  fullWidth
 							  defaultValue={password_confirm}
 							  margin="normal"
-							  className="mt-0 mb-4"
+							  className="mt-0 mb-3 to-right"
 							/>
 						</Grid>						
 			</Grid>
@@ -385,19 +387,19 @@ class SignUp extends React.Component {
 			
 			{/* d-flex align-items-center justify-content-between */}
 			
-                <div className="mb-3">
+                <div>
                   <Button variant="contained" onClick={() => {
 					  if(password != password_confirm){ NotificationManager.error("Password Mismatch")}
                       else { this.props.showAuthLoader();
                       this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }
-                  }} color="primary" className="linear-g">
+                  }} color="primary" style={{width: "100%"}} className="linear-g-r">
                     <IntlMessages
                       id="appModule.regsiter"/>
                   </Button>
-				<div>	
-                  <Link href="/signin">
-                    <a className="a-underLine" style={{float: "right"}}><IntlMessages id="signUp.alreadyMember"/></a>
-                  </Link>
+				<div style={{marginTop: ".4rem",textAlign:"center"}}>	
+                  {/* <Link href="/signin"> */}
+                    <a className="a-underLine-none" onClick={()=>{this.props.formSwitch(false)}} ><IntlMessages id="signUp.alreadyMember"/></a>
+                  {/* </Link> */}
 				  </div>
                 </div>
 				
@@ -433,5 +435,6 @@ export default connect(mapStateToProps, {
   hideMessage,
   showAuthLoader,
   hideAuthLoader,
-  userSignIn
+  userSignIn,
+  formSwitch
 })(SignUp);

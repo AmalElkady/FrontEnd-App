@@ -74,9 +74,9 @@ class VerifyEmail extends React.Component {
         {timeReturned && <Timer />}
 
         <div
-          className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
+          className="app-login-container app-login-container-2 d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
         >
-          <div className="app-login-main-content" style={{position:"relative" ,marginTop:"5rem"}}>
+          <div className="app-login-main-content app-login-main-content-2" style={{position:"relative" ,marginTop:"5rem"}}>
            <Button
           variant="contained"
           onClick={() => {
@@ -88,7 +88,7 @@ class VerifyEmail extends React.Component {
         >
           <IntlMessages id="appModule.signOut" />
         </Button>
-            <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
+            {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
               <Link href="/">
                 <a>
                   {" "}
@@ -99,9 +99,13 @@ class VerifyEmail extends React.Component {
                   />{" "}
                 </a>
               </Link>
-            </div>
+            </div> */}
+             <div className="logo-form">
+            <img  src="../static/images/Gila_Final_Logo_form.svg"
+                     alt="App" title="App"/>
+                     </div>
 
-            <div className="app-login-content">
+            <div className="app-login-content app-login-content-2">
               <div className="app-login-header">
                 <h1>
                   {" "}
@@ -132,7 +136,7 @@ class VerifyEmail extends React.Component {
                     fullWidth
                     defaultValue={verificationCode}
                     margin="normal"
-                    className="mt-0 mb-2"
+                    className="mt-0 mb-2 to-right"
                   />
 
                   {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}

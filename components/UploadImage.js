@@ -229,6 +229,7 @@ onSelectFile(MainPhotoSelected);
                             }}
                             color="primary"
                              className="linear-g-r"
+                             style={{width:"100%"}}
                           >
                             <IntlMessages id="appModule.submit" />
                           </Button>{" "}

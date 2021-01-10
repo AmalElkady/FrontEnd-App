@@ -4,6 +4,7 @@
   "appModule.regsiter": "انشاء حساب",
 
   "appModule.forgotPasswordHeader": "هل نسيت كلمة السر ؟",
+  "appModule.resetPasswordPageHeader": "أدخل هاتفك وأعد تعيين كلمة المرور الخاصة بك",
   "appModule.resendResetToken": "إعادة إرسال الرمز",
   "appModule.resetPasswordAgain": "إعادة تحديث كلمةالسر",
   "appModule.verifyPhone": "التحقق من رقم الهاتف",

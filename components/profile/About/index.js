@@ -59,7 +59,7 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
-
+{/* 
                       <Button
                             variant="contained"
                             onClick={() => {
@@ -76,7 +76,7 @@ export default function About({ aboutInfo }) {
                              className="linear-g-r"
                           >
                             change phone
-                          </Button>
+                          </Button> */}
 
           <div className="profile-nat d-flex margin-TB">
             <div className="profile-icon-flag">
@@ -89,7 +89,7 @@ export default function About({ aboutInfo }) {
           {disData.tpercent && (
             <div className="d-flex margin-TB">
               <div className="profile-icon-2">
-                <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
+                <img src="../../../static/images/icons/new-profile/tprecent.svg" />
               </div>
               <Typography variant="body1" gutterBottom>
                 {ARRAYS_OF_TPERCENT[disData.tpercent]}
@@ -100,7 +100,7 @@ export default function About({ aboutInfo }) {
           <div className="margin-TB d-flex-m">
             <div className="d-flex profile-about-subSec">
               <div className="profile-icon">
-                <img src="../../../static/images/icons/profile/Education_Icons.svg" />
+                <img src="../../../static/images/icons/new-profile/education.svg" />
               </div>
               <Typography variant="body1" gutterBottom>
                 <IntlMessages id={`education.${disData.education}`} />
@@ -108,7 +108,7 @@ export default function About({ aboutInfo }) {
             </div>
             <div className="d-flex profile-about-subSec">
               <div className="profile-icon">
-                <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
+                <img src="../../../static/images/icons/new-profile/title.svg" />
               </div>
               <Typography variant="body1" gutterBottom>
                 {disData.title}
@@ -118,7 +118,7 @@ export default function About({ aboutInfo }) {
 
           <div className="margin-TB d-flex">
             <div className="profile-icon-2">
-              <img src="../../../static/images/icons/profile/job_place_Icon.svg" />
+              <img src="../../../static/images/icons/new-profile/workd.svg" />
             </div>
             <Typography variant="body1" gutterBottom>
               <IntlMessages id={`workd.${disData.workd-1}`} />
@@ -126,7 +126,7 @@ export default function About({ aboutInfo }) {
           </div>
           <div className="margin-TB d-flex">
             <div className="profile-icon-2">
-              <img src="../../../static/images/icons/profile/Job_Title_Icon.svg" />
+              <img src="../../../static/images/icons/new-profile/bio.svg" />
             </div>
             <Typography variant="body1" gutterBottom>
               {disData.bio}
