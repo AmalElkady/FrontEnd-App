@@ -40,6 +40,7 @@ import {
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
+  CONFIRM_PASSWORD_CASE,
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -307,3 +308,11 @@ export const formSwitch2 = (value) => {
     payload:value
   };
 };
+
+export const confirmPasswordCase=(value)=>{
+  console.log("from action confirm",value);
+  return{
+    type:CONFIRM_PASSWORD_CASE,
+    payload:value
+  }
+}

@@ -86,6 +86,7 @@ export const RESET_PHONE_CHANGE_FLAG="reset_phone_change_flag";
 export const MAIN_PHOTO_SELECTED="main_photo_selected"
 export const SWITCH_FORM="switch_form"
 export const SWITCH_FORM_2="switch_form_2"
+export const CONFIRM_PASSWORD_CASE="confirm_password_case"
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";

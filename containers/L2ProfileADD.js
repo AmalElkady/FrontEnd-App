@@ -29,7 +29,8 @@ import {
   userAddProfileL2,
   stepFlagClear,
   hideAuthLoader,
-  userSignOut
+  userSignOut,
+  confirmPasswordCase
 } from '../actions/Auth';
 
 
@@ -65,6 +66,12 @@ class SignUp extends React.Component {
   }
 
 componentDidMount () {
+	 console.log("this.props ",this.props);
+	 if(this.props.sub!=0){
+		 console.log("this.props2 ",true);
+		 this.props.confirmPasswordCase(true);
+	 }
+	 
 	document.querySelector('.form-control').style = "width: 150px; pointer-events: none;"
 }
 
@@ -340,7 +347,7 @@ componentDidMount () {
 				
 		
 			
-                <div className="mb-3 d-flex align-items-center justify-content-between">
+               {this.props.confirmPasswordCase &&<div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
 					  this.props.showAuthLoader();
                       this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
@@ -356,7 +363,7 @@ componentDidMount () {
                       id="appModule.submit"/>
                   </Button>
                 </div>
-				
+			   }
 
               </form>
             </div>
@@ -380,8 +387,8 @@ componentDidMount () {
 }
 
 const mapStateToProps = ({auth}) => {
-  const {loader, alertMessage, showMessage, authUser, stepFlag, gender, country} = auth;
-  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, country}
+  const {loader, alertMessage, showMessage, authUser, stepFlag, gender, country,confirmPasswordCase} = auth;
+  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, country,confirmPasswordCase}
 };
 
 
@@ -391,5 +398,6 @@ export default connect(mapStateToProps, {
   hideMessage,
   showAuthLoader,
   hideAuthLoader,
-  userSignOut
+  userSignOut,
+  confirmPasswordCase
 })(SignUp);

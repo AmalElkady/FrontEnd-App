@@ -130,8 +130,9 @@ export default function UsersOnline() {
     <>
       {searchState == "active" && newUsers.length != 0 && (
         <InfiniteScroll
+          className="scroll-m"
           dataLength={newUsers.length}
-          height={300}
+          height={350}
           next={handleScroll}
           hasMore={!endOfResult}
           loader={<CircularProgress />}

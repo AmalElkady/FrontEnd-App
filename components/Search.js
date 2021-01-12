@@ -36,7 +36,7 @@ import { showAuthLoader } from "../actions/Auth";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
+import {  COUNTRY_MAP,COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import Radio from "@material-ui/core/Radio";
@@ -54,6 +54,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Grid from '@material-ui/core/Grid';
+import Flag from "react-world-flags";
 
 import IntlMessages from "../util/IntlMessages";
 
@@ -106,7 +108,16 @@ const useStyles = makeStyles(theme => ({
   },
   ////
   menu: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: "transparent",
+    width: "100%",
+    color:"white",
+    borderRadius:"1rem",
+    "& nav":{
+      padding:"0 !important",
+      "& div":{
+        padding:"0 !important"
+      }
+    }
   },
   displayFlexSA: {
     display: "flex",
@@ -121,10 +132,11 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "row"
   },
   margintop: {
-    marginTop: "1.5rem"
+    marginTop: "1.5rem",
+    width:"60%"
   },
   margin: {
-    margin: "1rem"
+    margin: "1rem 0"
   },
   padding: {
     padding: ".5rem"
@@ -303,12 +315,12 @@ export default function Search() {
     setSelectedIndexC(-1);
     setSelectedIndexCit(-1);
     dispatch(resetStatesOnline());
-    dispatch(resetEndResUsers());
-    dispatch(resetEndRes());
     dispatch(setSearchState(optionValue));
     // fill dropdowns based on optionValue
     if (optionValue == "most recent") {
       //Get all Countries Offline first time
+      //  dispatch(resetEndResUsers());
+      //  dispatch(resetEndRes());
       CountriesOptionsOffline.length == 0
         ? dispatch(allCountriesOffline("", 0))
         : "";
@@ -474,15 +486,15 @@ export default function Search() {
   }, [selectedIndexCit]);
 
   /// online
-  useEffect(() => {
-    if (
-      CountriesOptionsOnline.length != 0 &&
-      AllCountriesSelectedOnline.length == 0
-    ) {
-      // Get online users options for first call
-      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
-    }
-  }, [CountriesOptionsOnline]);
+  // useEffect(() => {
+  //   if (
+  //     CountriesOptionsOnline.length != 0 &&
+  //     AllCountriesSelectedOnline.length == 0
+  //   ) {
+  //     // Get online users options for first call
+  //     dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+  //   }
+  // }, [CountriesOptionsOnline]);
 
   //offline
   useEffect(() => {
@@ -790,29 +802,8 @@ export default function Search() {
   };
   return (
     <>
-      <Card className={`${classes.root} linear-g`}>
-        <FormControl component="fieldset" className={classes.margin}>
-          <FormLabel component="legend">Select Your option </FormLabel>
-          <RadioGroup
-            aria-label="option"
-            name="option"
-            value={optionValue}
-            onChange={handleChangeOptionValue}
-            className={classes.flexDirection}
-          >
-            <FormControlLabel
-              value="active"
-              control={<Radio />}
-              label="ACTIVE"
-            />
-            <FormControlLabel
-              value="most recent"
-              control={<Radio />}
-              label="MOST RECENT ACTIVE"
-            />
-          </RadioGroup>
-        </FormControl>
-
+      {/* <Card className={`${classes.root} linear-g`}> */}
+       
         {/* /////////// */}
         <form
           className={classes.displayFlexSA}
@@ -829,31 +820,126 @@ export default function Search() {
                   button
                   aria-haspopup="true"
                   aria-controls="lock-menu"
-                  aria-label="Age Range"
+                  aria-label="Age"
                   onClick={handleClickListItem}
                 >
                   <ListItemText
-                    primary="Age Range"
+                    primary={<IntlMessages id="search.age" />}
                     secondary={
                       selectedIndexC == -1
                         ? selectedIndex == -1
-                          ? "Select Age Range"
-                          : ARRAY_OF_AGE_RANGE[selectedIndex]
+                          ? <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                          :<Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        > {ARRAY_OF_AGE_RANGE[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                         : selectedIndexCit == -1
                         ? CountryAgerangesOptionsOnline.length != 0
                           ? selectedIndex == -1
-                            ? "Select Age Range"
-                            : CountryAgerangesOptionsOnline[selectedIndex]
+                            ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                            : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{CountryAgerangesOptionsOnline[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                           : selectedIndex == -1
-                          ? "Select Age Range"
-                          : ARRAY_OF_AGE_RANGE[selectedIndex]
+                          ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                          :<Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{ ARRAY_OF_AGE_RANGE[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                         : CountryCityAgerangesOptionsOnline.length != 0
                         ? selectedIndex == -1
-                          ? "Select Age Range"
-                          : CountryCityAgerangesOptionsOnline[selectedIndex]
+                          ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                          : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{CountryCityAgerangesOptionsOnline[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                         : selectedIndex == -1
-                        ? "Select Age Range"
-                        : ARRAY_OF_AGE_RANGE[selectedIndex]
+                        ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                        : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{ARRAY_OF_AGE_RANGE[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                     }
                   />
                 </ListItem>
@@ -874,7 +960,7 @@ export default function Search() {
                       }}
                       className={classes.displayFlexSB}
                     >
-                      <Typography variant="button" gutterBottom>
+                      <Typography variant="button"  gutterBottom>
                         No Select
                       </Typography>
                     </MenuItem>
@@ -1069,11 +1155,30 @@ export default function Search() {
                   onClick={handleClickListItem}
                 >
                   <ListItemText
-                    primary="Age Range"
+                    primary={<IntlMessages id="search.age" />}
                     secondary={
                       selectedIndex == -1
-                        ? "Select Age Range"
-                        : ARRAY_OF_AGE_RANGE[selectedIndex]
+                        ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <IntlMessages id="search.ageSelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                        : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{ARRAY_OF_AGE_RANGE[selectedIndex]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                     }
                   />
                 </ListItem>
@@ -1125,15 +1230,60 @@ export default function Search() {
                   onClick={handleClickListItemC}
                 >
                   <ListItemText
-                    primary="Countries"
+                    primary={<IntlMessages id="search.country" />}
                     secondary={
                       AgerangeCountriesOptionsOnline.length == 0
                         ? selectedIndexC == -1
-                          ? "Select Country"
-                          : CountriesOptionsOnline[selectedIndexC]
+                          ?<Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.countrySelect" />
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                          : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <div className="flag-country">
+                         <Flag code={CountriesOptionsOnline[selectedIndexC]} />
+                         </div>
+                          {COUNTRY_MAP[CountriesOptionsOnline[selectedIndexC]]}
+                          <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                           </Typography>
                         : selectedIndexC == -1
-                        ? "Select Country"
-                        : AgerangeCountriesOptionsOnline[selectedIndexC]
+                        ? <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.countrySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        
+                        </Typography>
+                        :  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                         <div className="flag-country">
+                         <Flag code={AgerangeCountriesOptionsOnline[selectedIndexC]} />
+                         </div>
+                        {COUNTRY_MAP[AgerangeCountriesOptionsOnline[selectedIndexC]]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                     }
                   />
                 </ListItem>
@@ -1197,7 +1347,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            {option}
+                             {COUNTRY_MAP[option]}
                           </Typography>
                           <Typography
                             variant="button"
@@ -1243,7 +1393,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            {option}
+                            {COUNTRY_MAP[option]}
                           </Typography>
                           <Typography
                             variant="button"
@@ -1290,7 +1440,7 @@ export default function Search() {
                               className={classes.displayFlexSB}
                             >
                               <Typography variant="button" gutterBottom>
-                                {option}
+                                {COUNTRY_MAP[option]}
                               </Typography>
                               <Typography
                                 variant="button"
@@ -1321,15 +1471,36 @@ export default function Search() {
                   onClick={handleClickListItemC}
                 >
                   <ListItemText
-                    primary="Countries"
+                    primary={<IntlMessages id="search.country" />}
                     secondary={
                       CountriesOptionsOffline
                         ? selectedIndexC == -1
-                          ? "Select Country"
+                          ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.countrySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                           : // ? CountriesOptionsOffline.list_of_results[
                             //     selectedIndexCOf + 1
                             //   ]
-                            CountriesOptionsOffline[selectedIndexC]
+                            <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><div className="flag-country">
+                         <Flag code={CountriesOptionsOffline[selectedIndexC]} />
+                         </div>
+                        {COUNTRY_MAP[CountriesOptionsOffline[selectedIndexC]]}
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                         : ""
                     }
                   />
@@ -1381,7 +1552,7 @@ export default function Search() {
                       className={classes.displayFlexSB}
                     >
                       <Typography variant="button" gutterBottom>
-                        {option}
+                         {COUNTRY_MAP[option]}
                       </Typography>
                       <Typography variant="button" color="primary" gutterBottom>
                         {CountriesOptionsOfflineCount[index]}
@@ -1405,36 +1576,95 @@ export default function Search() {
                   onClick={handleClickListItemCit}
                 >
                   <ListItemText
-                    primary="Cities"
+                    primary={<IntlMessages id="search.city" />}
                     secondary={
                       selectedIndex == -1
                         ? CountryCitiesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
-                            ? "select City"
-                            : COUNTRY_CITY_MAP[
+                            ? <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.citySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                            :  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
                                 CountryCitiesOptionsOnline[selectedIndexCit] - 1
-                              ]
-                          : "select City"
+                              ]}
+                               <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                              </Typography>
+                          : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.citySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
                         : //else index!=0
                         CountryCitiesAgerangeOptionsOnline.length != 0
                         ? CountriesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
-                            ? "Select City"
-                            : COUNTRY_CITY_MAP[
+                            ? <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.citySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                            : <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >
+                            { COUNTRY_CITY_MAP[
                                 CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
                                 CountryCitiesOptionsOnline[selectedIndexCit] - 1
-                              ]
+                              ]}
+                               <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                              </Typography>
                           : AgerangeCountriesOptionsOnline.length != 0
                           ? selectedIndexCit == -1
-                            ? "Select City"
-                            : COUNTRY_CITY_MAP[
+                            ? <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.citySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                            :  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{COUNTRY_CITY_MAP[
                                 AgerangeCountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
@@ -1442,7 +1672,12 @@ export default function Search() {
                                 CountryCitiesAgerangeOptionsOnline[
                                   selectedIndexCit
                                 ] - 1
-                              ]
+                              ]}
+                               <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                              </Typography>
                           : ""
                         : ""
                     }
@@ -1655,19 +1890,37 @@ export default function Search() {
                     onClick={handleClickListItemCit}
                   >
                     <ListItemText
-                      primary="Cities"
+                      primary={<IntlMessages id="search.city" />}
                       secondary={
                         CountryCitiesOptionsOffline
                           ? selectedIndexCit == -1
-                            ? "Select City"
-                            : COUNTRY_CITY_MAP[
+                            ?  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        ><IntlMessages id="search.citySelect" />
+                         <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                        </Typography>
+                            :  <Typography
+                          variant="body1"
+                          className="select-search"
+                          gutterBottom
+                        >{COUNTRY_CITY_MAP[
                                 CountriesOptionsOffline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
                                 CountryCitiesOptionsOffline[selectedIndexCit] -
                                   1
-                              ]
+                              ]}
+                               <div className="search-arrow">
+                             <img  src="../static/images/icons/search_Arraw_icon.svg"
+                               alt="App" title="App"/>
+                          </div>
+                              </Typography>
                           : ""
                       }
                     />
@@ -1752,7 +2005,41 @@ export default function Search() {
                 </Menu>
               </div>
             )}
-          <div className={classes.margintop}>
+          
+           {/* ////////  */}
+         <FormControl component="fieldset" className={classes.margin} style={{width:"100%",color:"white"}}>
+          {/* <FormLabel component="legend">Select Your option </FormLabel> */}
+          <RadioGroup
+            aria-label="option"
+            name="option"
+            value={optionValue}
+            onChange={handleChangeOptionValue}
+            className={classes.flexDirection}
+          >
+          <Grid container spacing={12}> 
+				  <Grid item xs={6}>
+            <FormControlLabel
+              value="most recent"
+              className="option-selected option-selected-2"
+              control={<Radio />}
+              label={<IntlMessages id="search.recent" />}
+            />
+            </Grid>
+            <Grid item xs={6}>
+            <FormControlLabel
+              value="active"
+              className="option-selected"
+              control={<Radio />}
+             label={<IntlMessages id="search.online" />}
+            />
+            </Grid>
+            </Grid>
+          </RadioGroup>
+        </FormControl>
+
+        {/* //////// */}
+          
+         <div className={classes.margintop}>
             <Button
               onClick={() => {
                 dispatch(showAuthLoader());
@@ -1765,7 +2052,8 @@ export default function Search() {
             </Button>
           </div>
         </form>
-      </Card>
+
+      {/* </Card> */}
     </>
   );
 }

@@ -3,4 +3,51 @@
   border: 1px solid !important;
   padding: 0.4rem 2rem !important;
   border-radius: 1.8rem !important;
+  width:100%;
+}
+
+.scroll-m{
+      @media only screen and (max-width: 575px){
+      margin-top: 2rem;
+    }
+}
+.option-selected{
+  & svg:nth-child(1),svg:nth-child(2){
+    color: white;
+  }
+   @media only screen and (max-width: 575px){
+     margin:0 !important;
+    }
+}
+
+.option-selected-2{
+   @media only screen and (max-width: 575px){
+      margin-left: -.8rem !important;
+    }
+}
+
+.select-search{
+    color: rgba(0, 0, 0, 0.54);
+    padding: .5rem;
+    background-color: white;
+    border-radius: .5rem;
+    margin-top: .5rem !important;
+}
+.flag-country{
+  display: inline-block;
+  width: 15%;
+   margin: 0 .5rem 0 0;
+}
+.search-arrow{
+
+    width: 11%;
+    display: inline-block;
+   // margin-left: 11.5rem;
+   margin-top: -.3rem;
+   float:right;
+   @media only screen and (max-width: 575px){
+    width: 15%;
+    margin-top: -.3rem;
+   // margin-left: 6rem;
+    }
 }

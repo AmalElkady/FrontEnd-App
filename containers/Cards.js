@@ -200,6 +200,14 @@ export default function Cards() {
   const dispatch = useDispatch();
 
   // online
+  useEffect(()=>{
+    if (
+      AllCountriesSelectedOnline.length == 0
+    ) {
+      // Get online users options for first call
+      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+    }
+  },[])
   useEffect(() => {
     if (AllCountriesSelectedOnline.length != 0) {
       // Get users of AllCountriesSelectedOnline (first time)
@@ -703,9 +711,10 @@ export default function Cards() {
         newSelectedOnlineUsers.length != 0 &&
         selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollAgerange}
-            height={250}
+            height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -733,9 +742,10 @@ export default function Cards() {
         newSelectedOnlineUsers.length != 0 &&
         selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountry}
-            height={250}
+            height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -763,9 +773,10 @@ export default function Cards() {
         newSelectedOnlineUsers.length != 0 &&
         selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryCity}
-            height={250}
+            height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -793,9 +804,10 @@ export default function Cards() {
         newSelectedOnlineUsers.length != 0 &&
         selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryAgerange}
-            height={250}
+            height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -823,9 +835,10 @@ export default function Cards() {
         newSelectedOnlineUsers.length != 0 &&
         selectedOnlineUsersTimeScore.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryCityAgerange}
-            height={250}
+            height={500}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -858,6 +871,7 @@ export default function Cards() {
         countryRecentActiveUsersTimescore.length != 0 &&
         newCountryRecentActiveUsers.length != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={CountryRecentActiveUsers.length}
             next={onScrollCountryRecentUsers}
             height={500}
@@ -882,9 +896,10 @@ export default function Cards() {
         ) : CountryCityRecentActiveUsers.length != 0 &&
           newCountryCityRecentActiveUsers != 0 ? (
           <InfiniteScroll
+          className="scroll-m"
             dataLength={CountryCityRecentActiveUsers.length}
             next={onScrollCountryCityRecentUsers}
-            height={250}
+            height={500}
             hasMore={!endOfResultUsersOfS}
             loader={<CircularProgress />}
             endMessage={

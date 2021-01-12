@@ -217,8 +217,9 @@ export default function ProfileCard({ mainInfo }) {
             </div>
             <div className="d-flex">
               <Typography variant="body1" className="card-h-row" component="p">
-                {mainInfo.b != ""
-                  ? `${moment().diff(mainInfo.b, "years")} Years Old`
+              {console.log("mainInfo.b ",mainInfo.b)}
+                {mainInfo.b != undefined
+                  ? `${moment().diff(mainInfo.b, "years")} Years Old `
                   : `${moment().diff(
                       mainInfo.timeScore.substring(0, 8),
                       "years"

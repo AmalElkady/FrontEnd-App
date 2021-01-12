@@ -60,14 +60,14 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
-{/* 
+
                       <Button
                             variant="contained"
                             onClick={() => {
                               console.log("on change pass ");
-                              //dispatch(changeMyPassword("Password#123","Password#1234"));
-                              //dispatch(changeUserLoginPhone("01220304050","Password#1234"));
-                             //dispatch(verifyUserLoginPhoneChange("337265"))
+                             // dispatch(changeMyPassword("Password#1234","Password#123"));
+                              //dispatch(changeUserLoginPhone("01120111120","Password#123"));
+                             dispatch(verifyUserLoginPhoneChange("318175"))
                              //dispatch(readMyPhoneAndPwData());
                              //dispatch(readMyPaymentAndSub(true,0,10));
                              //dispatch(ppUpload("image file",photoNum));
@@ -77,7 +77,7 @@ export default function About({ aboutInfo }) {
                              className="linear-g-r"
                           >
                             change phone
-                          </Button> */}
+                          </Button> 
      <Grid container spacing={12}> 
 				<Grid item xs={12} className="margin-TB">
                 <Grid container spacing={12}> 

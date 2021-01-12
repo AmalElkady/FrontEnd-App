@@ -289,7 +289,7 @@ class ForgotPassword extends React.Component {
                     )}
 
                     {authStateCleared && (
-                      <Link href="/signin">
+                      <Link href="/">
                         <a>
                           {" "}
                           <IntlMessages id="appModule.signin" />{" "}

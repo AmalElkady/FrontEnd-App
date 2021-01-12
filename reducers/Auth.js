@@ -31,6 +31,7 @@ import {
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
+  CONFIRM_PASSWORD_CASE
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -53,6 +54,7 @@ const INIT_STATE = {
   subFlag: false,
   formSwitchFlag:false,
   formSwitchFlag2:false,
+  confirmPasswordCase:false,
   gender: "",
   phone: "",
   country: "",
@@ -240,7 +242,13 @@ export default (state = INIT_STATE, action) => {
         gender: ""
       };
     }
-
+    case CONFIRM_PASSWORD_CASE:{
+      console.log("from reducer ",action.payload)
+      return{
+        ...state,
+        confirmPasswordCase:action.payload
+      }
+    }
     case SHOW_MESSAGE: {
       return {
         ...state,

@@ -1,5 +1,13 @@
 {
   "appModule.sendMessage": "ارسال",
   "appModule.yourMessage": "رسالتك",
-  "appModule.search": "بحث"
+  "appModule.search": "بحث",
+  "search.online":"نشط الآن",
+  "search.recent":"نشط منذ قليل",
+  "search.age":"العمر",
+  "search.ageSelect":"اختر العمر",
+  "search.age":"البلد",
+  "search.countrySelect":"اختر البلد",
+  "search.age":"المدينة",
+  "search.citySelect":"اختر المدينة"
 }

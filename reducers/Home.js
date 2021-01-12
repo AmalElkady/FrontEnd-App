@@ -739,7 +739,11 @@ const home = (state = initialHomeState, action) => {
         agerangeCountriesOnline: [],
         agerangeCountriesOnlineCount: [],
         allCountriesOnline: [],
-        allCountriesOnlineCount: []
+        allCountriesOnlineCount: [],
+        // allCountriesSelectedOnline:[],
+        // allCountriesSelectedOnlineCount:[],
+        // currentIndexAllCountriesSelectedOnline:0
+
       };
     case RESET_STATES_LIST_AGERANGE_ONLINE:
       return {

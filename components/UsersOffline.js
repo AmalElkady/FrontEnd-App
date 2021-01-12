@@ -157,6 +157,7 @@ export default function UsersOffline() {
     <>
       {searchState == "most recent" && newUsers.length != 0 && (
         <InfiniteScroll
+        className="scroll-m"
           dataLength={newUsers.length}
           height={300}
           next={handleScroll}

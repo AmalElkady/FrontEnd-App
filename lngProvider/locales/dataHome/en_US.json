@@ -1,5 +1,13 @@
 {
   "appModule.sendMessage": "Send",
   "appModule.yourMessage": "Your Message",
-  "appModule.search": "Search"
+  "appModule.search": "Search",
+  "search.online":"Online Now",
+  "search.recent":"Recent Online",
+  "search.age":"Age",
+  "search.ageSelect":"Select Age Range",
+  "search.country":"Country",
+  "search.countrySelect":"Select Country",
+  "search.city":"City",
+  "search.citySelect":"Select City"
 }

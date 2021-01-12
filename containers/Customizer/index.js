@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import SideNavOption from "./SideNavOption";
 import Search from "../../components/Search";
+import IntlMessages from "../../util/IntlMessages";
+import Typography from '@material-ui/core/Typography';
 import {
   changeDirection,
   setDarkTheme,
@@ -77,13 +79,15 @@ class Customizer extends React.Component {
           open={this.state.drawerStatus}
           onClose={this.closeCustomizer.bind(this)}
         >
-          <div className="color-theme">
+          <div className="color-theme linear-g">
             <div className="color-theme-header">
               {/* <h3 className="color-theme-title">Service Panel </h3> */}
-
               <IconButton className="icon-btn" onClick={this.closeCustomizer}>
                 <i className="zmdi zmdi-close text-white" />
               </IconButton>
+                  <Typography variant="h6" gutterBottom className="color-theme-title">
+                        <IntlMessages id="appModule.search" />
+                </Typography>
             </div>
             <div className="color-theme-body">
               <Search />
