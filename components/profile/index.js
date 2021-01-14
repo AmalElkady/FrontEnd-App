@@ -4,8 +4,10 @@ import { useRouter } from "next/router";
 import { getCookie } from "../../util/session";
 import base64url from "base64url";
 import ProfileCard from "./ProfileCard";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import About from "./About";
+import Carousel from "../../app/components/carousel";
+import Photos from "./Photos";
 import { readMyProfile, readMyPhotos } from "../../actions/Profile";
 import { requestPhotoRead } from "../../actions/Home";
 import { mapUserPhotoUrl } from "../../helpers/mapUserPhotoUrl";
@@ -14,9 +16,19 @@ export default function Profile() {
   const router = useRouter();
   const [profileCard, setProfileCard] = useState({});
   const [aboutInfo, setAboutInfo] = useState({});
+  const [photos, setPhotos] = useState([
+    // image:
+    //   "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+    { id: 1, title: "item #1" },
+    { id: 2, title: "item #2" },
+    { id: 3, title: "item #3" },
+    { id: 4, title: "item #4" },
+    { id: 5, title: "item #5" }
+  ]);
   const myProfileL1Data = useSelector(state => state.profile.myProfileDataL1);
   const myPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (router.query) {
       if (router.query.flag == "read") {
@@ -71,13 +83,15 @@ export default function Profile() {
   return (
     <>
       <div className="profile-container">
-      <Grid container spacing={12}> 
-				<Grid item xs={6} className="profile-Grid-container">
-        {profileCard.co && <ProfileCard mainInfo={profileCard} />}
-        </Grid>
-        <Grid item xs={6} className="profile-Grid-container">
-        {aboutInfo.id && <About aboutInfo={aboutInfo} />}
-        </Grid>
+        <Grid container spacing={12}>
+          <Grid item xs={6} className="profile-Grid-container">
+            {profileCard.co && <ProfileCard mainInfo={profileCard} />}
+            {/* <Carousel /> */}
+            {/* <Photos photoList={photos} /> */}
+          </Grid>
+          <Grid item xs={6} className="profile-Grid-container">
+            {aboutInfo.id && <About aboutInfo={aboutInfo} />}
+          </Grid>
         </Grid>
       </div>
     </>

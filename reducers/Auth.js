@@ -46,19 +46,19 @@ const INIT_STATE = {
   initURL: "",
   authUser: null,
   authStateCleared: false,
-  mainPhotoSelected:null,
+  mainPhotoSelected: null,
   phoneVerified: false,
   stepFlag: false,
   mpUploadFlag: false,
   checkMpFlag: true,
   subFlag: false,
-  formSwitchFlag:false,
-  formSwitchFlag2:false,
-  confirmPasswordCase:false,
+  formSwitchFlag: false,
+  formSwitchFlag2: false,
+  confirmPasswordFlag: false,
   gender: "",
   phone: "",
   country: "",
-  city:"",
+  city: "",
   countryiso2: "",
   name: "",
   birth: "",
@@ -75,7 +75,7 @@ export default (state = INIT_STATE, action) => {
         phone: action.payload.phone,
         country: action.payload.country,
         countryiso2: action.payload.countryiso2,
-        city:action.payload.city,
+        city: action.payload.city,
         name: action.payload.name,
         birth: action.payload.birth,
         martial: action.payload.martial,
@@ -91,11 +91,11 @@ export default (state = INIT_STATE, action) => {
       };
     }
 
-    case MAIN_PHOTO_SELECTED:{
-      return{
+    case MAIN_PHOTO_SELECTED: {
+      return {
         ...state,
-      mainPhotoSelected:action.payload
-      }
+        mainPhotoSelected: action.payload
+      };
     }
 
     case MP_UPLOAD_SUCCESS: {
@@ -135,12 +135,12 @@ export default (state = INIT_STATE, action) => {
         authUser: null
       };
     }
-  case RESET_PHONE_CHANGE_FLAG:{
-     return {
+    case RESET_PHONE_CHANGE_FLAG: {
+      return {
         ...state,
         phoneChangedBefore: false
       };
-  }
+    }
 
     case STEP_FLAG_CLEAR: {
       return {
@@ -181,15 +181,15 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case CHANGE_PHONE_BEFORE_VERIF_SUCCESS: {
-      newPhone, phonecountrycode, countryiso2, newCity
+      newPhone, phonecountrycode, countryiso2, newCity;
       return {
         ...state,
         loader: false,
         phoneChangedBefore: action.payload.returnData,
-        phone:  action.payload.newPhone,
-       country:action.payload.phonecountrycode ,
-      city:action.payload.newCity,
-      countryiso2: action.payload.countryiso2,
+        phone: action.payload.newPhone,
+        country: action.payload.phonecountrycode,
+        city: action.payload.newCity,
+        countryiso2: action.payload.countryiso2
       };
     }
 
@@ -239,15 +239,16 @@ export default (state = INIT_STATE, action) => {
         name: "",
         birth: "",
         martial: "",
-        gender: ""
+        gender: "",
+        confirmPasswordFlag: false
       };
     }
-    case CONFIRM_PASSWORD_CASE:{
-      console.log("from reducer ",action.payload)
-      return{
+    case CONFIRM_PASSWORD_CASE: {
+      console.log("from reducer ", action.payload);
+      return {
         ...state,
-        confirmPasswordCase:action.payload
-      }
+        confirmPasswordFlag: action.payload
+      };
     }
     case SHOW_MESSAGE: {
       return {
@@ -322,17 +323,17 @@ export default (state = INIT_STATE, action) => {
         loader: false
       };
     }
-    case SWITCH_FORM:{
+    case SWITCH_FORM: {
       return {
         ...state,
-        formSwitchFlag:action.payload,
-        formSwitchFlag2:false
+        formSwitchFlag: action.payload,
+        formSwitchFlag2: false
       };
     }
-     case SWITCH_FORM_2:{
+    case SWITCH_FORM_2: {
       return {
         ...state,
-        formSwitchFlag2:action.payload
+        formSwitchFlag2: action.payload
       };
     }
 

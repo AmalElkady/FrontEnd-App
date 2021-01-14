@@ -16,6 +16,7 @@ import { styled } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import ModalConfirmPassword from "../components/Modals/modalConfirmPassword"
 
 import {ARRAY_OF_WORKD} from '../util/data';
 
@@ -54,7 +55,8 @@ class SignUp extends React.Component {
       setTimeout(() => {
         this.props.hideMessage();
       }, 3000);
-    }
+	}
+	
     if (this.props.stepFlag == true) {
 		this.props.showAuthLoader();
 		
@@ -66,12 +68,7 @@ class SignUp extends React.Component {
   }
 
 componentDidMount () {
-	 console.log("this.props ",this.props);
-	 if(this.props.sub!=0){
-		 console.log("this.props2 ",true);
-		 this.props.confirmPasswordCase(true);
-	 }
-	 
+	 console.log("this.props ",this.props); 
 	document.querySelector('.form-control').style = "width: 150px; pointer-events: none;"
 }
 
@@ -122,7 +119,9 @@ componentDidMount () {
                   }} color="primary">
                     <IntlMessages
                       id="appModule.signOut"/>
-                  </Button> */}
+				  </Button> */}
+		{console.log("this.props.confirmPasswordFlag ",this.props.confirmPasswordFlag)}
+				{this.props.confirmPasswordFlag && <ModalConfirmPassword phone={this.props.phone} country={this.props.country} tpercent={tpercent} nationality={nationality} workd={workd} title={title} education={education} bio={bio}/>	}	  
 	
       <div
 	  
@@ -344,13 +343,15 @@ componentDidMount () {
 					
 						</Grid>
 				</Grid>
-				
-		
-			
-               {this.props.confirmPasswordCase &&<div className="mb-3 d-flex align-items-center justify-content-between">
+               <div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
-					  this.props.showAuthLoader();
-                      this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
+					   if(this.props.sub!=0){
+						console.log("this.props2 ",true);
+						this.props.confirmPasswordCase(true);
+					}else{
+						this.props.showAuthLoader();
+						this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
+					}
 					 //console.log(country);
 					//   console.log(nationality);
 					//   console.log(tpercent);
@@ -363,7 +364,7 @@ componentDidMount () {
                       id="appModule.submit"/>
                   </Button>
                 </div>
-			   }
+			   
 
               </form>
             </div>
@@ -387,8 +388,8 @@ componentDidMount () {
 }
 
 const mapStateToProps = ({auth}) => {
-  const {loader, alertMessage, showMessage, authUser, stepFlag, gender, country,confirmPasswordCase} = auth;
-  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, country,confirmPasswordCase}
+  const {loader, alertMessage, showMessage, authUser, stepFlag, gender,phone, country,confirmPasswordFlag} = auth;
+  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, phone,country,confirmPasswordFlag}
 };
 
 
