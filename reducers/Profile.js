@@ -12,6 +12,7 @@ import {
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
+  REQUEST_PERMISSION_PP_READ_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -24,13 +25,14 @@ const initialProfileState = {
   userMartial: null,
   myPhotoSigned: null,
   returnUpdateMessage: null,
-  passwordChanged:false,
-  loginPhoneChanged:false,
-  photoUploadPP:false,
-  photoRemovePP:false,
-  verifyLoginPhoneChanged:false,
-  myPhoneAndPwData:null,
-  myPaymentsAndSub:null,
+  passwordChanged: false,
+  loginPhoneChanged: false,
+  photoUploadPP: false,
+  photoRemovePP: false,
+  permissionReadPP: false,
+  verifyLoginPhoneChanged: false,
+  myPhoneAndPwData: null,
+  myPaymentsAndSub: null,
   openModal: false,
   showMessage: false,
   loader: false,
@@ -81,44 +83,50 @@ const home = (state = initialProfileState, action) => {
         myPhotoSigned: action.payload.signedRequest
       };
     }
-    case REQUEST_PHOTO_UPLOAD_PP_SUCCESS:{
-       return {
+    case REQUEST_PHOTO_UPLOAD_PP_SUCCESS: {
+      return {
         ...state,
         photoUploadPP: action.payload
       };
     }
-    case REQUEST_REMOVE_PHOTO_PP_SUCCESS:{
+    case REQUEST_REMOVE_PHOTO_PP_SUCCESS: {
       return {
         ...state,
         photoRemovePP: action.payload
       };
     }
-    case READ_MY_PHONE_AND_PW_DATA_SUCCESS:{
+    case REQUEST_PERMISSION_PP_READ_SUCCESS: {
+      return {
+        ...state,
+        permissionReadPP: action.payload
+      };
+    }
+    case READ_MY_PHONE_AND_PW_DATA_SUCCESS: {
       return {
         ...state,
         myPhoneAndPwData: action.payload
       };
     }
-    case READ_MY_PAYMENTS_AND_SUB_SUCCESS:{
-       return {
+    case READ_MY_PAYMENTS_AND_SUB_SUCCESS: {
+      return {
         ...state,
         myPaymentsAndSub: action.payload
       };
     }
-    case CHANGE_MY_PASSWORD_SUCCESS:{
-       return {
+    case CHANGE_MY_PASSWORD_SUCCESS: {
+      return {
         ...state,
         passwordChanged: action.payload
       };
     }
-    case CHANGE_USER_LOGIN_PHONE_SUCCESS:{
-       return {
+    case CHANGE_USER_LOGIN_PHONE_SUCCESS: {
+      return {
         ...state,
         loginPhoneChanged: action.payload
       };
     }
-    case  VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS:{
-     return {
+    case VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS: {
+      return {
         ...state,
         verifyLoginPhoneChanged: action.payload
       };

@@ -23,7 +23,9 @@ import {
   REQUEST_PHOTO_UPLOAD_PP,
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP,
-  REQUEST_REMOVE_PHOTO_PP_SUCCESS, 
+  REQUEST_REMOVE_PHOTO_PP_SUCCESS,
+  REQUEST_PERMISSION_PP_READ,
+  REQUEST_PERMISSION_PP_READ_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -76,11 +78,11 @@ export const updateProfileL1Success = (data, martial) => {
   };
 };
 
-export const changeMyPassword = (oldPassword,newPassword) => {
-  console.log("oldPassword,newPassword action ",oldPassword,newPassword)
+export const changeMyPassword = (oldPassword, newPassword) => {
+  console.log("oldPassword,newPassword action ", oldPassword, newPassword);
   return {
     type: CHANGE_MY_PASSWORD,
-    payload: {oldPassword,newPassword}
+    payload: { oldPassword, newPassword }
   };
 };
 
@@ -91,11 +93,11 @@ export const changeMyPasswordSuccess = data => {
   };
 };
 
-export const changeUserLoginPhone = (newPhone,password) => {
-  console.log("newPhone,password action ",newPhone,password)
+export const changeUserLoginPhone = (newPhone, password) => {
+  console.log("newPhone,password action ", newPhone, password);
   return {
     type: CHANGE_USER_LOGIN_PHONE,
-    payload: {newPhone,password}
+    payload: { newPhone, password }
   };
 };
 
@@ -106,8 +108,8 @@ export const changeUserLoginPhoneSuccess = data => {
   };
 };
 
-export const verifyUserLoginPhoneChange = (verifyCode) => {
-  console.log("newPhone,password action ",verifyCode)
+export const verifyUserLoginPhoneChange = verifyCode => {
+  console.log("newPhone,password action ", verifyCode);
   return {
     type: VERIFY_USER_LOGIN_PHONE_CHANGE,
     payload: verifyCode
@@ -120,7 +122,6 @@ export const verifyUserLoginPhoneChangeSuccess = data => {
     payload: data
   };
 };
-
 
 export const readMyPhoneAndPwData = () => {
   return {
@@ -135,10 +136,10 @@ export const readMyPhoneAndPwDataSuccess = data => {
   };
 };
 
-export const readMyPaymentAndSub = (count,start,end) => {
+export const readMyPaymentAndSub = (count, start, end) => {
   return {
     type: READ_MY_PAYMENTS_AND_SUB,
-    payload: {count,start,end}
+    payload: { count, start, end }
   };
 };
 
@@ -149,7 +150,6 @@ export const readMyPaymentAndSubSuccess = data => {
   };
 };
 
-
 export const updateProfileL2 = (
   nationality,
   tpercent,
@@ -157,7 +157,7 @@ export const updateProfileL2 = (
   workd,
   education,
   bio
-  ) => {
+) => {
   return {
     type: UPDATE_PROFILE_L2,
     payload: { nationality, tpercent, title, workd, education, bio }
@@ -171,11 +171,10 @@ export const updateProfileL2Success = (data, L2Data) => {
   };
 };
 
-
-export const ppUpload = (file,photoNum) => {
+export const ppUpload = (file, photoNum) => {
   return {
     type: REQUEST_PHOTO_UPLOAD_PP,
-    payload: {file,photoNum}
+    payload: { file, photoNum }
   };
 };
 
@@ -186,8 +185,7 @@ export const ppUploadSuccess = data => {
   };
 };
 
-
-export const ppRemove = (photoNum) => {
+export const ppRemove = photoNum => {
   return {
     type: REQUEST_REMOVE_PHOTO_PP,
     payload: photoNum
@@ -201,7 +199,6 @@ export const ppRemoveSuccess = data => {
   };
 };
 
-
 export const readMyPhotos = params => {
   return {
     type: READ_MY_PHOTOS,
@@ -212,6 +209,20 @@ export const readMyPhotos = params => {
 export const readMyPhotosSuccess = data => {
   return {
     type: READ_MY_PHOTOS_SUCCESS,
+    payload: data
+  };
+};
+
+export const permissionPPRead = (action, profileid, country, city, varea) => {
+  return {
+    type: REQUEST_PERMISSION_PP_READ,
+    payload: { action, profileid, country, city, varea }
+  };
+};
+
+export const permissionPPReadSuccess = data => {
+  return {
+    type: REQUEST_PERMISSION_PP_READ_SUCCESS,
     payload: data
   };
 };

@@ -245,11 +245,10 @@ profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
   });
 };
 
-
-profile.changePassword = function(oldPassword,newPassword) {
-    //  "oldPassword" : "{{password}}",
-    //     "newPassword" : "NewPassword#123"
-  console.log("from change password service ",oldPassword,newPassword);
+profile.changePassword = function(oldPassword, newPassword) {
+  //  "oldPassword" : "{{password}}",
+  //     "newPassword" : "NewPassword#123"
+  console.log("from change password service ", oldPassword, newPassword);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -271,7 +270,7 @@ profile.changePassword = function(oldPassword,newPassword) {
       let response = responseX.data;
 
       if (response.response) {
-        console.log("response of change password ",response);
+        console.log("response of change password ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -284,11 +283,10 @@ profile.changePassword = function(oldPassword,newPassword) {
   });
 };
 
-
-profile.changeUserLoginPhone = function(newPhone,password) {
-    	// "newPhone" : "{{newphone}}",
-	    // "password" : "{{password}}"
-    console.log("from change phone service ",newPhone,password);
+profile.changeUserLoginPhone = function(newPhone, password) {
+  // "newPhone" : "{{newphone}}",
+  // "password" : "{{password}}"
+  console.log("from change phone service ", newPhone, password);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -301,7 +299,8 @@ profile.changeUserLoginPhone = function(newPhone,password) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-         newPhone,password
+          newPhone,
+          password
         }
       };
 
@@ -309,7 +308,7 @@ profile.changeUserLoginPhone = function(newPhone,password) {
       let response = responseX.data;
 
       if (response.response) {
-        console.log("response of change phone ",response);
+        console.log("response of change phone ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -322,10 +321,10 @@ profile.changeUserLoginPhone = function(newPhone,password) {
   });
 };
 
-profile.verifyUserLoginPhoneChange=function(verifyTokenCode) {
-    		//"verifyTokenCode" : "742036"
+profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
+  //"verifyTokenCode" : "742036"
 
-    console.log("from verify change phone service ",verifyTokenCode);
+  console.log("from verify change phone service ", verifyTokenCode);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -338,7 +337,7 @@ profile.verifyUserLoginPhoneChange=function(verifyTokenCode) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-        verifyTokenCode
+          verifyTokenCode
         }
       };
 
@@ -346,7 +345,7 @@ profile.verifyUserLoginPhoneChange=function(verifyTokenCode) {
       let response = responseX.data;
 
       if (response.response) {
-        console.log("response of verify change phone ",response);
+        console.log("response of verify change phone ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -359,8 +358,7 @@ profile.verifyUserLoginPhoneChange=function(verifyTokenCode) {
   });
 };
 
-
-profile.readMyPhoneAndMyPwData=function() {
+profile.readMyPhoneAndMyPwData = function() {
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -377,7 +375,7 @@ profile.readMyPhoneAndMyPwData=function() {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-        console.log("response read my phone and pw data ",response);
+      console.log("response read my phone and pw data ", response);
       if (response) {
         resolve(response);
       } else {
@@ -391,13 +389,11 @@ profile.readMyPhoneAndMyPwData=function() {
   });
 };
 
-
-
-profile.readMyPaymentsAndSub=function(count,start,end) {
+profile.readMyPaymentsAndSub = function(count, start, end) {
   // "count": "true",
-	// "start": 0,
-	// "end": 10
-  console.log("from service read payments ",count,start,end)
+  // "start": 0,
+  // "end": 10
+  console.log("from service read payments ", count, start, end);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -410,14 +406,16 @@ profile.readMyPaymentsAndSub=function(count,start,end) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-        count,start,end
+          count,
+          start,
+          end
         }
       };
 
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-        console.log("response read my payments and sub ",response);
+      console.log("response read my payments and sub ", response);
       if (response) {
         resolve(response);
       } else {
@@ -431,11 +429,9 @@ profile.readMyPaymentsAndSub=function(count,start,end) {
   });
 };
 
-
-
-profile.requestPhotouploadPP=function(file,photoNum) {
+profile.requestPhotouploadPP = function(file, photoNum) {
   // "filetype" : "/png"
-  console.log("from service rrequestPhotouploadPP ",file)
+  console.log("from service rrequestPhotouploadPP ", file);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -448,34 +444,34 @@ profile.requestPhotouploadPP=function(file,photoNum) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-       	filetype :file.type,
-        filesize :file.size
+          filetype: file.type,
+          filesize: file.size
         }
       };
 
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-        console.log("response requestPhotouploadPP",response);
+      console.log("response requestPhotouploadPP", response);
       if (response.signedRequest) {
-                    const formData = new FormData();
-                Object.keys(response.signedRequest.fields).forEach(key => {
-                  formData.append(key, response.signedRequest[key]);
-                });
-                // Actual file has to be appended last.
-                formData.append("file", file);
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", response.signedRequest.url, true);
-                xhr.send(formData);
-                xhr.onload = async function() {
-                if(this.status === 204 ){
-                console.log("trueeeeeeee pp 204");
-                      resolve(true);
-                 } else{
-                reject(this.responseText);
-                 }
-                };
-       // resolve(response);
+        const formData = new FormData();
+        Object.keys(response.signedRequest.fields).forEach(key => {
+          formData.append(key, response.signedRequest[key]);
+        });
+        // Actual file has to be appended last.
+        formData.append("file", file);
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", response.signedRequest.url, true);
+        xhr.send(formData);
+        xhr.onload = async function() {
+          if (this.status === 204) {
+            console.log("trueeeeeeee pp 204");
+            resolve(true);
+          } else {
+            reject(this.responseText);
+          }
+        };
+        // resolve(response);
       } else {
         resolve({ message: "no response !" });
       }
@@ -487,10 +483,8 @@ profile.requestPhotouploadPP=function(file,photoNum) {
   });
 };
 
-
-
-profile.requestRemovePhotoPP=function(photoNum) {
-  console.log("from service requestRemovePhotoPP ",photoNum)
+profile.requestRemovePhotoPP = function(photoNum) {
+  console.log("from service requestRemovePhotoPP ", photoNum);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -507,7 +501,7 @@ profile.requestRemovePhotoPP=function(photoNum) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-        console.log("response requestRemovePhotoPP",response);
+      console.log("response requestRemovePhotoPP", response);
       if (response) {
         resolve(response);
       } else {
@@ -521,8 +515,60 @@ profile.requestRemovePhotoPP=function(photoNum) {
   });
 };
 
+profile.requestPermissionPPRead = function(
+  action,
+  profileid,
+  country,
+  city,
+  varea
+) {
+  // "profileid": "1511edf6-5f16-4813-801f-a40ce8e355a2",
+  // "country": "20",
+  // "city": "1",
+  // "varea": "1"
 
+  console.log(
+    "from service requestPermissionPPRead ",
+    action,
+    profileid,
+    country,
+    city,
+    varea
+  );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/requestpermissionppreadaddremove?action=${action}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea
+        }
+      };
 
+      let responseX = await callAxios(options);
+      let response = responseX.data;
 
+      console.log("response requestPermissionPPRead", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
 
 export { profile };

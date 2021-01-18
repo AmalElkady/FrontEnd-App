@@ -81,12 +81,13 @@ export const SIGNOUT_USER = "signout_user";
 export const SIGNOUT_USER_SUCCESS = "signout_user_success";
 export const INIT_URL = "init_url";
 export const CHANGE_PHONE_BEFORE_VERIF = "change_phone_before_verif";
-export const CHANGE_PHONE_BEFORE_VERIF_SUCCESS = "change_phone_before_verif_success";
-export const RESET_PHONE_CHANGE_FLAG="reset_phone_change_flag";
-export const MAIN_PHOTO_SELECTED="main_photo_selected"
-export const SWITCH_FORM="switch_form"
-export const SWITCH_FORM_2="switch_form_2"
-export const CONFIRM_PASSWORD_CASE="confirm_password_case"
+export const CHANGE_PHONE_BEFORE_VERIF_SUCCESS =
+  "change_phone_before_verif_success";
+export const RESET_PHONE_CHANGE_FLAG = "reset_phone_change_flag";
+export const MAIN_PHOTO_SELECTED = "main_photo_selected";
+export const SWITCH_FORM = "switch_form";
+export const SWITCH_FORM_2 = "switch_form_2";
+export const CONFIRM_PASSWORD_CASE = "confirm_password_case";
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";
@@ -299,27 +300,37 @@ export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";
 export const READ_MY_PHOTOS = "read_my_photo";
 export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";
 
-export const CHANGE_MY_PASSWORD="change_my_password";
-export const CHANGE_MY_PASSWORD_SUCCESS="change_my_password_success";
+export const CHANGE_MY_PASSWORD = "change_my_password";
+export const CHANGE_MY_PASSWORD_SUCCESS = "change_my_password_success";
 
-export const CHANGE_USER_LOGIN_PHONE="change_user_login_phone";
-export const CHANGE_USER_LOGIN_PHONE_SUCCESS="change_user_login_phone_success";
+export const CHANGE_USER_LOGIN_PHONE = "change_user_login_phone";
+export const CHANGE_USER_LOGIN_PHONE_SUCCESS =
+  "change_user_login_phone_success";
 
+export const VERIFY_USER_LOGIN_PHONE_CHANGE = "verify_user_login_phone_change";
+export const VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS =
+  "verify_user_login_phone_change_success";
 
-export const VERIFY_USER_LOGIN_PHONE_CHANGE="verify_user_login_phone_change";
-export const VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS="verify_user_login_phone_change_success";
+export const READ_MY_PHONE_AND_PW_DATA = "read_my_phone_and_pw_data";
+export const READ_MY_PHONE_AND_PW_DATA_SUCCESS =
+  "read_my_phone_and_pw_data_success";
 
+export const READ_MY_PAYMENTS_AND_SUB = "read_my_payments_and_sub";
+export const READ_MY_PAYMENTS_AND_SUB_SUCCESS =
+  "read_my_payments_and_sub_success";
 
-export const READ_MY_PHONE_AND_PW_DATA="read_my_phone_and_pw_data";
-export const READ_MY_PHONE_AND_PW_DATA_SUCCESS="read_my_phone_and_pw_data_success";
+//PP
 
-export const READ_MY_PAYMENTS_AND_SUB="read_my_payments_and_sub";
-export const READ_MY_PAYMENTS_AND_SUB_SUCCESS="read_my_payments_and_sub_success";
+export const REQUEST_PHOTO_UPLOAD_PP = "request_photo_upload_pp";
+export const REQUEST_PHOTO_UPLOAD_PP_SUCCESS =
+  "request_photo_upload_pp_success";
 
-export const REQUEST_PHOTO_UPLOAD_PP="request_photo_upload_pp";
-export const REQUEST_PHOTO_UPLOAD_PP_SUCCESS="request_photo_upload_pp_success";
+export const REQUEST_REMOVE_PHOTO_PP = "request_remove_photo_pp";
+export const REQUEST_REMOVE_PHOTO_PP_SUCCESS =
+  "request_remove_photo_pp_success";
 
-export const REQUEST_REMOVE_PHOTO_PP="request_remove_photo_pp";
-export const REQUEST_REMOVE_PHOTO_PP_SUCCESS="request_remove_photo_pp_success";
+export const REQUEST_PERMISSION_PP_READ = "request_permission_pp_read";
+export const REQUEST_PERMISSION_PP_READ_SUCCESS =
+  "request_permission_pp_read_success";
 
 export const OPEN_MODAL = "open_modal";
