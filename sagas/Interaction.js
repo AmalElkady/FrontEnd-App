@@ -1,11 +1,13 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   ppAccessApproveRemoveSuccess,
-  getPhotoPPReadOutgoingRequestsApprovalesSuccess
+  getPhotoPPReadOutgoingRequestsApprovalesSuccess,
+  getPhotoPPReadIncomingApprovedPendingRequestsSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
-  GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES
+  GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
+  GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -19,6 +21,16 @@ const ppAccessApproveRemove = async (action, profileid, country, city, varea) =>
 const getPhotoReadPPOutgoingRequestsApprovales = async (scoreH, offset) =>
   await interaction
     .requestGetPhotoPPReadOutgoingRequestsApprovales(scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const getPhotoReadPPIncomingApprovePendingRequests = async (
+  action,
+  scoreH,
+  offset
+) =>
+  await interaction
+    .requestGetPhotoReadPPIncomingApprovePendingRequests(action, scoreH, offset)
     .then(returnData => returnData)
     .catch(error => error);
 /////
@@ -63,6 +75,28 @@ function* getPhotoPPReadOutgoingRequestsApprovalesRequest({ payload }) {
   }
 }
 
+function* getPhotoPPReadIncomingApprovePendingRequest({ payload }) {
+  const { action, scoreH, offset } = payload;
+  console.log("incoming pp read saga ", action, scoreH, offset);
+  try {
+    const returnedData = yield call(
+      getPhotoReadPPIncomingApprovePendingRequests,
+      action,
+      scoreH,
+      offset
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnData.message));
+    } else {
+      yield put(
+        getPhotoPPReadIncomingApprovedPendingRequestsSuccess(returnedData)
+      );
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -78,9 +112,17 @@ export function* requestGetPhotoPPReadOutgoingRequestsApprovales() {
   );
 }
 
+export function* requestGetPhotoPPReadIncomingApprovePending() {
+  yield takeEvery(
+    GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
+    getPhotoPPReadIncomingApprovePendingRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
-    fork(requestGetPhotoPPReadOutgoingRequestsApprovales)
+    fork(requestGetPhotoPPReadOutgoingRequestsApprovales),
+    fork(requestGetPhotoPPReadIncomingApprovePending)
   ]);
 }

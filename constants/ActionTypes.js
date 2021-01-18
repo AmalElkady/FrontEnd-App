@@ -344,4 +344,9 @@ export const GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES =
 export const GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS =
   "get_photo_pp_read_outogoing_requests_approvales_success";
 
+export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS =
+  "get_photo_pp_read_incoming_approved_pending_requests";
+export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS =
+  "get_photo_pp_read_incoming_approved_pending_requests_success";
+
 export const OPEN_MODAL = "open_modal";

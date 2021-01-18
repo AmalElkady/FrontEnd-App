@@ -21,7 +21,10 @@ import {
   openModal
 } from "../../../actions/Profile";
 
-import { getPhotoPPReadOutgoingRequestsApprovales } from "../../../actions/Interaction";
+import {
+  getPhotoPPReadOutgoingRequestsApprovales,
+  getPhotoPPReadIncomingApprovedPendingRequests
+} from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
 import ModalUploadL2 from "../../Modals/modalUpdateL2";
@@ -78,6 +81,9 @@ export default function About({ aboutInfo }) {
               //dispatch(ppUpload("image file",photoNum));
               //dispatch(ppRemove(photoNum));
               //dispatch(getPhotoPPReadOutgoingRequestsApprovales("", ""));
+              // dispatch(
+              //   getPhotoPPReadIncomingApprovedPendingRequests(1, "", "")
+              // );
             }}
             color="primary"
             className="linear-g-r"

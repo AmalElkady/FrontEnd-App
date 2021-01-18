@@ -2,7 +2,9 @@ import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
   REQUEST_PP_ACCESS_APPROVE_REMOVE_SUCCESS,
   GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
-  GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS
+  GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS,
+  GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
+  GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -33,9 +35,28 @@ export const getPhotoPPReadOutgoingRequestsApprovales = (scoreH, offset) => {
 };
 
 export const getPhotoPPReadOutgoingRequestsApprovalesSuccess = data => {
-  console.log("from success outgoing ", DataTransferItem);
+  console.log("from success outgoing ", data);
   return {
     type: GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS,
+    payload: data
+  };
+};
+
+export const getPhotoPPReadIncomingApprovedPendingRequests = (
+  action,
+  scoreH,
+  offset
+) => {
+  return {
+    type: GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
+    payload: { action, scoreH, offset }
+  };
+};
+
+export const getPhotoPPReadIncomingApprovedPendingRequestsSuccess = data => {
+  console.log("from success incoming ", data);
+  return {
+    type: GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS,
     payload: data
   };
 };
