@@ -334,4 +334,9 @@ export const REQUEST_PERMISSION_PP_READ_REMOVE =
 export const REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS =
   "request_permission_pp_read_remove_success";
 
+export const REQUEST_PP_ACCESS_APPROVE_REMOVE =
+  "request_pp_access_approve_remove";
+export const REQUEST_PP_ACCESS_APPROVE_REMOVE_SUCCESS =
+  "request_pp_access_approve_remove_success";
+
 export const OPEN_MODAL = "open_modal";

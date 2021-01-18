@@ -39,7 +39,7 @@ const initialProfileState = {
   alertMessage: ""
 };
 
-const home = (state = initialProfileState, action) => {
+const Profile = (state = initialProfileState, action) => {
   switch (action.type) {
     case READ_PROFILE_L2_SUCCESS: {
       return {
@@ -150,4 +150,4 @@ const home = (state = initialProfileState, action) => {
   }
 };
 
-export default home;
+export default Profile;

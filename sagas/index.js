@@ -5,6 +5,7 @@ import chatSagas from "./Chat";
 import authSagas from "./Auth";
 import homeSagas from "./Home";
 import profileSage from "./Profile";
+import interactionSaga from "./Interaction";
 export default function* rootSaga(getState) {
   yield all([
     mailSagas(),
@@ -12,6 +13,7 @@ export default function* rootSaga(getState) {
     chatSagas(),
     authSagas(),
     homeSagas(),
-    profileSage()
+    profileSage(),
+    interactionSaga()
   ]);
 }

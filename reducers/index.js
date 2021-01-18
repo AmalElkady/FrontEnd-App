@@ -12,6 +12,7 @@ import Mail from "./Mail";
 import Auth from "./Auth";
 import Home from "./Home";
 import Profile from "./Profile";
+import Interaction from "./Interaction";
 
 const MIGRATION_DEBUG = false;
 
@@ -43,7 +44,7 @@ const authPersistConfig = {
     "phone",
     "country",
     "city",
- "countryiso2",
+    "countryiso2",
     "name",
     "birth",
     "martial",
@@ -83,5 +84,6 @@ export default history =>
     home: Home,
     // home: persist(homePersistConfig, Home),
     profile: Profile,
+    interaction: Interaction,
     auth: persist(authPersistConfig, Auth)
   });
