@@ -7,7 +7,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import { ARRAYS_OF_TPERCENT } from "../../../util/data";
 import Button from "@material-ui/core/Button";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import {
   readProfileL2,
   readMyProfile,
@@ -20,6 +20,9 @@ import {
   ppRemove,
   openModal
 } from "../../../actions/Profile";
+
+import { getPhotoPPReadOutgoingRequestsApprovales } from "../../../actions/Interaction";
+
 import Flag from "react-world-flags";
 import ModalUploadL2 from "../../Modals/modalUpdateL2";
 export default function About({ aboutInfo }) {
@@ -27,6 +30,9 @@ export default function About({ aboutInfo }) {
   const l2Data = useSelector(state => state.profile.profileL2Data);
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
   const OpenModal = useSelector(state => state.profile.openModal);
+  const outgoingRequestsData = useSelector(
+    state => state.interaction.outgoingRequestsData
+  );
   const [disData, setDisData] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -60,120 +66,134 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
+          <Button
+            variant="contained"
+            onClick={() => {
+              console.log("on change pass ");
+              // dispatch(changeMyPassword("Password#1234","Password#123"));
+              //dispatch(changeUserLoginPhone("01120111120","Password#123"));
+              //dispatch(verifyUserLoginPhoneChange("318175"))
+              //dispatch(readMyPhoneAndPwData());
+              //dispatch(readMyPaymentAndSub(true,0,10));
+              //dispatch(ppUpload("image file",photoNum));
+              //dispatch(ppRemove(photoNum));
+              //dispatch(getPhotoPPReadOutgoingRequestsApprovales("", ""));
+            }}
+            color="primary"
+            className="linear-g-r"
+          >
+            change phone
+          </Button>
+          <Grid container spacing={12}>
+            <Grid item xs={12} className="margin-TB">
+              <Grid container spacing={12}>
+                <Grid item xs={3}>
+                  <div
+                    className="profile-icon-flag"
+                    style={{ width: "50%", margin: ".6rem auto" }}
+                  >
+                    <Flag code={disData.nationality} />
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="body1" gutterBottom>
+                    <IntlMessages id={`nationality.${disData.nationality}`} />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            {disData.tpercent && (
+              <Grid item xs={12} className="margin-TB">
+                <Grid container spacing={12}>
+                  <Grid item xs={3}>
+                    <div
+                      className="profile-icon-2"
+                      style={{ width: "50%", margin: "auto" }}
+                    >
+                      <img src="../../../static/images/icons/new-profile/tprecent.svg" />
+                    </div>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Typography variant="body1" gutterBottom>
+                      {ARRAYS_OF_TPERCENT[disData.tpercent]}
+                      {/* <IntlMessages id={`nationality.${disData.tpercent}`} /> */}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
+            <Grid item xs={12} className="margin-TB">
+              <Grid container spacing={12}>
+                <Grid item xs={3}>
+                  <div
+                    className="profile-icon-2"
+                    style={{ width: "50%", margin: "auto" }}
+                  >
+                    <img src="../../../static/images/icons/new-profile/education.svg" />
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="body1" gutterBottom>
+                    <IntlMessages id={`education.${disData.education}`} />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
 
-                      <Button
-                            variant="contained"
-                            onClick={() => {
-                              console.log("on change pass ");
-                             // dispatch(changeMyPassword("Password#1234","Password#123"));
-                              //dispatch(changeUserLoginPhone("01120111120","Password#123"));
-                             dispatch(verifyUserLoginPhoneChange("318175"))
-                             //dispatch(readMyPhoneAndPwData());
-                             //dispatch(readMyPaymentAndSub(true,0,10));
-                             //dispatch(ppUpload("image file",photoNum));
-                             //dispatch(ppRemove(photoNum));
-                            }}
-                            color="primary"
-                             className="linear-g-r"
-                          >
-                            change phone
-                          </Button> 
-     <Grid container spacing={12}> 
-				<Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-flag" style={{ width: "50%", margin:".6rem auto"}} >
-                        <Flag code={disData.nationality} />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                        <Typography variant="body1" gutterBottom>
-                          <IntlMessages id={`nationality.${disData.nationality}`} />
-                        </Typography>
-                       </Grid> 
-                 </Grid>                
-				</Grid>
-          {disData.tpercent && 	<Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-2"  style={{ width: "50%", margin:"auto"}}>
-                          <img src="../../../static/images/icons/new-profile/tprecent.svg" />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                        <Typography variant="body1" gutterBottom>
-                            {ARRAYS_OF_TPERCENT[disData.tpercent]}
-                            {/* <IntlMessages id={`nationality.${disData.tpercent}`} /> */}
-                        </Typography>
-                       </Grid> 
-                 </Grid>                
-						</Grid>
-          }
-        <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-2"  style={{ width: "50%", margin:"auto"}}>
-                           <img src="../../../static/images/icons/new-profile/education.svg" />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                        <Typography variant="body1" gutterBottom>
-                           <IntlMessages id={`education.${disData.education}`} />
-                        </Typography>
-                       </Grid> 
-                 </Grid>                
-				 </Grid>
+            <Grid item xs={12} className="margin-TB">
+              <Grid container spacing={12}>
+                <Grid item xs={3}>
+                  <div
+                    className="profile-icon-2"
+                    style={{ width: "50%", margin: "auto" }}
+                  >
+                    <img src="../../../static/images/icons/new-profile/title.svg" />
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="body1" gutterBottom>
+                    {disData.title}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
 
-        <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-2"  style={{ width: "50%", margin:"auto"}}>
-                           <img src="../../../static/images/icons/new-profile/title.svg" />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                         <Typography variant="body1" gutterBottom>
-                             {disData.title}
-                         </Typography>
-                       </Grid> 
-                 </Grid>                
-				</Grid>
+            <Grid item xs={12} className="margin-TB">
+              <Grid container spacing={12}>
+                <Grid item xs={3}>
+                  <div
+                    className="profile-icon-2"
+                    style={{ width: "50%", margin: "auto" }}
+                  >
+                    <img src="../../../static/images/icons/new-profile/workd.svg" />
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="body1" gutterBottom>
+                    <IntlMessages id={`workd.${disData.workd - 1}`} />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
 
-        <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-2"  style={{ width: "50%", margin:"auto"}}>
-                           <img src="../../../static/images/icons/new-profile/workd.svg" />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                         <Typography variant="body1" gutterBottom>
-                            <IntlMessages id={`workd.${disData.workd-1}`} />
-                         </Typography>
-                       </Grid> 
-                 </Grid>                
-				</Grid>
-
-        <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}> 
-                       <Grid item xs={3}>
-                       <div className="profile-icon-2"  style={{ width: "50%", margin:"auto"}}>
-                           <img src="../../../static/images/icons/new-profile/bio.svg" />
-                        </div>
-                       </Grid>    
-                       <Grid item xs={9}>
-                         <Typography variant="body1" gutterBottom>
-                            {disData.bio}
-                         </Typography>
-                       </Grid> 
-                 </Grid>                
-				</Grid>
-
-
-
-        </Grid>
-
-
+            <Grid item xs={12} className="margin-TB">
+              <Grid container spacing={12}>
+                <Grid item xs={3}>
+                  <div
+                    className="profile-icon-2"
+                    style={{ width: "50%", margin: "auto" }}
+                  >
+                    <img src="../../../static/images/icons/new-profile/bio.svg" />
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="body1" gutterBottom>
+                    {disData.bio}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
 
           {/* <div className="profile-nat d-flex margin-TB">
             <div className="profile-icon-flag">

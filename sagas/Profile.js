@@ -35,73 +35,73 @@ import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
   await profile
     .readProfileL2(id, co, ci, va)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const readMyProfile = async params =>
   await profile
     .readMyProfile(params)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const readMyPhotos = async params =>
   await profile
     .readMyPhotos(params)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const updateL1Profile = async martial =>
   await profile
     .updateProfileL1(martial)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const updateL2Profile = async (na, tpercent, title, workd, edu, bio) =>
   await profile
     .updateProfileL2(na, tpercent, title, workd, edu, bio)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const changePassword = async (oldPassword, newPassword) =>
   await profile
     .changePassword(oldPassword, newPassword)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const changeUserPhone = async (newPhone, password) =>
   await profile
     .changeUserLoginPhone(newPhone, password)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const verifyUserPhoneChange = async verifyCode =>
   await profile
     .verifyUserLoginPhoneChange(verifyCode)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const readPhoneAndPwData = async () =>
   await profile
     .readMyPhoneAndMyPwData()
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const photoUploadPP = async (file, photoNum) =>
   await profile
     .requestPhotouploadPP(file, photoNum)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const photoRemovePP = async photoNum =>
   await profile
     .requestRemovePhotoPP(photoNum)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const readPaymentsAndSub = async (count, start, end) =>
   await profile
     .readMyPaymentsAndSub(count, start, end)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 
 const permissionReadRemovePP = async (
@@ -113,7 +113,7 @@ const permissionReadRemovePP = async (
 ) =>
   await profile
     .requestPermissionPPReadRemove(action, profileid, country, city, varea)
-    .then(returnData => returnData)
+    .then(returnedData => returnedData)
     .catch(error => error);
 /////
 function* readProfileL2Request({ payload }) {
@@ -179,7 +179,7 @@ function* changeMyPasswordRequest({ payload }) {
   console.log("oldPassword,newPassword saga ", oldPassword, newPassword);
   try {
     const returnedData = yield call(changePassword, oldPassword, newPassword);
-    if (returnData.message) {
+    if (returnedData.message) {
       yield put(changeMyPasswordSuccess(false));
     } else {
       yield put(changeMyPasswordSuccess(true));
@@ -194,7 +194,7 @@ function* changeUserLoginPhoneRequest({ payload }) {
   console.log("oldPassword,newPassword saga ", newPhone, password);
   try {
     const returnedData = yield call(changeUserPhone, newPhone, password);
-    if (returnData.message) {
+    if (returnedData.message) {
       yield put(changeUserLoginPhoneSuccess(false));
     } else {
       yield put(changeUserLoginPhoneSuccess(true));
@@ -208,7 +208,7 @@ function* verifyUserLoginPhoneChangeRequest({ payload }) {
   console.log("verify from saga ", payload);
   try {
     const returnedData = yield call(verifyUserPhoneChange, payload);
-    if (returnData.message) {
+    if (returnedData.message) {
       yield put(verifyUserLoginPhoneChangeSuccess(false));
     } else {
       yield put(verifyUserLoginPhoneChangeSuccess(true));
@@ -221,8 +221,8 @@ function* verifyUserLoginPhoneChangeRequest({ payload }) {
 function* readMyPhoneAndPwDataRequest() {
   try {
     const returnedData = yield call(readPhoneAndPwData);
-    if (returnData.message) {
-      yield put(showProfileMessage(returnData.message));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(readMyPhoneAndPwDataSuccess(returnedData));
     }
@@ -236,8 +236,8 @@ function* readMyPaymentsAndSubRequest({ payload }) {
   console.log("count,start,end saga ", count, start, end);
   try {
     const returnedData = yield call(readPaymentsAndSub, count, start, end);
-    if (returnData.message) {
-      yield put(showProfileMessage(returnData.message));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(readMyPaymentAndSubSuccess(returnedData));
     }
@@ -251,8 +251,8 @@ function* requestPhotoUploadPPRequest({ payload }) {
   console.log("pp file saga ", file, photoNum);
   try {
     const returnedData = yield call(photoUploadPP, file, photoNum);
-    if (returnData.message) {
-      yield put(showProfileMessage(returnData.message));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(ppUploadSuccess(returnedData));
     }
@@ -265,8 +265,8 @@ function* requestRemovePhotoPPRequest({ payload }) {
   console.log("pp remove file saga ", payload);
   try {
     const returnedData = yield call(photoRemovePP, payload);
-    if (returnData.message) {
-      yield put(showProfileMessage(returnData.message));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(ppRemoveSuccess(returnedData));
     }
@@ -294,8 +294,8 @@ function* permissionPPReadRemoveRequest({ payload }) {
       city,
       varea
     );
-    if (returnData.message) {
-      yield put(showProfileMessage(returnData.message));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(permissionPPReadRemoveSuccess(returnedData));
     }

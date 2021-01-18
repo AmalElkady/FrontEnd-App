@@ -339,4 +339,9 @@ export const REQUEST_PP_ACCESS_APPROVE_REMOVE =
 export const REQUEST_PP_ACCESS_APPROVE_REMOVE_SUCCESS =
   "request_pp_access_approve_remove_success";
 
+export const GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES =
+  "get_photo_pp_read_outogoing_requests_approvales";
+export const GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS =
+  "get_photo_pp_read_outogoing_requests_approvales_success";
+
 export const OPEN_MODAL = "open_modal";
