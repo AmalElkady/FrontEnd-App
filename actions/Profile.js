@@ -24,8 +24,8 @@ import {
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
-  REQUEST_PERMISSION_PP_READ,
-  REQUEST_PERMISSION_PP_READ_SUCCESS,
+  REQUEST_PERMISSION_PP_READ_REMOVE,
+  REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -213,16 +213,22 @@ export const readMyPhotosSuccess = data => {
   };
 };
 
-export const permissionPPRead = (action, profileid, country, city, varea) => {
+export const permissionPPReadRemove = (
+  action,
+  profileid,
+  country,
+  city,
+  varea
+) => {
   return {
-    type: REQUEST_PERMISSION_PP_READ,
+    type: REQUEST_PERMISSION_PP_READ_REMOVE,
     payload: { action, profileid, country, city, varea }
   };
 };
 
-export const permissionPPReadSuccess = data => {
+export const permissionPPReadRemoveSuccess = data => {
   return {
-    type: REQUEST_PERMISSION_PP_READ_SUCCESS,
+    type: REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
     payload: data
   };
 };

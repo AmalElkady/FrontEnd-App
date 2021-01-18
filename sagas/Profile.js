@@ -13,7 +13,7 @@ import {
   readMyPaymentAndSubSuccess,
   ppUploadSuccess,
   ppRemoveSuccess,
-  permissionPPReadSuccess,
+  permissionPPReadRemoveSuccess,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -28,8 +28,8 @@ import {
   READ_MY_PAYMENTS_AND_SUB,
   REQUEST_PHOTO_UPLOAD_PP,
   REQUEST_REMOVE_PHOTO_PP,
-  REQUEST_PERMISSION_PP_READ,
-  READ_MY_PHOTOS
+  READ_MY_PHOTOS,
+  REQUEST_PERMISSION_PP_READ_REMOVE
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -104,9 +104,15 @@ const readPaymentsAndSub = async (count, start, end) =>
     .then(returnData => returnData)
     .catch(error => error);
 
-const permissionReadPP = async (action, profileid, country, city, varea) =>
+const permissionReadRemovePP = async (
+  action,
+  profileid,
+  country,
+  city,
+  varea
+) =>
   await profile
-    .requestPermissionPPRead(action, profileid, country, city, varea)
+    .requestPermissionPPReadRemove(action, profileid, country, city, varea)
     .then(returnData => returnData)
     .catch(error => error);
 /////
@@ -269,7 +275,7 @@ function* requestRemovePhotoPPRequest({ payload }) {
   }
 }
 
-function* permissionPPReadRequest({ payload }) {
+function* permissionPPReadRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
   console.log(
     "permission pp read saga ",
@@ -281,7 +287,7 @@ function* permissionPPReadRequest({ payload }) {
   );
   try {
     const returnedData = yield call(
-      permissionReadPP,
+      permissionReadRemovePP,
       action,
       profileid,
       country,
@@ -291,7 +297,7 @@ function* permissionPPReadRequest({ payload }) {
     if (returnData.message) {
       yield put(showProfileMessage(returnData.message));
     } else {
-      yield put(permissionPPReadSuccess(returnedData));
+      yield put(permissionPPReadRemoveSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -345,8 +351,11 @@ export function* requestRemovePhotoPP() {
   yield takeEvery(REQUEST_REMOVE_PHOTO_PP, requestRemovePhotoPPRequest);
 }
 
-export function* requestPermissionPPRead() {
-  yield takeEvery(REQUEST_PERMISSION_PP_READ, permissionPPReadRequest);
+export function* requestPermissionPPReadRemove() {
+  yield takeEvery(
+    REQUEST_PERMISSION_PP_READ_REMOVE,
+    permissionPPReadRemoveRequest
+  );
 }
 
 export default function* rootSaga() {
@@ -363,6 +372,6 @@ export default function* rootSaga() {
     fork(readMyPaymentsAndSub),
     fork(requestPhotoUploadPP),
     fork(requestRemovePhotoPP),
-    fork(requestPermissionPPRead)
+    fork(requestPermissionPPReadRemove)
   ]);
 }

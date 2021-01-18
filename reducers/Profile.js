@@ -12,7 +12,7 @@ import {
   READ_MY_PAYMENTS_AND_SUB_SUCCESS,
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
-  REQUEST_PERMISSION_PP_READ_SUCCESS,
+  REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
   OPEN_MODAL,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
@@ -95,7 +95,7 @@ const home = (state = initialProfileState, action) => {
         photoRemovePP: action.payload
       };
     }
-    case REQUEST_PERMISSION_PP_READ_SUCCESS: {
+    case REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS: {
       return {
         ...state,
         permissionReadPP: action.payload

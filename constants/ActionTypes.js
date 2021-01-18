@@ -329,8 +329,9 @@ export const REQUEST_REMOVE_PHOTO_PP = "request_remove_photo_pp";
 export const REQUEST_REMOVE_PHOTO_PP_SUCCESS =
   "request_remove_photo_pp_success";
 
-export const REQUEST_PERMISSION_PP_READ = "request_permission_pp_read";
-export const REQUEST_PERMISSION_PP_READ_SUCCESS =
-  "request_permission_pp_read_success";
+export const REQUEST_PERMISSION_PP_READ_REMOVE =
+  "request_permission_pp_read_remove";
+export const REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS =
+  "request_permission_pp_read_remove_success";
 
 export const OPEN_MODAL = "open_modal";

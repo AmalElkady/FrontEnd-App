@@ -515,7 +515,7 @@ profile.requestRemovePhotoPP = function(photoNum) {
   });
 };
 
-profile.requestPermissionPPRead = function(
+profile.requestPermissionPPReadRemove = function(
   action,
   profileid,
   country,
