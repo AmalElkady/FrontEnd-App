@@ -87,7 +87,8 @@ export default function Profile() {
           <Grid item xs={6} className="profile-Grid-container">
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
             {/* <Carousel /> */}
-            {/* <Photos photoList={photos} /> */}
+            <br />
+            <Photos items={photos} />
           </Grid>
           <Grid item xs={6} className="profile-Grid-container">
             {aboutInfo.id && <About aboutInfo={aboutInfo} />}
