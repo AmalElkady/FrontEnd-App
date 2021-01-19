@@ -23,7 +23,8 @@ import {
 
 import {
   getPhotoPPReadOutgoingRequestsApprovales,
-  getPhotoPPReadIncomingApprovedPendingRequests
+  getPhotoPPReadIncomingApprovedPendingRequests,
+  sendLoveMatchRequest
 } from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
@@ -83,6 +84,14 @@ export default function About({ aboutInfo }) {
               //dispatch(getPhotoPPReadOutgoingRequestsApprovales("", ""));
               // dispatch(
               //   getPhotoPPReadIncomingApprovedPendingRequests(1, "", "")
+              // );
+              // dispatch(
+              //   sendLoveMatchRequest(
+              //     "4ce4b911-11f0-41f5-9760-774a3048cf41",
+              //     "20",
+              //     "4",
+              //     "1"
+              //   )
               // );
             }}
             color="primary"

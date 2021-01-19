@@ -320,7 +320,6 @@ export const READ_MY_PAYMENTS_AND_SUB_SUCCESS =
   "read_my_payments_and_sub_success";
 
 //PP
-
 export const REQUEST_PHOTO_UPLOAD_PP = "request_photo_upload_pp";
 export const REQUEST_PHOTO_UPLOAD_PP_SUCCESS =
   "request_photo_upload_pp_success";
@@ -348,5 +347,10 @@ export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS =
   "get_photo_pp_read_incoming_approved_pending_requests";
 export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS =
   "get_photo_pp_read_incoming_approved_pending_requests_success";
+
+// Love Request
+export const SEND_LOVE_MATCH_REQUEST = "send_love_match_request";
+export const SEND_LOVE_MATCH_REQUEST_SUCCESS =
+  "send_love_match_request_success";
 
 export const OPEN_MODAL = "open_modal";

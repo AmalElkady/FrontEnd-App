@@ -2,12 +2,14 @@ import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   ppAccessApproveRemoveSuccess,
   getPhotoPPReadOutgoingRequestsApprovalesSuccess,
-  getPhotoPPReadIncomingApprovedPendingRequestsSuccess
+  getPhotoPPReadIncomingApprovedPendingRequestsSuccess,
+  sendLoveMatchRequestSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
   GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
-  GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS
+  GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
+  SEND_LOVE_MATCH_REQUEST
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -31,6 +33,12 @@ const getPhotoReadPPIncomingApprovePendingRequests = async (
 ) =>
   await interaction
     .requestGetPhotoReadPPIncomingApprovePendingRequests(action, scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const loveMatchSendRequest = async (profileid, country, city, varea) =>
+  await interaction
+    .sendLoveMatchRequest(profileid, country, city, varea)
     .then(returnData => returnData)
     .catch(error => error);
 /////
@@ -97,6 +105,27 @@ function* getPhotoPPReadIncomingApprovePendingRequest({ payload }) {
   }
 }
 
+function* sendLoveMatchRequest({ payload }) {
+  const { profileid, country, city, varea } = payload;
+  console.log("love match saga ", profileid, country, city, varea);
+  try {
+    const returnedData = yield call(
+      loveMatchSendRequest,
+      profileid,
+      country,
+      city,
+      varea
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(sendLoveMatchRequestSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -119,10 +148,15 @@ export function* requestGetPhotoPPReadIncomingApprovePending() {
   );
 }
 
+export function* requestSendLoveMatch() {
+  yield takeEvery(SEND_LOVE_MATCH_REQUEST, sendLoveMatchRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
     fork(requestGetPhotoPPReadOutgoingRequestsApprovales),
-    fork(requestGetPhotoPPReadIncomingApprovePending)
+    fork(requestGetPhotoPPReadIncomingApprovePending),
+    fork(requestSendLoveMatch)
   ]);
 }
