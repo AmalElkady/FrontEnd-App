@@ -6,7 +6,8 @@ import {
   GET_LOVE_SENT_REQUESTS_SUCCESS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
   GET_USER_VIEWS_SUCCESS,
-  BLOCK_USER_SUCCESS
+  BLOCK_USER_SUCCESS,
+  UNBLOCK_USER_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
@@ -17,7 +18,8 @@ const initialProfileState = {
   loveSentRequests: null,
   loveMatchedAndReceivedRequests: null,
   userViews: null,
-  userBlocked: false
+  userBlocked: false,
+  userUnblocked: false
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -75,6 +77,13 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         userBlocked: action.payload
+      };
+    }
+    case UNBLOCK_USER_SUCCESS: {
+      console.log("form reducer User unblock ", action.payload);
+      return {
+        ...state,
+        userUnblocked: action.payload
       };
     }
     default:

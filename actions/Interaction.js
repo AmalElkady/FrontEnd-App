@@ -14,7 +14,9 @@ import {
   GET_USER_VIEWS,
   GET_USER_VIEWS_SUCCESS,
   BLOCK_USER,
-  BLOCK_USER_SUCCESS
+  BLOCK_USER_SUCCESS,
+  UNBLOCK_USER,
+  UNBLOCK_USER_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -142,6 +144,21 @@ export const blockUserSuccess = data => {
   console.log("from success block user ", data);
   return {
     type: BLOCK_USER_SUCCESS,
+    payload: data
+  };
+};
+
+export const unblockUser = (profileid, country, city, varea) => {
+  return {
+    type: UNBLOCK_USER,
+    payload: { profileid, country, city, varea }
+  };
+};
+
+export const unblockUserSuccess = data => {
+  console.log("from success unblock user ", data);
+  return {
+    type: UNBLOCK_USER_SUCCESS,
     payload: data
   };
 };

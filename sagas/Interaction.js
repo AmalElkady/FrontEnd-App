@@ -7,7 +7,8 @@ import {
   getLoveSentRequestsSuccess,
   getLoveMatchedAndReceivedRequestsSuccess,
   getUserViewsSuccess,
-  blockUserSuccess
+  blockUserSuccess,
+  unblockUserSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -17,7 +18,8 @@ import {
   GET_LOVE_SENT_REQUESTS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
   GET_USER_VIEWS,
-  BLOCK_USER
+  BLOCK_USER,
+  UNBLOCK_USER
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -71,6 +73,12 @@ const userViewsRequest = async (start, end) =>
 const blockUserRequest = async (profileid, country, city, varea) =>
   await interaction
     .blockUser(profileid, country, city, varea)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const unblockUserRequest = async (profileid, country, city, varea) =>
+  await interaction
+    .unblockUser(profileid, country, city, varea)
     .then(returnData => returnData)
     .catch(error => error);
 /////
@@ -207,7 +215,7 @@ function* getUserViewsRequest({ payload }) {
   }
 }
 
-function* userblockRequest({ payload }) {
+function* userBlockRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
   console.log("user block saga ", profileid, country, city, varea);
   try {
@@ -222,6 +230,26 @@ function* userblockRequest({ payload }) {
       yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(blockUserSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+function* userUnblockRequest({ payload }) {
+  const { profileid, country, city, varea } = payload;
+  console.log("user unblock saga ", profileid, country, city, varea);
+  try {
+    const returnedData = yield call(
+      unblockUserRequest,
+      profileid,
+      country,
+      city,
+      varea
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(unblockUserSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -269,7 +297,11 @@ export function* requestGetUserViews() {
 }
 
 export function* requestBlockUser() {
-  yield takeEvery(BLOCK_USER, userblockRequest);
+  yield takeEvery(BLOCK_USER, userBlockRequest);
+}
+
+export function* requestUnblockUser() {
+  yield takeEvery(UNBLOCK_USER, userUnblockRequest);
 }
 
 export default function* rootSaga() {
@@ -281,6 +313,7 @@ export default function* rootSaga() {
     fork(requestGetLoveSentRequests),
     fork(requestGetLoveMatchedAndReceivedRequests),
     fork(requestGetUserViews),
-    fork(requestBlockUser)
+    fork(requestBlockUser),
+    fork(requestUnblockUser)
   ]);
 }

@@ -28,7 +28,8 @@ import {
   getLoveSentRequests,
   getLoveMatchedAndReceivedRequests,
   getUserViews,
-  blockUser
+  blockUser,
+  unblockUser
 } from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
@@ -103,11 +104,19 @@ export default function About({ aboutInfo }) {
               // dispatch(
               //   blockUser(
               //     "4ce4b911-11f0-41f5-9760-774a3048cf41",
-              //     "20",
+              //     "EG",
               //     "4",
               //     "1"
               //   )
               // );
+              dispatch(
+                unblockUser(
+                  "4ce4b911-11f0-41f5-9760-774a3048cf41",
+                  "EG",
+                  "4",
+                  "1"
+                )
+              );
             }}
             color="primary"
             className="linear-g-r"

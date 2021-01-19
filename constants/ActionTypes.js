@@ -366,8 +366,10 @@ export const GET_USER_VIEWS = "get_user_views";
 export const GET_USER_VIEWS_SUCCESS = "get_user_views_success";
 
 //BLOCK
-
 export const BLOCK_USER = "block_user";
 export const BLOCK_USER_SUCCESS = "block_user_success";
+
+export const UNBLOCK_USER = "unblock_user";
+export const UNBLOCK_USER_SUCCESS = "unblock_user_success";
 
 export const OPEN_MODAL = "open_modal";
