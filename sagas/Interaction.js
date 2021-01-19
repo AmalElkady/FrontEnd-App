@@ -4,14 +4,16 @@ import {
   getPhotoPPReadOutgoingRequestsApprovalesSuccess,
   getPhotoPPReadIncomingApprovedPendingRequestsSuccess,
   sendLoveMatchRequestSuccess,
-  getLoveSentRequestsSuccess
+  getLoveSentRequestsSuccess,
+  getLoveMatchedAndReceivedRequestsSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
   GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
   SEND_LOVE_MATCH_REQUEST,
-  GET_LOVE_SENT_REQUESTS
+  GET_LOVE_SENT_REQUESTS,
+  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -50,6 +52,12 @@ const loveSentRequests = async (scoreH, offset) =>
     .then(returnData => returnData)
     .catch(error => error);
 
+const loveMatchedAndReceivedRequests = async (action, scoreH, offset) =>
+  await interaction
+    .getLoveMatchedAndReceivedRequests(action, scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
@@ -83,7 +91,7 @@ function* getPhotoPPReadOutgoingRequestsApprovalesRequest({ payload }) {
       offset
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnData.message));
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(getPhotoPPReadOutgoingRequestsApprovalesSuccess(returnedData));
     }
@@ -103,7 +111,7 @@ function* getPhotoPPReadIncomingApprovePendingRequest({ payload }) {
       offset
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnData.message));
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(
         getPhotoPPReadIncomingApprovedPendingRequestsSuccess(returnedData)
@@ -141,9 +149,28 @@ function* getLoveSentRequestsRequest({ payload }) {
   try {
     const returnedData = yield call(loveSentRequests, scoreH, offset);
     if (returnedData.message) {
-      yield put(showProfileMessage(returnData.message));
+      yield put(showProfileMessage(returnedData.message));
     } else {
       yield put(getLoveSentRequestsSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+function* getLoveMatchedAndReceivedRequestsRequest({ payload }) {
+  const { action, scoreH, offset } = payload;
+  console.log("love sent requests saga ", action, scoreH, offset);
+  try {
+    const returnedData = yield call(
+      loveMatchedAndReceivedRequests,
+      action,
+      scoreH,
+      offset
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(getLoveMatchedAndReceivedRequestsSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -179,12 +206,20 @@ export function* requestGetLoveSentRequests() {
   yield takeEvery(GET_LOVE_SENT_REQUESTS, getLoveSentRequestsRequest);
 }
 
+export function* requestGetLoveMatchedAndReceivedRequests() {
+  yield takeEvery(
+    GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
+    getLoveMatchedAndReceivedRequestsRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
     fork(requestGetPhotoPPReadOutgoingRequestsApprovales),
     fork(requestGetPhotoPPReadIncomingApprovePending),
     fork(requestSendLoveMatch),
-    fork(requestGetLoveSentRequests)
+    fork(requestGetLoveSentRequests),
+    fork(requestGetLoveMatchedAndReceivedRequests)
   ]);
 }

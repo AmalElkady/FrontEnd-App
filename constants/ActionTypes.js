@@ -356,4 +356,9 @@ export const SEND_LOVE_MATCH_REQUEST_SUCCESS =
 export const GET_LOVE_SENT_REQUESTS = "get_love_sent_requests";
 export const GET_LOVE_SENT_REQUESTS_SUCCESS = "get_love_sent_requests_success";
 
+export const GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS =
+  "get_love_matched_and_received_requests";
+export const GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS =
+  "get_love_matched_and_received_requests_success";
+
 export const OPEN_MODAL = "open_modal";

@@ -8,7 +8,9 @@ import {
   SEND_LOVE_MATCH_REQUEST,
   SEND_LOVE_MATCH_REQUEST_SUCCESS,
   GET_LOVE_SENT_REQUESTS,
-  GET_LOVE_SENT_REQUESTS_SUCCESS
+  GET_LOVE_SENT_REQUESTS_SUCCESS,
+  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
+  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -91,6 +93,21 @@ export const getLoveSentRequestsSuccess = data => {
   console.log("from success get love requests ", data);
   return {
     type: GET_LOVE_SENT_REQUESTS_SUCCESS,
+    payload: data
+  };
+};
+
+export const getLoveMatchedAndReceivedRequests = (action, scoreH, offset) => {
+  return {
+    type: GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
+    payload: { action, scoreH, offset }
+  };
+};
+
+export const getLoveMatchedAndReceivedRequestsSuccess = data => {
+  console.log("from success get love matched requests ", data);
+  return {
+    type: GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
     payload: data
   };
 };

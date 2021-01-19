@@ -282,4 +282,48 @@ interaction.getLoveSentRequests = function(scoreH, offset) {
     console.log(err);
   });
 };
+
+interaction.getLoveMatchedAndReceivedRequests = function(
+  action,
+  scoreH,
+  offset
+) {
+  // "scoreH": "",
+  // "offset": ""
+
+  console.log("from service getLoveSentRequests ", scoreH, offset);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/getlovematchedandreceivedrequests?action=${action}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          scoreH,
+          offset
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response getlovematchedandreceivedrequests", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { interaction };

@@ -25,7 +25,8 @@ import {
   getPhotoPPReadOutgoingRequestsApprovales,
   getPhotoPPReadIncomingApprovedPendingRequests,
   sendLoveMatchRequest,
-  getLoveSentRequests
+  getLoveSentRequests,
+  getLoveMatchedAndReceivedRequests
 } from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
@@ -95,6 +96,7 @@ export default function About({ aboutInfo }) {
               //   )
               // );
               //dispatch(getLoveSentRequests("", ""));
+              dispatch(getLoveMatchedAndReceivedRequests(1, "", ""));
             }}
             color="primary"
             className="linear-g-r"
