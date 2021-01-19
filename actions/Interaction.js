@@ -6,7 +6,9 @@ import {
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS,
   SEND_LOVE_MATCH_REQUEST,
-  SEND_LOVE_MATCH_REQUEST_SUCCESS
+  SEND_LOVE_MATCH_REQUEST_SUCCESS,
+  GET_LOVE_SENT_REQUESTS,
+  GET_LOVE_SENT_REQUESTS_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -74,6 +76,21 @@ export const sendLoveMatchRequestSuccess = data => {
   console.log("from success love match request ", data);
   return {
     type: SEND_LOVE_MATCH_REQUEST_SUCCESS,
+    payload: data
+  };
+};
+
+export const getLoveSentRequests = (scoreH, offset) => {
+  return {
+    type: GET_LOVE_SENT_REQUESTS,
+    payload: { scoreH, offset }
+  };
+};
+
+export const getLoveSentRequestsSuccess = data => {
+  console.log("from success get love requests ", data);
+  return {
+    type: GET_LOVE_SENT_REQUESTS_SUCCESS,
     payload: data
   };
 };

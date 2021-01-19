@@ -3,13 +3,15 @@ import {
   ppAccessApproveRemoveSuccess,
   getPhotoPPReadOutgoingRequestsApprovalesSuccess,
   getPhotoPPReadIncomingApprovedPendingRequestsSuccess,
-  sendLoveMatchRequestSuccess
+  sendLoveMatchRequestSuccess,
+  getLoveSentRequestsSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
   GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
-  SEND_LOVE_MATCH_REQUEST
+  SEND_LOVE_MATCH_REQUEST,
+  GET_LOVE_SENT_REQUESTS
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -41,6 +43,13 @@ const loveMatchSendRequest = async (profileid, country, city, varea) =>
     .sendLoveMatchRequest(profileid, country, city, varea)
     .then(returnData => returnData)
     .catch(error => error);
+
+const loveSentRequests = async (scoreH, offset) =>
+  await interaction
+    .getLoveSentRequests(scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
@@ -126,6 +135,21 @@ function* sendLoveMatchRequest({ payload }) {
   }
 }
 
+function* getLoveSentRequestsRequest({ payload }) {
+  const { scoreH, offset } = payload;
+  console.log("love sent requests saga ", scoreH, offset);
+  try {
+    const returnedData = yield call(loveSentRequests, scoreH, offset);
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnData.message));
+    } else {
+      yield put(getLoveSentRequestsSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -151,12 +175,16 @@ export function* requestGetPhotoPPReadIncomingApprovePending() {
 export function* requestSendLoveMatch() {
   yield takeEvery(SEND_LOVE_MATCH_REQUEST, sendLoveMatchRequest);
 }
+export function* requestGetLoveSentRequests() {
+  yield takeEvery(GET_LOVE_SENT_REQUESTS, getLoveSentRequestsRequest);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
     fork(requestGetPhotoPPReadOutgoingRequestsApprovales),
     fork(requestGetPhotoPPReadIncomingApprovePending),
-    fork(requestSendLoveMatch)
+    fork(requestSendLoveMatch),
+    fork(requestGetLoveSentRequests)
   ]);
 }

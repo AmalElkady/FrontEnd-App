@@ -2,14 +2,16 @@ import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE_SUCCESS,
   GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS,
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS,
-  SEND_LOVE_MATCH_REQUEST_SUCCESS
+  SEND_LOVE_MATCH_REQUEST_SUCCESS,
+  GET_LOVE_SENT_REQUESTS_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
   ppAccessApproveRemove: false,
   outgoingRequestsData: null,
   incomingRequestsData: null,
-  sendLoveMatchRequest: false
+  sendLoveMatchRequest: false,
+  loveSentRequests: null
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -39,6 +41,13 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         sendLoveMatchRequest: action.payload
+      };
+    }
+    case GET_LOVE_SENT_REQUESTS_SUCCESS: {
+      console.log("form reducer love sent requests ", action.payload);
+      return {
+        ...state,
+        loveSentRequests: action.payload
       };
     }
     default:

@@ -244,4 +244,42 @@ interaction.sendLoveMatchRequest = function(profileid, country, city, varea) {
   });
 };
 
+interaction.getLoveSentRequests = function(scoreH, offset) {
+  // "scoreH": "",
+  // "offset": ""
+
+  console.log("from service getLoveSentRequests ", scoreH, offset);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/getlovesentrequests`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          scoreH,
+          offset
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response getlovesentrequests", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
 export { interaction };
