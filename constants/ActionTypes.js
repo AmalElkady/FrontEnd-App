@@ -372,4 +372,7 @@ export const BLOCK_USER_SUCCESS = "block_user_success";
 export const UNBLOCK_USER = "unblock_user";
 export const UNBLOCK_USER_SUCCESS = "unblock_user_success";
 
+export const GET_BLOCKED_USERS = "get_blocked_users";
+export const GET_BLOCKED_USERS_SUCCESS = "get_blocked_users_success";
+
 export const OPEN_MODAL = "open_modal";

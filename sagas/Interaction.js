@@ -8,7 +8,8 @@ import {
   getLoveMatchedAndReceivedRequestsSuccess,
   getUserViewsSuccess,
   blockUserSuccess,
-  unblockUserSuccess
+  unblockUserSuccess,
+  getBlockedUsersSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -19,7 +20,8 @@ import {
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
   GET_USER_VIEWS,
   BLOCK_USER,
-  UNBLOCK_USER
+  UNBLOCK_USER,
+  GET_BLOCKED_USERS
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -81,6 +83,13 @@ const unblockUserRequest = async (profileid, country, city, varea) =>
     .unblockUser(profileid, country, city, varea)
     .then(returnData => returnData)
     .catch(error => error);
+
+const getUsersBlocked = async (scoreH, offset) =>
+  await interaction
+    .getBlockedUsers(scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
@@ -256,6 +265,21 @@ function* userUnblockRequest({ payload }) {
   }
 }
 
+function* getBlockedUsersRequest({ payload }) {
+  const { scoreH, offset } = payload;
+  console.log("blocked Users saga ", scoreH, offset);
+  try {
+    const returnedData = yield call(getUsersBlocked, scoreH, offset);
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(getBlockedUsersSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -304,6 +328,10 @@ export function* requestUnblockUser() {
   yield takeEvery(UNBLOCK_USER, userUnblockRequest);
 }
 
+export function* requestBlockedUsers() {
+  yield takeEvery(GET_BLOCKED_USERS, getBlockedUsersRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -314,6 +342,7 @@ export default function* rootSaga() {
     fork(requestGetLoveMatchedAndReceivedRequests),
     fork(requestGetUserViews),
     fork(requestBlockUser),
-    fork(requestUnblockUser)
+    fork(requestUnblockUser),
+    fork(requestBlockedUsers)
   ]);
 }

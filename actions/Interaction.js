@@ -16,7 +16,9 @@ import {
   BLOCK_USER,
   BLOCK_USER_SUCCESS,
   UNBLOCK_USER,
-  UNBLOCK_USER_SUCCESS
+  UNBLOCK_USER_SUCCESS,
+  GET_BLOCKED_USERS,
+  GET_BLOCKED_USERS_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -159,6 +161,21 @@ export const unblockUserSuccess = data => {
   console.log("from success unblock user ", data);
   return {
     type: UNBLOCK_USER_SUCCESS,
+    payload: data
+  };
+};
+
+export const getBlockedUsers = (scoreH, offset) => {
+  return {
+    type: GET_BLOCKED_USERS,
+    payload: { scoreH, offset }
+  };
+};
+
+export const getBlockedUsersSuccess = data => {
+  console.log("from success get getBlockedUsers ", data);
+  return {
+    type: GET_BLOCKED_USERS_SUCCESS,
     payload: data
   };
 };
