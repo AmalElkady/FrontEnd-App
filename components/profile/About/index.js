@@ -30,7 +30,8 @@ import {
   getUserViews,
   blockUser,
   unblockUser,
-  getBlockedUsers
+  getBlockedUsers,
+  getNotificationViewPPLove
 } from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
@@ -40,8 +41,8 @@ export default function About({ aboutInfo }) {
   const l2Data = useSelector(state => state.profile.profileL2Data);
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
   const OpenModal = useSelector(state => state.profile.openModal);
-  const outgoingRequestsData = useSelector(
-    state => state.interaction.outgoingRequestsData
+  const notificationViewCount = useSelector(
+    state => state.interaction.notificationViewCount
   );
   const [disData, setDisData] = useState(null);
   const dispatch = useDispatch();
@@ -118,7 +119,8 @@ export default function About({ aboutInfo }) {
               //     "1"
               //   )
               // );
-              dispatch(getBlockedUsers("", ""));
+              //dispatch(getBlockedUsers("", ""));
+              //dispatch(getNotificationViewPPLove("CVPL", "", "", "", ""));
             }}
             color="primary"
             className="linear-g-r"

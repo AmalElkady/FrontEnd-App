@@ -18,7 +18,9 @@ import {
   UNBLOCK_USER,
   UNBLOCK_USER_SUCCESS,
   GET_BLOCKED_USERS,
-  GET_BLOCKED_USERS_SUCCESS
+  GET_BLOCKED_USERS_SUCCESS,
+  GET_NOTIFICATION_VIEW_PP_LOVE,
+  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -176,6 +178,27 @@ export const getBlockedUsersSuccess = data => {
   console.log("from success get getBlockedUsers ", data);
   return {
     type: GET_BLOCKED_USERS_SUCCESS,
+    payload: data
+  };
+};
+
+export const getNotificationViewPPLove = (
+  unread,
+  viewScoreHigh,
+  ppScoreHigh,
+  loveScoreHigh,
+  offset
+) => {
+  return {
+    type: GET_NOTIFICATION_VIEW_PP_LOVE,
+    payload: { unread, viewScoreHigh, ppScoreHigh, loveScoreHigh, offset }
+  };
+};
+
+export const getNotificationViewPPLoveSuccess = data => {
+  console.log("from success getNotificationViewPPLoveS ", data);
+  return {
+    type: GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
     payload: data
   };
 };

@@ -8,20 +8,39 @@ import {
   GET_USER_VIEWS_SUCCESS,
   BLOCK_USER_SUCCESS,
   UNBLOCK_USER_SUCCESS,
-  GET_BLOCKED_USERS_SUCCESS
+  GET_BLOCKED_USERS_SUCCESS,
+  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
   ppAccessApproveRemove: false,
   outgoingRequestsData: null,
   incomingRequestsData: null,
+
   sendLoveMatchRequest: false,
   loveSentRequests: null,
   loveMatchedAndReceivedRequests: null,
+
   userViews: null,
+
   userBlocked: false,
   userUnblocked: false,
-  blockedUsers: null
+  blockedUsers: null,
+
+  notificationViewUnread: null,
+  notificationViewDates: null,
+  notificationViewOrder: null,
+  notificationViewCount: null,
+
+  notificationPPUnread: null,
+  notificationPPDates: null,
+  notificationPPOrder: null,
+  notificationPPCount: null,
+
+  notificationLoveUnread: null,
+  notificationLoveDates: null,
+  notificationLoveOrder: null,
+  notificationLoveCount: null
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -93,6 +112,26 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         blockedUsers: action.payload
+      };
+    }
+    case GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
+      console.log("form notification ", action.payload);
+      return {
+        ...state,
+        notificationViewUnread: action.payload.unread.Views,
+        notificationViewDates: action.payload.dates.Views,
+        notificationViewOrder: action.payload.order.Views,
+        notificationViewCount: action.payload.count.Views,
+
+        notificationPPUnread: action.payload.unread.PP,
+        notificationPPDates: action.payload.dates.PP,
+        notificationPPOrder: action.payload.order.PP,
+        notificationPPCount: action.payload.count.PP,
+
+        notificationLoveUnread: action.payload.unread.Love,
+        notificationLoveDates: action.payload.dates.Love,
+        notificationLoveOrder: action.payload.order.Love,
+        notificationLoveCount: action.payload.count.Love
       };
     }
     default:

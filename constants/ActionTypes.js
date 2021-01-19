@@ -375,4 +375,9 @@ export const UNBLOCK_USER_SUCCESS = "unblock_user_success";
 export const GET_BLOCKED_USERS = "get_blocked_users";
 export const GET_BLOCKED_USERS_SUCCESS = "get_blocked_users_success";
 
+//NOTIFICATION
+export const GET_NOTIFICATION_VIEW_PP_LOVE = "get_notification_view_pp_love";
+export const GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
+  "get_notification_view_pp_love_success";
+
 export const OPEN_MODAL = "open_modal";

@@ -9,7 +9,8 @@ import {
   getUserViewsSuccess,
   blockUserSuccess,
   unblockUserSuccess,
-  getBlockedUsersSuccess
+  getBlockedUsersSuccess,
+  getNotificationViewPPLoveSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -21,7 +22,8 @@ import {
   GET_USER_VIEWS,
   BLOCK_USER,
   UNBLOCK_USER,
-  GET_BLOCKED_USERS
+  GET_BLOCKED_USERS,
+  GET_NOTIFICATION_VIEW_PP_LOVE
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -87,6 +89,24 @@ const unblockUserRequest = async (profileid, country, city, varea) =>
 const getUsersBlocked = async (scoreH, offset) =>
   await interaction
     .getBlockedUsers(scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const getViewPPLoveNotification = async (
+  unread,
+  viewScoreHigh,
+  ppScoreHigh,
+  loveScoreHigh,
+  offset
+) =>
+  await interaction
+    .getNotificationViewPPLove(
+      unread,
+      viewScoreHigh,
+      ppScoreHigh,
+      loveScoreHigh,
+      offset
+    )
     .then(returnData => returnData)
     .catch(error => error);
 
@@ -280,6 +300,34 @@ function* getBlockedUsersRequest({ payload }) {
   }
 }
 
+function* getNotificationViewPPLoveRequest({ payload }) {
+  const { unread, viewScoreHigh, ppScoreHigh, loveScoreHigh, offset } = payload;
+  console.log(
+    " notification saga ",
+    unread,
+    viewScoreHigh,
+    ppScoreHigh,
+    loveScoreHigh,
+    offset
+  );
+  try {
+    const returnedData = yield call(
+      getViewPPLoveNotification,
+      unread,
+      viewScoreHigh,
+      ppScoreHigh,
+      loveScoreHigh,
+      offset
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(getNotificationViewPPLoveSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -332,6 +380,13 @@ export function* requestBlockedUsers() {
   yield takeEvery(GET_BLOCKED_USERS, getBlockedUsersRequest);
 }
 
+export function* requestGetNotificationViewPPLove() {
+  yield takeEvery(
+    GET_NOTIFICATION_VIEW_PP_LOVE,
+    getNotificationViewPPLoveRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -343,6 +398,7 @@ export default function* rootSaga() {
     fork(requestGetUserViews),
     fork(requestBlockUser),
     fork(requestUnblockUser),
-    fork(requestBlockedUsers)
+    fork(requestBlockedUsers),
+    fork(requestGetNotificationViewPPLove)
   ]);
 }

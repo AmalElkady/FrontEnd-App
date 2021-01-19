@@ -490,4 +490,60 @@ interaction.getBlockedUsers = function(scoreH, offset) {
   });
 };
 
+interaction.getNotificationViewPPLove = function(
+  unread,
+  viewScoreHigh,
+  ppScoreHigh,
+  loveScoreHigh,
+  offset
+) {
+  // "viewScoreHigh": "",
+  // "ppScoreHigh": "",
+  // "loveScoreHigh": "",
+  // "offset": ""
+
+  console.log(
+    "from service getNotificationViewPPLove ",
+    unread,
+    viewScoreHigh,
+    ppScoreHigh,
+    loveScoreHigh,
+    offset
+  );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `getnotificationviewpplove?unread=${unread}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          viewScoreHigh,
+          ppScoreHigh,
+          loveScoreHigh,
+          offset
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response getNotificationViewPPLove", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { interaction };
