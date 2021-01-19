@@ -5,7 +5,8 @@ import {
   getPhotoPPReadIncomingApprovedPendingRequestsSuccess,
   sendLoveMatchRequestSuccess,
   getLoveSentRequestsSuccess,
-  getLoveMatchedAndReceivedRequestsSuccess
+  getLoveMatchedAndReceivedRequestsSuccess,
+  getUserViewsSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -13,7 +14,8 @@ import {
   GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS,
   SEND_LOVE_MATCH_REQUEST,
   GET_LOVE_SENT_REQUESTS,
-  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS
+  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
+  GET_USER_VIEWS
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -55,6 +57,12 @@ const loveSentRequests = async (scoreH, offset) =>
 const loveMatchedAndReceivedRequests = async (action, scoreH, offset) =>
   await interaction
     .getLoveMatchedAndReceivedRequests(action, scoreH, offset)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const userViewsRequest = async (start, end) =>
+  await interaction
+    .getUserViews(start, end)
     .then(returnData => returnData)
     .catch(error => error);
 
@@ -177,6 +185,21 @@ function* getLoveMatchedAndReceivedRequestsRequest({ payload }) {
   }
 }
 
+function* getUserViewsRequest({ payload }) {
+  const { start, end } = payload;
+  console.log("user Views saga ", start, end);
+  try {
+    const returnedData = yield call(userViewsRequest, start, end);
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(getUserViewsSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -213,6 +236,10 @@ export function* requestGetLoveMatchedAndReceivedRequests() {
   );
 }
 
+export function* requestGetUserViews() {
+  yield takeEvery(GET_USER_VIEWS, getUserViewsRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -220,6 +247,7 @@ export default function* rootSaga() {
     fork(requestGetPhotoPPReadIncomingApprovePending),
     fork(requestSendLoveMatch),
     fork(requestGetLoveSentRequests),
-    fork(requestGetLoveMatchedAndReceivedRequests)
+    fork(requestGetLoveMatchedAndReceivedRequests),
+    fork(requestGetUserViews)
   ]);
 }

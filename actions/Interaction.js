@@ -10,7 +10,9 @@ import {
   GET_LOVE_SENT_REQUESTS,
   GET_LOVE_SENT_REQUESTS_SUCCESS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
-  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS
+  GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
+  GET_USER_VIEWS,
+  GET_USER_VIEWS_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -108,6 +110,21 @@ export const getLoveMatchedAndReceivedRequestsSuccess = data => {
   console.log("from success get love matched requests ", data);
   return {
     type: GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
+    payload: data
+  };
+};
+
+export const getUserViews = (start, end) => {
+  return {
+    type: GET_USER_VIEWS,
+    payload: { start, end }
+  };
+};
+
+export const getUserViewsSuccess = data => {
+  console.log("from success get user views ", data);
+  return {
+    type: GET_USER_VIEWS_SUCCESS,
     payload: data
   };
 };

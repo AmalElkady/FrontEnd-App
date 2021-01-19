@@ -26,7 +26,8 @@ import {
   getPhotoPPReadIncomingApprovedPendingRequests,
   sendLoveMatchRequest,
   getLoveSentRequests,
-  getLoveMatchedAndReceivedRequests
+  getLoveMatchedAndReceivedRequests,
+  getUserViews
 } from "../../../actions/Interaction";
 
 import Flag from "react-world-flags";
@@ -96,7 +97,8 @@ export default function About({ aboutInfo }) {
               //   )
               // );
               //dispatch(getLoveSentRequests("", ""));
-              dispatch(getLoveMatchedAndReceivedRequests(1, "", ""));
+              //dispatch(getLoveMatchedAndReceivedRequests(1, "", ""));
+              // dispatch(getUserViews("", ""));
             }}
             color="primary"
             className="linear-g-r"

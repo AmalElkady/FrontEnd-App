@@ -326,4 +326,43 @@ interaction.getLoveMatchedAndReceivedRequests = function(
   });
 };
 
+interaction.getUserViews = function(start, end) {
+  // "start": "",
+  // "end": ""
+
+  console.log("from service getuserviews ", start, end);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/getuserviews`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          start,
+          end
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response getuserviews", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { interaction };

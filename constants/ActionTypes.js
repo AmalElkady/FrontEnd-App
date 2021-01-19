@@ -348,7 +348,7 @@ export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS =
 export const GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS =
   "get_photo_pp_read_incoming_approved_pending_requests_success";
 
-// Love Request
+// LOVE REQUESTS
 export const SEND_LOVE_MATCH_REQUEST = "send_love_match_request";
 export const SEND_LOVE_MATCH_REQUEST_SUCCESS =
   "send_love_match_request_success";
@@ -360,5 +360,9 @@ export const GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS =
   "get_love_matched_and_received_requests";
 export const GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS =
   "get_love_matched_and_received_requests_success";
+
+//VIEWS
+export const GET_USER_VIEWS = "get_user_views";
+export const GET_USER_VIEWS_SUCCESS = "get_user_views_success";
 
 export const OPEN_MODAL = "open_modal";
