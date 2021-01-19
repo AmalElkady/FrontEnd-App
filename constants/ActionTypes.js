@@ -365,4 +365,9 @@ export const GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS =
 export const GET_USER_VIEWS = "get_user_views";
 export const GET_USER_VIEWS_SUCCESS = "get_user_views_success";
 
+//BLOCK
+
+export const BLOCK_USER = "block_user";
+export const BLOCK_USER_SUCCESS = "block_user_success";
+
 export const OPEN_MODAL = "open_modal";

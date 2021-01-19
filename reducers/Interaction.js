@@ -5,7 +5,8 @@ import {
   SEND_LOVE_MATCH_REQUEST_SUCCESS,
   GET_LOVE_SENT_REQUESTS_SUCCESS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
-  GET_USER_VIEWS_SUCCESS
+  GET_USER_VIEWS_SUCCESS,
+  BLOCK_USER_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
@@ -15,7 +16,8 @@ const initialProfileState = {
   sendLoveMatchRequest: false,
   loveSentRequests: null,
   loveMatchedAndReceivedRequests: null,
-  userViews: null
+  userViews: null,
+  userBlocked: false
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -66,6 +68,13 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         userViews: action.payload
+      };
+    }
+    case BLOCK_USER_SUCCESS: {
+      console.log("form reducer User block ", action.payload);
+      return {
+        ...state,
+        userBlocked: action.payload
       };
     }
     default:

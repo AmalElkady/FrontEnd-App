@@ -6,7 +6,8 @@ import {
   sendLoveMatchRequestSuccess,
   getLoveSentRequestsSuccess,
   getLoveMatchedAndReceivedRequestsSuccess,
-  getUserViewsSuccess
+  getUserViewsSuccess,
+  blockUserSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -15,7 +16,8 @@ import {
   SEND_LOVE_MATCH_REQUEST,
   GET_LOVE_SENT_REQUESTS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
-  GET_USER_VIEWS
+  GET_USER_VIEWS,
+  BLOCK_USER
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -66,6 +68,11 @@ const userViewsRequest = async (start, end) =>
     .then(returnData => returnData)
     .catch(error => error);
 
+const blockUserRequest = async (profileid, country, city, varea) =>
+  await interaction
+    .blockUser(profileid, country, city, varea)
+    .then(returnData => returnData)
+    .catch(error => error);
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
@@ -200,6 +207,27 @@ function* getUserViewsRequest({ payload }) {
   }
 }
 
+function* userblockRequest({ payload }) {
+  const { profileid, country, city, varea } = payload;
+  console.log("user block saga ", profileid, country, city, varea);
+  try {
+    const returnedData = yield call(
+      blockUserRequest,
+      profileid,
+      country,
+      city,
+      varea
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(blockUserSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -240,6 +268,10 @@ export function* requestGetUserViews() {
   yield takeEvery(GET_USER_VIEWS, getUserViewsRequest);
 }
 
+export function* requestBlockUser() {
+  yield takeEvery(BLOCK_USER, userblockRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -248,6 +280,7 @@ export default function* rootSaga() {
     fork(requestSendLoveMatch),
     fork(requestGetLoveSentRequests),
     fork(requestGetLoveMatchedAndReceivedRequests),
-    fork(requestGetUserViews)
+    fork(requestGetUserViews),
+    fork(requestBlockUser)
   ]);
 }

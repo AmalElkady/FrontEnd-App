@@ -365,4 +365,47 @@ interaction.getUserViews = function(start, end) {
   });
 };
 
+interaction.blockUser = function(profileid, country, city, varea) {
+  // "profileid": "1511edf6-5f16-4813-801f-a40ce8e355a2",
+  // "country": "20",
+  // "city": "1",
+  // "varea": "1"
+
+  console.log("from service blockuser ", profileid, country, city, varea);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/blockuser`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response blockuser", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { interaction };

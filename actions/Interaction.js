@@ -12,7 +12,9 @@ import {
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS,
   GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
   GET_USER_VIEWS,
-  GET_USER_VIEWS_SUCCESS
+  GET_USER_VIEWS_SUCCESS,
+  BLOCK_USER,
+  BLOCK_USER_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -125,6 +127,21 @@ export const getUserViewsSuccess = data => {
   console.log("from success get user views ", data);
   return {
     type: GET_USER_VIEWS_SUCCESS,
+    payload: data
+  };
+};
+
+export const blockUser = (profileid, country, city, varea) => {
+  return {
+    type: BLOCK_USER,
+    payload: { profileid, country, city, varea }
+  };
+};
+
+export const blockUserSuccess = data => {
+  console.log("from success block user ", data);
+  return {
+    type: BLOCK_USER_SUCCESS,
     payload: data
   };
 };
