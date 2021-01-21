@@ -77,7 +77,7 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <div className="profile-about">
-          <Button
+          {/* <Button
             variant="contained"
             onClick={() => {
               console.log("on change pass ");
@@ -120,13 +120,13 @@ export default function About({ aboutInfo }) {
               //   )
               // );
               //dispatch(getBlockedUsers("", ""));
-              //dispatch(getNotificationViewPPLove("CVPL", "", "", "", ""));
+              dispatch(getNotificationViewPPLove("CVPL", "", "", "", ""));
             }}
             color="primary"
             className="linear-g-r"
           >
             change phone
-          </Button>
+          </Button> */}
           <Grid container spacing={12}>
             <Grid item xs={12} className="margin-TB">
               <Grid container spacing={12}>
@@ -213,7 +213,12 @@ export default function About({ aboutInfo }) {
                 </Grid>
                 <Grid item xs={9}>
                   <Typography variant="body1" gutterBottom>
-                    <IntlMessages id={`workd.${disData.workd - 1}`} />
+                    {router.query.flag == "readMe" && (
+                      <IntlMessages id={`workd.${disData.workd - 1}`} />
+                    )}
+                    {router.query.flag == "read" && (
+                      <IntlMessages id={`workd.${disData.workd}`} />
+                    )}
                   </Typography>
                 </Grid>
               </Grid>

@@ -5,7 +5,13 @@
   "appModule.name": "اسم",
   "appModule.phone": "هاتف",
   "appModule.designation": "تعيين",
-  "appModule.age":"سنه",
+  "appModule.age": "سنه",
+
+  "Profile.online": "نشط",
+  "updateProfile.martial": " :الحالة الاجتماعية",
+  "updateProfile.update": "تحديث",
+  "appModule.profileL2Update": "تحديث معلوماتك",
+  "profile.privateImg": "صور خاصة",
 
   "inputLabel.birthday": "تاريخ الميلاد",
   "inputLabel.martial": "الحالة الإجتماعية",

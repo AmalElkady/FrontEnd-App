@@ -159,7 +159,7 @@ export default function ProfileCard({ mainInfo }) {
   ///
   return (
     <>
-      {/* {console.log("from render ", returnUpdateMessage)} */}
+      {mainInfo && console.log("from render mainInfo ", mainInfo)}
       {mainInfo && (
         <div className="profile-card">
           <div className="card-container-img">
@@ -217,7 +217,7 @@ export default function ProfileCard({ mainInfo }) {
             </div>
             <div className="d-flex">
               <Typography variant="body1" className="card-h-row" component="p">
-              {console.log("mainInfo.b ",mainInfo.b)}
+                {console.log("mainInfo.b ", mainInfo.b)}
                 {mainInfo.b != undefined
                   ? `${moment().diff(mainInfo.b, "years")} Years Old `
                   : `${moment().diff(
