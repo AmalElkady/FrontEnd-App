@@ -33,8 +33,10 @@ export default function Profile() {
     if (router.query) {
       if (router.query.flag == "read") {
         setProfileCard({
+          id: router.query.i,
           co: router.query.co,
           ci: router.query.ci,
+          va: router.query.va,
           n: router.query.n,
           photo: router.query._,
           b: router.query.b,

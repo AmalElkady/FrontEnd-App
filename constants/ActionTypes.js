@@ -381,3 +381,4 @@ export const GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
   "get_notification_view_pp_love_success";
 
 export const OPEN_MODAL = "open_modal";
+export const CLICKED_ID = "clicked_id";

@@ -186,9 +186,9 @@ function* sendLoveMatchRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnedData.message));
+      yield put(sendLoveMatchRequestSuccess("error"));
     } else {
-      yield put(sendLoveMatchRequestSuccess(returnedData));
+      yield put(sendLoveMatchRequestSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

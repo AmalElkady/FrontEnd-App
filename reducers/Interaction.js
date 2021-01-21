@@ -9,7 +9,8 @@ import {
   BLOCK_USER_SUCCESS,
   UNBLOCK_USER_SUCCESS,
   GET_BLOCKED_USERS_SUCCESS,
-  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
+  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  CLICKED_ID
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
@@ -40,7 +41,9 @@ const initialProfileState = {
   notificationLoveUnread: null,
   notificationLoveDates: null,
   notificationLoveOrder: null,
-  notificationLoveCount: null
+  notificationLoveCount: null,
+
+  clicked_id: null
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -112,6 +115,12 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         blockedUsers: action.payload
+      };
+    }
+    case CLICKED_ID: {
+      return {
+        ...state,
+        clicked_id: action.payload
       };
     }
     case GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {

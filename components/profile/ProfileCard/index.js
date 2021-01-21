@@ -9,6 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import Flag from "react-world-flags";
 import moment from "moment";
 import { updateProfileL1 } from "../../../actions/Profile";
+import {
+  sendLoveMatchRequest,
+  sendLoveMatchRequestSuccess
+} from "../../../actions/Interaction";
 ///Modal
 import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
@@ -108,6 +112,10 @@ export default function ProfileCard({ mainInfo }) {
   const returnUpdateMessage = useSelector(
     state => state.profile.returnUpdateMessage
   );
+
+  const SendLoveMatchRequest = useSelector(
+    state => state.interaction.sendLoveMatchRequest
+  );
   const userMartial = useSelector(state => state.profile.userMartial);
   const [showMessage, setShowMessage] = useState(false);
   const router = useRouter();
@@ -155,11 +163,19 @@ export default function ProfileCard({ mainInfo }) {
   //   //   setShowMessage(false);
   //   // }
   // }, [userMartial]);
-
+  useEffect(() => {
+    if (SendLoveMatchRequest == true) {
+      NotificationManager.success("Love Sent successfully", "Success");
+    } else if (SendLoveMatchRequest == "error") {
+      NotificationManager.error("love already sent");
+    }
+    dispatch(sendLoveMatchRequestSuccess(false));
+  }, [SendLoveMatchRequest]);
   ///
   return (
     <>
-      {mainInfo && console.log("from render mainInfo ", mainInfo)}
+      {mainInfo &&
+        console.log("from render mainInfo ", mainInfo, SendLoveMatchRequest)}
       {mainInfo && (
         <div className="profile-card">
           <div className="card-container-img">
@@ -168,7 +184,19 @@ export default function ProfileCard({ mainInfo }) {
             </div>
             {router.query.flag == "read" && (
               <div className="card-img-icon">
-                <div className="card-icon">
+                <div
+                  className="card-icon"
+                  onClick={() => {
+                    dispatch(
+                      sendLoveMatchRequest(
+                        mainInfo.id,
+                        mainInfo.co,
+                        mainInfo.ci,
+                        mainInfo.va
+                      )
+                    );
+                  }}
+                >
                   <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
                 </div>
                 <div className="card-icon">
@@ -217,7 +245,6 @@ export default function ProfileCard({ mainInfo }) {
             </div>
             <div className="d-flex">
               <Typography variant="body1" className="card-h-row" component="p">
-                {console.log("mainInfo.b ", mainInfo.b)}
                 {mainInfo.b != undefined
                   ? `${moment().diff(mainInfo.b, "years")} Years Old `
                   : `${moment().diff(

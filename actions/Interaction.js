@@ -20,7 +20,8 @@ import {
   GET_BLOCKED_USERS,
   GET_BLOCKED_USERS_SUCCESS,
   GET_NOTIFICATION_VIEW_PP_LOVE,
-  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
+  GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  CLICKED_ID
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -200,5 +201,12 @@ export const getNotificationViewPPLoveSuccess = data => {
   return {
     type: GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
     payload: data
+  };
+};
+
+export const clickedId = id => {
+  return {
+    type: CLICKED_ID,
+    payload: id
   };
 };

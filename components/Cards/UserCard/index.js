@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -9,8 +9,18 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
-import { COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE,COUNTRY_MAP } from "../../../util/data";
+import {
+  COUNTRY_CITY_MAP,
+  ARRAY_OF_AGE_RANGE,
+  COUNTRY_MAP
+} from "../../../util/data";
+import {
+  sendLoveMatchRequest,
+  sendLoveMatchRequestSuccess,
+  clickedId
+} from "../../../actions/Interaction";
 import { red } from "@material-ui/core/colors";
+import { NotificationManager } from "react-notifications";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -28,7 +38,6 @@ import TextField from "@material-ui/core/TextField";
 import IntlMessages from "../../../util/IntlMessages";
 import Button from "@material-ui/core/Button";
 import Flag from "react-world-flags";
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,7 +59,7 @@ const useStyles = makeStyles(theme => ({
   media: {
     height: 0,
     paddingTop: "90%", // 16:9
-    position:"relative"
+    position: "relative"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -65,7 +74,7 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     backgroundColor: red[500]
   },
-  cardContent:{
+  cardContent: {
     position: "absolute",
     bottom: 0,
     backgroundImage: "linear-gradient(to top, white, transparent)",
@@ -77,32 +86,29 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "wrap",
     flexDirection: "column",
     justifyContent: "flex-end"
-
   },
-  iconsContainer:{
-     //   backgroundColor: #d61f5f;
+  iconsContainer: {
+    //   backgroundColor: #d61f5f;
     justifyContent: "space-around",
     padding: "1rem 2rem"
-
   },
   iconBtn: {
     width: "25%",
     padding: 0
   },
-  dFlex:{
-  display: "flex",
+  dFlex: {
+    display: "flex",
     justifyContent: "space-between"
   },
-  rowW:{
-      width: "35%",
+  rowW: {
+    width: "35%"
   },
-  rowP:{
-padding: "0 .5rem .5rem 0"
-  }
-,
-fontW:{
-fontWeight: "600",
-},
+  rowP: {
+    padding: "0 .5rem .5rem 0"
+  },
+  fontW: {
+    fontWeight: "600"
+  },
   ///modal
   modal: {
     display: "flex",
@@ -175,6 +181,11 @@ export default function UserCard({ user, timeScore }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
   const searchState = useSelector(state => state.home.searchState);
+  const LoveMatchRequestSend = useSelector(
+    state => state.interaction.sendLoveMatchRequest
+  );
+  const Clicked_id = useSelector(state => state.interaction.clicked_id);
+  const dispatch = useDispatch();
 
   ////// modal
   const [open, setOpen] = React.useState(false);
@@ -196,70 +207,103 @@ export default function UserCard({ user, timeScore }) {
       user.flag = "read";
     }
   }, []);
+  useEffect(() => {
+    if (Clicked_id == user.i) {
+      if (LoveMatchRequestSend == true) {
+        NotificationManager.success("Love Sent successfully");
+      } else if (LoveMatchRequestSend == "error") {
+        NotificationManager.error("love already sent ");
+      }
+
+      dispatch(clickedId(null));
+      dispatch(sendLoveMatchRequestSuccess(false));
+    }
+  }, [LoveMatchRequestSend]);
 
   return (
     <>
-      <Card className={`${classes.root} linear-g-r` }>
+      <Card className={`${classes.root} linear-g-r`}>
         <CardMedia className={classes.media} image={user._} title="userPhoto">
           <CardContent className={classes.cardContent}>
-          <div className={classes.dFlex}>
-          <Typography variant="body1"component="p" className={classes.fontW}>
-            {searchState == "active" && (
-              <div className={classes.onlineFlag}></div>
-            )}
-            {user.n}
-          </Typography>
+            <div className={classes.dFlex}>
+              <Typography
+                variant="body1"
+                component="p"
+                className={classes.fontW}
+              >
+                {searchState == "active" && (
+                  <div className={classes.onlineFlag}></div>
+                )}
+                {user.n}
+              </Typography>
 
-            <div className={`${classes.rowW} d-flex`}>
+              <div className={`${classes.rowW} d-flex`}>
                 <div className="profile-icon-flag-2">
                   <Flag code={user.co} />
                 </div>
-                <Typography variant="body1" gutterBottom  className={classes.fontW}>
+                <Typography
+                  variant="body1"
+                  gutterBottom
+                  className={classes.fontW}
+                >
                   {COUNTRY_MAP[user.co]}
                 </Typography>
               </div>
-          </div>
-          <div className={classes.dFlex}>
-          <Typography variant="body1" component="p" className={classes.rowP+" "+classes.fontW }>
-            {user.b
-              ?<>
-               {moment().diff(user.b, "years")} <IntlMessages id="appModule.age" />
-               </>
-              : (
-                <>
-                {moment().diff(
-                  timeScore.substring(0, 8),
-                  "years"
-                )} <IntlMessages id="appModule.age" />
-                </>
-              )
-                }
-          </Typography>
-          <Typography variant="body1" className={`${classes.rowW} ${classes.rowP} ${classes.fontW} d-flex`} component="p">
-          <div className="profile-icon-flag-2" style={{width: "12%"}}>
+            </div>
+            <div className={classes.dFlex}>
+              <Typography
+                variant="body1"
+                component="p"
+                className={classes.rowP + " " + classes.fontW}
+              >
+                {user.b ? (
+                  <>
+                    {moment().diff(user.b, "years")}{" "}
+                    <IntlMessages id="appModule.age" />
+                  </>
+                ) : (
+                  <>
+                    {moment().diff(timeScore.substring(0, 8), "years")}{" "}
+                    <IntlMessages id="appModule.age" />
+                  </>
+                )}
+              </Typography>
+              <Typography
+                variant="body1"
+                className={`${classes.rowW} ${classes.rowP} ${classes.fontW} d-flex`}
+                component="p"
+              >
+                <div className="profile-icon-flag-2" style={{ width: "12%" }}>
                   <img src="../../../static/images/icons/Location_Icon_2.svg" />
                 </div>
-            {user.ci
-              ? COUNTRY_CITY_MAP[user.co.toLowerCase()][user.ci - 1]
-              : ""}
-          </Typography>
-          </div>
-        </CardContent>
+                {user.ci
+                  ? COUNTRY_CITY_MAP[user.co.toLowerCase()][user.ci - 1]
+                  : ""}
+              </Typography>
+            </div>
+          </CardContent>
         </CardMedia>
-      
-        <CardActions disableSpacing className={`${classes.iconsContainer} linear-g-r`}>
+
+        <CardActions
+          disableSpacing
+          className={`${classes.iconsContainer} linear-g-r`}
+        >
           <IconButton
             className={classes.iconBtn}
+            id={user.i}
             aria-label="Love"
-            // onClick={handleClickLove}
+            onClick={event => {
+              dispatch(clickedId(user.i));
+              dispatch(sendLoveMatchRequest(user.i, user.co, user.ci, user.va));
+            }}
           >
             {/* <FavoriteIcon /> */}
             {/* <LoveIcon /> */}
-                    {/* <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" /> */}
-                    <img
-                      src="../../../static/images/icons/standard/Love_Icon_Standard.svg"
-                      alt="Love Icon"
-                    />
+            {/* <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" /> */}
+            <img
+              src="../../../static/images/icons/standard/Love_Icon_Standard.svg"
+              alt="Love Icon"
+            />
           </IconButton>
           <IconButton
             className={classes.iconBtn}
@@ -271,10 +315,10 @@ export default function UserCard({ user, timeScore }) {
           >
             {/* <VisibilityIcon /> */}
             {/* <ViewProIcon /> */}
-              <img
-                      src="../../../static/images/icons/Profile_Icon.svg"
-                      alt="Notifications"
-                    />
+            <img
+              src="../../../static/images/icons/Profile_Icon.svg"
+              alt="Notifications"
+            />
           </IconButton>
 
           <IconButton
@@ -284,10 +328,10 @@ export default function UserCard({ user, timeScore }) {
           >
             {/* <ChatBubbleIcon /> */}
             {/* <ChatIcon /> */}
-              <img
-                      src="../../../static/images/icons/standard/Messages_Icon_Standard.svg"
-                      alt="Notifications"
-                    />
+            <img
+              src="../../../static/images/icons/standard/Messages_Icon_Standard.svg"
+              alt="Notifications"
+            />
           </IconButton>
         </CardActions>
       </Card>
