@@ -1,21 +1,30 @@
 /*Sidebar Styles*/
 
 .side-nav {
-  width: $side-nav-width;
-  background-color: $sidebar-bg !important;
-  color: $sidebar-text-color !important;
+  width: 22%;
+  //background-color: $sidebar-bg !important;
+  color: white !important;
   border-right: 0 none !important;
   z-index: 1250 !important;
-
+  height: 74% !important;
+  margin-top: 3.4rem;
+  padding: 1rem;
+  border-radius: 0rem 2rem 2rem 0rem;
+  @media screen and (max-width: 575px) {
+    width: 85%;
+    margin-top: 5.4rem;
+    height: 80% !important;
+  }
   & .user-profile {
-    background-color: $sidebar-bg-darken;
+    background-color: transparent;
     padding: 13px 20px;
+    border-bottom: 1px solid white;
   }
 
   & .user-avatar {
     margin: 0 15px 0 0 !important;
-    height: 44px !important;
-    width: 44px !important;
+    height: 55px !important;
+    width: 55px !important;
     line-height: 44px;
   }
 
@@ -23,8 +32,8 @@
     & .user-name {
       color: $sidebar-hover-color;
       cursor: pointer;
-      font-size: $font-size-base;
-      font-weight: 400;
+      font-size: 1rem;
+      font-weight: bold;
       white-space: nowrap;
     }
   }
@@ -41,14 +50,21 @@ ul.nav-menu {
   font-size: $font-size-base;
   list-style: outside none none;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
 }
 
 ul.nav-menu li {
   position: relative;
-  margin-bottom: 1px;
+  padding: 1rem 0;
+  border-bottom: 1px solid #84173a;
+  cursor: pointer;
 }
-
+ul.nav-menu .no-border {
+  border: none;
+}
+ul.nav-menu .no-margin {
+  margin: 0;
+}
 ul.nav-menu li.menu {
   & + .nav-header {
     margin-top: 30px;
@@ -78,12 +94,12 @@ ul.nav-menu li.menu {
 
 ul.nav-menu li button,
 ul.nav-menu li a {
-  color: $sidebar-text-color;
+  color: white;
   display: block;
   font-size: 14px;
   min-width: inherit !important;
   padding: 7px 35px 8px 20px;
-  font-weight: 400;
+  font-weight: bold;
   text-transform: capitalize;
   text-decoration: none;
   @include border-radius(0);
@@ -118,8 +134,9 @@ ul.nav-menu > li > button:focus,
 ul.nav-menu > li.open > a,
 ul.nav-menu > li > a:hover,
 ul.nav-menu > li > a:focus {
-  background-color: $sidebar-bg-darken;
-  color: $sidebar-hover-color;
+  background-color: #1d1d1d2b;
+  color: #fff;
+  border-radius: 0.5rem;
 }
 
 ul.nav-menu li.menu > button:focus:before,

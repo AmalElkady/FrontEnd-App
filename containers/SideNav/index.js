@@ -57,7 +57,7 @@ class SideNav extends React.PureComponent {
           open={type.includes("temporary") ? navCollapsed : true}
           onClose={this.onToggleCollapsedNav}
           classes={{
-            paper: "side-nav"
+            paper: "side-nav linear-g"
           }}
         >
           <UserInfo />

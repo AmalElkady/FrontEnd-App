@@ -2,12 +2,20 @@
   "appModule.sendMessage": "Send",
   "appModule.yourMessage": "Your Message",
   "appModule.search": "Search",
-  "search.online":"Online Now",
-  "search.recent":"Recent Online",
-  "search.age":"Age",
-  "search.ageSelect":"Select Age Range",
-  "search.country":"Country",
-  "search.countrySelect":"Select Country",
-  "search.city":"City",
-  "search.citySelect":"Select City"
+  "search.online": "Online Now",
+  "search.recent": "Recent Online",
+  "search.age": "Age",
+  "search.ageSelect": "Select Age Range",
+  "search.country": "Country",
+  "search.countrySelect": "Select Country",
+  "search.city": "City",
+  "search.citySelect": "Select City",
+
+  "sidebar.inbox": "Inbox",
+  "sidebar.notification": "Notifications",
+  "sidebar.match": "Mactch",
+  "sidebar.setting": "Settings",
+  "sidebar.logout": "Logout",
+  "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",
+  "sidebar.love": "Love Gila ${&copy;} 2021"
 }
