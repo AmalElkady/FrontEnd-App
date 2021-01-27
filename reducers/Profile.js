@@ -5,6 +5,7 @@ import {
   UPDATE_PROFILE_L1_SUCCESS,
   UPDATE_PROFILE_L2_SUCCESS,
   READ_MY_PHOTOS_SUCCESS,
+  READ_MY_PHOTOS_PP_SUCCESS,
   CHANGE_MY_PASSWORD_SUCCESS,
   CHANGE_USER_LOGIN_PHONE_SUCCESS,
   VERIFY_USER_LOGIN_PHONE_CHANGE_SUCCESS,
@@ -13,6 +14,7 @@ import {
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
+  SET_FINAL_PP,
   PP_PHOTO_SELECTED,
   OPEN_MODAL,
   OPEN_MODAL_PP,
@@ -26,6 +28,8 @@ const initialProfileState = {
   myPhotos: null,
   userMartial: null,
   myPhotoSigned: null,
+  myPhotoPPSigned: null,
+  finalPP: null,
   returnUpdateMessage: null,
   passwordChanged: false,
   loginPhoneChanged: false,
@@ -59,6 +63,7 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PROFILE_L2_SUCCESS: {
+      console.log("from reducer ", action.payload);
       return {
         ...state,
         myProfileDataL2: JSON.parse(action.payload.profile),
@@ -85,6 +90,18 @@ const Profile = (state = initialProfileState, action) => {
       return {
         ...state,
         myPhotoSigned: action.payload.signedRequest
+      };
+    }
+    case SET_FINAL_PP: {
+      return {
+        ...state,
+        finalPP: action.payload
+      };
+    }
+    case READ_MY_PHOTOS_PP_SUCCESS: {
+      return {
+        ...state,
+        myPhotoPPSigned: action.payload.signedRequest
       };
     }
     case REQUEST_PHOTO_UPLOAD_PP_SUCCESS: {

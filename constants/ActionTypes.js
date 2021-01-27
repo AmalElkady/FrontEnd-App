@@ -299,6 +299,9 @@ export const UPDATE_PROFILE_L2_SUCCESS = "update_profile_l2_success";
 
 export const READ_MY_PHOTOS = "read_my_photo";
 export const READ_MY_PHOTOS_SUCCESS = "read_my_photo_success";
+export const READ_MY_PHOTOS_PP_SUCCESS = "read_my_photo_pp_success";
+
+export const SET_FINAL_PP = "set_final_pp";
 
 export const CHANGE_MY_PASSWORD = "change_my_password";
 export const CHANGE_MY_PASSWORD_SUCCESS = "change_my_password_success";

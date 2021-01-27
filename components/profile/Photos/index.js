@@ -14,8 +14,16 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
-import { openModalPP, ppRemove } from "../../../actions/Profile";
+import {
+  openModalPP,
+  ppRemove,
+  readMyPhotos,
+  setFinalPP,
+  readMyProfile,
+  ppUploadSuccess
+} from "../../../actions/Profile";
 import { mapObjectToArray } from "../../../helpers/mapObjectToArray";
+import { mapPPToUrl } from "../../../helpers/mapPPToUrl";
 
 export default function Photos({ items }) {
   const breakPoints = [
@@ -27,20 +35,39 @@ export default function Photos({ items }) {
   const router = useRouter();
   const [photoIndex, setPhotoIndex] = useState(null);
   const [photosMapped, setPhotosMapped] = useState(null);
+  //const [finalPhotos, setfinalPhotos] = useState(null);
   const OpenModalPP = useSelector(state => state.profile.openModalPP);
+  const PhotoUploadPP = useSelector(state => state.profile.photoUploadPP);
   const PhotoRemovePP = useSelector(state => state.profile.photoRemovePP);
   const myPhotos = useSelector(state => state.profile.myPhotos);
+  const myPhotoPPSigned = useSelector(state => state.profile.myPhotoPPSigned);
+  const finalPP = useSelector(state => state.profile.finalPP);
   const dispatch = useDispatch();
   useEffect(() => {
     if (myPhotos != null) {
       setPhotosMapped(mapObjectToArray(myPhotos));
+      dispatch(readMyPhotos(1));
     }
   }, [myPhotos]);
+  useEffect(() => {
+    if (myPhotoPPSigned != null) {
+      // console.log("photos and signed ", photosMapped, myPhotoPPSigned);
+      dispatch(setFinalPP(mapPPToUrl(photosMapped, myPhotoPPSigned)));
+    }
+  }, [myPhotoPPSigned]);
+
+  useEffect(() => {
+    if (PhotoUploadPP) {
+      dispatch(readMyProfile("L2"));
+      dispatch(openModalPP(false));
+      dispatch(ppUploadSuccess(false));
+    }
+  }, [PhotoUploadPP]);
   return (
     <>
-      {PhotoRemovePP && console.log("PhotoRemovePP ", PhotoRemovePP)}
-      {photosMapped && console.log("photosMapped ", photosMapped)}
-      {photosMapped && (
+      {/* {PhotoRemovePP && console.log("PhotoRemovePP ", PhotoRemovePP)} */}
+      {finalPP && console.log("finalPhotos ", photosMapped)}
+      {finalPP && (
         <Carousel breakPoints={breakPoints}>
           {photosMapped.map(item => (
             <div className="img-div" key={item.id}>
@@ -64,8 +91,8 @@ export default function Photos({ items }) {
                     title="Delete"
                     className="icon-img-delete"
                     onClick={() => {
-                      console.log("remove pp ", item.id);
-                      dispatch(ppRemove(item.id));
+                      console.log("remove pp ", item.id + 1);
+                      dispatch(ppRemove(item.id + 1));
                     }}
                   >
                     <Fab aria-label="delete">
@@ -78,8 +105,8 @@ export default function Photos({ items }) {
                     className="icon-img-edit"
                     onClick={() => {
                       console.log("remove pp ", item.id);
-                      dispatch(ppRemove(item.id));
-                      setPhotoIndex(item.id);
+                      dispatch(ppRemove(item.id + 1));
+                      setPhotoIndex(item.id + 1);
                       dispatch(openModalPP(true));
                     }}
                   >
@@ -92,7 +119,7 @@ export default function Photos({ items }) {
                     aria-label="add"
                     className="icon-img-add"
                     onClick={() => {
-                      setPhotoIndex(item.id);
+                      setPhotoIndex(item.id + 1);
                       dispatch(openModalPP(true));
                     }}
                   >
@@ -102,7 +129,10 @@ export default function Photos({ items }) {
                   </Tooltip>
                 </>
               )}
-              <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
+              {item.p && <img src={item.p} />}
+              {item.p == null && (
+                <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
+              )}
             </div>
           ))}
         </Carousel>

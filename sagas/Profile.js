@@ -6,6 +6,7 @@ import {
   updateProfileL1Success,
   updateProfileL2Success,
   readMyPhotosSuccess,
+  readMyPhotosPPSuccess,
   changeMyPasswordSuccess,
   changeUserLoginPhoneSuccess,
   verifyUserLoginPhoneChangeSuccess,
@@ -171,7 +172,11 @@ function* readMyPhotosRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(readMyPhotosSuccess(returnedData));
+      if (returnedData._PH) {
+        yield put(readMyPhotosPPSuccess(returnedData));
+      } else {
+        yield put(readMyPhotosSuccess(returnedData));
+      }
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -258,7 +263,7 @@ function* requestPhotoUploadPPRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(ppUploadSuccess(returnedData));
+      yield put(ppUploadSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

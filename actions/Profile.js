@@ -10,6 +10,8 @@ import {
   UPDATE_PROFILE_L2_SUCCESS,
   READ_MY_PHOTOS,
   READ_MY_PHOTOS_SUCCESS,
+  READ_MY_PHOTOS_PP_SUCCESS,
+  SET_FINAL_PP,
   CHANGE_MY_PASSWORD,
   CHANGE_MY_PASSWORD_SUCCESS,
   CHANGE_USER_LOGIN_PHONE,
@@ -207,10 +209,23 @@ export const readMyPhotos = params => {
     payload: params
   };
 };
+export const setFinalPP = finalPhotos => {
+  return {
+    type: SET_FINAL_PP,
+    payload: finalPhotos
+  };
+};
 
 export const readMyPhotosSuccess = data => {
   return {
     type: READ_MY_PHOTOS_SUCCESS,
+    payload: data
+  };
+};
+
+export const readMyPhotosPPSuccess = data => {
+  return {
+    type: READ_MY_PHOTOS_PP_SUCCESS,
     payload: data
   };
 };
