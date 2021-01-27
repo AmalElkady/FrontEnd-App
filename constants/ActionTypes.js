@@ -320,6 +320,7 @@ export const READ_MY_PAYMENTS_AND_SUB_SUCCESS =
   "read_my_payments_and_sub_success";
 
 //PP
+export const PP_PHOTO_SELECTED = "pp_photo_selected";
 export const REQUEST_PHOTO_UPLOAD_PP = "request_photo_upload_pp";
 export const REQUEST_PHOTO_UPLOAD_PP_SUCCESS =
   "request_photo_upload_pp_success";
@@ -381,4 +382,5 @@ export const GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
   "get_notification_view_pp_love_success";
 
 export const OPEN_MODAL = "open_modal";
+export const OPEN_MODAL_PP = "open_modal_pp";
 export const CLICKED_ID = "clicked_id";

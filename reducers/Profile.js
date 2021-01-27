@@ -13,7 +13,9 @@ import {
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
+  PP_PHOTO_SELECTED,
   OPEN_MODAL,
+  OPEN_MODAL_PP,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -33,7 +35,9 @@ const initialProfileState = {
   verifyLoginPhoneChanged: false,
   myPhoneAndPwData: null,
   myPaymentsAndSub: null,
+  ppPhotoSelected: null,
   openModal: false,
+  openModalPP: false,
   showMessage: false,
   loader: false,
   alertMessage: ""
@@ -119,6 +123,13 @@ const Profile = (state = initialProfileState, action) => {
         passwordChanged: action.payload
       };
     }
+
+    case PP_PHOTO_SELECTED: {
+      return {
+        ...state,
+        ppPhotoSelected: action.payload
+      };
+    }
     case CHANGE_USER_LOGIN_PHONE_SUCCESS: {
       return {
         ...state,
@@ -135,6 +146,12 @@ const Profile = (state = initialProfileState, action) => {
       return {
         ...state,
         openModal: action.payload
+      };
+    }
+    case OPEN_MODAL_PP: {
+      return {
+        ...state,
+        openModalPP: action.payload
       };
     }
     case SHOW_MESSAGE: {

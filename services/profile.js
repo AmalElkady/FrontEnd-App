@@ -431,7 +431,14 @@ profile.readMyPaymentsAndSub = function(count, start, end) {
 
 profile.requestPhotouploadPP = function(file, photoNum) {
   // "filetype" : "/png"
-  console.log("from service rrequestPhotouploadPP ", file);
+  console.log(
+    "from service rrequestPhotouploadPP ",
+    file,
+    file.size,
+    file.type,
+    file.type.slice(5),
+    photoNum
+  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -444,37 +451,62 @@ profile.requestPhotouploadPP = function(file, photoNum) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-          filetype: file.type,
+          filetype: `${file.type}`.slice(5),
           filesize: file.size
         }
       };
-
       let responseX = await callAxios(options);
-      let response = responseX.data;
-
-      console.log("response requestPhotouploadPP", response);
-      if (response.signedRequest) {
+      // let response = responseX.data;
+      console.log("responseX ", responseX);
+      if (responseX.data.code) {
+        resolve({ message: responseX.data.code });
+      } else if (responseX.data.signedRequest) {
         const formData = new FormData();
-        Object.keys(response.signedRequest.fields).forEach(key => {
-          formData.append(key, response.signedRequest[key]);
+        Object.keys(responseX.data.signedRequest.fields).forEach(key => {
+          formData.append(key, responseX.data.signedRequest.fields[key]);
         });
         // Actual file has to be appended last.
         formData.append("file", file);
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", response.signedRequest.url, true);
+        xhr.open("POST", responseX.data.signedRequest.url, true);
         xhr.send(formData);
         xhr.onload = async function() {
           if (this.status === 204) {
-            console.log("trueeeeeeee pp 204");
+            console.log("trueeeeeeee 204");
+            // optionsCheck.url = "/checkmpupload";
+            //           await callAxios(optionsCheck);
             resolve(true);
           } else {
             reject(this.responseText);
           }
         };
-        // resolve(response);
       } else {
-        resolve({ message: "no response !" });
+        resolve({ message: "Error" });
       }
+
+      // console.log("response requestPhotouploadPP", response);
+      // if (response.signedRequest) {
+      //   const formData = new FormData();
+      //   Object.keys(response.signedRequest.fields).forEach(key => {
+      //     formData.append(key, response.signedRequest[key]);
+      //   });
+      //   // Actual file has to be appended last.
+      //   formData.append("file", file);
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("POST", response.signedRequest.url, true);
+      //   xhr.send(formData);
+      //   xhr.onload = async function() {
+      //     if (this.status === 204) {
+      //       console.log("trueeeeeeee pp 204");
+      //       resolve(true);
+      //     } else {
+      //       reject(this.responseText);
+      //     }
+      //   };
+      //   // resolve(response);
+      // } else {
+      //   resolve({ message: "no response !" });
+      // }
     } catch (err) {
       resolve({ message: err.message });
     }

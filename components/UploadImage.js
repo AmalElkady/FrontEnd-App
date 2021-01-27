@@ -9,7 +9,8 @@ import ReactCrop from "react-image-crop";
 import UserCard from "./Cards/UserCard";
 import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../util/IntlMessages";
-import {mpUpload,showAuthLoader}from "../actions/Auth";
+import { mpUpload, showAuthLoader } from "../actions/Auth";
+import { ppUpload } from "../actions/Profile";
 import {
   NotificationContainer,
   NotificationManager
@@ -21,12 +22,14 @@ const useStyles = makeStyles(theme => ({
     margin: "2rem auto"
   }
 }));
-export default function UploadImage({}) {
+export default function UploadImage({ photoNum }) {
   const classes = useStyles();
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [displayFile, setDisplayFile] = useState(null);
-   const MainPhotoSelected = useSelector(state => state.auth.mainPhotoSelected);
+  const MainPhotoSelected = useSelector(state => state.auth.mainPhotoSelected);
+  const PPPhotoSelected = useSelector(state => state.profile.ppPhotoSelected);
+  const PhotoUploadPP = useSelector(state => state.profile.photoUploadPP);
   /////////
   const [crop, setCrop] = useState(null);
   let myRef = React.createRef();
@@ -54,19 +57,24 @@ export default function UploadImage({}) {
     }
     window.addEventListener("resize", handleResize);
   });
-
- useEffect(() => {
-onSelectFile(MainPhotoSelected);
-  },[MainPhotoSelected]);
+  useEffect(() => {
+    if (PPPhotoSelected != null) {
+      console.log("photo num upload ", photoNum);
+      onSelectFile(PPPhotoSelected);
+    }
+  }, [PPPhotoSelected]);
+  useEffect(() => {
+    if (MainPhotoSelected != null) onSelectFile(MainPhotoSelected);
+  }, [MainPhotoSelected]);
   const onSelectFile = fileInput => {
-      setCrop(null);
-      setFileSrc(null);
-      setCroppedImageUrl(null);
-      setImageRef(null);
-      setSelectedImg(null);
-      const reader = new FileReader();
-      reader.addEventListener("load", () => setFileSrc(reader.result));
-      reader.readAsDataURL(fileInput);
+    setCrop(null);
+    setFileSrc(null);
+    setCroppedImageUrl(null);
+    setImageRef(null);
+    setSelectedImg(null);
+    const reader = new FileReader();
+    reader.addEventListener("load", () => setFileSrc(reader.result));
+    reader.readAsDataURL(fileInput);
   };
 
   const onImageLoaded = image => {
@@ -183,19 +191,38 @@ onSelectFile(MainPhotoSelected);
 
   const onChange = async file => {
     const image = await resizeFile(file);
-    const finalFile = new File([image], MainPhotoSelected.name, {
-          type: "image/jpeg",
-          lastModified: Date.now()
-        });   
+    let finalFile;
+    if (MainPhotoSelected != null && photoNum == null) {
+      finalFile = new File([image], MainPhotoSelected.name, {
+        type: "image/jpeg",
+        lastModified: Date.now()
+      });
+    } else if (PPPhotoSelected != null && photoNum != null) {
+      finalFile = new File([image], PPPhotoSelected.name, {
+        type: "image/jpeg",
+        lastModified: Date.now()
+      });
+    }
     console.log("final image after resize", finalFile);
     setFinalImg(finalFile);
   };
   return (
     <>
       {croppedImageUrl && (
-        <div style={{ width: "30%",marginBottom:"1rem",borderRadius:"1rem",boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.75)" }}>
+        <div
+          style={{
+            width: "30%",
+            marginBottom: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.75)"
+          }}
+        >
           {" "}
-          <img alt="Crop" style={{ maxWidth: "100%",borderRadius:"1rem" }} src={croppedImageUrl} />
+          <img
+            alt="Crop"
+            style={{ maxWidth: "100%", borderRadius: "1rem" }}
+            src={croppedImageUrl}
+          />
         </div>
       )}
       {fileSrc && (
@@ -210,30 +237,29 @@ onSelectFile(MainPhotoSelected);
           ref={myRef}
         />
       )}
-           <Grid
-                          container
-                          style={{ paddingTop: "25px" }}
-                          spacing={12}
-                        >
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                              dispatch(showAuthLoader());
-                               console.log("onSubmit ",finalImg,finalImg.size);
-                               if(finalImg.size<=3500 ||finalImg.size>=32000 ){
-                                 NotificationManager.error(<IntlMessages id="upload.error" />)
-
-                               }else{
-                               dispatch(mpUpload(finalImg))
-                               }
-                            }}
-                            color="primary"
-                             className="linear-g-r"
-                             style={{width:"100%"}}
-                          >
-                            <IntlMessages id="appModule.submit" />
-                          </Button>{" "}
-                        </Grid>
+      <Grid container style={{ paddingTop: "25px" }} spacing={12}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            dispatch(showAuthLoader());
+            console.log("onSubmit ", finalImg, finalImg.size);
+            if (finalImg.size <= 3500 || finalImg.size >= 32000) {
+              NotificationManager.error(<IntlMessages id="upload.error" />);
+            } else {
+              if (photoNum == null) {
+                dispatch(mpUpload(finalImg));
+              } else {
+                dispatch(ppUpload(finalImg, photoNum));
+              }
+            }
+          }}
+          color="primary"
+          className="linear-g-r"
+          style={{ width: "100%" }}
+        >
+          <IntlMessages id="appModule.submit" />
+        </Button>{" "}
+      </Grid>
       {/* {displayFile && <img src={displayFile} alt="" />} */}
       {/* <label htmlFor="upload-photo">
         <input

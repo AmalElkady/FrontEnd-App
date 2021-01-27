@@ -26,7 +26,9 @@ import {
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
   REQUEST_PERMISSION_PP_READ_REMOVE,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
+  PP_PHOTO_SELECTED,
   OPEN_MODAL,
+  OPEN_MODAL_PP,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -233,9 +235,23 @@ export const permissionPPReadRemoveSuccess = data => {
   };
 };
 
+export const ppPhotoSelected = photo => {
+  return {
+    type: PP_PHOTO_SELECTED,
+    payload: photo
+  };
+};
+
 export const openModal = flag => {
   return {
     type: OPEN_MODAL,
+    payload: flag
+  };
+};
+
+export const openModalPP = flag => {
+  return {
+    type: OPEN_MODAL_PP,
     payload: flag
   };
 };

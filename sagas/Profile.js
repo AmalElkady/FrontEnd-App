@@ -168,7 +168,11 @@ function* updateProfileL2Request({ payload }) {
 function* readMyPhotosRequest({ payload }) {
   try {
     const returnedData = yield call(readMyPhotos, payload);
-    yield put(readMyPhotosSuccess(returnedData));
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(readMyPhotosSuccess(returnedData));
+    }
   } catch (error) {
     yield put(showProfileMessage(error));
   }
@@ -268,7 +272,7 @@ function* requestRemovePhotoPPRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(ppRemoveSuccess(returnedData));
+      yield put(ppRemoveSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
