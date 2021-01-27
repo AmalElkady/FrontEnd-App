@@ -15,8 +15,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
 import { openModalPP, ppRemove } from "../../../actions/Profile";
+import { mapObjectToArray } from "../../../helpers/mapObjectToArray";
 
-export default function Photos({ items, photos }) {
+export default function Photos({ items }) {
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -25,15 +26,23 @@ export default function Photos({ items, photos }) {
   ];
   const router = useRouter();
   const [photoIndex, setPhotoIndex] = useState(null);
+  const [photosMapped, setPhotosMapped] = useState(null);
   const OpenModalPP = useSelector(state => state.profile.openModalPP);
   const PhotoRemovePP = useSelector(state => state.profile.photoRemovePP);
+  const myPhotos = useSelector(state => state.profile.myPhotos);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (myPhotos != null) {
+      setPhotosMapped(mapObjectToArray(myPhotos));
+    }
+  }, [myPhotos]);
   return (
     <>
       {PhotoRemovePP && console.log("PhotoRemovePP ", PhotoRemovePP)}
-      {photos && (
+      {photosMapped && console.log("photosMapped ", photosMapped)}
+      {photosMapped && (
         <Carousel breakPoints={breakPoints}>
-          {photos.map(item => (
+          {photosMapped.map(item => (
             <div className="img-div" key={item.id}>
               {/* {item.title} */}
               {router.query.flag == "read" && (
@@ -98,7 +107,6 @@ export default function Photos({ items, photos }) {
           ))}
         </Carousel>
       )}
-
       {items && (
         <Carousel breakPoints={breakPoints}>
           {items.map(item => (

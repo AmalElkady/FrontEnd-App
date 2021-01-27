@@ -78,7 +78,7 @@ export default function About({ aboutInfo }) {
       {console.log("disData about ", disData)}
       {disData != null && (
         <>
-          <Photos photos={myPhotos} />
+          {/* <Photos photos={myPhotos} /> */}
           <div className="profile-about">
             <Grid container spacing={12}>
               <Grid item xs={12} className="margin-TB">
