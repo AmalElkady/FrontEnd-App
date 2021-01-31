@@ -15,6 +15,8 @@ import {
   ppUploadSuccess,
   ppRemoveSuccess,
   permissionPPReadRemoveSuccess,
+  requestPhotoReadPPSuccess,
+  requestPhotoReadPPFail,
   showProfileMessage
 } from "../actions/Profile";
 import {
@@ -30,7 +32,8 @@ import {
   REQUEST_PHOTO_UPLOAD_PP,
   REQUEST_REMOVE_PHOTO_PP,
   READ_MY_PHOTOS,
-  REQUEST_PERMISSION_PP_READ_REMOVE
+  REQUEST_PERMISSION_PP_READ_REMOVE,
+  REQUEST_PHOTO_READ_PP
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -42,6 +45,12 @@ const readProfileL2 = async (id, co, ci, va) =>
 const readMyProfile = async params =>
   await profile
     .readMyProfile(params)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const readPhotosPP = async (id, co, ci, va) =>
+  await profile
+    .readPhotosPP(id, co, ci, va)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -177,6 +186,22 @@ function* readMyPhotosRequest({ payload }) {
       } else {
         yield put(readMyPhotosSuccess(returnedData));
       }
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
+function* readPhotosPPRequest({ payload }) {
+  const { id, co, ci, va } = payload;
+  console.log("from saga read pp ", id, co, ci, va);
+  try {
+    const returnedData = yield call(readPhotosPP, id, co, ci, va);
+    console.log("from saga read pp returnedData ", returnedData);
+    if (returnedData.message) {
+      yield put(requestPhotoReadPPFail(true));
+    } else {
+      yield put(requestPhotoReadPPSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -367,6 +392,10 @@ export function* requestPermissionPPReadRemove() {
   );
 }
 
+export function* requestReadPhotosPP() {
+  yield takeEvery(REQUEST_PHOTO_READ_PP, readPhotosPPRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(readProfileL2Data),
@@ -381,6 +410,7 @@ export default function* rootSaga() {
     fork(readMyPaymentsAndSub),
     fork(requestPhotoUploadPP),
     fork(requestRemovePhotoPP),
-    fork(requestPermissionPPReadRemove)
+    fork(requestPermissionPPReadRemove),
+    fork(requestReadPhotosPP)
   ]);
 }

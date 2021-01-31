@@ -29,6 +29,9 @@ import {
   REQUEST_PERMISSION_PP_READ_REMOVE,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
   PP_PHOTO_SELECTED,
+  REQUEST_PHOTO_READ_PP,
+  REQUEST_PHOTO_READ_PP_SUCCESS,
+  REQUEST_PHOTO_READ_PP_FAIL,
   OPEN_MODAL,
   OPEN_MODAL_PP,
   SHOW_MESSAGE
@@ -52,6 +55,28 @@ export const readMyProfile = params => {
   return {
     type: READ_MY_PROFILE,
     payload: params
+  };
+};
+
+export const requestPhotoReadPP = (id, co, ci, va) => {
+  console.log("from action read pp ", id, co, ci, va);
+  return {
+    type: REQUEST_PHOTO_READ_PP,
+    payload: { id, co, ci, va }
+  };
+};
+
+export const requestPhotoReadPPSuccess = data => {
+  return {
+    type: REQUEST_PHOTO_READ_PP_SUCCESS,
+    payload: data
+  };
+};
+
+export const requestPhotoReadPPFail = data => {
+  return {
+    type: REQUEST_PHOTO_READ_PP_FAIL,
+    payload: data
   };
 };
 

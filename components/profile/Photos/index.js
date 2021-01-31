@@ -20,12 +20,14 @@ import {
   readMyPhotos,
   setFinalPP,
   readMyProfile,
-  ppUploadSuccess
+  requestPhotoReadPP,
+  ppUploadSuccess,
+  ppRemoveSuccess
 } from "../../../actions/Profile";
 import { mapObjectToArray } from "../../../helpers/mapObjectToArray";
 import { mapPPToUrl } from "../../../helpers/mapPPToUrl";
 
-export default function Photos({ items }) {
+export default function Photos({ id, co, ci, va }) {
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -35,12 +37,26 @@ export default function Photos({ items }) {
   const router = useRouter();
   const [photoIndex, setPhotoIndex] = useState(null);
   const [photosMapped, setPhotosMapped] = useState(null);
-  //const [finalPhotos, setfinalPhotos] = useState(null);
+
+  const [defaultPhotos, setDefaultPhotos] = useState([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 }
+  ]);
   const OpenModalPP = useSelector(state => state.profile.openModalPP);
   const PhotoUploadPP = useSelector(state => state.profile.photoUploadPP);
   const PhotoRemovePP = useSelector(state => state.profile.photoRemovePP);
   const myPhotos = useSelector(state => state.profile.myPhotos);
+  const userPhotos = useSelector(state => state.profile.userPhotos);
   const myPhotoPPSigned = useSelector(state => state.profile.myPhotoPPSigned);
+  const userPhotoPPSigned = useSelector(
+    state => state.profile.userPhotoPPSigned
+  );
+  const userPhotoPPSignedMessage = useSelector(
+    state => state.profile.userPhotoPPSignedMessage
+  );
   const finalPP = useSelector(state => state.profile.finalPP);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -49,6 +65,25 @@ export default function Photos({ items }) {
       dispatch(readMyPhotos(1));
     }
   }, [myPhotos]);
+  useEffect(() => {
+    if (userPhotos != null) {
+      setPhotosMapped(mapObjectToArray(userPhotos));
+      dispatch(requestPhotoReadPP(id, co, ci, va));
+    }
+  }, [userPhotos]);
+
+  useEffect(() => {
+    if (userPhotoPPSigned != null) {
+      console.log("userPhotoPPSigned ", userPhotoPPSigned);
+    }
+  }, [userPhotoPPSigned]);
+
+  useEffect(() => {
+    if (userPhotoPPSignedMessage) {
+      console.log("userPhotoPPSignedMessage ", userPhotoPPSignedMessage);
+    }
+  }, [userPhotoPPSignedMessage]);
+
   useEffect(() => {
     if (myPhotoPPSigned != null) {
       // console.log("photos and signed ", photosMapped, myPhotoPPSigned);
@@ -63,16 +98,120 @@ export default function Photos({ items }) {
       dispatch(ppUploadSuccess(false));
     }
   }, [PhotoUploadPP]);
+
+  useEffect(() => {
+    if (PhotoRemovePP) {
+      dispatch(readMyProfile("L2"));
+      dispatch(ppRemoveSuccess(false));
+    }
+  }, [PhotoRemovePP]);
   return (
     <>
       {/* {PhotoRemovePP && console.log("PhotoRemovePP ", PhotoRemovePP)} */}
-      {finalPP && console.log("finalPhotos ", photosMapped)}
-      {finalPP && (
+      {console.log("finalPhotos ", photosMapped)}
+      {
         <Carousel breakPoints={breakPoints}>
-          {photosMapped.map(item => (
-            <div className="img-div" key={item.id}>
-              {/* {item.title} */}
-              {router.query.flag == "read" && (
+          {photosMapped &&
+            !userPhotoPPSignedMessage &&
+            photosMapped.map(item => (
+              <div className="img-div" key={item.id}>
+                {router.query.flag == "read" && (
+                  <div className="img-div-overlay">
+                    <Tooltip title="Send request to access photos">
+                      {/* <Button>
+                  <Fab aria-label="Send to access photos"> */}
+                      <Typography variant="body1" gutterBottom>
+                        <IntlMessages id="profile.privateImg" />
+                      </Typography>
+                      {/* </Fab>
+                </Button> */}
+                    </Tooltip>
+                  </div>
+                )}
+                {router.query.flag == "readMe" && (
+                  <>
+                    {item.p && (
+                      <>
+                        <Tooltip
+                          title="Delete"
+                          className="icon-img-delete"
+                          onClick={() => {
+                            console.log("remove pp ", item.id + 1);
+                            dispatch(ppRemove(item.id + 1));
+                          }}
+                        >
+                          <Fab aria-label="delete">
+                            <DeleteIcon />
+                          </Fab>
+                        </Tooltip>
+                        <Tooltip
+                          title="Edit"
+                          aria-label="add"
+                          className="icon-img-edit"
+                          onClick={() => {
+                            console.log("remove pp ", item.id);
+                            dispatch(ppRemove(item.id + 1));
+                            setPhotoIndex(item.id + 1);
+                            dispatch(openModalPP(true));
+                          }}
+                        >
+                          <Fab color="secondary">
+                            <EditIcon />
+                          </Fab>
+                        </Tooltip>
+                      </>
+                    )}
+                    {item.p == null && (
+                      <Tooltip
+                        title="Add New Photo"
+                        aria-label="add"
+                        className="icon-img-add"
+                        onClick={() => {
+                          setPhotoIndex(item.id + 1);
+                          dispatch(openModalPP(true));
+                        }}
+                      >
+                        <Fab color="secondary">
+                          <AddIcon />
+                        </Fab>
+                      </Tooltip>
+                    )}
+                  </>
+                )}
+                {item.p && <img src={item.p} />}
+                {item.p == null && (
+                  <img src="../../../static/images/avatar.png" />
+                )}
+              </div>
+            ))}
+          {photosMapped == null &&
+            router.query.flag == "readMe" &&
+            defaultPhotos.map(item => (
+              <div className="img-div" key={item.id}>
+                {router.query.flag == "readMe" && (
+                  <>
+                    <Tooltip
+                      title="Add New Photo"
+                      aria-label="add"
+                      className="icon-img-add"
+                      onClick={() => {
+                        setPhotoIndex(item.id);
+                        dispatch(openModalPP(true));
+                      }}
+                    >
+                      <Fab color="secondary">
+                        <AddIcon />
+                      </Fab>
+                    </Tooltip>
+                    <img src="../../../static/images/avatar.png" />
+                  </>
+                )}
+              </div>
+            ))}
+          {(userPhotos == null || userPhotoPPSignedMessage) &&
+            router.query.flag == "read" &&
+            defaultPhotos.map(item => (
+              <div className="img-div" key={item.id}>
                 <div className="img-div-overlay">
                   <Tooltip title="Send request to access photos">
                     {/* <Button>
@@ -84,126 +223,11 @@ export default function Photos({ items }) {
                 </Button> */}
                   </Tooltip>
                 </div>
-              )}
-              {router.query.flag == "readMe" && (
-                <>
-                  <Tooltip
-                    title="Delete"
-                    className="icon-img-delete"
-                    onClick={() => {
-                      console.log("remove pp ", item.id + 1);
-                      dispatch(ppRemove(item.id + 1));
-                    }}
-                  >
-                    <Fab aria-label="delete">
-                      <DeleteIcon />
-                    </Fab>
-                  </Tooltip>
-                  <Tooltip
-                    title="Edit"
-                    aria-label="add"
-                    className="icon-img-edit"
-                    onClick={() => {
-                      console.log("remove pp ", item.id);
-                      dispatch(ppRemove(item.id + 1));
-                      setPhotoIndex(item.id + 1);
-                      dispatch(openModalPP(true));
-                    }}
-                  >
-                    <Fab color="secondary">
-                      <EditIcon />
-                    </Fab>
-                  </Tooltip>
-                  <Tooltip
-                    title="Add New Photo"
-                    aria-label="add"
-                    className="icon-img-add"
-                    onClick={() => {
-                      setPhotoIndex(item.id + 1);
-                      dispatch(openModalPP(true));
-                    }}
-                  >
-                    <Fab color="secondary">
-                      <AddIcon />
-                    </Fab>
-                  </Tooltip>
-                </>
-              )}
-              {item.p && <img src={item.p} />}
-              {item.p == null && (
-                <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
-              )}
-            </div>
-          ))}
+                <img src="../../../static/images/avatar.png" />
+              </div>
+            ))}
         </Carousel>
-      )}
-      {items && (
-        <Carousel breakPoints={breakPoints}>
-          {items.map(item => (
-            <div className="img-div" key={item.id}>
-              {/* {item.title} */}
-              {router.query.flag == "read" && (
-                <div className="img-div-overlay">
-                  <Tooltip title="Send request to access photos">
-                    {/* <Button>
-                  <Fab aria-label="Send to access photos"> */}
-                    <Typography variant="body1" gutterBottom>
-                      <IntlMessages id="profile.privateImg" />
-                    </Typography>
-                    {/* </Fab>
-                </Button> */}
-                  </Tooltip>
-                </div>
-              )}
-              {router.query.flag == "readMe" && (
-                <>
-                  <Tooltip
-                    title="Delete"
-                    className="icon-img-delete"
-                    onClick={() => {
-                      console.log("remove pp ", item.id);
-                      dispatch(ppRemove(item.id));
-                    }}
-                  >
-                    <Fab aria-label="delete">
-                      <DeleteIcon />
-                    </Fab>
-                  </Tooltip>
-                  <Tooltip
-                    title="Edit"
-                    aria-label="add"
-                    className="icon-img-edit"
-                    onClick={() => {
-                      console.log("remove pp ", item.id);
-                      dispatch(ppRemove(item.id));
-                      setPhotoIndex(item.id);
-                      dispatch(openModalPP(true));
-                    }}
-                  >
-                    <Fab color="secondary">
-                      <EditIcon />
-                    </Fab>
-                  </Tooltip>
-                  <Tooltip
-                    title="Add New Photo"
-                    aria-label="add"
-                    className="icon-img-add"
-                    onClick={() => {
-                      setPhotoIndex(item.id);
-                      dispatch(openModalPP(true));
-                    }}
-                  >
-                    <Fab color="secondary">
-                      <AddIcon />
-                    </Fab>
-                  </Tooltip>
-                </>
-              )}
-              <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
-            </div>
-          ))}
-        </Carousel>
-      )}
+      }
       {OpenModalPP && <ModalUploadMPP photoNum={photoIndex}></ModalUploadMPP>}
     </>
   );

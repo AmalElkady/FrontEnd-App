@@ -55,6 +55,45 @@ let callAxios = options => {
   });
 };
 
+profile.readPhotosPP = function(id, co, ci, va) {
+  console.log("from profile service readPhotosPP ");
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/requestphotoread?photo=1",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid: id,
+          country: co,
+          city: ci,
+          varea: va
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("PP from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 profile.readProfileL2 = function(id, co, ci, va) {
   console.log("from profile service ", id, co, ci, va);
 

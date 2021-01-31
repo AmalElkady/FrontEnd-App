@@ -14,6 +14,8 @@ import {
   REQUEST_PHOTO_UPLOAD_PP_SUCCESS,
   REQUEST_REMOVE_PHOTO_PP_SUCCESS,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
+  REQUEST_PHOTO_READ_PP_SUCCESS,
+  REQUEST_PHOTO_READ_PP_FAIL,
   SET_FINAL_PP,
   PP_PHOTO_SELECTED,
   OPEN_MODAL,
@@ -23,12 +25,15 @@ import {
 
 const initialProfileState = {
   profileL2Data: null,
+  userPhotos: null,
+  userPhotoPPSigned: null,
   myProfileDataL1: null,
   myProfileDataL2: null,
   myPhotos: null,
   userMartial: null,
   myPhotoSigned: null,
   myPhotoPPSigned: null,
+  userPhotoPPSignedMessage: false,
   finalPP: null,
   returnUpdateMessage: null,
   passwordChanged: false,
@@ -52,7 +57,8 @@ const Profile = (state = initialProfileState, action) => {
     case READ_PROFILE_L2_SUCCESS: {
       return {
         ...state,
-        profileL2Data: action.payload
+        profileL2Data: action.payload.profile,
+        userPhotos: action.payload.photos
       };
     }
     case READ_MY_PROFILE_L1_SUCCESS: {
@@ -68,6 +74,20 @@ const Profile = (state = initialProfileState, action) => {
         ...state,
         myProfileDataL2: JSON.parse(action.payload.profile),
         myPhotos: action.payload.photos
+      };
+    }
+    case REQUEST_PHOTO_READ_PP_SUCCESS: {
+      console.log("from reducer READ PP", action.payload);
+      return {
+        ...state,
+        userPhotoPPSigned: action.payload
+      };
+    }
+    case REQUEST_PHOTO_READ_PP_FAIL: {
+      console.log("from reducer READ PP fail", action.payload);
+      return {
+        ...state,
+        userPhotoPPSignedMessage: action.payload
       };
     }
     case UPDATE_PROFILE_L1_SUCCESS: {

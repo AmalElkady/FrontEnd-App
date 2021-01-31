@@ -60,7 +60,7 @@ export default function About({ aboutInfo }) {
 
   useEffect(() => {
     if (l2Data != null && router.query.flag == "read") {
-      setDisData(l2Data.profile);
+      setDisData(l2Data);
     }
   }, [l2Data]);
   useEffect(() => {

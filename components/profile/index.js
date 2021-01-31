@@ -32,6 +32,7 @@ export default function Profile() {
   useEffect(() => {
     if (router.query) {
       if (router.query.flag == "read") {
+        console.log("from mainnnnnn ", router.query);
         setProfileCard({
           id: router.query.i,
           co: router.query.co,
@@ -90,7 +91,15 @@ export default function Profile() {
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
             {/* <Carousel /> */}
             <br />
-            <Photos items={photos} />
+            {router.query.flag == "read" && (
+              <Photos
+                id={router.query.i}
+                co={router.query.co}
+                ci={router.query.ci}
+                va={router.query.va}
+              />
+            )}
+            {router.query.flag == "readMe" && <Photos />}
           </Grid>
           <Grid item xs={6} className="profile-Grid-container">
             {aboutInfo.id && <About aboutInfo={aboutInfo} />}
