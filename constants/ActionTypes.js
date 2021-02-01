@@ -336,6 +336,8 @@ export const REQUEST_PHOTO_READ_PP = "request_photo_read_pp";
 export const REQUEST_PHOTO_READ_PP_SUCCESS = "request_photo_read_pp_success";
 export const REQUEST_PHOTO_READ_PP_FAIL = "request_photo_read_pp_fail";
 
+export const OPEN_MODAL_SEND_PP = "open_modal_send_pp";
+
 export const REQUEST_PERMISSION_PP_READ_REMOVE =
   "request_permission_pp_read_remove";
 export const REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS =

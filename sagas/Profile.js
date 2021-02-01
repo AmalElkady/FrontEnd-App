@@ -328,8 +328,9 @@ function* permissionPPReadRemoveRequest({ payload }) {
       city,
       varea
     );
+    console.log("from saga returnedData",returnedData)
     if (returnedData.message) {
-      yield put(showProfileMessage(returnedData.message));
+      yield put(permissionPPReadRemoveSuccess("error"));
     } else {
       yield put(permissionPPReadRemoveSuccess(returnedData));
     }

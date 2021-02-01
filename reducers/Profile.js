@@ -20,6 +20,7 @@ import {
   PP_PHOTO_SELECTED,
   OPEN_MODAL,
   OPEN_MODAL_PP,
+  OPEN_MODAL_SEND_PP,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -47,6 +48,7 @@ const initialProfileState = {
   ppPhotoSelected: null,
   openModal: false,
   openModalPP: false,
+  openModalSendPP: false,
   showMessage: false,
   loader: false,
   alertMessage: ""
@@ -189,6 +191,12 @@ const Profile = (state = initialProfileState, action) => {
       return {
         ...state,
         openModalPP: action.payload
+      };
+    }
+    case OPEN_MODAL_SEND_PP: {
+      return {
+        ...state,
+        openModalSendPP: action.payload
       };
     }
     case SHOW_MESSAGE: {

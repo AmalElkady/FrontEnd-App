@@ -14,8 +14,10 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
+import ModalSendPPAccess from "../../../components/Modals/modalSendPPAccess";
 import {
   openModalPP,
+  openModalSendPP,
   ppRemove,
   readMyPhotos,
   setFinalPP,
@@ -46,6 +48,7 @@ export default function Photos({ id, co, ci, va }) {
     { id: 5 }
   ]);
   const OpenModalPP = useSelector(state => state.profile.openModalPP);
+  const OpenModalSendPP = useSelector(state => state.profile.openModalSendPP);
   const PhotoUploadPP = useSelector(state => state.profile.photoUploadPP);
   const PhotoRemovePP = useSelector(state => state.profile.photoRemovePP);
   const myPhotos = useSelector(state => state.profile.myPhotos);
@@ -117,7 +120,12 @@ export default function Photos({ id, co, ci, va }) {
               <div className="img-div" key={item.id}>
                 {router.query.flag == "read" && (
                   <div className="img-div-overlay">
-                    <Tooltip title="Send request to access photos">
+                    <Tooltip
+                      title="Send request to access photos"
+                      onClick={() => {
+                        dispatch(openModalSendPP(true));
+                      }}
+                    >
                       {/* <Button>
                   <Fab aria-label="Send to access photos"> */}
                       <Typography variant="body1" gutterBottom>
@@ -213,14 +221,16 @@ export default function Photos({ id, co, ci, va }) {
             defaultPhotos.map(item => (
               <div className="img-div" key={item.id}>
                 <div className="img-div-overlay">
-                  <Tooltip title="Send request to access photos">
-                    {/* <Button>
-                  <Fab aria-label="Send to access photos"> */}
+                  <Tooltip
+                    title="Send request to access photos"
+                    onClick={() => {
+                      console.log("open modal");
+                      dispatch(openModalSendPP(true));
+                    }}
+                  >
                     <Typography variant="body1" gutterBottom>
                       <IntlMessages id="profile.privateImg" />
                     </Typography>
-                    {/* </Fab>
-                </Button> */}
                   </Tooltip>
                 </div>
                 <img src="../../../static/images/avatar.png" />
@@ -228,6 +238,9 @@ export default function Photos({ id, co, ci, va }) {
             ))}
         </Carousel>
       }
+      {OpenModalSendPP && (
+        <ModalSendPPAccess id={id} co={co} ci={ci} va={va}></ModalSendPPAccess>
+      )}
       {OpenModalPP && <ModalUploadMPP photoNum={photoIndex}></ModalUploadMPP>}
     </>
   );

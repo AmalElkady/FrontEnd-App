@@ -34,6 +34,7 @@ import {
   REQUEST_PHOTO_READ_PP_FAIL,
   OPEN_MODAL,
   OPEN_MODAL_PP,
+  OPEN_MODAL_SEND_PP,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -269,6 +270,7 @@ export const permissionPPReadRemove = (
 };
 
 export const permissionPPReadRemoveSuccess = data => {
+  console.log("from action success sent request",data)
   return {
     type: REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
     payload: data
@@ -292,6 +294,13 @@ export const openModal = flag => {
 export const openModalPP = flag => {
   return {
     type: OPEN_MODAL_PP,
+    payload: flag
+  };
+};
+
+export const openModalSendPP = flag => {
+  return {
+    type: OPEN_MODAL_SEND_PP,
     payload: flag
   };
 };
