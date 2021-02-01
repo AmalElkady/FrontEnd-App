@@ -1,0 +1,30 @@
+.icons-container{
+    padding:1rem !important;
+    border-bottom: 1px solid #84173a !important;
+   @media screen and (max-width: 575px) {
+       margin-top: 4rem !important;
+    }
+}
+
+.icons-container:first-child div{
+    flex-direction: row;
+    margin: auto;
+    justify-content: space-around;
+    width: 100%;
+
+  @media screen and (max-width: 575px) {
+    flex-wrap: unset;
+    }
+}
+.m-r-label{
+     @media screen and (max-width: 575px) {
+    margin-right:-2rem !important;
+    }
+}
+
+.icons-container span div{
+    max-width:38%;
+    @media screen and (max-width: 575px) {
+    max-width:52%;
+    }
+}

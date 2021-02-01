@@ -171,6 +171,9 @@ export const UPDATE_SEARCH = "update_search";
 export const SHOW_TIMER = "show_timer";
 export const HIDE_TIMER = "hide_timer";
 
+//Home 
+export const SELECTED_HEADER_ICON="selected_header_icon";
+
 ////// SEARCH
 /// ONLINE
 // Age Range

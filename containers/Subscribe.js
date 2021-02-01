@@ -146,8 +146,8 @@ export default function Subscribe() {
  <FormControl component="fieldset" style={{minWidth:"70%"}}>
       <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange2}>
         <FormControlLabel value="0" className={selectedValue === "0"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="0"  checked={selectedValue === "0"}  onChange={handleChangeSub} className="d-none"/>} label={
-<>
-<Grid container spacing={12} >
+              <>
+            <Grid container spacing={12} >
 				    <Grid item xs={9}>
             <Grid item xs={12}>
             <h2 style={{color:"white"}}>

@@ -35,7 +35,7 @@ import {
   SET_SEARCH_STATE,
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
-  RESET_STATES_LIST_CITY_ONLINE
+  RESET_STATES_LIST_CITY_ONLINE,SELECTED_HEADER_ICON
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { addUserGender } from "../helpers/addUserGender";
@@ -157,7 +157,8 @@ const initialHomeState = {
   limitCount: 5,
   showMessage: false,
   loader: false,
-  alertMessage: ""
+  alertMessage: "",
+  headerSelectedIcon:null
 };
 
 const home = (state = initialHomeState, action) => {
@@ -764,6 +765,11 @@ const home = (state = initialHomeState, action) => {
 
         countryCitiesAgerangeOnline: [],
         countryCitiesAgerangeOnlineCount: []
+      };
+    case SELECTED_HEADER_ICON:
+      return {
+        ...state,
+        headerSelectedIcon: action.payload
       };
     case SHOW_MESSAGE: {
       return {

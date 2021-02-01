@@ -55,7 +55,8 @@ import {
   SET_SEARCH_STATE,
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
-  RESET_STATES_LIST_CITY_ONLINE
+  RESET_STATES_LIST_CITY_ONLINE,
+  SELECTED_HEADER_ICON
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -458,5 +459,12 @@ export const resetEndResUsers = () => {
 export const resetEndResUsersOf = () => {
   return {
     type: RESET_END_RES_USERS_OF
+  };
+};
+
+export const selectedHeaderIcon = (data) => {
+  return {
+    type: SELECTED_HEADER_ICON,
+    payload:data
   };
 };

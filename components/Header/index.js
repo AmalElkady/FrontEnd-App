@@ -19,21 +19,30 @@ import MailNotification from "../MailNotification/index";
 import AppNotification from "../AppNotification/index";
 import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
+import {selectedHeaderIcon} from "../../actions/Home";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
 import UserInfoPopup from "../../components/UserInfo/UserInfoPopup";
 
 class Header extends React.Component {
+  onLoveNotificationSelect = () => {
+    this.setState({
+      loveNotification: !this.state.loveNotification
+    });
+    this.props.selectedHeaderIcon("love");
+  };
   onAppNotificationSelect = () => {
     this.setState({
       appNotification: !this.state.appNotification
     });
+     this.props.selectedHeaderIcon("notif");
   };
   onMailNotificationSelect = () => {
     this.setState({
       mailNotification: !this.state.mailNotification
     });
+     this.props.selectedHeaderIcon("message");
   };
   onLangSwitcherSelect = event => {
     this.setState({
@@ -62,6 +71,7 @@ class Header extends React.Component {
       userInfo: false,
       mailNotification: false,
       appNotification: false,
+      loveNotification:false,
       searchBox: false,
       apps: false
     });
@@ -149,7 +159,8 @@ class Header extends React.Component {
       mailNotification: false,
       userInfo: false,
       langSwitcher: false,
-      appNotification: false
+      appNotification: false,
+      loveNotification:false,
     };
   }
 
@@ -164,7 +175,8 @@ class Header extends React.Component {
       drawerType,
       locale,
       navigationStyle,
-      horizontalNavPosition
+      horizontalNavPosition,
+      headerSelectedIcon
     } = this.props;
     const drawerStyle = drawerType.includes(FIXED_DRAWER)
       ? "d-block d-xl-none"
@@ -230,6 +242,7 @@ class Header extends React.Component {
           /> */}
           {navigationStyle === HORIZONTAL_NAVIGATION &&
             horizontalNavPosition === INSIDE_THE_HEADER && <Menu />}
+            {console.log("headerSelectedIcon ",headerSelectedIcon)}
 
           <ul className="header-notifications list-inline ml-auto ">
             {/* <li className="list-inline-item">
@@ -282,28 +295,34 @@ class Header extends React.Component {
 
             {/* love not */}
             <li className="list-inline-item app-tour">
-              <Dropdown className="quick-menu" isOpen="" toggle="">
+              <Dropdown className="quick-menu"  isOpen={this.state.loveNotification}
+                toggle={this.onLoveNotificationSelect.bind(this)}>
                 <DropdownToggle
                   className="d-inline-block"
                   tag="span"
                   data-toggle="dropdown"
                 >
+                <Link href="/home/love">
                   <IconButton className="icon-btn">
-                    {/* <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" /> */}
-                    <img
-                      src="../../static/images/icons/standard/Love_Icon_Standard.svg"
+                   <img
+                      src={headerSelectedIcon!="love"?"../../static/images/icons/standard/Love_Icon_Standard.svg":"../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"}
                       alt="Love Icon"
                     />
+                     {/* {this.state.loveNotification&&<img
+                      src="../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
+                      alt="Love Icon"
+                    />} */}
                   </IconButton>
+                   </Link>
                 </DropdownToggle>
 
-                <DropdownMenu right>
+                {/* <DropdownMenu right>
                   <CardHeader
                     styleName="align-items-center"
                     heading={<IntlMessages id="appNotification.title" />}
                   />
                   <AppNotification />
-                </DropdownMenu>
+                </DropdownMenu> */}
               </Dropdown>
             </li>
             {/* Notifications */}
@@ -321,7 +340,7 @@ class Header extends React.Component {
                   <IconButton className="icon-btn">
                     {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                     <img
-                      src="../../static/images/icons/standard/Notifications_Icon_Standard.svg"
+                      src={headerSelectedIcon!="notif"?"../../static/images/icons/standard/Notifications_Icon_Standard.svg":"../../static/images/icons/Highlighted/Notifications_Icon_Highlighted.svg"}
                       alt="Notifications"
                     />
                   </IconButton>
@@ -352,7 +371,7 @@ class Header extends React.Component {
                   <IconButton className="icon-btn">
                     {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                     <img
-                      src="../../static/images/icons/standard/Messages_Icon_Standard.svg"
+                      src={headerSelectedIcon!="message"?"../../static/images/icons/standard/Messages_Icon_Standard.svg":"../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"}
                       alt="Notifications"
                     />
                   </IconButton>
@@ -431,16 +450,20 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = ({ settings ,home}) => {
   const {
     drawerType,
     locale,
     navigationStyle,
     horizontalNavPosition
   } = settings;
-  return { drawerType, locale, navigationStyle, horizontalNavPosition };
+   const {
+    headerSelectedIcon
+  } = home;
+
+  return { drawerType, locale, navigationStyle, horizontalNavPosition,headerSelectedIcon };
 };
 
 export default withRouter(
-  connect(mapStateToProps, { toggleCollapsedNav, switchLanguage })(Header)
+  connect(mapStateToProps, { toggleCollapsedNav, switchLanguage,selectedHeaderIcon })(Header)
 );
