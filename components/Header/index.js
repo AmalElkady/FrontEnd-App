@@ -242,7 +242,6 @@ class Header extends React.Component {
           /> */}
           {navigationStyle === HORIZONTAL_NAVIGATION &&
             horizontalNavPosition === INSIDE_THE_HEADER && <Menu />}
-            {console.log("headerSelectedIcon ",headerSelectedIcon)}
 
           <ul className="header-notifications list-inline ml-auto ">
             {/* <li className="list-inline-item">

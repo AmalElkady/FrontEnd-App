@@ -12,6 +12,8 @@ import {
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   CLICKED_ID
 } from "../constants/ActionTypes";
+import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
+import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
 
 const initialProfileState = {
   ppAccessApproveRemove: false,
@@ -19,7 +21,14 @@ const initialProfileState = {
   incomingRequestsData: null,
 
   sendLoveMatchRequest: false,
-  loveSentRequests: null,
+
+  endOfResultLoveSentRequests: false, // for Love Sent requests
+  scoreHLoveSentRequests: "",
+  OffsetLoveSentRequests: 0,
+  loveSentRequestsDates: "",
+  loveSentRequestsOrder: "",
+  loveSentRequestsProfiles: "",
+
   loveMatchedAndReceivedRequests: null,
 
   userViews: null,
@@ -43,7 +52,8 @@ const initialProfileState = {
   notificationLoveOrder: null,
   notificationLoveCount: null,
 
-  clicked_id: null
+  clicked_id: null,
+  limitReturnedItems: 5
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -76,10 +86,35 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_LOVE_SENT_REQUESTS_SUCCESS: {
-      console.log("form reducer love sent requests ", action.payload);
+      console.log(
+        "form reducer love sent requests ",
+        action.payload,
+        action.payload.profiles
+      );
+      const loveSentProfiles = map2ArrTo1Arr(
+        action.payload.order,
+        action.payload.profiles
+      );
+      const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+      state.OffsetLoveSentRequests = offset;
+      state.scoreHLoveSentRequests = SL;
+      if (action.payload.profiles.length == 0) {
+        state.endOfResultLoveSentRequests = true;
+      }
       return {
         ...state,
-        loveSentRequests: action.payload
+        loveSentRequestsDates: [
+          ...state.loveSentRequestsDates,
+          ...action.payload.dates
+        ],
+        // loveSentRequestsOrder: [
+        //   ...state.loveSentRequestsOrder,
+        //   ...action.payload.order
+        // ],
+        loveSentRequestsProfiles: [
+          ...state.loveSentRequestsProfiles,
+          ...loveSentProfiles
+        ]
       };
     }
     case GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS: {

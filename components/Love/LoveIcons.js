@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import {getLoveMatchedAndReceivedRequests,getLoveSentRequests} from "../../actions/Interaction"
 import {
   NotificationContainer,
   NotificationManager
@@ -34,15 +35,26 @@ export default function LoveIcons() {
  const handleChangeIcon = event => {
     setSelectedValue(event.target.value);
   }; 
-  //const PPPhotoSelected = useSelector(state => state.profile.ppPhotoSelected);
+  
+  const OffsetLoveSentRequests = useSelector(state => state.interaction.OffsetLoveSentRequests);
+  const scoreHLoveSentRequests=useSelector(state => state.interaction.scoreHLoveSentRequests);
+  const endOfResultLoveSentRequests=useSelector(state => state.interaction.endOfResultLoveSentRequests);
   
 
   /////////
   let myRef = React.createRef();
 
   useEffect(() => {
-  }, []);
-
+    if(selectedValue==0){
+       dispatch(getLoveMatchedAndReceivedRequests(1,"",""));
+    }
+    else if(selectedValue==1){
+        dispatch(getLoveSentRequests(scoreHLoveSentRequests,OffsetLoveSentRequests))
+    }
+    else if(selectedValue==2){
+        dispatch(getLoveMatchedAndReceivedRequests(0,"",""));
+    }
+  }, [selectedValue]);
   return (
     <>
       {/* <Grid container>

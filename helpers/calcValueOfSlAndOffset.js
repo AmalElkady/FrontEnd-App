@@ -12,6 +12,5 @@ export const calcValueOfSlAndOffset = arr => {
       }
     }
   }
-  // console.log("from fun calc 3", offset, SL);
   return { offset, SL };
 };
