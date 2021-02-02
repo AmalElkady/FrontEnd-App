@@ -28,3 +28,29 @@
     max-width:52%;
     }
 }
+
+
+.items-container{
+    border: 2px solid #b72051;
+    margin-top: 1rem !important;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.item-container{
+    padding: 1rem;
+    border-bottom: .5px solid #84173a !important;
+    color:$secondary ;
+
+    & .item-btn{
+        padding:.4rem !important;
+        border-left: .5px solid #84173a !important;
+        border-radius: unset !important;
+    }
+    & .item-image{
+         border-radius:1rem;
+        & img{
+            border-radius:1rem;
+        }
+    }
+}

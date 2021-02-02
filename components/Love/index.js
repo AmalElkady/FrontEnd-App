@@ -5,8 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../../util/IntlMessages";
 
 import LoveIcons from "./LoveIcons"
-
-
+import ListItem from "./ListItem"
 import {
   NotificationContainer,
   NotificationManager
@@ -30,7 +29,9 @@ export default function Love() {
            <Grid item xs={12} className="grid-width-1" >
                      <LoveIcons/>
 			</Grid>
-            <Grid item xs={12} className="grid-width-1" >
+            <Grid item xs={12} className="grid-width-1 items-container" >
+                <ListItem/>
+                <ListItem/>
 		   </Grid>
       </Grid>
     </>
