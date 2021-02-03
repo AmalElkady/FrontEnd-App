@@ -288,10 +288,21 @@ interaction.getLoveMatchedAndReceivedRequests = function(
   scoreH,
   offset
 ) {
-  // "scoreH": "",
+  // "scoreL": "",
+  //  "scoreH":""
   // "offset": ""
 
-  console.log("from service getLoveSentRequests ", scoreH, offset);
+  let scoreL = "";
+  if (action === 1) {
+    scoreL = scoreH;
+    scoreH = "";
+  }
+  console.log(
+    "from service getLoveMatchedAndReceivedRequests ",
+    scoreH,
+    scoreL,
+    offset
+  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -305,6 +316,7 @@ interaction.getLoveMatchedAndReceivedRequests = function(
         },
         data: {
           scoreH,
+          scoreL,
           offset
         }
       };

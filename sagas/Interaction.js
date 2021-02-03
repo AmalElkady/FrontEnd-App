@@ -197,7 +197,6 @@ function* sendLoveMatchRequest({ payload }) {
 
 function* getLoveSentRequestsRequest({ payload }) {
   const { scoreH, offset } = payload;
-  console.log("love sent requests saga ", scoreH, offset);
   try {
     const returnedData = yield call(loveSentRequests, scoreH, offset);
     if (returnedData.message) {
@@ -211,7 +210,6 @@ function* getLoveSentRequestsRequest({ payload }) {
 }
 function* getLoveMatchedAndReceivedRequestsRequest({ payload }) {
   const { action, scoreH, offset } = payload;
-  console.log("love sent requests saga ", action, scoreH, offset);
   try {
     const returnedData = yield call(
       loveMatchedAndReceivedRequests,

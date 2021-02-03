@@ -1,67 +1,74 @@
-.icons-container{
-    padding:1rem !important;
-    border-bottom: 1px solid #84173a !important;
-   @media screen and (max-width: 575px) {
-       margin-top: 4rem !important;
-    }
+.icons-container {
+  padding: 1rem !important;
+  border-bottom: 1px solid #84173a !important;
+  @media screen and (max-width: 575px) {
+    margin-top: 4rem !important;
+  }
 }
 
-.icons-container:first-child div{
-    flex-direction: row;
-    margin: auto;
-    justify-content: space-around;
-    width: 100%;
+.icons-container:first-child div {
+  flex-direction: row;
+  margin: auto;
+  justify-content: space-around;
+  width: 100%;
 
   @media screen and (max-width: 575px) {
     flex-wrap: unset;
-    }
+  }
 }
-.m-r-label{
-     @media screen and (max-width: 575px) {
-    margin-right:-2rem !important;
-    }
-}
-
-.icons-container span div{
-    max-width:38%;
-    @media screen and (max-width: 575px) {
-    max-width:52%;
-    }
+.m-r-label {
+  @media screen and (max-width: 575px) {
+    margin-right: -2rem !important;
+  }
 }
 
+.icons-container span div {
+  max-width: 38%;
+  @media screen and (max-width: 575px) {
+    max-width: 52%;
+  }
+}
 
-.items-container{
-    border: 2px solid #b72051;
-    margin:auto !important;
-    margin-top: 1rem !important;
-    border-radius: 1rem;
-    padding: 1rem;
-    max-width:65% !important;
+.items-scroll {
+  margin-top: 2rem !important;
+  height: 400px !important;
+  @media screen and (max-width: 575px) {
+    height: 325px !important;
+  }
+}
+.items-container {
+  border: 2px solid #b72051;
+  margin: auto !important;
+  border-radius: 1rem;
+  padding: 1rem;
+  max-width: 70% !important;
+  background-color: #f4f4f7;
+  @media screen and (max-width: 575px) {
+    max-width: 90% !important;
+    padding: 0rem;
+  }
+}
+
+.item-container {
+  padding: 1rem;
+  border-bottom: 0.5px solid #84173a !important;
+  color: $secondary;
+
+  & .item-btn {
+    padding: 0.4rem !important;
+    border-left: 0.5px solid #84173a !important;
+    border-radius: unset !important;
+    & span {
+      width: 50%;
       @media screen and (max-width: 575px) {
-    max-width:100%;
+        width: 100%;
+      }
     }
-}
-
-.item-container{
-    padding: 1rem;
-    border-bottom: .5px solid #84173a !important;
-    color:$secondary ;
-
-    & .item-btn{
-        padding:.4rem !important;
-        border-left: .5px solid #84173a !important;
-        border-radius: unset !important;
-        & span{
-            width:50%;
-              @media screen and (max-width: 575px) {
-               width:100%;
-               }
-        }
+  }
+  & .item-image {
+    border-radius: 1rem;
+    & img {
+      border-radius: 1rem;
     }
-    & .item-image{
-         border-radius:1rem;
-        & img{
-            border-radius:1rem;
-        }
-    }
+  }
 }

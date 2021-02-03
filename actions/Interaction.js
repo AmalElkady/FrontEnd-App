@@ -21,7 +21,8 @@ import {
   GET_BLOCKED_USERS_SUCCESS,
   GET_NOTIFICATION_VIEW_PP_LOVE,
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
-  CLICKED_ID
+  CLICKED_ID,
+  SELECTED_LOVE_ICON
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -86,7 +87,6 @@ export const sendLoveMatchRequest = (profileid, country, city, varea) => {
 };
 
 export const sendLoveMatchRequestSuccess = data => {
-  console.log("from success love match request ", data);
   return {
     type: SEND_LOVE_MATCH_REQUEST_SUCCESS,
     payload: data
@@ -101,7 +101,6 @@ export const getLoveSentRequests = (scoreH, offset) => {
 };
 
 export const getLoveSentRequestsSuccess = data => {
-  console.log("from success get love requests ", data);
   return {
     type: GET_LOVE_SENT_REQUESTS_SUCCESS,
     payload: data
@@ -116,7 +115,6 @@ export const getLoveMatchedAndReceivedRequests = (action, scoreH, offset) => {
 };
 
 export const getLoveMatchedAndReceivedRequestsSuccess = data => {
-  console.log("from success get love matched requests ", data);
   return {
     type: GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS,
     payload: data
@@ -208,5 +206,12 @@ export const clickedId = id => {
   return {
     type: CLICKED_ID,
     payload: id
+  };
+};
+
+export const selectedLoveIcon = data => {
+  return {
+    type: SELECTED_LOVE_ICON,
+    payload: data
   };
 };

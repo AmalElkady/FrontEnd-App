@@ -10,6 +10,7 @@ import {
   UNBLOCK_USER_SUCCESS,
   GET_BLOCKED_USERS_SUCCESS,
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  SELECTED_LOVE_ICON,
   CLICKED_ID
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
@@ -26,10 +27,19 @@ const initialProfileState = {
   scoreHLoveSentRequests: "",
   OffsetLoveSentRequests: 0,
   loveSentRequestsDates: "",
-  loveSentRequestsOrder: "",
   loveSentRequestsProfiles: "",
 
-  loveMatchedAndReceivedRequests: null,
+  endOfResultLoveMatchedRequests: false, // for Love Matched
+  scoreHLoveMatchedRequests: "",
+  OffsetLoveMatchedRequests: 0,
+  loveMatchedRequestsDates: "",
+  loveMatchedRequestsProfiles: "",
+
+  endOfResultLoveReceivedRequests: false, // for Love Received
+  scoreHLoveReceivedRequests: "",
+  OffsetLoveReceivedRequests: 0,
+  loveReceivedRequestsDates: "",
+  loveReceivedRequestsProfiles: "",
 
   userViews: null,
 
@@ -53,6 +63,7 @@ const initialProfileState = {
   notificationLoveCount: null,
 
   clicked_id: null,
+  loveSelectedIcon: null,
   limitReturnedItems: 5
 };
 
@@ -86,19 +97,15 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_LOVE_SENT_REQUESTS_SUCCESS: {
-      console.log(
-        "form reducer love sent requests ",
-        action.payload,
-        action.payload.profiles
-      );
       const loveSentProfiles = map2ArrTo1Arr(
         action.payload.order,
         action.payload.profiles
       );
-      const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
-      state.OffsetLoveSentRequests = offset;
-      state.scoreHLoveSentRequests = SL;
-      if (action.payload.profiles.length == 0) {
+      if (action.payload.profiles.length != 0) {
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+        state.OffsetLoveSentRequests = offset;
+        state.scoreHLoveSentRequests = SL;
+      } else if (action.payload.profiles.length == 0) {
         state.endOfResultLoveSentRequests = true;
       }
       return {
@@ -107,10 +114,6 @@ const Interaction = (state = initialProfileState, action) => {
           ...state.loveSentRequestsDates,
           ...action.payload.dates
         ],
-        // loveSentRequestsOrder: [
-        //   ...state.loveSentRequestsOrder,
-        //   ...action.payload.order
-        // ],
         loveSentRequestsProfiles: [
           ...state.loveSentRequestsProfiles,
           ...loveSentProfiles
@@ -118,10 +121,49 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_LOVE_MATCHED_AND_RECEIVED_REQUESTS_SUCCESS: {
-      console.log("form reducer love matched requests ", action.payload);
+      let loveProfiles = [];
+      if (state.loveSelectedIcon === "match") {
+        if (action.payload.dates.length != 0) {
+          loveProfiles = map2ArrTo1Arr(
+            action.payload.order,
+            action.payload.matched
+          );
+          state.loveMatchedRequestsDates = [
+            ...state.loveMatchedRequestsDates,
+            ...loveProfiles
+          ];
+          state.loveMatchedRequestsProfiles = [
+            ...state.loveMatchedRequestsProfiles,
+            ...loveProfiles
+          ];
+          const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+          state.OffsetLoveMatchedRequests = offset;
+          state.scoreHLoveMatchedRequests = SL;
+        } else if (action.payload.dates.length === 0) {
+          state.endOfResultLoveMatchedRequests = true;
+        }
+      } else if (state.loveSelectedIcon === "received") {
+        loveProfiles = map2ArrTo1Arr(
+          action.payload.order,
+          action.payload.profiles
+        );
+        state.loveReceivedRequestsDates = [
+          ...state.loveReceivedRequestsDates,
+          ...loveProfiles
+        ];
+        state.loveReceivedRequestsProfiles = [
+          ...state.loveReceivedRequestsProfiles,
+          ...loveProfiles
+        ];
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+        state.OffsetLoveReceivedRequests = offset;
+        state.scoreHLoveReceivedRequests = SL;
+        if (action.payload.profiles.length == 0) {
+          state.endOfResultLoveReceivedRequests = true;
+        }
+      }
       return {
-        ...state,
-        loveMatchedAndReceivedRequests: action.payload
+        ...state
       };
     }
     case GET_USER_VIEWS_SUCCESS: {
@@ -178,6 +220,11 @@ const Interaction = (state = initialProfileState, action) => {
         notificationLoveCount: action.payload.count.Love
       };
     }
+    case SELECTED_LOVE_ICON:
+      return {
+        ...state,
+        loveSelectedIcon: action.payload
+      };
     default:
       return state;
   }
