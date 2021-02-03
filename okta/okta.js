@@ -1567,7 +1567,7 @@ home.requestPhotoRead=()=>{
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							//console.log("respo signedRequest from okta: ",response);
+																							console.log("respo signedRequest from okta: ",response);
 																							
 																							   if(response){
 																										resolve(response);					 

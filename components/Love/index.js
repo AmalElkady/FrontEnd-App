@@ -11,6 +11,10 @@ import {
   getLoveSentRequests
 } from "../../actions/Interaction";
 
+import { mapSmallUserPhotoUrl } from "../../helpers/mapSmallUserPhotoUrl";
+
+import { requestPhotoRead } from "../../actions/Home";
+
 import LoveIcons from "./LoveIcons";
 import ListItem from "./ListItem";
 import {
@@ -27,9 +31,14 @@ const useStyles = makeStyles(theme => ({
 export default function Love() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [finalUsersProfiles, setFinalUsersProfiles] = useState(null);
 
   const loveSelectedIcon = useSelector(
     state => state.interaction.loveSelectedIcon
+  );
+
+  const photoReadSignedRequest = useSelector(
+    state => state.home.photoReadSignedRequest
   );
 
   //sent love
@@ -74,10 +83,60 @@ export default function Love() {
   );
 
   useEffect(() => {
-    if (LoveSentRequestsProfiles.length != 0) {
-      console.log("LoveSentRequestsProfiles ", LoveSentRequestsProfiles);
+    if (loveSelectedIcon == "sent" && LoveSentRequestsProfiles.length != 0) {
+      dispatch(requestPhotoRead());
     }
   }, [LoveSentRequestsProfiles]);
+
+  useEffect(() => {
+    if (
+      loveSelectedIcon == "match" &&
+      LoveMatchedRequestsProfiles.length != 0
+    ) {
+      dispatch(requestPhotoRead());
+    }
+  }, [LoveMatchedRequestsProfiles]);
+
+  useEffect(() => {
+    if (
+      loveSelectedIcon == "received" &&
+      LoveReceivedRequestsProfiles.length != 0
+    ) {
+      dispatch(requestPhotoRead());
+    }
+  }, [LoveReceivedRequestsProfiles]);
+
+  useEffect(() => {
+    if (photoReadSignedRequest != null) {
+      setFinalUsersProfiles(null);
+      let finalLoveSentRequestsProfiles = [];
+      if (loveSelectedIcon == "sent") {
+        if (LoveSentRequestsProfiles.length != 0) {
+          finalLoveSentRequestsProfiles = mapSmallUserPhotoUrl(
+            LoveSentRequestsProfiles,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalLoveSentRequestsProfiles);
+        }
+      } else if (loveSelectedIcon == "match") {
+        if (LoveMatchedRequestsProfiles.length != 0) {
+          finalLoveSentRequestsProfiles = mapSmallUserPhotoUrl(
+            LoveMatchedRequestsProfiles,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalLoveSentRequestsProfiles);
+        }
+      } else if (loveSelectedIcon == "received") {
+        if (LoveReceivedRequestsProfiles.length != 0) {
+          finalLoveSentRequestsProfiles = mapSmallUserPhotoUrl(
+            LoveReceivedRequestsProfiles,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalLoveSentRequestsProfiles);
+        }
+      }
+    }
+  }, [photoReadSignedRequest]);
 
   // handle scroll for list of sent love requests
   const handleScrollSentLoveRequests = () => {
@@ -123,7 +182,7 @@ export default function Love() {
         <Grid item xs={12} className="grid-width-1">
           <LoveIcons />
         </Grid>
-        {loveSelectedIcon == "sent" && LoveSentRequestsProfiles && (
+        {loveSelectedIcon == "sent" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
             dataLength={LoveSentRequestsProfiles.length}
@@ -151,7 +210,7 @@ export default function Love() {
             )}
           </InfiniteScroll>
         )}
-        {loveSelectedIcon == "match" && LoveMatchedRequestsProfiles && (
+        {loveSelectedIcon == "match" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
             height={300}
@@ -179,7 +238,7 @@ export default function Love() {
             )}
           </InfiniteScroll>
         )}
-        {loveSelectedIcon == "received" && LoveReceivedRequestsProfiles && (
+        {loveSelectedIcon == "received" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
             dataLength={LoveReceivedRequestsProfiles.length}

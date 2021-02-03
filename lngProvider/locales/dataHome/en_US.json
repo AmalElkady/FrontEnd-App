@@ -11,6 +11,10 @@
   "search.city": "City",
   "search.citySelect": "Select City",
 
+  "loveList.match": "Now you are matching with ",
+  "loveList.sent": "You had sent love to ",
+  "loveList.receoved": " had sent love to you",
+
   "sidebar.inbox": "Inbox",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",

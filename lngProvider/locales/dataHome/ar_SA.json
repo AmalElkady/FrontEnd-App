@@ -10,6 +10,11 @@
   "search.countrySelect": "اختر البلد",
   "search.age": "المدينة",
   "search.citySelect": "اختر المدينة",
+
+  "loveList.match": "أنت الآن تتطابق مع",
+  "loveList.sent": "كنت قد أرسلت اعجاب إلى  ",
+  "loveList.receoved": " أرسل لك اعجاب ",
+
   "sidebar.inbox": "Inbox",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",

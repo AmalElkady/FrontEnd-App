@@ -20,6 +20,10 @@ const useStyles = makeStyles(theme => ({
 export default function ListItem({ user }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const loveSelectedIcon = useSelector(
+    state => state.interaction.loveSelectedIcon
+  );
+
   useEffect(() => {}, []);
 
   return (
@@ -29,13 +33,31 @@ export default function ListItem({ user }) {
           <Grid container>
             <Grid item xs={2}>
               <div className="item-image">
-                <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
+                {/* <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" /> */}
+                <img src={user._} />
               </div>
             </Grid>
             <Grid item xs={1}></Grid>
             <Grid item xs={9}>
               <Typography variant="body1" component="p">
-                Now you are matching with {user.n}
+                {loveSelectedIcon == "match" ? (
+                  <>
+                    <IntlMessages id="loveList.match" />
+                    {user.n}
+                  </>
+                ) : loveSelectedIcon == "sent" ? (
+                  <>
+                    <IntlMessages id="loveList.sent" />
+                    {user.n}
+                  </>
+                ) : loveSelectedIcon == "received" ? (
+                  <>
+                    {user.n}
+                    <IntlMessages id="loveList.received" />
+                  </>
+                ) : (
+                  ""
+                )}
               </Typography>
             </Grid>
           </Grid>
