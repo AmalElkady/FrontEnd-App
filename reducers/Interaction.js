@@ -48,6 +48,18 @@ const initialProfileState = {
   outgoingPPRequestsDates: "",
   outgoingPPRequestsProfiles: "",
 
+  endOfResultIncomingPPApprovedRequests: false, // for private photos incoming approved requests
+  scoreHIncomingPPApprovedRequests: "",
+  OffsetIncomingPPApprovedRequests: 0,
+  incomingPPApprovedRequestsDates: "",
+  incomingPPApprovedRequestsProfiles: "",
+
+  endOfResultIncomingPPNotApprovedRequests: false, // for private photos incoming Not approved requests
+  scoreHIncomingPPNotApprovedRequests: "",
+  OffsetIncomingPPNotApprovedRequests: 0,
+  incomingPPNotApprovedRequestsDates: "",
+  incomingPPNotApprovedRequestsProfiles: "",
+
   userViews: null,
 
   userBlocked: false,
@@ -116,9 +128,58 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS: {
       console.log("form reducer incoming ", action.payload);
+      let incomingPPProfiles = [];
+      if (state.privateSelectedIcon === "incomingApproved") {
+        if (action.payload.order.length != 0) {
+          incomingPPProfiles = map2ArrTo1Arr(
+            action.payload.order,
+            action.payload.approved
+          );
+          state.incomingPPApprovedRequestsDates = [
+            ...state.incomingPPApprovedRequestsDates,
+            ...action.payload.dates
+          ];
+          state.incomingPPApprovedRequestsProfiles = [
+            ...state.incomingPPApprovedRequestsProfiles,
+            ...incomingPPProfiles
+          ];
+          const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+          state.OffsetIncomingPPApprovedRequests = offset;
+          state.scoreHIncomingPPApprovedRequests = SL;
+        }
+        if (
+          action.payload.order.length === 0 ||
+          action.payload.order.length < state.limitReturnedItems
+        ) {
+          state.endOfResultIncomingPPApprovedRequests = true;
+        }
+      } else if (state.privateSelectedIcon === "incomingNotApproved") {
+        if (action.payload.order.length != 0) {
+          incomingPPProfiles = map2ArrTo1Arr(
+            action.payload.order,
+            action.payload.pending
+          );
+          state.incomingPPNotApprovedRequestsDates = [
+            ...state.incomingPPNotApprovedRequestsDates,
+            ...action.payload.dates
+          ];
+          state.incomingPPNotApprovedRequestsProfiles = [
+            ...state.incomingPPNotApprovedRequestsProfiles,
+            ...incomingPPProfiles
+          ];
+          const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+          state.OffsetIncomingPPNotApprovedRequests = offset;
+          state.scoreHIncomingPPNotApprovedRequests = SL;
+        }
+        if (
+          action.payload.order.length === 0 ||
+          action.payload.order.length < state.limitReturnedItems
+        ) {
+          state.endOfResultIncomingPPNotApprovedRequests = true;
+        }
+      }
       return {
-        ...state,
-        incomingRequestsData: action.payload
+        ...state
       };
     }
     case SEND_LOVE_MATCH_REQUEST_SUCCESS: {
@@ -162,7 +223,7 @@ const Interaction = (state = initialProfileState, action) => {
           );
           state.loveMatchedRequestsDates = [
             ...state.loveMatchedRequestsDates,
-            ...loveProfiles
+            ...action.payload.dates
           ];
           state.loveMatchedRequestsProfiles = [
             ...state.loveMatchedRequestsProfiles,
@@ -181,7 +242,7 @@ const Interaction = (state = initialProfileState, action) => {
         );
         state.loveReceivedRequestsDates = [
           ...state.loveReceivedRequestsDates,
-          ...loveProfiles
+          ...action.payload.dates
         ];
         state.loveReceivedRequestsProfiles = [
           ...state.loveReceivedRequestsProfiles,

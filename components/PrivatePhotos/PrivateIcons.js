@@ -40,11 +40,11 @@ export default function PrivateIcons() {
   );
 
   // Incoming approved requests
-  const OffsetLoveMatchedRequests = useSelector(
-    state => state.interaction.OffsetLoveMatchedRequests
+  const OffsetIncomingPPApprovedRequests = useSelector(
+    state => state.interaction.OffsetIncomingPPApprovedRequests
   );
-  const scoreHLoveMatchedRequests = useSelector(
-    state => state.interaction.scoreHLoveMatchedRequests
+  const scoreHIncomingPPApprovedRequests = useSelector(
+    state => state.interaction.scoreHIncomingPPApprovedRequests
   );
 
   // Incoming not approved requests
@@ -67,17 +67,17 @@ export default function PrivateIcons() {
       );
       dispatch(selectedPrivateIcon("outgoing"));
     } else if (selectedValue == 1) {
-      //   dispatch(
-      //     getLoveSentRequests(scoreHLoveSentRequests, OffsetLoveSentRequests)
-      //   );
+      dispatch(
+        getPhotoPPReadIncomingApprovedPendingRequests(
+          1,
+          scoreHIncomingPPApprovedRequests,
+          OffsetIncomingPPApprovedRequests
+        )
+      );
       dispatch(selectedPrivateIcon("incomingApproved"));
     } else if (selectedValue == 2) {
-      //   dispatch(
-      //     getLoveMatchedAndReceivedRequests(
-      //       0,
-      //       scoreHLoveReceivedRequests,
-      //       OffsetLoveReceivedRequests
-      //     )
+      // dispatch(
+      //      getPhotoPPReadIncomingApprovedPendingRequests(0,scoreHLoveSentRequests, OffsetLoveSentRequests)
       //   );
       dispatch(selectedPrivateIcon("incomingNotApproved"));
     }
