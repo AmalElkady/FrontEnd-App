@@ -48,11 +48,11 @@ export default function PrivateIcons() {
   );
 
   // Incoming not approved requests
-  const OffsetLoveReceivedRequests = useSelector(
-    state => state.interaction.OffsetLoveReceivedRequests
+  const OffsetIncomingPPNotApprovedRequests = useSelector(
+    state => state.interaction.OffsetIncomingPPNotApprovedRequests
   );
-  const scoreHLoveReceivedRequests = useSelector(
-    state => state.interaction.scoreHLoveReceivedRequests
+  const scoreHIncomingPPNotApprovedRequests = useSelector(
+    state => state.interaction.scoreHIncomingPPNotApprovedRequests
   );
   /////////
   let myRef = React.createRef();
@@ -76,9 +76,13 @@ export default function PrivateIcons() {
       );
       dispatch(selectedPrivateIcon("incomingApproved"));
     } else if (selectedValue == 2) {
-      // dispatch(
-      //      getPhotoPPReadIncomingApprovedPendingRequests(0,scoreHLoveSentRequests, OffsetLoveSentRequests)
-      //   );
+      dispatch(
+        getPhotoPPReadIncomingApprovedPendingRequests(
+          0,
+          scoreHIncomingPPNotApprovedRequests,
+          OffsetIncomingPPNotApprovedRequests
+        )
+      );
       dispatch(selectedPrivateIcon("incomingNotApproved"));
     }
   }, [selectedValue]);

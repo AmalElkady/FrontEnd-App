@@ -67,17 +67,17 @@ export default function PrivatePhotos() {
   );
 
   //Incoming requests not approved
-  const LoveReceivedRequestsProfiles = useSelector(
-    state => state.interaction.loveReceivedRequestsProfiles
+  const incomingPPNotApprovedRequestsProfiles = useSelector(
+    state => state.interaction.incomingPPNotApprovedRequestsProfiles
   );
-  const OffsetLoveReceivedRequests = useSelector(
-    state => state.interaction.OffsetLoveReceivedRequests
+  const OffsetIncomingPPNotApprovedRequests = useSelector(
+    state => state.interaction.OffsetIncomingPPNotApprovedRequests
   );
-  const scoreHLoveReceivedRequests = useSelector(
-    state => state.interaction.scoreHLoveReceivedRequests
+  const scoreHIncomingPPNotApprovedRequests = useSelector(
+    state => state.interaction.scoreHIncomingPPNotApprovedRequests
   );
-  const endOfResultLoveReceivedRequests = useSelector(
-    state => state.interaction.endOfResultLoveReceivedRequests
+  const endOfResultIncomingPPNotApprovedRequests = useSelector(
+    state => state.interaction.endOfResultIncomingPPNotApprovedRequests
   );
 
   useEffect(() => {
@@ -98,14 +98,14 @@ export default function PrivatePhotos() {
     }
   }, [incomingPPApprovedRequestsProfiles]);
 
-  //   useEffect(() => {
-  //     if (
-  //       loveSelectedIcon == "received" &&
-  //       LoveReceivedRequestsProfiles.length != 0
-  //     ) {
-  //       dispatch(requestPhotoRead());
-  //     }
-  //   }, [LoveReceivedRequestsProfiles]);
+  useEffect(() => {
+    if (
+      privateSelectedIcon == "incomingNotApproved" &&
+      incomingPPNotApprovedRequestsProfiles.length != 0
+    ) {
+      dispatch(requestPhotoRead());
+    }
+  }, [incomingPPNotApprovedRequestsProfiles]);
 
   useEffect(() => {
     if (photoReadSignedRequest != null) {
@@ -128,13 +128,13 @@ export default function PrivatePhotos() {
           setFinalUsersProfiles(finalPPRequestsProfiles);
         }
       } else if (privateSelectedIcon == "incomingNotApproved") {
-        //   if (LoveReceivedRequestsProfiles.length != 0) {
-        //     finalPPRequestsProfiles = mapSmallUserPhotoUrl(
-        //       LoveReceivedRequestsProfiles,
-        //       photoReadSignedRequest.signedRequest
-        //     );
-        //     setFinalUsersProfiles(finalLoveSentRequestsProfiles);
-        //   }
+        if (incomingPPNotApprovedRequestsProfiles.length != 0) {
+          finalPPRequestsProfiles = mapSmallUserPhotoUrl(
+            incomingPPNotApprovedRequestsProfiles,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalPPRequestsProfiles);
+        }
       }
     }
   }, [photoReadSignedRequest]);
@@ -168,16 +168,16 @@ export default function PrivatePhotos() {
 
   // handle scroll for list of Incoming requests not approved
   const handleScrollIncomingNotApprovedRequests = () => {
-    // if (!endOfResultLoveReceivedRequests) {
-    //   //  Incoming Not Approved requests (next options)
-    //   dispatch(
-    //     getLoveMatchedAndReceivedRequests(
-    //       0,
-    //       scoreHLoveReceivedRequests,
-    //       OffsetLoveReceivedRequests
-    //     )
-    //   );
-    // }
+    if (!endOfResultIncomingPPNotApprovedRequests) {
+      //  Incoming Not Approved requests (next options)
+      dispatch(
+        getPhotoPPReadIncomingApprovedPendingRequests(
+          0,
+          scoreHIncomingPPNotApprovedRequests,
+          OffsetIncomingPPNotApprovedRequests
+        )
+      );
+    }
   };
 
   return (
@@ -243,34 +243,34 @@ export default function PrivatePhotos() {
             )}
           </InfiniteScroll>
         )}
-        {/* {loveSelectedIcon == "received" && finalUsersProfiles && (
+        {privateSelectedIcon == "incomingNotApproved" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
-            dataLength={LoveReceivedRequestsProfiles.length}
+            dataLength={incomingPPNotApprovedRequestsProfiles.length}
             height={300}
-            next={handleScrollReceivedLoveRequests}
-            hasMore={!endOfResultLoveReceivedRequests}
+            next={handleScrollIncomingNotApprovedRequests}
+            hasMore={!endOfResultIncomingPPNotApprovedRequests}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {LoveReceivedRequestsProfiles.length != 0 && (
-                  <b>Yay! You have seen received love requests </b>
+                {incomingPPNotApprovedRequestsProfiles.length != 0 && (
+                  <b>Yay! You have seen incoming pp not approved requests </b>
                 )}
-                {LoveReceivedRequestsProfiles.length === 0 && (
-                  <b>Yay! You don't have received love requests </b>
+                {incomingPPNotApprovedRequestsProfiles.length === 0 && (
+                  <b>Yay! You don't have incoming pp not approved requests </b>
                 )}
               </p>
             }
           >
-            {LoveReceivedRequestsProfiles.length != 0 && (
+            {incomingPPNotApprovedRequestsProfiles.length != 0 && (
               <Grid item xs={12} className="items-container">
-                {LoveReceivedRequestsProfiles.map((option, index) => (
-                  <ListItem key={option.i} user={option} />
+                {incomingPPNotApprovedRequestsProfiles.map((option, index) => (
+                  <PPListItem key={option.i} user={option} />
                 ))}
               </Grid>
             )}
           </InfiniteScroll>
-        )} */}
+        )}
       </Grid>
     </>
   );

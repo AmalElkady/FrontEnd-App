@@ -33,7 +33,6 @@ export default function ListItem({ user }) {
           <Grid container>
             <Grid item xs={2}>
               <div className="item-image">
-                {/* <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" /> */}
                 <img src={user._} />
               </div>
             </Grid>
@@ -52,8 +51,8 @@ export default function ListItem({ user }) {
                   </>
                 ) : privateSelectedIcon == "incomingNotApproved" ? (
                   <>
-                    {user.n}
                     <IntlMessages id="ppList.incomingNotApproved" />
+                    {user.n}
                   </>
                 ) : (
                   ""
