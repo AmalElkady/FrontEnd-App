@@ -15,6 +15,10 @@
   "loveList.sent": "كنت قد أرسلت اعجاب إلى  ",
   "loveList.receoved": " أرسل لك اعجاب ",
 
+  "ppList.outgoing": "تمت الموافقة على طلبك من  ",
+  "ppList.incomingApproved": "أنت وافقت على طلب ",
+  "ppList.incomingNotApproved": "لم توافق على طلب ",
+
   "sidebar.inbox": "Inbox",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",

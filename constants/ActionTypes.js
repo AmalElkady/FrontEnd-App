@@ -174,6 +174,7 @@ export const HIDE_TIMER = "hide_timer";
 //Home
 export const SELECTED_HEADER_ICON = "selected_header_icon";
 export const SELECTED_LOVE_ICON = "selected_love_icon";
+export const SELECTED_PRIVATE_ICON = "selected_private_icon";
 
 ////// SEARCH
 /// ONLINE

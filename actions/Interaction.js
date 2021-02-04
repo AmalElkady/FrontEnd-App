@@ -22,7 +22,8 @@ import {
   GET_NOTIFICATION_VIEW_PP_LOVE,
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   CLICKED_ID,
-  SELECTED_LOVE_ICON
+  SELECTED_LOVE_ICON,
+  SELECTED_PRIVATE_ICON
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -45,14 +46,14 @@ export const ppAccessApproveRemoveSuccess = data => {
   };
 };
 
-export const getPhotoPPReadOutgoingRequestsApprovales = (scoreH, offset) => {
+export const getPhotoPPReadOutgoingRequestsApprovals = (scoreH, offset) => {
   return {
     type: GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES,
     payload: { scoreH, offset }
   };
 };
 
-export const getPhotoPPReadOutgoingRequestsApprovalesSuccess = data => {
+export const getPhotoPPReadOutgoingRequestsApprovalsSuccess = data => {
   console.log("from success outgoing ", data);
   return {
     type: GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS,
@@ -212,6 +213,13 @@ export const clickedId = id => {
 export const selectedLoveIcon = data => {
   return {
     type: SELECTED_LOVE_ICON,
+    payload: data
+  };
+};
+
+export const selectedPrivateIcon = data => {
+  return {
+    type: SELECTED_PRIVATE_ICON,
     payload: data
   };
 };

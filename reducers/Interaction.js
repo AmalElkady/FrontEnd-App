@@ -11,6 +11,7 @@ import {
   GET_BLOCKED_USERS_SUCCESS,
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   SELECTED_LOVE_ICON,
+  SELECTED_PRIVATE_ICON,
   CLICKED_ID
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
@@ -41,6 +42,12 @@ const initialProfileState = {
   loveReceivedRequestsDates: "",
   loveReceivedRequestsProfiles: "",
 
+  endOfResultOutgoingPPRequests: false, // for private photos outgoing requests
+  scoreHOutgoingPPRequests: "",
+  OffsetOutgoingPPRequests: 0,
+  outgoingPPRequestsDates: "",
+  outgoingPPRequestsProfiles: "",
+
   userViews: null,
 
   userBlocked: false,
@@ -64,6 +71,7 @@ const initialProfileState = {
 
   clicked_id: null,
   loveSelectedIcon: null,
+  privateSelectedIcon: null,
   limitReturnedItems: 5
 };
 
@@ -77,9 +85,33 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS: {
       console.log("form reducer outgoing ", action.payload);
+      const outgoingPPProfiles = map2ArrTo1Arr(
+        action.payload.order,
+        action.payload.view_profiles
+      );
+      if (action.payload.view_profiles.length != 0) {
+        const { offset, SL } = calcValueOfSlAndOffset(
+          action.payload.view_dates
+        );
+        state.OffsetOutgoingPPRequests = offset;
+        state.scoreHOutgoingPPRequests = SL;
+      }
+      if (
+        action.payload.view_profiles.length == 0 ||
+        action.payload.view_profiles.length < state.limitReturnedItems
+      ) {
+        state.endOfResultOutgoingPPRequests = true;
+      }
       return {
         ...state,
-        outgoingRequestsData: action.payload
+        outgoingPPRequestsDates: [
+          ...state.outgoingPPRequestsDates,
+          ...action.payload.view_dates
+        ],
+        outgoingPPRequestsProfiles: [
+          ...state.outgoingPPRequestsProfiles,
+          ...outgoingPPProfiles
+        ]
       };
     }
     case GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS: {
@@ -224,6 +256,11 @@ const Interaction = (state = initialProfileState, action) => {
       return {
         ...state,
         loveSelectedIcon: action.payload
+      };
+    case SELECTED_PRIVATE_ICON:
+      return {
+        ...state,
+        privateSelectedIcon: action.payload
       };
     default:
       return state;

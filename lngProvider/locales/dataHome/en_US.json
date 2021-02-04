@@ -15,6 +15,10 @@
   "loveList.sent": "You had sent love to ",
   "loveList.receoved": " had sent love to you",
 
+  "ppList.outgoing": "Your request approved from ",
+  "ppList.incomingApproved": "You approved request of",
+  "ppList.incomingNotApproved": "You didn't approve request of",
+
   "sidebar.inbox": "Inbox",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",

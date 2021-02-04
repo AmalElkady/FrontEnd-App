@@ -19,7 +19,7 @@ import MailNotification from "../MailNotification/index";
 import AppNotification from "../AppNotification/index";
 import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
-import {selectedHeaderIcon} from "../../actions/Home";
+import { selectedHeaderIcon } from "../../actions/Home";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
@@ -32,17 +32,23 @@ class Header extends React.Component {
     });
     this.props.selectedHeaderIcon("love");
   };
+  onPrivatePhotosNotificationSelect = () => {
+    this.setState({
+      privatePhotoNotification: !this.state.privatePhotoNotification
+    });
+    this.props.selectedHeaderIcon("private");
+  };
   onAppNotificationSelect = () => {
     this.setState({
       appNotification: !this.state.appNotification
     });
-     this.props.selectedHeaderIcon("notif");
+    this.props.selectedHeaderIcon("notif");
   };
   onMailNotificationSelect = () => {
     this.setState({
       mailNotification: !this.state.mailNotification
     });
-     this.props.selectedHeaderIcon("message");
+    this.props.selectedHeaderIcon("message");
   };
   onLangSwitcherSelect = event => {
     this.setState({
@@ -71,7 +77,8 @@ class Header extends React.Component {
       userInfo: false,
       mailNotification: false,
       appNotification: false,
-      loveNotification:false,
+      loveNotification: false,
+      privatePhotoNotification: false,
       searchBox: false,
       apps: false
     });
@@ -160,7 +167,8 @@ class Header extends React.Component {
       userInfo: false,
       langSwitcher: false,
       appNotification: false,
-      loveNotification:false,
+      loveNotification: false,
+      privatePhotoNotification: false
     };
   }
 
@@ -294,25 +302,28 @@ class Header extends React.Component {
 
             {/* love not */}
             <li className="list-inline-item app-tour">
-              <Dropdown className="quick-menu"  isOpen={this.state.loveNotification}
-                toggle={this.onLoveNotificationSelect.bind(this)}>
+              <Dropdown
+                className="quick-menu"
+                isOpen={this.state.loveNotification}
+                toggle={this.onLoveNotificationSelect.bind(this)}
+              >
                 <DropdownToggle
                   className="d-inline-block"
                   tag="span"
                   data-toggle="dropdown"
                 >
-                <Link href="/home/love">
-                  <IconButton className="icon-btn">
-                   <img
-                      src={headerSelectedIcon!="love"?"../../static/images/icons/standard/Love_Icon_Standard.svg":"../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"}
-                      alt="Love Icon"
-                    />
-                     {/* {this.state.loveNotification&&<img
-                      src="../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
-                      alt="Love Icon"
-                    />} */}
-                  </IconButton>
-                   </Link>
+                  <Link href="/home/love">
+                    <IconButton className="icon-btn">
+                      <img
+                        src={
+                          headerSelectedIcon != "love"
+                            ? "../../static/images/icons/standard/Love_Icon_Standard.svg"
+                            : "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
+                        }
+                        alt="Love Icon"
+                      />
+                    </IconButton>
+                  </Link>
                 </DropdownToggle>
 
                 {/* <DropdownMenu right>
@@ -339,7 +350,11 @@ class Header extends React.Component {
                   <IconButton className="icon-btn">
                     {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                     <img
-                      src={headerSelectedIcon!="notif"?"../../static/images/icons/standard/Notifications_Icon_Standard.svg":"../../static/images/icons/Highlighted/Notifications_Icon_Highlighted.svg"}
+                      src={
+                        headerSelectedIcon != "notif"
+                          ? "../../static/images/icons/standard/Notifications_Icon_Standard.svg"
+                          : "../../static/images/icons/Highlighted/Notifications_Icon_Highlighted.svg"
+                      }
                       alt="Notifications"
                     />
                   </IconButton>
@@ -370,7 +385,11 @@ class Header extends React.Component {
                   <IconButton className="icon-btn">
                     {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                     <img
-                      src={headerSelectedIcon!="message"?"../../static/images/icons/standard/Messages_Icon_Standard.svg":"../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"}
+                      src={
+                        headerSelectedIcon != "message"
+                          ? "../../static/images/icons/standard/Messages_Icon_Standard.svg"
+                          : "../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"
+                      }
                       alt="Notifications"
                     />
                   </IconButton>
@@ -383,6 +402,42 @@ class Header extends React.Component {
                   />
                   <MailNotification />
                 </DropdownMenu>
+              </Dropdown>
+            </li>
+
+            {/* private photos notif */}
+            <li className="list-inline-item app-tour">
+              <Dropdown
+                className="quick-menu"
+                isOpen={this.state.privatePhotoNotification}
+                toggle={this.onPrivatePhotosNotificationSelect.bind(this)}
+              >
+                <DropdownToggle
+                  className="d-inline-block"
+                  tag="span"
+                  data-toggle="dropdown"
+                >
+                  <Link href="/home/private-photos">
+                    <IconButton className="icon-btn">
+                      <img
+                        src={
+                          headerSelectedIcon != "private"
+                            ? "../../static/images/icons/standard/Love_Icon_Standard.svg"
+                            : "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
+                        }
+                        alt="private Photo Icon"
+                      />
+                    </IconButton>
+                  </Link>
+                </DropdownToggle>
+
+                {/* <DropdownMenu right>
+                  <CardHeader
+                    styleName="align-items-center"
+                    heading={<IntlMessages id="appNotification.title" />}
+                  />
+                  <AppNotification />
+                </DropdownMenu> */}
               </Dropdown>
             </li>
 
@@ -449,20 +504,28 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings ,home}) => {
+const mapStateToProps = ({ settings, home }) => {
   const {
     drawerType,
     locale,
     navigationStyle,
     horizontalNavPosition
   } = settings;
-   const {
-    headerSelectedIcon
-  } = home;
+  const { headerSelectedIcon } = home;
 
-  return { drawerType, locale, navigationStyle, horizontalNavPosition,headerSelectedIcon };
+  return {
+    drawerType,
+    locale,
+    navigationStyle,
+    horizontalNavPosition,
+    headerSelectedIcon
+  };
 };
 
 export default withRouter(
-  connect(mapStateToProps, { toggleCollapsedNav, switchLanguage,selectedHeaderIcon })(Header)
+  connect(mapStateToProps, {
+    toggleCollapsedNav,
+    switchLanguage,
+    selectedHeaderIcon
+  })(Header)
 );

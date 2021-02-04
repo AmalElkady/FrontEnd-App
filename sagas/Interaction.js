@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import {
   ppAccessApproveRemoveSuccess,
-  getPhotoPPReadOutgoingRequestsApprovalesSuccess,
+  getPhotoPPReadOutgoingRequestsApprovalsSuccess,
   getPhotoPPReadIncomingApprovedPendingRequestsSuccess,
   sendLoveMatchRequestSuccess,
   getLoveSentRequestsSuccess,
@@ -145,7 +145,7 @@ function* getPhotoPPReadOutgoingRequestsApprovalesRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(getPhotoPPReadOutgoingRequestsApprovalesSuccess(returnedData));
+      yield put(getPhotoPPReadOutgoingRequestsApprovalsSuccess(returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
