@@ -422,7 +422,7 @@ class Header extends React.Component {
                       <img
                         src={
                           headerSelectedIcon != "private"
-                            ? "../../static/images/icons/standard/Love_Icon_Standard.svg"
+                            ? "../../static/images/icons/standard/PP4.svg"
                             : "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
                         }
                         alt="private Photo Icon"

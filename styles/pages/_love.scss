@@ -23,12 +23,15 @@
 }
 
 .icons-container span div {
-  max-width: 38%;
+  max-width: 40%;
   @media screen and (max-width: 575px) {
-    max-width: 52%;
+    max-width: 57%;
   }
 }
 
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
 .items-scroll {
   margin-top: 2rem !important;
   height: 400px !important;
@@ -41,7 +44,7 @@
   margin: auto !important;
   border-radius: 1rem;
   padding: 1rem;
-  max-width: 70% !important;
+  max-width: 60% !important;
   background-color: #f4f4f7;
   @media screen and (max-width: 575px) {
     max-width: 90% !important;
@@ -66,9 +69,32 @@
     }
   }
   & .item-image {
-    border-radius: 1rem;
-    & img {
-      border-radius: 1rem;
+    border-radius: 50%;
+    padding: 1rem;
+    background-image: linear-gradient(to right, #b72051, #e61f5f);
+    width: 75%;
+    margin: auto;
+    @media screen and (max-width: 575px) {
+      padding: unset;
+      background-image: unset;
+      width: 100%;
     }
+
+    & div {
+      background-color: #f4f4f7;
+      border-radius: 50%;
+    }
+    & img {
+      border-radius: 50%;
+      padding: 0.4rem;
+      @media screen and (max-width: 575px) {
+        padding: unset;
+      }
+    }
+  }
+  & .item-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

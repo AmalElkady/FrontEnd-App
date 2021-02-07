@@ -31,13 +31,15 @@ export default function ListItem({ user }) {
       <Grid container className="item-container">
         <Grid item xs={10}>
           <Grid container>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <div className="item-image">
-                <img src={user._} />
+                <div>
+                  <img src={user._} />
+                </div>
               </div>
             </Grid>
             <Grid item xs={1}></Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8} className="item-text">
               <Typography variant="body1" component="p">
                 {privateSelectedIcon == "outgoing" ? (
                   <>

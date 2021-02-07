@@ -402,7 +402,7 @@
     color: $white;
     font-size: 20px !important;
     padding: 6px;
-    width: 4rem;
+    width: 4.5rem;
   }
 
   & .icon-alert {
@@ -436,7 +436,7 @@
     display: block;
     visibility: hidden;
     left: auto !important;
-    right: 0 ;
+    right: 0;
     opacity: 0;
     transform: translate3d(0px, 100px, 0px) !important;
     @include transition(all 200ms linear 0ms);
