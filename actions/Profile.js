@@ -139,7 +139,6 @@ export const changeUserLoginPhoneSuccess = data => {
 };
 
 export const verifyUserLoginPhoneChange = verifyCode => {
-  console.log("newPhone,password action ", verifyCode);
   return {
     type: VERIFY_USER_LOGIN_PHONE_CHANGE,
     payload: verifyCode
@@ -229,10 +228,10 @@ export const ppRemoveSuccess = data => {
   };
 };
 
-export const readMyPhotos = params => {
+export const readMyPhotos = (params, size) => {
   return {
     type: READ_MY_PHOTOS,
-    payload: params
+    payload: { params, size }
   };
 };
 export const setFinalPP = finalPhotos => {
@@ -270,7 +269,7 @@ export const permissionPPReadRemove = (
 };
 
 export const permissionPPReadRemoveSuccess = data => {
-  console.log("from action success sent request",data)
+  console.log("from action success sent request", data);
   return {
     type: REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
     payload: data

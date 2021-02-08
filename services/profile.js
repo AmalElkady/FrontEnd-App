@@ -173,14 +173,14 @@ profile.readMyProfile = function(params) {
   });
 };
 
-profile.readMyPhotos = function(params) {
-  console.log("from profile service my photo ", params);
+profile.readMyPhotos = function(params, size) {
+  console.log("from profile service my photo ", params, size);
 
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
       const options = {
-        url: `/readmyphotos?photo=${params}`,
+        url: `/readmyphotos?photo=${params}&size=${size}`,
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -191,7 +191,7 @@ profile.readMyPhotos = function(params) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-
+      console.log("from profile service my photo response ", response);
       if (response) {
         resolve(response);
       } else {

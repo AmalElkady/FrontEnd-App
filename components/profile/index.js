@@ -16,18 +16,11 @@ export default function Profile() {
   const router = useRouter();
   const [profileCard, setProfileCard] = useState({});
   const [aboutInfo, setAboutInfo] = useState({});
-  const [photos, setPhotos] = useState([
-    // image:
-    //   "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-    { id: 1, title: "item #1" },
-    { id: 2, title: "item #2" },
-    { id: 3, title: "item #3" },
-    { id: 4, title: "item #4" },
-    { id: 5, title: "item #5" }
-  ]);
   const myProfileL1Data = useSelector(state => state.profile.myProfileDataL1);
   const myPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
   const dispatch = useDispatch();
+
+  const [finalPhotoSrc, setFinalPhotoSrc] = useState({});
 
   useEffect(() => {
     if (router.query) {
@@ -59,18 +52,33 @@ export default function Profile() {
 
   useEffect(() => {
     if (myProfileL1Data != null && router.query.flag == "readMe") {
-      dispatch(readMyPhotos(0));
+      dispatch(readMyPhotos(0, ""));
     }
   }, [myProfileL1Data]);
+
   useEffect(() => {
-    if (myPhotoSigned != null && router.query.flag == "readMe") {
+    if (
+      myPhotoSigned != null &&
+      !myPhotoSigned.includes("_49x49_mp0") &&
+      router.query.flag == "readMe"
+    ) {
+      setFinalPhotoSrc(myPhotoSigned);
+    }
+  }, [myPhotoSigned]);
+
+  useEffect(() => {
+    if (
+      myProfileL1Data != null &&
+      finalPhotoSrc != null &&
+      router.query.flag == "readMe"
+    ) {
       let token = getCookie("access_token");
       let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
       setProfileCard({
         co: myProfileL1Data.profile.L1.country,
         ci: myProfileL1Data.profile.L1.city,
         n: myProfileL1Data.profile.L1.profile,
-        photo: myPhotoSigned,
+        photo: finalPhotoSrc,
         b: myProfileL1Data.profile.L1.birth,
         gd: myProfileL1Data.profile.L1.gender,
         m: myProfileL1Data.profile.L1.martial
@@ -82,14 +90,13 @@ export default function Profile() {
         va: myProfileL1Data.profile.L1.varea
       });
     }
-  }, [myPhotoSigned]);
+  }, [finalPhotoSrc]);
   return (
     <>
       <div className="profile-container">
         <Grid container spacing={12}>
           <Grid item xs={6} className="profile-Grid-container">
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
-            {/* <Carousel /> */}
             <br />
             {router.query.flag == "read" && (
               <Photos

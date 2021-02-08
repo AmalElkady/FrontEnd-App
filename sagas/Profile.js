@@ -54,9 +54,9 @@ const readPhotosPP = async (id, co, ci, va) =>
     .then(returnedData => returnedData)
     .catch(error => error);
 
-const readMyPhotos = async params =>
+const readMyPhotos = async (params, size) =>
   await profile
-    .readMyPhotos(params)
+    .readMyPhotos(params, size)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -176,8 +176,9 @@ function* updateProfileL2Request({ payload }) {
 }
 
 function* readMyPhotosRequest({ payload }) {
+  const { params, size } = payload;
   try {
-    const returnedData = yield call(readMyPhotos, payload);
+    const returnedData = yield call(readMyPhotos, params, size);
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
@@ -328,7 +329,6 @@ function* permissionPPReadRemoveRequest({ payload }) {
       city,
       varea
     );
-    console.log("from saga returnedData",returnedData)
     if (returnedData.message) {
       yield put(permissionPPReadRemoveSuccess("error"));
     } else {

@@ -71,7 +71,6 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PROFILE_L2_SUCCESS: {
-      console.log("from reducer ", action.payload);
       return {
         ...state,
         myProfileDataL2: JSON.parse(action.payload.profile),
@@ -79,14 +78,12 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case REQUEST_PHOTO_READ_PP_SUCCESS: {
-      console.log("from reducer READ PP", action.payload);
       return {
         ...state,
         userPhotoPPSigned: action.payload
       };
     }
     case REQUEST_PHOTO_READ_PP_FAIL: {
-      console.log("from reducer READ PP fail", action.payload);
       return {
         ...state,
         userPhotoPPSignedMessage: action.payload
@@ -108,7 +105,9 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PHOTOS_SUCCESS: {
-      state.myProfileDataL1.profile.MP = action.payload.signedRequest;
+      if (state.myProfileDataL1) {
+        state.myProfileDataL1.profile.MP = action.payload.signedRequest;
+      }
       return {
         ...state,
         myPhotoSigned: action.payload.signedRequest

@@ -1,98 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
-import { connect } from "react-redux";
 import Router from "next/router";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { userSignOut } from "../../actions/Auth";
 import { resetStates } from "../../actions/Home";
-import { readMyProfile } from "../../actions/Profile";
+import { readMyPhotos } from "../../actions/Profile";
 import IntlMessages from "../../util/IntlMessages";
 
-class UserInfo extends React.Component {
-  state = {
-    anchorEl: null,
-    open: false
+export default function UserInfo() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [photoSrc, setPhotoSrc] = useState(null);
+
+  const dispatch = useDispatch();
+  const Name = useSelector(state => state.auth.name);
+  const MyPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
-  handleClick = event => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
+  const handleRequestClose = () => {
+    setOpen(false);
   };
 
-  handleRequestClose = () => {
-    this.setState({ open: false });
-  };
-  componentDidMount = () => {
-    console.log("props in userInfo component ", this.props);
-  };
+  useEffect(() => {
+    dispatch(readMyPhotos(0, "small"));
+  }, []);
 
-  render() {
-    return (
-      <div className="user-profile d-flex flex-row align-items-center">
+  useEffect(() => {
+    if (MyPhotoSigned != null && MyPhotoSigned.includes("_49x49_mp0")) {
+      setPhotoSrc(MyPhotoSigned);
+    }
+  }, [MyPhotoSigned]);
+
+  return (
+    <div className="user-profile d-flex flex-row align-items-center">
+      {photoSrc && (
         <Avatar
           alt="..."
-          src={"https://via.placeholder.com/150x150"}
+          // src={"https://via.placeholder.com/150x150"}
+          src={photoSrc}
           className="user-avatar "
         />
-        <div className="user-detail">
-          <h4 className="user-name" onClick={this.handleClick}>
-            {this.props.auth.name}
-            <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
-          </h4>
-        </div>
-        <Menu
-          className="user-info"
-          id="simple-menu"
-          anchorEl={this.state.anchorEl}
-          open={this.state.open}
-          onClose={this.handleRequestClose}
-          PaperProps={{
-            style: {
-              minWidth: 120,
-              paddingTop: 0,
-              paddingBottom: 0
-            }
+      )}
+      <div className="user-detail">
+        <h4 className="user-name" onClick={handleClick}>
+          {Name}
+          <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
+        </h4>
+      </div>
+      <Menu
+        className="user-info"
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleRequestClose}
+        PaperProps={{
+          style: {
+            minWidth: 120,
+            paddingTop: 0,
+            paddingBottom: 0
+          }
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            Router.push({
+              pathname: `/home/profile`,
+              query: { flag: "readMe" }
+            });
+            handleRequestClose();
           }}
         >
-          <MenuItem
-            onClick={() => {
-              Router.push({
-                pathname: `/home/profile`,
-                query: { flag: "readMe" }
-              });
-              this.handleRequestClose();
-            }}
-          >
-            <i className="zmdi zmdi-account zmdi-hc-fw mr-2" />
-            <IntlMessages id="popup.profile" />
-          </MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>
-            <i className="zmdi zmdi-settings zmdi-hc-fw mr-2" />
-            <IntlMessages id="popup.setting" />
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleRequestClose();
-              this.props.resetStates();
-              this.props.userSignOut();
-            }}
-          >
-            <i className="zmdi zmdi-sign-in zmdi-hc-fw mr-2" />
+          <i className="zmdi zmdi-account zmdi-hc-fw mr-2" />
+          <IntlMessages id="popup.profile" />
+        </MenuItem>
+        <MenuItem onClick={handleRequestClose}>
+          <i className="zmdi zmdi-settings zmdi-hc-fw mr-2" />
+          <IntlMessages id="popup.setting" />
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleRequestClose();
+            dispatch(resetStates());
+            dispatch(userSignOut());
+          }}
+        >
+          <i className="zmdi zmdi-sign-in zmdi-hc-fw mr-2" />
 
-            <IntlMessages id="popup.logout" />
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  }
+          <IntlMessages id="popup.logout" />
+        </MenuItem>
+      </Menu>
+    </div>
+  );
 }
-
-const mapStateToProps = ({ settings, auth }) => {
-  const { locale } = settings;
-  return { locale, auth };
-};
-export default connect(mapStateToProps, {
-  userSignOut,
-  resetStates,
-  readMyProfile
-})(UserInfo);

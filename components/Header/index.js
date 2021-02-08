@@ -20,6 +20,7 @@ import AppNotification from "../AppNotification/index";
 import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
 import { selectedHeaderIcon } from "../../actions/Home";
+import { readMyPhotos } from "../../actions/Profile";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
@@ -224,7 +225,10 @@ class Header extends React.Component {
           <IconButton
             className={`jr-menu-icon mr-3`}
             aria-label="Menu"
-            onClick={this.onToggleCollapsedNav}
+            onClick={() => {
+              this.onToggleCollapsedNav();
+              // this.props.readMyPhotos(0);
+            }}
           >
             <img
               src="../../static/images/icons/standard/Menu_Icon_Sandard.svg"
@@ -422,7 +426,7 @@ class Header extends React.Component {
                       <img
                         src={
                           headerSelectedIcon != "private"
-                            ? "../../static/images/icons/standard/PP4.svg"
+                            ? "../../static/images/icons/standard/PP.svg"
                             : "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
                         }
                         alt="private Photo Icon"
@@ -526,6 +530,7 @@ export default withRouter(
   connect(mapStateToProps, {
     toggleCollapsedNav,
     switchLanguage,
-    selectedHeaderIcon
+    selectedHeaderIcon,
+    readMyPhotos
   })(Header)
 );

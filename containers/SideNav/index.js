@@ -80,5 +80,8 @@ const mapStateToProps = ({ settings }) => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, { toggleCollapsedNav, updateWindowWidth })(SideNav)
+  connect(mapStateToProps, {
+    toggleCollapsedNav,
+    updateWindowWidth
+  })(SideNav)
 );
