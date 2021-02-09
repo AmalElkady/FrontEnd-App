@@ -35,7 +35,8 @@ const Clicked_id = useSelector(state => state.interaction.clicked_id);
     if (Clicked_id == user.i) {
        console.log("PpAccessApproveRemove ",PpAccessApproveRemove)
     if (PpAccessApproveRemove == true) {
-      NotificationManager.success(`You give ${user.n} access successfully`, "Success");
+      // NotificationManager.success(`You give ${user.n} access successfully`, "Success");
+      NotificationManager.success("Your request successfully executed")
     } else if (!(PpAccessApproveRemove == true || PpAccessApproveRemove == false) ) {
       NotificationManager.error(PpAccessApproveRemove);
     }
@@ -116,8 +117,9 @@ const Clicked_id = useSelector(state => state.interaction.clicked_id);
           <IconButton
             // className="item-btn"
             onClick={() => {
-              //  user.timeScore = timeScore;
-              // Router.push({ pathname: `/home/profile`, query: user });
+              console.log("user ",user)
+             dispatch(clickedId(user.i));
+             dispatch(ppAccessApproveRemove(1,user.i,user.co,user.ci,user.va))
             }}
             aria-label="View Profile"
           >
