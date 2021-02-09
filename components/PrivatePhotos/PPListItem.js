@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
 
 import {ppAccessApproveRemove,ppAccessApproveRemoveSuccess,clickedId} from "../../actions/Interaction"
+import {permissionPPReadRemove}from "../../actions/Profile"
 
 
 import {
@@ -31,6 +32,10 @@ const PpAccessApproveRemove=useSelector(
   );
 const Clicked_id = useSelector(state => state.interaction.clicked_id);
 
+const permissionReadPP=useSelector(
+    state => state.profile.permissionReadPP
+  );
+
    useEffect(() => {
     if (Clicked_id == user.i) {
        console.log("PpAccessApproveRemove ",PpAccessApproveRemove)
@@ -43,6 +48,19 @@ const Clicked_id = useSelector(state => state.interaction.clicked_id);
     dispatch(clickedId(null));
     dispatch(ppAccessApproveRemoveSuccess(false));}
   }, [PpAccessApproveRemove]);
+
+    useEffect(() => {
+    if (Clicked_id == user.i) {
+       console.log("permissionReadPP ",permissionReadPP)
+    if (permissionReadPP == true) {
+      // NotificationManager.success(`You give ${user.n} access successfully`, "Success");
+      NotificationManager.success("Your request successfully executed")
+    } else if (!(permissionReadPP == true || permissionReadPP == false) ) {
+      NotificationManager.error(permissionReadPP);
+    }
+    dispatch(clickedId(null));
+    dispatch(ppAccessApproveRemoveSuccess(false));}
+  }, [permissionReadPP]);
 
   return (
     <>
@@ -124,6 +142,21 @@ const Clicked_id = useSelector(state => state.interaction.clicked_id);
             aria-label="View Profile"
           >
             <img src="../../static/images/icons/PP_Access_Remove.svg" />
+          </IconButton>
+           </Grid>}
+
+            {/* permission pp removed */}
+           {privateSelectedIcon == "incomingNotApproved"&&<Grid item xs={4}>
+          <IconButton
+            // className="item-btn"
+            onClick={() => {
+              console.log("user ",user)
+             dispatch(clickedId(user.i));
+             dispatch(permissionPPReadRemove(1,user.i,user.co,user.ci,user.va))
+            }}
+            aria-label="View Profile"
+          >
+            <img src="../../static/images/icons/PP_Permission_remove.svg" />
           </IconButton>
            </Grid>}
            </Grid>

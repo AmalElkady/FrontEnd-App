@@ -332,7 +332,7 @@ function* permissionPPReadRemoveRequest({ payload }) {
     if (returnedData.message) {
       yield put(permissionPPReadRemoveSuccess("error"));
     } else {
-      yield put(permissionPPReadRemoveSuccess(returnedData));
+      yield put(permissionPPReadRemoveSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
