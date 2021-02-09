@@ -254,9 +254,9 @@ function* userBlockRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnedData.message));
+       yield put(blockUserSuccess("error"));
     } else {
-      yield put(blockUserSuccess(returnedData));
+      yield put(blockUserSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

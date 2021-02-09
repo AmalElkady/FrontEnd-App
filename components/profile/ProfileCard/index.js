@@ -12,7 +12,8 @@ import { updateProfileL1 } from "../../../actions/Profile";
 import {
   sendLoveMatchRequest,
   sendLoveMatchRequestSuccess,
-  blockUser
+  blockUser,
+  blockUserSuccess
 } from "../../../actions/Interaction";
 ///Modal
 import PropTypes from "prop-types";
@@ -117,6 +118,10 @@ export default function ProfileCard({ mainInfo }) {
   const SendLoveMatchRequest = useSelector(
     state => state.interaction.sendLoveMatchRequest
   );
+
+  const userBlocked=useSelector(
+    state => state.interaction.userBlocked
+  );
   const userMartial = useSelector(state => state.profile.userMartial);
   const [showMessage, setShowMessage] = useState(false);
   const router = useRouter();
@@ -172,6 +177,15 @@ export default function ProfileCard({ mainInfo }) {
     }
     dispatch(sendLoveMatchRequestSuccess(false));
   }, [SendLoveMatchRequest]);
+
+   useEffect(() => {
+    if (userBlocked == true) {
+      NotificationManager.success(`You block ${mainInfo.n} successfully`, "Success");
+    } else if (userBlocked == "error") {
+      NotificationManager.error(`You already blocked ${mainInfo.n}`);
+    }
+    dispatch(blockUserSuccess(false));
+  }, [userBlocked]);
   ///
   return (
     <>
@@ -203,6 +217,24 @@ export default function ProfileCard({ mainInfo }) {
                 <div className="card-icon">
                   <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
                 </div>
+              </div>
+            )}
+             {router.query.flag == "read" && (
+              <div className="card-img-icon-block">
+                 <IconButton
+                  onClick={() => {
+                    dispatch(
+                      blockUser(
+                        mainInfo.id,
+                        mainInfo.co,
+                        mainInfo.ci,
+                        mainInfo.va
+                      )
+                    );
+                  }}
+                >
+                  <img src="../../../static/images/icons/Block_User.svg" />
+                </IconButton>
               </div>
             )}
             {router.query.flag == "readMe" && (
