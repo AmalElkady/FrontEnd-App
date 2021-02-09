@@ -252,7 +252,7 @@ export default function ProfileCard({ mainInfo }) {
                 </IconButton>
               </div>
             )}
-               {/* {router.query.flag == "read" && (
+               {router.query.flag == "read" && (
               <div className="card-img-icon-block">
                  <IconButton
                   onClick={() => {
@@ -269,7 +269,7 @@ export default function ProfileCard({ mainInfo }) {
                   <img src="../../../static/images/icons/Unblock_User.svg" />
                 </IconButton>
               </div>
-            )} */}
+            )}
             {router.query.flag == "readMe" && (
               <IconButton aria-label="Edit" className="edit-icon-large">
                 <EditIcon></EditIcon>

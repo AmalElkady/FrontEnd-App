@@ -124,9 +124,9 @@ function* ppAccessApproveRemoveRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnedData.message));
+      yield put(ppAccessApproveRemoveSuccess(returnedData.message));
     } else {
-      yield put(ppAccessApproveRemoveSuccess(returnedData));
+      yield put(ppAccessApproveRemoveSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

@@ -310,6 +310,17 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_BLOCKED_USERS_SUCCESS: {
       console.log("form reducer blocked users", action.payload);
+      //  let blockedProfiles=[];
+      //  if (action.payload.view_profiles.length != 0) {
+      //   blockedProfiles = map2ArrTo1Arr(
+      //   action.payload.order,
+      //   action.payload.view_profiles
+      // );
+      //   state.startUserViews += state.limitReturnedItems;
+      //   state.endUserViews +=state.limitReturnedItems;
+      // } else if (action.payload.view_profiles.length == 0) {
+      //   state.endOfResultUserViews = true;
+      // }
       return {
         ...state,
         blockedUsersProfiles: action.payload

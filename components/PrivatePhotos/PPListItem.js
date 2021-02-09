@@ -6,6 +6,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
 
+import {ppAccessApproveRemove,ppAccessApproveRemoveSuccess,clickedId} from "../../actions/Interaction"
+
+
 import {
   NotificationContainer,
   NotificationManager
@@ -23,13 +26,27 @@ export default function ListItem({ user }) {
   const privateSelectedIcon = useSelector(
     state => state.interaction.privateSelectedIcon
   );
+const PpAccessApproveRemove=useSelector(
+    state => state.interaction.ppAccessApproveRemove
+  );
+const Clicked_id = useSelector(state => state.interaction.clicked_id);
 
-  useEffect(() => {}, []);
+   useEffect(() => {
+    if (Clicked_id == user.i) {
+       console.log("PpAccessApproveRemove ",PpAccessApproveRemove)
+    if (PpAccessApproveRemove == true) {
+      NotificationManager.success(`You give ${user.n} access successfully`, "Success");
+    } else if (!(PpAccessApproveRemove == true || PpAccessApproveRemove == false) ) {
+      NotificationManager.error(PpAccessApproveRemove);
+    }
+    dispatch(clickedId(null));
+    dispatch(ppAccessApproveRemoveSuccess(false));}
+  }, [PpAccessApproveRemove]);
 
   return (
     <>
       <Grid container className="item-container">
-        <Grid item xs={10}>
+        <Grid item xs={12}>
           <Grid container>
             <Grid item xs={3}>
               <div className="item-image">
@@ -63,9 +80,28 @@ export default function ListItem({ user }) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
+          <Grid container className="item-icons-container">
+            {/* access approved */}
+           {privateSelectedIcon == "incomingNotApproved"&&  <Grid item xs={3}>
           <IconButton
-            className="item-btn"
+            // className="item-btn"
+            onClick={() => {
+              console.log("user ",user)
+             dispatch(clickedId(user.i));
+             dispatch(ppAccessApproveRemove(0,user.i,user.co,user.ci,user.va))
+            }}
+            aria-label="View Profile"
+          >
+            <img src="../../static/images/icons/PP_Access_Approved.svg" />
+          </IconButton>
+           </Grid>}
+           
+
+           {/* View profile */}
+          <Grid item xs={4}>
+           <IconButton
+            // className="item-btn"
             onClick={() => {
               //  user.timeScore = timeScore;
               // Router.push({ pathname: `/home/profile`, query: user });
@@ -74,6 +110,21 @@ export default function ListItem({ user }) {
           >
             <img src="../../static/images/icons/Profile_icon_2.svg" />
           </IconButton>
+          </Grid>
+         {/* access removed */}
+           {privateSelectedIcon == "incomingApproved"&&<Grid item xs={3}>
+          <IconButton
+            // className="item-btn"
+            onClick={() => {
+              //  user.timeScore = timeScore;
+              // Router.push({ pathname: `/home/profile`, query: user });
+            }}
+            aria-label="View Profile"
+          >
+            <img src="../../static/images/icons/PP_Access_Remove.svg" />
+          </IconButton>
+           </Grid>}
+           </Grid>
         </Grid>
       </Grid>
     </>
