@@ -13,15 +13,18 @@
 
   "loveList.match": "Now you are matching with ",
   "loveList.sent": "You had sent love to ",
-  "loveList.receoved": " had sent love to you",
+  "loveList.received": " had sent love to you",
 
   "ppList.outgoing": "Your request approved from ",
   "ppList.incomingApproved": "You approved request of ",
   "ppList.incomingNotApproved": "You didn't approve request of ",
 
-  "sidebar.inbox": "Inbox",
+  "viewList.view": " has seen your profile on ",
+
+  "sidebar.profile": "My Profile",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",
+  "sidebar.views": "My Profile Views",
   "sidebar.setting": "Settings",
   "sidebar.logout": "Logout",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",

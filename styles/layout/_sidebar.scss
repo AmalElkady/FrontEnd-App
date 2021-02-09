@@ -6,14 +6,13 @@
   color: white !important;
   border-right: 0 none !important;
   z-index: 1250 !important;
-  height: 74% !important;
+  height: 85% !important;
   margin-top: 3.4rem;
   padding: 1rem;
   border-radius: 0rem 2rem 2rem 0rem;
   @media screen and (max-width: 575px) {
     width: 85%;
-    margin-top: 5.4rem;
-    height: 80% !important;
+    height: 90% !important;
   }
   & .user-profile {
     background-color: transparent;

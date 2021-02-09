@@ -364,9 +364,12 @@ interaction.getUserViews = function(start, end) {
       let response = responseX.data;
 
       console.log("response getuserviews", response);
-      if (response) {
+      if (response.order) {
         resolve(response);
-      } else {
+      } else if(response.code){
+        resolve({view_profiles:"",view_dates:"",order:""});
+      }
+      else {
         resolve({ message: "no response !" });
       }
     } catch (err) {

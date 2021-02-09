@@ -11,7 +11,8 @@ import moment from "moment";
 import { updateProfileL1 } from "../../../actions/Profile";
 import {
   sendLoveMatchRequest,
-  sendLoveMatchRequestSuccess
+  sendLoveMatchRequestSuccess,
+  blockUser
 } from "../../../actions/Interaction";
 ///Modal
 import PropTypes from "prop-types";

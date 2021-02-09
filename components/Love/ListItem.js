@@ -5,21 +5,13 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
+import { useRouter } from "next/router";
+import moment from "moment";
 
-import {
-  NotificationContainer,
-  NotificationManager
-} from "react-notifications";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    maxWidth: "70%",
-    margin: "2rem auto"
-  }
-}));
-export default function ListItem({ user }) {
-  const classes = useStyles();
+export default function ListItem({ user,time }) {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const loveSelectedIcon = useSelector(
     state => state.interaction.loveSelectedIcon
   );
@@ -42,23 +34,35 @@ export default function ListItem({ user }) {
             <Grid item xs={1}></Grid>
             <Grid item xs={8} className="item-text">
               <Typography variant="body1" component="p">
-                {loveSelectedIcon == "match" ? (
+                {router.pathname == "/home/love" && (
                   <>
-                    <IntlMessages id="loveList.match" />
-                    {user.n}
+                    {loveSelectedIcon == "match" ? (
+                      <>
+                        <IntlMessages id="loveList.match" />
+                        {user.n}
+                      </>
+                    ) : loveSelectedIcon == "sent" ? (
+                      <>
+                        <IntlMessages id="loveList.sent" />
+                        {user.n}
+                      </>
+                    ) : loveSelectedIcon == "received" ? (
+                      <>
+                        {user.n}
+                        <IntlMessages id="loveList.received" />
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </>
-                ) : loveSelectedIcon == "sent" ? (
+                )}
+                {router.pathname == "/home/views" && (
                   <>
-                    <IntlMessages id="loveList.sent" />
                     {user.n}
+                    <IntlMessages id="viewList.view" />
+                    {console.log("time",time)}
+                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
-                ) : loveSelectedIcon == "received" ? (
-                  <>
-                    {user.n}
-                    <IntlMessages id="loveList.received" />
-                  </>
-                ) : (
-                  ""
                 )}
               </Typography>
             </Grid>

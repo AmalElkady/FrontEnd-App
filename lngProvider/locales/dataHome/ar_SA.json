@@ -6,24 +6,26 @@
   "search.recent": "نشط منذ قليل",
   "search.age": "العمر",
   "search.ageSelect": "اختر العمر",
-  "search.age": "البلد",
+  "search.country": "البلد",
   "search.countrySelect": "اختر البلد",
-  "search.age": "المدينة",
+  "search.city": "المدينة",
   "search.citySelect": "اختر المدينة",
 
   "loveList.match": "أنت الآن تتطابق مع",
   "loveList.sent": "كنت قد أرسلت اعجاب إلى  ",
-  "loveList.receoved": " أرسل لك اعجاب ",
+  "loveList.received": " أرسل لك اعجاب ",
+  "viewList.view": " رأى ملفك الشخصي في",
 
   "ppList.outgoing": "تمت الموافقة على طلبك من  ",
   "ppList.incomingApproved": "أنت وافقت على طلب ",
   "ppList.incomingNotApproved": "لم توافق على طلب ",
 
-  "sidebar.inbox": "Inbox",
-  "sidebar.notification": "Notifications",
+  "sidebar.profile": "ملفي الشخصي",
+  "sidebar.notification": "إشعارات",
   "sidebar.match": "Mactch",
-  "sidebar.setting": "Settings",
-  "sidebar.logout": "Logout",
+  "sidebar.views": "مشاهدات ملفي الشخصي ",
+  "sidebar.setting": "الإعدادات",
+  "sidebar.logout": "تسجيل خروج",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",
   "sidebar.love": "Love Gila ${&copy;} 2021"
 }

@@ -39,6 +39,14 @@
     height: 325px !important;
   }
 }
+.items-scroll-2 {
+  margin-top: 3rem !important;
+  height: 400px !important;
+  @media screen and (max-width: 575px) {
+    height: 325px !important;
+    margin-top: 6rem !important;
+  }
+}
 .items-container {
   border: 2px solid #b72051;
   margin: auto !important;

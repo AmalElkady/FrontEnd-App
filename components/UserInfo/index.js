@@ -38,21 +38,32 @@ export default function UserInfo() {
 
   return (
     <div className="user-profile d-flex flex-row align-items-center">
-      {photoSrc && (
-        <Avatar
-          alt="..."
-          // src={"https://via.placeholder.com/150x150"}
-          src={photoSrc}
-          className="user-avatar "
-        />
-      )}
+      <Avatar
+        alt="..."
+        src={photoSrc ? photoSrc : "https://via.placeholder.com/150x150"}
+        className="user-avatar "
+        onClick={() => {
+          Router.push({
+            pathname: `/home/profile`,
+            query: { flag: "readMe" }
+          });
+        }}
+      />
       <div className="user-detail">
-        <h4 className="user-name" onClick={handleClick}>
+        <h4
+          className="user-name"
+          onClick={() => {
+            Router.push({
+              pathname: `/home/profile`,
+              query: { flag: "readMe" }
+            });
+          }}
+        >
           {Name}
-          <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
+          {/* <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" /> */}
         </h4>
       </div>
-      <Menu
+      {/* <Menu
         className="user-info"
         id="simple-menu"
         anchorEl={anchorEl}
@@ -93,7 +104,7 @@ export default function UserInfo() {
 
           <IntlMessages id="popup.logout" />
         </MenuItem>
-      </Menu>
+      </Menu> */}
     </div>
   );
 }

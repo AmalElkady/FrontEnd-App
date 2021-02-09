@@ -25,7 +25,7 @@ export default function Profile() {
   useEffect(() => {
     if (router.query) {
       if (router.query.flag == "read") {
-        console.log("from mainnnnnn ", router.query);
+        setAboutInfo(null)
         setProfileCard({
           id: router.query.i,
           co: router.query.co,

@@ -110,11 +110,11 @@ class SidenavContent extends Component {
       <CustomScrollbars className=" scrollbar">
         <ul className="nav-menu">
           <li className="menu no-arrow">
-            <Link href="/app/mail">
+            <Link href="/home/profile?flag=readMe">
               <a className="prepend-icon">
                 {/* <i className="zmdi zmdi-email zmdi-hc-fw" /> */}
                 <span className="nav-text">
-                  <IntlMessages id="sidebar.inbox" />
+                  <IntlMessages id="sidebar.profile" />
                 </span>
               </a>
             </Link>
@@ -137,6 +137,17 @@ class SidenavContent extends Component {
                 {/* <i className="zmdi zmdi-account-box zmdi-hc-fw" /> */}
                 <span className="nav-text">
                   <IntlMessages id="sidebar.match" />
+                </span>
+              </a>
+            </Link>
+          </li>
+
+          <li className="menu no-arrow">
+            <Link href="/home/views">
+              <a className="prepend-icon">
+                {/* <i className="zmdi zmdi-account-box zmdi-hc-fw" /> */}
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.views" />
                 </span>
               </a>
             </Link>

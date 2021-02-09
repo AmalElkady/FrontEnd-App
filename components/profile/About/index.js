@@ -59,11 +59,14 @@ export default function About({ aboutInfo }) {
   }, [router.query]);
 
   useEffect(() => {
+    setDisData(null)
     if (l2Data != null && router.query.flag == "read") {
+      console.log("l2Data ",l2Data)
       setDisData(l2Data);
     }
   }, [l2Data]);
   useEffect(() => {
+    setDisData(null)
     if (myProfileDataL2 != null && router.query.flag == "readMe") {
       setDisData(myProfileDataL2);
     }

@@ -63,29 +63,19 @@ export default function Photos({ id, co, ci, va }) {
   const finalPP = useSelector(state => state.profile.finalPP);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (myPhotos != null) {
+    setPhotosMapped(null);
+    if (myPhotos != null&&router.query.flag == "readMe") {
       setPhotosMapped(mapObjectToArray(myPhotos));
       dispatch(readMyPhotos(1));
     }
   }, [myPhotos]);
   useEffect(() => {
-    if (userPhotos != null) {
+    setPhotosMapped(null)
+    if (userPhotos != null&&router.query.flag == "read") {
       setPhotosMapped(mapObjectToArray(userPhotos));
       dispatch(requestPhotoReadPP(id, co, ci, va));
     }
   }, [userPhotos]);
-
-  useEffect(() => {
-    if (userPhotoPPSigned != null) {
-      console.log("userPhotoPPSigned ", userPhotoPPSigned);
-    }
-  }, [userPhotoPPSigned]);
-
-  useEffect(() => {
-    if (userPhotoPPSignedMessage) {
-      console.log("userPhotoPPSignedMessage ", userPhotoPPSignedMessage);
-    }
-  }, [userPhotoPPSignedMessage]);
 
   useEffect(() => {
     if (myPhotoPPSigned != null) {
@@ -110,8 +100,6 @@ export default function Photos({ id, co, ci, va }) {
   }, [PhotoRemovePP]);
   return (
     <>
-      {/* {PhotoRemovePP && console.log("PhotoRemovePP ", PhotoRemovePP)} */}
-      {console.log("finalPhotos ", photosMapped)}
       {
         <Carousel breakPoints={breakPoints}>
           {photosMapped &&

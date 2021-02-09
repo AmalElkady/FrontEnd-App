@@ -60,7 +60,11 @@ const initialProfileState = {
   incomingPPNotApprovedRequestsDates: "",
   incomingPPNotApprovedRequestsProfiles: "",
 
-  userViews: null,
+  endOfResultUserViews: false, // for user views
+  startUserViews: 0,
+  endUserViews: 5,
+  userViewsProfiles: "",
+  userViewsDates: "",
 
   userBlocked: false,
   userUnblocked: false,
@@ -260,10 +264,29 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_USER_VIEWS_SUCCESS: {
-      console.log("form reducer User views ", action.payload);
+      console.log("from reducer User views ", action.payload);
+      
+      let viewsProfiles=[];
+       if (action.payload.view_profiles.length != 0) {
+        viewsProfiles = map2ArrTo1Arr(
+        action.payload.order,
+        action.payload.view_profiles
+      );
+        state.startUserViews += state.limitReturnedItems;
+        state.endUserViews +=state.limitReturnedItems;
+      } else if (action.payload.view_profiles.length == 0) {
+        state.endOfResultUserViews = true;
+      }
       return {
         ...state,
-        userViews: action.payload
+        userViewsProfiles: [
+          ...state.userViewsProfiles,
+          ...viewsProfiles
+        ],
+        userViewsDates:[
+          ...state.userViewsDates,
+          ...action.payload.view_dates
+        ]
       };
     }
     case BLOCK_USER_SUCCESS: {

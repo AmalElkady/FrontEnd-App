@@ -116,11 +116,11 @@ export default function PrivateIcons() {
                   <img
                     src={
                       selectedValue != "0"
-                        ? "../../static/images/icons/standard/Match_Icon_Standard.svg"
-                        : "../../static/images/icons/Highlighted/Match_Icon_Highlighted.svg"
+                        ? "../../static/images/icons/standard/PP_Standard_outgoing.svg"
+                        : "../../static/images/icons/Highlighted/PP_Highlighted_outgoing.svg"
                     }
-                    alt="Match Icon"
-                    title="match icon"
+                    alt="Outgoing Icon"
+                    title="Outgoing icon"
                   />
                 </Grid>
               </>
@@ -144,11 +144,11 @@ export default function PrivateIcons() {
                   <img
                     src={
                       selectedValue != "1"
-                        ? "../../static/images/icons/standard/sent_Love_Icon_Standard.svg"
-                        : "../../static/images/icons/Highlighted/sent_Love_Icon_Highlighted.svg"
+                        ? "../../static/images/icons/standard/PP_Standard_incoming_approved.svg"
+                        : "../../static/images/icons/Highlighted/PP_Highlighted_incoming_approved.svg"
                     }
-                    alt="Sent Love Icon"
-                    title="Sent Love Icon"
+                    alt="Incoming Approved Icon"
+                    title="Incoming ApprovedIcon"
                   />
                 </Grid>
               </>
@@ -172,11 +172,11 @@ export default function PrivateIcons() {
                   <img
                     src={
                       selectedValue != "2"
-                        ? "../../static/images/icons/standard/Recived_Love_Icon_Standard.svg"
-                        : "../../static/images/icons/Highlighted/Recived_Love_Icon_Highlighted.svg"
+                        ? "../../static/images/icons/standard/PP_Standard_incoming_not_approved.svg"
+                        : "../../static/images/icons/Highlighted/PP_Highlighted_incoming_not_approved.svg"
                     }
-                    alt="Recived Love Icon"
-                    title="Recived Love Icon"
+                    alt="Incoming Not Approved Icon"
+                    title="Incoming Not Approved Icon"
                   />
                 </Grid>
               </>
