@@ -68,7 +68,12 @@ const initialProfileState = {
 
   userBlocked: false,
   userUnblocked: false,
-  blockedUsers: null,
+
+  endOfResultBlockedUsers: false, // for blocked Users
+  scoreHBlockedUsers: "",
+  OffsetBlockedUsers: 0,
+  blockedUsersProfiles: "",
+  blockedUsersDates: "",
 
   notificationViewUnread: null,
   notificationViewDates: null,
@@ -307,7 +312,7 @@ const Interaction = (state = initialProfileState, action) => {
       console.log("form reducer blocked users", action.payload);
       return {
         ...state,
-        blockedUsers: action.payload
+        blockedUsersProfiles: action.payload
       };
     }
     case CLICKED_ID: {

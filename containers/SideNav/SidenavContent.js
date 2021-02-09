@@ -120,6 +120,17 @@ class SidenavContent extends Component {
             </Link>
           </li>
 
+        <li className="menu no-arrow">
+            <Link href="/home/views">
+              <a className="prepend-icon">
+                {/* <i className="zmdi zmdi-account-box zmdi-hc-fw" /> */}
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.views" />
+                </span>
+              </a>
+            </Link>
+          </li>
+
           <li className="menu no-arrow">
             <Link href="/app/to-do">
               <a className="prepend-icon">
@@ -143,11 +154,11 @@ class SidenavContent extends Component {
           </li>
 
           <li className="menu no-arrow">
-            <Link href="/home/views">
+            <Link href="/home/blockedUsers">
               <a className="prepend-icon">
                 {/* <i className="zmdi zmdi-account-box zmdi-hc-fw" /> */}
                 <span className="nav-text">
-                  <IntlMessages id="sidebar.views" />
+                  <IntlMessages id="sidebar.blockedUsers" />
                 </span>
               </a>
             </Link>

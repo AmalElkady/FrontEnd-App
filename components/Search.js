@@ -2017,20 +2017,20 @@ export default function Search() {
             className={classes.flexDirection}
           >
           <Grid container spacing={12}> 
-				  <Grid item xs={6}>
-            <FormControlLabel
-              value="most recent"
-              className="option-selected option-selected-2"
-              control={<Radio />}
-              label={<IntlMessages id="search.recent" />}
-            />
-            </Grid>
             <Grid item xs={6}>
             <FormControlLabel
               value="active"
               className="option-selected"
               control={<Radio />}
              label={<IntlMessages id="search.online" />}
+            />
+            </Grid>
+             <Grid item xs={6}>
+            <FormControlLabel
+              value="most recent"
+              className="option-selected"
+              control={<Radio />}
+              label={<IntlMessages id="search.recent" />}
             />
             </Grid>
             </Grid>

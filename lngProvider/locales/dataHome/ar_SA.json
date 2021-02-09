@@ -20,10 +20,13 @@
   "ppList.incomingApproved": "أنت وافقت على طلب ",
   "ppList.incomingNotApproved": "لم توافق على طلب ",
 
+  "blockedList.blocked":"أنت منعت ",
+
   "sidebar.profile": "ملفي الشخصي",
   "sidebar.notification": "إشعارات",
   "sidebar.match": "Mactch",
   "sidebar.views": "مشاهدات ملفي الشخصي ",
+  "sidebar.blockedUsers":"مستخدمين محجوبين",
   "sidebar.setting": "الإعدادات",
   "sidebar.logout": "تسجيل خروج",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",

@@ -21,10 +21,13 @@
 
   "viewList.view": " has seen your profile on ",
 
+  "blockedList.blocked":"You Blocked ",
+
   "sidebar.profile": "My Profile",
   "sidebar.notification": "Notifications",
   "sidebar.match": "Mactch",
   "sidebar.views": "My Profile Views",
+  "sidebar.blockedUsers":"Blocked Users",
   "sidebar.setting": "Settings",
   "sidebar.logout": "Logout",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",
