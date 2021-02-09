@@ -274,9 +274,9 @@ function* userUnblockRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showProfileMessage(returnedData.message));
+      yield put(unblockUserSuccess("error"));
     } else {
-      yield put(unblockUserSuccess(returnedData));
+      yield put(unblockUserSuccess(true));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

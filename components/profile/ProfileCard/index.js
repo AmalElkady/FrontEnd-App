@@ -13,7 +13,9 @@ import {
   sendLoveMatchRequest,
   sendLoveMatchRequestSuccess,
   blockUser,
-  blockUserSuccess
+  blockUserSuccess,
+  unblockUser,
+  unblockUserSuccess
 } from "../../../actions/Interaction";
 ///Modal
 import PropTypes from "prop-types";
@@ -122,6 +124,10 @@ export default function ProfileCard({ mainInfo }) {
   const userBlocked=useSelector(
     state => state.interaction.userBlocked
   );
+   const userUnblocked=useSelector(
+    state => state.interaction.userUnblocked
+  );
+
   const userMartial = useSelector(state => state.profile.userMartial);
   const [showMessage, setShowMessage] = useState(false);
   const router = useRouter();
@@ -186,6 +192,15 @@ export default function ProfileCard({ mainInfo }) {
     }
     dispatch(blockUserSuccess(false));
   }, [userBlocked]);
+
+     useEffect(() => {
+    if (userUnblocked == true) {
+      NotificationManager.success(`You unblock ${mainInfo.n} successfully`, "Success");
+    } else if (userUnblocked == "error") {
+      NotificationManager.error(`You already unblocked ${mainInfo.n}`);
+    }
+    dispatch(unblockUserSuccess(false));
+  }, [userUnblocked]);
   ///
   return (
     <>
@@ -234,6 +249,24 @@ export default function ProfileCard({ mainInfo }) {
                   }}
                 >
                   <img src="../../../static/images/icons/Block_User.svg" />
+                </IconButton>
+              </div>
+            )}
+               {router.query.flag == "read" && (
+              <div className="card-img-icon-block">
+                 <IconButton
+                  onClick={() => {
+                    dispatch(
+                      unblockUser(
+                        mainInfo.id,
+                        mainInfo.co,
+                        mainInfo.ci,
+                        mainInfo.va
+                      )
+                    );
+                  }}
+                >
+                  <img src="../../../static/images/icons/Unblock_User.svg" />
                 </IconButton>
               </div>
             )}
