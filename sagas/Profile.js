@@ -20,6 +20,9 @@ import {
   showProfileMessage
 } from "../actions/Profile";
 import {
+  showAuthMessage
+} from "../actions/Auth";
+import {
   READ_PROFILE_L2,
   READ_MY_PROFILE,
   UPDATE_PROFILE_L1,
@@ -132,7 +135,7 @@ function* readProfileL2Request({ payload }) {
     const returnedData = yield call(readProfileL2, id, co, ci, va);
     yield put(readProfileL2Success(returnedData));
   } catch (error) {
-    yield put(showProfileMessage(error));
+    yield put(showAuthMessage(error));
   }
 }
 function* readMyProfileRequest({ payload }) {

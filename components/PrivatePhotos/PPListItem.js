@@ -104,7 +104,9 @@ const permissionReadPP=useSelector(
         <Grid item xs={12}>
           <Grid container className="item-icons-container">
             {/* access approved */}
-           {privateSelectedIcon == "incomingNotApproved"&&  <Grid item xs={3}>
+           {privateSelectedIcon == "incomingNotApproved"&& 
+           
+          <Grid item xs={3} className="item-icon-container icon-container">
           <IconButton
             // className="item-btn"
             onClick={() => {
@@ -116,11 +118,15 @@ const permissionReadPP=useSelector(
           >
             <img src="../../static/images/icons/PP_Access_Approved.svg" />
           </IconButton>
+             <Typography variant="body1" component="p">
+                    <IntlMessages id="ppList.iconTitleApprove" />
+              </Typography>
+
            </Grid>}
            
 
            {/* View profile */}
-          <Grid item xs={4}>
+          <Grid item xs={3} className="icon-container">
            <IconButton
             // className="item-btn"
             onClick={() => {
@@ -132,9 +138,12 @@ const permissionReadPP=useSelector(
           >
             <img src="../../static/images/icons/Profile_icon_2.svg" />
           </IconButton>
+           <Typography variant="body1" component="p">
+                    <IntlMessages id="ppList.iconTitleView" />
+              </Typography>
           </Grid>
          {/* access removed */}
-           {privateSelectedIcon == "incomingApproved"&&<Grid item xs={3}>
+           {privateSelectedIcon == "incomingApproved"&&<Grid item xs={5} className="icon-container-2">
           <IconButton
             // className="item-btn"
             onClick={() => {
@@ -146,10 +155,13 @@ const permissionReadPP=useSelector(
           >
             <img src="../../static/images/icons/PP_Access_Remove.svg" />
           </IconButton>
+          <Typography variant="body1" component="p">
+                    <IntlMessages id="ppList.iconTitleRemove" />
+              </Typography>
            </Grid>}
 
             {/* permission pp removed */}
-           {privateSelectedIcon == "incomingNotApproved"&&<Grid item xs={4}>
+           {privateSelectedIcon == "incomingNotApproved"&&<Grid item xs={3} className="icon-container">
           <IconButton
             // className="item-btn"
             onClick={() => {
@@ -161,6 +173,9 @@ const permissionReadPP=useSelector(
           >
             <img src="../../static/images/icons/PP_Permission_remove.svg" />
           </IconButton>
+          <Typography variant="body1" component="p">
+                    <IntlMessages id="ppList.iconTitleDelete" />
+              </Typography>
            </Grid>}
            </Grid>
         </Grid>

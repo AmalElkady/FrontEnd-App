@@ -36,9 +36,16 @@ import {
 
 import Flag from "react-world-flags";
 import ModalUploadL2 from "../../Modals/modalUpdateL2";
+
+import {
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
+
 export default function About({ aboutInfo }) {
   const router = useRouter();
   const l2Data = useSelector(state => state.profile.profileL2Data);
+  const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
   const myPhotos = useSelector(state => state.profile.myPhotos);
   const OpenModal = useSelector(state => state.profile.openModal);
@@ -58,6 +65,16 @@ export default function About({ aboutInfo }) {
       dispatch(readMyProfile("L2"));
     }
   }, [router.query]);
+
+  useEffect(() => {
+    if (userBlockedMessage) {
+     NotificationManager.error(userBlockedMessage);
+     dispatch(
+        readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
+      );
+    }
+  }, [userBlockedMessage]);
+
 
   useEffect(() => {
     setDisData(null)

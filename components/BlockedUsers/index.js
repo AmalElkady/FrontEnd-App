@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IntlMessages from "../../util/IntlMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 
 import { getBlockedUsers } from "../../actions/Interaction";
@@ -77,10 +78,14 @@ export default function Views() {
   return (
     <>
       <Grid container>
-          {console.log("finalUsersProfiles ",finalUsersProfiles)}
+            <Grid item xs={12} className="page-title-container">
+         <Typography variant="h6">
+                    <IntlMessages id="blockedList.blockedTitle" />
+              </Typography>
+       </Grid>
         {router.pathname == "/home/blockedUsers" && finalUsersProfiles && (
           <InfiniteScroll
-            className="scroll-m items-scroll-2"
+            className="scroll-m items-scroll-2 "
             dataLength={blockedUsersProfiles.length}
             height={300}
             next={handleScrollGetBlockedUsers}
@@ -98,7 +103,7 @@ export default function Views() {
             }
           >
             {blockedUsersProfiles.length != 0 && (
-              <Grid item xs={12} className="items-container">
+              <Grid item xs={12} className="items-container ">
                 {blockedUsersProfiles.map((option, index) => (
                   <ListItem key={blockedUsersDates[index]} user={option} time={blockedUsersDates[index]} />
                 ))}

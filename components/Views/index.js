@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IntlMessages from "../../util/IntlMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 
 import { getUserViews } from "../../actions/Interaction";
@@ -44,7 +45,7 @@ export default function Views() {
 
   useEffect(() => {
     if (userViewsProfiles) {
-      console.log("userViewsProfiles ", userViewsProfiles);
+       console.log("userViewsProfiles ", userViewsProfiles);
        dispatch(requestPhotoRead());
     }
   }, [userViewsProfiles]);
@@ -76,6 +77,11 @@ export default function Views() {
   return (
     <>
       <Grid container>
+        <Grid item xs={12} className="page-title-container">
+         <Typography variant="h6">
+                    <IntlMessages id="viewList.viewTitle" />
+              </Typography>
+       </Grid>
         {router.pathname == "/home/views" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll-2"

@@ -51,12 +51,18 @@ const initialProfileState = {
   openModalSendPP: false,
   showMessage: false,
   loader: false,
-  alertMessage: ""
+  alertMessage: "",
+  userBlockedMessage:null
 };
 
 const Profile = (state = initialProfileState, action) => {
   switch (action.type) {
     case READ_PROFILE_L2_SUCCESS: {
+      if( action.payload.message){
+        state.userBlockedMessage=action.payload.message
+      }else{
+         state.userBlockedMessage=null
+      }
       return {
         ...state,
         profileL2Data: action.payload.profile,

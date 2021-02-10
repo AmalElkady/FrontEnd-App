@@ -44,7 +44,7 @@
   height: 400px !important;
   @media screen and (max-width: 575px) {
     height: 325px !important;
-    margin-top: 6rem !important;
+    margin-top: 2rem !important;
   }
 }
 .items-container {
@@ -110,3 +110,24 @@
 .item-icons-container{
     justify-content:space-around;
   }
+
+.item-icon-container{
+  flex-basis: 23% !important;
+    padding-top: .3rem;
+}  
+.icon-container{
+    text-align: center;
+    color: gray
+}
+.icon-container-2{
+    text-align: end;
+    color: gray
+}
+
+.page-title-container{
+  margin-top:4rem !important;
+}
+
+.page-icons-container{
+  margin-top:-4rem !important;
+}

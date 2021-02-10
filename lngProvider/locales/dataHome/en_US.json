@@ -12,17 +12,32 @@
   "search.citySelect": "Select City",
 
   "loveList.match": "Now you are matching with ",
+  "loveList.matchTitle":"Users are matching with you ",
   "loveList.sent": "You had sent love to ",
+  "loveList.sentTitle":"Users who you sent love to them ",
   "loveList.received": " had sent love to you",
+  "loveList.receivedTitle":"Users who sent love to you ",
 
   "ppList.outgoing": "Your request approved from ",
+  "ppList.outgoingTitle": "Users approved you to access their private photos",
   "ppList.incomingApproved": "You approved request of ",
+  "ppList.incomingApprovedTitle": "Users have your approval to access private photos",
   "ppList.incomingNotApproved": "You didn't approve request of ",
+  "ppList.incomingNotApprovedTitle": "Users awaiting your approval to access private photos",
+  "ppList.iconTitleApprove":"Approve",
+  "ppList.iconTitleRemove":"Remove",
+  "ppList.iconTitleDelete":"Delete",
+  "ppList.iconTitleView":"View",
+
 
   "viewList.view": " has seen your profile on ",
+  "viewList.viewTitle": " Users who viewed your profile ",
 
   "blockedList.blocked":"You Blocked ",
+  "blockedList.blockedTitle":"Users are blocked from you ",
   "blockedList.on":" on ",
+  "blockedList.iconTitle":"Unblock ",
+
 
   "sidebar.profile": "My Profile",
   "sidebar.notification": "Notifications",

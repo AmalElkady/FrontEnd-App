@@ -18,6 +18,7 @@ export default function Profile() {
   const [aboutInfo, setAboutInfo] = useState({});
   const myProfileL1Data = useSelector(state => state.profile.myProfileDataL1);
   const myPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
+  const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
   const dispatch = useDispatch();
 
   const [finalPhotoSrc, setFinalPhotoSrc] = useState({});
@@ -98,7 +99,7 @@ export default function Profile() {
           <Grid item xs={6} className="profile-Grid-container">
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
             <br />
-            {router.query.flag == "read" && (
+            {router.query.flag == "read" && userBlockedMessage==null&&(
               <Photos
                 id={router.query.i}
                 co={router.query.co}

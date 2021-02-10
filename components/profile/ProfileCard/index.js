@@ -8,7 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import Flag from "react-world-flags";
 import moment from "moment";
-import { updateProfileL1 } from "../../../actions/Profile";
+import { updateProfileL1,readProfileL2 } from "../../../actions/Profile";
 import {
   sendLoveMatchRequest,
   sendLoveMatchRequestSuccess,
@@ -113,6 +113,9 @@ Fade.propTypes = {
 export default function ProfileCard({ mainInfo }) {
   const classes = useStyles();
   const searchState = useSelector(state => state.home.searchState);
+   const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
+   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
+    const profileL2Data = useSelector(state => state.profile.profileL2Data);
   const returnUpdateMessage = useSelector(
     state => state.profile.returnUpdateMessage
   );
@@ -226,7 +229,7 @@ export default function ProfileCard({ mainInfo }) {
                 </div>
               </div>
             )}
-             {router.query.flag == "read" && (
+             {router.query.flag == "read" && userBlockedMessage==null&& profileL2Data!=null&& (
               <div className="card-img-icon-block">
                  <IconButton
                   onClick={() => {
@@ -238,13 +241,19 @@ export default function ProfileCard({ mainInfo }) {
                         mainInfo.va
                       )
                     );
+                    dispatch(
+                      readProfileL2(mainInfo.id,
+                        mainInfo.co,
+                        mainInfo.ci,
+                        mainInfo.va)
+                      );
                   }}
                 >
                   <img src="../../../static/images/icons/Block_User.svg" />
                 </IconButton>
               </div>
             )}
-               {router.query.flag == "read" && (
+               {router.query.flag == "read" && userBlockedMessage!=null&& profileL2Data==null&&(
               <div className="card-img-icon-block">
                  <IconButton
                   onClick={() => {
@@ -256,6 +265,12 @@ export default function ProfileCard({ mainInfo }) {
                         mainInfo.va
                       )
                     );
+                     dispatch(
+                      readProfileL2(mainInfo.id,
+                        mainInfo.co,
+                        mainInfo.ci,
+                        mainInfo.va)
+                      );
                   }}
                 >
                   <img src="../../../static/images/icons/Unblock_User.svg" />

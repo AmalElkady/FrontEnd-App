@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IntlMessages from "../../util/IntlMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Typography from "@material-ui/core/Typography";
+
 
 import {
   getLoveMatchedAndReceivedRequests,
@@ -179,8 +181,27 @@ export default function Love() {
   return (
     <>
       <Grid container>
-        <Grid item xs={12} className="grid-width-1">
-          <LoveIcons />
+          <Grid item xs={12} className="page-title-container">
+         <Typography variant="h6">
+                {loveSelectedIcon == "match"? (
+                  <>
+                    <IntlMessages id="loveList.matchTitle" />
+                  </>
+                ) : loveSelectedIcon == "sent"? (
+                  <>
+                    <IntlMessages id="loveList.sentTitle" />
+                  </>
+                ) : loveSelectedIcon == "received" ? (
+                  <>
+                    <IntlMessages id="loveList.receivedTitle" />
+                  </>
+                ) : (
+                  ""
+                )}
+              </Typography>
+       </Grid>
+        <Grid item xs={12} className="grid-width-1 page-icons-container">
+         <LoveIcons />
         </Grid>
         {loveSelectedIcon == "sent" && finalUsersProfiles && (
           <InfiniteScroll

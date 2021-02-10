@@ -7,6 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
 import { useRouter} from "next/router";
 import moment from "moment";
+import {
+  unblockUser
+  ,clickedId
+} from "../../actions/Interaction";
 
 export default function ListItem({ user,time }) {
   const dispatch = useDispatch();
@@ -15,6 +19,8 @@ export default function ListItem({ user,time }) {
   const loveSelectedIcon = useSelector(
     state => state.interaction.loveSelectedIcon
   );
+
+  const Clicked_id = useSelector(state => state.interaction.clicked_id);
 
   useEffect(() => {}, []);
 
@@ -75,6 +81,7 @@ export default function ListItem({ user,time }) {
             </Grid>
           </Grid>
         </Grid>
+       {router.pathname == "/home/love" &&
         <Grid item xs={2}>
           <IconButton
             className="item-btn"
@@ -88,6 +95,46 @@ export default function ListItem({ user,time }) {
             <img src="../../static/images/icons/Profile_icon_2.svg" />
           </IconButton>
         </Grid>
+        }
+
+       {router.pathname == "/home/blockedUsers" &&
+       <Grid item xs={12}>
+          <Grid container className="item-icons-container">
+           {/* View profile */}
+          <Grid item xs={3} className="icon-container">
+           <IconButton
+            onClick={() => {
+              //  user.timeScore = timeScore;
+              user.flag="read"
+              router.push({ pathname: `/home/profile`, query: user });
+            }}
+            aria-label="View Profile"
+          >
+            <img src="../../static/images/icons/Profile_icon_2.svg" />
+          </IconButton>
+           <Typography variant="body1" component="p">
+                    <IntlMessages id="ppList.iconTitleView" />
+              </Typography>
+          </Grid>
+         {/* unblock user */}
+          <Grid item xs={3} className="icon-container-2">
+             <IconButton
+            // className="item-btn"
+            onClick={() => {
+             dispatch(clickedId(user.i));
+             dispatch(unblockUser(user.i,user.co,user.ci,user.va))
+            }}
+            aria-label="Unblock User"
+              >
+            <img src="../../static/images/icons/Unblock_User_2.svg" />
+              </IconButton>
+              <Typography variant="body1" component="p">
+                    <IntlMessages id="blockedList.iconTitle" />
+              </Typography>
+          </Grid>
+           </Grid>
+        </Grid>}
+
       </Grid>
     </>
   );
