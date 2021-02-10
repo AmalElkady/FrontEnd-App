@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
-import { useRouter } from "next/router";
+import { useRouter} from "next/router";
 import moment from "moment";
 
 export default function ListItem({ user,time }) {
@@ -60,7 +60,14 @@ export default function ListItem({ user,time }) {
                   <>
                     {user.n}
                     <IntlMessages id="viewList.view" />
-                    {console.log("time",time)}
+                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                  </>
+                )}
+                 {router.pathname == "/home/blockedUsers" && (
+                  <>
+                    <IntlMessages id="blockedList.blocked" />
+                    {user.n}
+                     <IntlMessages id="blockedList.on" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
                 )}
@@ -73,7 +80,8 @@ export default function ListItem({ user,time }) {
             className="item-btn"
             onClick={() => {
               //  user.timeScore = timeScore;
-              // Router.push({ pathname: `/home/profile`, query: user });
+              user.flag="read"
+              router.push({ pathname: `/home/profile`, query: user });
             }}
             aria-label="View Profile"
           >

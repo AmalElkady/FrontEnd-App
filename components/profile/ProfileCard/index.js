@@ -129,7 +129,9 @@ export default function ProfileCard({ mainInfo }) {
   );
 
   const userMartial = useSelector(state => state.profile.userMartial);
+  const gender=useSelector(state => state.auth.gender);
   const [showMessage, setShowMessage] = useState(false);
+  const [mainGender, setMainGender] = useState(mainInfo.gd?mainInfo.gd:Number(!gender));
   const router = useRouter();
   const dispatch = useDispatch();
   ////// modal
@@ -165,16 +167,6 @@ export default function ProfileCard({ mainInfo }) {
     }
   });
 
-  // useEffect(() => {
-  //   if (userMartial != null) {
-  //     console.log("true show");
-  //     setShowMessage(true);
-  //   }
-  //   //else {
-  //   //   console.log("true show");
-  //   //   setShowMessage(false);
-  //   // }
-  // }, [userMartial]);
   useEffect(() => {
     if (SendLoveMatchRequest == true) {
       NotificationManager.success("Love Sent successfully", "Success");
@@ -323,7 +315,8 @@ export default function ProfileCard({ mainInfo }) {
                 className="card-h-row p-relative"
                 gutterBottom
               >
-                {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
+               {/* {mainInfo.gd=mainInfo.gd?mainInfo.gd:Number(!gender)} */}
+               {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
                 {router.query.flag == "readMe" && (
                   <IconButton
                     aria-label="Edit"
@@ -357,7 +350,7 @@ export default function ProfileCard({ mainInfo }) {
               <form className={classes.positionR} noValidate autoComplete="off">
                 <Typography variant="body1" gutterBottom>
                   <IntlMessages id="updateProfile.martial" />
-                  {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][userMartial]}
+                  {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
                 </Typography>
                 <StyledFormControl style={{ minWidth: "149px" }}>
                   <InputLabel id="martial-label">
@@ -371,10 +364,10 @@ export default function ProfileCard({ mainInfo }) {
                     name="martial"
                     style={{ marginRight: "35px" }}
                   >
-                    {ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd].map((value, i) => (
+                    {ARRAYS_OF_MARTIAL_STATUS[mainGender].map((value, i) => (
                       <MenuItem
-                        key={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
-                        value={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainInfo.gd][i]}
+                        key={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainGender][i]}
+                        value={ARRAYS_OF_MARTIAL_STATUS_VALUES[mainGender][i]}
                         control={<Radio />}
                         label={value}
                       >

@@ -108,18 +108,18 @@ const Interaction = (state = initialProfileState, action) => {
       console.log("form reducer outgoing ", action.payload);
       const outgoingPPProfiles = map2ArrTo1Arr(
         action.payload.order,
-        action.payload.view_profiles
+        action.payload.profiles
       );
-      if (action.payload.view_profiles.length != 0) {
+      if (action.payload.profiles.length != 0) {
         const { offset, SL } = calcValueOfSlAndOffset(
-          action.payload.view_dates
+          action.payload.dates
         );
         state.OffsetOutgoingPPRequests = offset;
         state.scoreHOutgoingPPRequests = SL;
       }
       if (
-        action.payload.view_profiles.length == 0 ||
-        action.payload.view_profiles.length < state.limitReturnedItems
+        action.payload.profiles.length == 0 ||
+        action.payload.profiles.length < state.limitReturnedItems
       ) {
         state.endOfResultOutgoingPPRequests = true;
       }
@@ -127,7 +127,7 @@ const Interaction = (state = initialProfileState, action) => {
         ...state,
         outgoingPPRequestsDates: [
           ...state.outgoingPPRequestsDates,
-          ...action.payload.view_dates
+          ...action.payload.dates
         ],
         outgoingPPRequestsProfiles: [
           ...state.outgoingPPRequestsProfiles,
@@ -272,14 +272,14 @@ const Interaction = (state = initialProfileState, action) => {
       console.log("from reducer User views ", action.payload);
       
       let viewsProfiles=[];
-       if (action.payload.view_profiles.length != 0) {
+       if (action.payload.profiles.length != 0) {
         viewsProfiles = map2ArrTo1Arr(
         action.payload.order,
-        action.payload.view_profiles
+        action.payload.profiles
       );
         state.startUserViews += state.limitReturnedItems;
         state.endUserViews +=state.limitReturnedItems;
-      } else if (action.payload.view_profiles.length == 0) {
+      } else if (action.payload.profiles.length == 0) {
         state.endOfResultUserViews = true;
       }
       return {
@@ -290,7 +290,7 @@ const Interaction = (state = initialProfileState, action) => {
         ],
         userViewsDates:[
           ...state.userViewsDates,
-          ...action.payload.view_dates
+          ...action.payload.dates
         ]
       };
     }
@@ -310,20 +310,32 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_BLOCKED_USERS_SUCCESS: {
       console.log("form reducer blocked users", action.payload);
-      //  let blockedProfiles=[];
-      //  if (action.payload.view_profiles.length != 0) {
-      //   blockedProfiles = map2ArrTo1Arr(
-      //   action.payload.order,
-      //   action.payload.view_profiles
-      // );
-      //   state.startUserViews += state.limitReturnedItems;
-      //   state.endUserViews +=state.limitReturnedItems;
-      // } else if (action.payload.view_profiles.length == 0) {
-      //   state.endOfResultUserViews = true;
-      // }
+      let  blockedProfiles = [];
+      if (action.payload.profiles.length != 0) {
+           blockedProfiles=  map2ArrTo1Arr(
+              action.payload.order,
+              action.payload.profiles
+            );  
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+        state.OffsetBlockedUsers = offset;
+        state.scoreHBlockedUsers = SL;
+        if(action.payload.profiles.length < state.limitReturnedItems) {       
+           state.endOfResultBlockedUsers = true;
+        }
+      } else if (action.payload.profiles.length == 0) {
+        state.endOfResultBlockedUsers = true;
+      }
+
       return {
         ...state,
-        blockedUsersProfiles: action.payload
+        blockedUsersProfiles: [
+          ...state.blockedUsersProfiles,
+          ...blockedProfiles
+        ],
+        blockedUsersDates:[
+          ...state.blockedUsersDates,
+          ...action.payload.dates
+        ]
       };
     }
     case CLICKED_ID: {

@@ -29,9 +29,9 @@ export default function Views() {
     state => state.home.photoReadSignedRequest
   );
 
-  //User Views
+  //Users Blocked
   const blockedUsersProfiles = useSelector(state => state.interaction.blockedUsersProfiles);
-  const userViewsDates = useSelector(state => state.interaction.userViewsDates);
+  const blockedUsersDates = useSelector(state => state.interaction.blockedUsersDates);
   const scoreHBlockedUsers = useSelector(state => state.interaction.scoreHBlockedUsers);
   const OffsetBlockedUsers = useSelector(state => state.interaction.OffsetBlockedUsers);
   const endOfResultBlockedUsers = useSelector(
@@ -45,66 +45,67 @@ export default function Views() {
   useEffect(() => {
     if (blockedUsersProfiles.length!=0) {
       console.log("blockedUsersProfiles ", blockedUsersProfiles);
-       //dispatch(requestPhotoRead());
+       dispatch(requestPhotoRead());
     }
   }, [blockedUsersProfiles]);
 
 
-    // useEffect(() => {
-    //   if (photoReadSignedRequest != null) {
-    //     setFinalUsersProfiles(null);
-    //     let finalUserViewsProfiles = [];
-    //     if (router.pathname == "/home/blockedUsers") {
-    //       if (userViewsProfiles.length != 0) {
-    //         finalUserViewsProfiles = mapSmallUserPhotoUrl(
-    //           userViewsProfiles,
-    //           photoReadSignedRequest.signedRequest
-    //         );
-    //         setFinalUsersProfiles(finalUserViewsProfiles);
-    //       }
-    //     }
-    //   }
-    // }, [photoReadSignedRequest]);
+    useEffect(() => {
+      if (photoReadSignedRequest != null) {
+        setFinalUsersProfiles(null);
+        let finalUserBlocked = [];
+        if (router.pathname == "/home/blockedUsers") {
+        //   if (user.length != 0) {
+            finalUserBlocked = mapSmallUserPhotoUrl(
+              blockedUsersProfiles,
+              photoReadSignedRequest.signedRequest
+            );
+            setFinalUsersProfiles(finalUserBlocked);
+        //   }
+        }
+      }
+    }, [photoReadSignedRequest]);
 
   // handle scroll for list of Blocked Users
   const handleScrollGetBlockedUsers = () => {
-    // if (!endOfResultBlockedUsers) {
-    //   // sent get Blocked users (next options)
-    //   dispatch(getBlockedUsers(scoreHBlockedUsers, OffsetBlockedUsers));
-    // }
+    if (!endOfResultBlockedUsers) {
+      // sent get Blocked users (next options)
+      dispatch(getBlockedUsers(scoreHBlockedUsers, OffsetBlockedUsers));
+    }
   };
 
   return (
     <>
       <Grid container>
-        {/* {router.pathname == "/home/blockedUsers" && finalUsersProfiles && (
+          {console.log("finalUsersProfiles ",finalUsersProfiles)}
+        {router.pathname == "/home/blockedUsers" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll-2"
-            dataLength={userViewsProfiles.length}
+            dataLength={blockedUsersProfiles.length}
             height={300}
             next={handleScrollGetBlockedUsers}
             hasMore={!endOfResultBlockedUsers}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {userViewsProfiles.length != 0 && (
-                  <b>Yay! You have seen All profile Views </b>
+                {blockedUsersProfiles.length != 0 && (
+                  <b>Yay! You have seen All blocked Users </b>
                 )}
-                {userViewsProfiles.length === 0 && (
-                  <b>Yay! You don't have profile Views </b>
+                {blockedUsersProfiles.length === 0 && (
+                  <b>Yay! You don't have blocked Users </b>
                 )}
               </p>
             }
           >
-            {userViewsProfiles.length != 0 && (
+            {blockedUsersProfiles.length != 0 && (
               <Grid item xs={12} className="items-container">
-                {userViewsProfiles.map((option, index) => (
-                  <ListItem key={userViewsDates[index]} user={option} time={userViewsDates[index]} />
+                {blockedUsersProfiles.map((option, index) => (
+                  <ListItem key={blockedUsersDates[index]} user={option} time={blockedUsersDates[index]} />
                 ))}
               </Grid>
             )}
           </InfiniteScroll>
-        )} */}
+        )}
       </Grid>
     </>
   );

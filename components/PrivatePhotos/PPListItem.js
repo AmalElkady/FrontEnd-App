@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
+import { useRouter} from "next/router";
 
 import {ppAccessApproveRemove,ppAccessApproveRemoveSuccess,clickedId} from "../../actions/Interaction"
 import {permissionPPReadRemove}from "../../actions/Profile"
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default function ListItem({ user }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+   const router = useRouter();
   const privateSelectedIcon = useSelector(
     state => state.interaction.privateSelectedIcon
   );
@@ -123,7 +125,8 @@ const permissionReadPP=useSelector(
             // className="item-btn"
             onClick={() => {
               //  user.timeScore = timeScore;
-              // Router.push({ pathname: `/home/profile`, query: user });
+              user.flag="read"
+              router.push({ pathname: `/home/profile`, query: user });
             }}
             aria-label="View Profile"
           >

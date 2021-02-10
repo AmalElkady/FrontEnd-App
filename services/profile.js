@@ -124,6 +124,8 @@ profile.readProfileL2 = function(id, co, ci, va) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
+console.log("response about data ",response)
+
       if (response) {
         resolve(response);
       } else {

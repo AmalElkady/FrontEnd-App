@@ -50,6 +50,7 @@ export default function About({ aboutInfo }) {
   useEffect(() => {
     setDisData(null);
     if (router.query.flag == "read") {
+       console.log("router.query.flag ",router.query.flag,aboutInfo)
       dispatch(
         readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
       );
