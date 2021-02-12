@@ -45,7 +45,7 @@ export default function Views() {
 
   useEffect(() => {
     if (blockedUsersProfiles.length!=0) {
-      console.log("blockedUsersProfiles ", blockedUsersProfiles);
+       console.log("blockedUsersProfiles2 ", blockedUsersProfiles);
        dispatch(requestPhotoRead());
     }
   }, [blockedUsersProfiles]);

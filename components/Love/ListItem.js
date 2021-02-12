@@ -9,7 +9,8 @@ import { useRouter} from "next/router";
 import moment from "moment";
 import {
   unblockUser
-  ,clickedId
+  ,clickedId,
+  updateBlockedUsersList
 } from "../../actions/Interaction";
 
 export default function ListItem({ user,time }) {
@@ -20,9 +21,16 @@ export default function ListItem({ user,time }) {
     state => state.interaction.loveSelectedIcon
   );
 
+  const blockedUsersProfiles = useSelector(state => state.interaction.blockedUsersProfiles);
+  const blockedUsersDates = useSelector(state => state.interaction.blockedUsersDates);
   const Clicked_id = useSelector(state => state.interaction.clicked_id);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   if(Clicked_id && router.pathname == "/home/blockedUsers"){
+  //     console.log("Clicked_id trueeeeee ",Clicked_id)
+  //      dispatch(updateBlockedUsersList());
+  //    }
+  // }, [Clicked_id]);
 
   return (
     <>

@@ -398,3 +398,6 @@ export const GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
 export const OPEN_MODAL = "open_modal";
 export const OPEN_MODAL_PP = "open_modal_pp";
 export const CLICKED_ID = "clicked_id";
+
+/// blocked users page 
+export const UPDATE_BLOCKED_LIST="update_blocked_list";

@@ -23,7 +23,8 @@ import {
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   CLICKED_ID,
   SELECTED_LOVE_ICON,
-  SELECTED_PRIVATE_ICON
+  SELECTED_PRIVATE_ICON,
+  UPDATE_BLOCKED_LIST
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -223,3 +224,10 @@ export const selectedPrivateIcon = data => {
     payload: data
   };
 };
+
+export const updateBlockedUsersList=()=>{
+  console.log("from update block action")
+  return {
+    type: UPDATE_BLOCKED_LIST
+  };
+}

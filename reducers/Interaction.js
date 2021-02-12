@@ -12,10 +12,12 @@ import {
   GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   SELECTED_LOVE_ICON,
   SELECTED_PRIVATE_ICON,
-  CLICKED_ID
+  CLICKED_ID,
+  UPDATE_BLOCKED_LIST
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
+import {removeUserFromList }from"../helpers/removeUserFromList"
 
 const initialProfileState = {
   ppAccessApproveRemove: false,
@@ -303,9 +305,19 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case UNBLOCK_USER_SUCCESS: {
       console.log("form reducer User unblock ", action.payload);
+      const {list1,list2}=removeUserFromList(state.clicked_id,state.blockedUsersProfiles,state.blockedUsersDates)
+      console.log("list1 ",list1,list2)
+      state.blockedUsersProfiles="";
+      state.blockedUsersDates="";
+      state.blockedUsersProfiles=list1;
+      state.blockedUsersDates=list2;
+      console.log("blockedUsersProfiles ",state.blockedUsersProfiles)
       return {
         ...state,
-        userUnblocked: action.payload
+        userUnblocked: action.payload,
+        // blockedUsersProfiles:list1,
+        // blockedUsersDates:list2,
+        clicked_id: null
       };
     }
     case GET_BLOCKED_USERS_SUCCESS: {
@@ -364,6 +376,16 @@ const Interaction = (state = initialProfileState, action) => {
         notificationLoveCount: action.payload.count.Love
       };
     }
+    case UPDATE_BLOCKED_LIST:{
+      const {list1,list2}=removeUserFromList(state.clicked_id,state.blockedUsersProfiles,state.blockedUsersDates)
+      console.log("list1 ",list1,list2)
+      state.blockedUsersProfiles=list1;
+      state.blockedUsersDates=list2;
+      return {
+        ...state,
+        clicked_id: null
+      };
+    }
     case SELECTED_LOVE_ICON:
       return {
         ...state,
@@ -379,4 +401,5 @@ const Interaction = (state = initialProfileState, action) => {
   }
 };
 
+ 
 export default Interaction;
