@@ -5,15 +5,15 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
-import { useRouter} from "next/router";
+import { useRouter } from "next/router";
 import moment from "moment";
 import {
-  unblockUser
-  ,clickedId,
+  unblockUser,
+  clickedId,
   updateBlockedUsersList
 } from "../../actions/Interaction";
 
-export default function ListItem({ user,time }) {
+export default function ListItem({ user, time }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -21,8 +21,12 @@ export default function ListItem({ user,time }) {
     state => state.interaction.loveSelectedIcon
   );
 
-  const blockedUsersProfiles = useSelector(state => state.interaction.blockedUsersProfiles);
-  const blockedUsersDates = useSelector(state => state.interaction.blockedUsersDates);
+  const blockedUsersProfiles = useSelector(
+    state => state.interaction.blockedUsersProfiles
+  );
+  const blockedUsersDates = useSelector(
+    state => state.interaction.blockedUsersDates
+  );
   const Clicked_id = useSelector(state => state.interaction.clicked_id);
 
   // useEffect(() => {
@@ -77,11 +81,20 @@ export default function ListItem({ user,time }) {
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
                 )}
-                 {router.pathname == "/home/blockedUsers" && (
+
+                {router.pathname == "/home/notifications-love" && (
+                  <>
+                    {user.n}
+                    <IntlMessages id="Love.notification" />
+                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                  </>
+                )}
+
+                {router.pathname == "/home/blockedUsers" && (
                   <>
                     <IntlMessages id="blockedList.blocked" />
                     {user.n}
-                     <IntlMessages id="blockedList.on" />
+                    <IntlMessages id="blockedList.on" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
                 )}
@@ -89,60 +102,61 @@ export default function ListItem({ user,time }) {
             </Grid>
           </Grid>
         </Grid>
-       {router.pathname == "/home/love" &&
-        <Grid item xs={2}>
-          <IconButton
-            className="item-btn"
-            onClick={() => {
-              //  user.timeScore = timeScore;
-              user.flag="read"
-              router.push({ pathname: `/home/profile`, query: user });
-            }}
-            aria-label="View Profile"
-          >
-            <img src="../../static/images/icons/Profile_icon_2.svg" />
-          </IconButton>
-        </Grid>
-        }
-
-       {router.pathname == "/home/blockedUsers" &&
-       <Grid item xs={12}>
-          <Grid container className="item-icons-container">
-           {/* View profile */}
-          <Grid item xs={3} className="icon-container">
-           <IconButton
-            onClick={() => {
-              //  user.timeScore = timeScore;
-              user.flag="read"
-              router.push({ pathname: `/home/profile`, query: user });
-            }}
-            aria-label="View Profile"
-          >
-            <img src="../../static/images/icons/Profile_icon_2.svg" />
-          </IconButton>
-           <Typography variant="body1" component="p">
-                    <IntlMessages id="ppList.iconTitleView" />
-              </Typography>
+        {(router.pathname == "/home/love" ||
+          router.pathname == "/home/notifications-love") && (
+          <Grid item xs={2}>
+            <IconButton
+              className="item-btn"
+              onClick={() => {
+                //  user.timeScore = timeScore;
+                user.flag = "read";
+                router.push({ pathname: `/home/profile`, query: user });
+              }}
+              aria-label="View Profile"
+            >
+              <img src="../../static/images/icons/Profile_icon_2.svg" />
+            </IconButton>
           </Grid>
-         {/* unblock user */}
-          <Grid item xs={3} className="icon-container-2">
-             <IconButton
-            // className="item-btn"
-            onClick={() => {
-             dispatch(clickedId(user.i));
-             dispatch(unblockUser(user.i,user.co,user.ci,user.va))
-            }}
-            aria-label="Unblock User"
-              >
-            <img src="../../static/images/icons/Unblock_User_2.svg" />
-              </IconButton>
-              <Typography variant="body1" component="p">
-                    <IntlMessages id="blockedList.iconTitle" />
-              </Typography>
-          </Grid>
-           </Grid>
-        </Grid>}
+        )}
 
+        {router.pathname == "/home/blockedUsers" && (
+          <Grid item xs={12}>
+            <Grid container className="item-icons-container">
+              {/* View profile */}
+              <Grid item xs={3} className="icon-container">
+                <IconButton
+                  onClick={() => {
+                    //  user.timeScore = timeScore;
+                    user.flag = "read";
+                    router.push({ pathname: `/home/profile`, query: user });
+                  }}
+                  aria-label="View Profile"
+                >
+                  <img src="../../static/images/icons/Profile_icon_2.svg" />
+                </IconButton>
+                <Typography variant="body1" component="p">
+                  <IntlMessages id="ppList.iconTitleView" />
+                </Typography>
+              </Grid>
+              {/* unblock user */}
+              <Grid item xs={3} className="icon-container-2">
+                <IconButton
+                  // className="item-btn"
+                  onClick={() => {
+                    dispatch(clickedId(user.i));
+                    dispatch(unblockUser(user.i, user.co, user.ci, user.va));
+                  }}
+                  aria-label="Unblock User"
+                >
+                  <img src="../../static/images/icons/Unblock_User_2.svg" />
+                </IconButton>
+                <Typography variant="body1" component="p">
+                  <IntlMessages id="blockedList.iconTitle" />
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     </>
   );

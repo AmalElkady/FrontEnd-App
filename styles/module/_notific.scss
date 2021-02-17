@@ -1,0 +1,16 @@
+.notific-list-item {
+  padding: 0.5rem !important;
+
+  & .list-item-count {
+    background-color: $secondary;
+    color: white;
+    border-radius: 50%;
+    width: 56%;
+    text-align: center;
+
+    & span {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+}

@@ -479,3 +479,17 @@
     background-color: transparent;
   }
 }
+
+.love-count {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 0;
+  background-color: white;
+  right: 0;
+  border-radius: 50%;
+  color: $secondary;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+}

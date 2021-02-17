@@ -17,7 +17,7 @@ import {
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
-import {removeUserFromList }from"../helpers/removeUserFromList"
+import { removeUserFromList } from "../helpers/removeUserFromList";
 
 const initialProfileState = {
   ppAccessApproveRemove: false,
@@ -77,20 +77,29 @@ const initialProfileState = {
   blockedUsersProfiles: "",
   blockedUsersDates: "",
 
-  notificationViewUnread: null,
+  notificationViewUnread: null, //for view notifications
   notificationViewDates: null,
   notificationViewOrder: null,
   notificationViewCount: null,
+  endOfResultNotificationView: false,
+  scoreHNotificationView: "",
+  OffsetNotificationView: 0,
 
-  notificationPPUnread: null,
+  notificationPPUnread: null, // for pp notifications
   notificationPPDates: null,
   notificationPPOrder: null,
   notificationPPCount: null,
+  endOfResultNotificationPP: false,
+  scoreHNotificationPP: "",
+  OffsetNotificationPP: 0,
 
-  notificationLoveUnread: null,
+  notificationLoveUnread: null, //for love notifications
   notificationLoveDates: null,
   notificationLoveOrder: null,
   notificationLoveCount: null,
+  endOfResultNotificationLove: false,
+  scoreHNotificationLove: "",
+  OffsetNotificationLove: 0,
 
   clicked_id: null,
   loveSelectedIcon: null,
@@ -113,9 +122,7 @@ const Interaction = (state = initialProfileState, action) => {
         action.payload.profiles
       );
       if (action.payload.profiles.length != 0) {
-        const { offset, SL } = calcValueOfSlAndOffset(
-          action.payload.dates
-        );
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
         state.OffsetOutgoingPPRequests = offset;
         state.scoreHOutgoingPPRequests = SL;
       }
@@ -272,28 +279,22 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_USER_VIEWS_SUCCESS: {
       console.log("from reducer User views ", action.payload);
-      
-      let viewsProfiles=[];
-       if (action.payload.profiles.length != 0) {
+
+      let viewsProfiles = [];
+      if (action.payload.profiles.length != 0) {
         viewsProfiles = map2ArrTo1Arr(
-        action.payload.order,
-        action.payload.profiles
-      );
+          action.payload.order,
+          action.payload.profiles
+        );
         state.startUserViews += state.limitReturnedItems;
-        state.endUserViews +=state.limitReturnedItems;
+        state.endUserViews += state.limitReturnedItems;
       } else if (action.payload.profiles.length == 0) {
         state.endOfResultUserViews = true;
       }
       return {
         ...state,
-        userViewsProfiles: [
-          ...state.userViewsProfiles,
-          ...viewsProfiles
-        ],
-        userViewsDates:[
-          ...state.userViewsDates,
-          ...action.payload.dates
-        ]
+        userViewsProfiles: [...state.userViewsProfiles, ...viewsProfiles],
+        userViewsDates: [...state.userViewsDates, ...action.payload.dates]
       };
     }
     case BLOCK_USER_SUCCESS: {
@@ -305,13 +306,17 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case UNBLOCK_USER_SUCCESS: {
       console.log("form reducer User unblock ", action.payload);
-      const {list1,list2}=removeUserFromList(state.clicked_id,state.blockedUsersProfiles,state.blockedUsersDates)
-      console.log("list1 ",list1,list2)
-      state.blockedUsersProfiles="";
-      state.blockedUsersDates="";
-      state.blockedUsersProfiles=list1;
-      state.blockedUsersDates=list2;
-      console.log("blockedUsersProfiles ",state.blockedUsersProfiles)
+      const { list1, list2 } = removeUserFromList(
+        state.clicked_id,
+        state.blockedUsersProfiles,
+        state.blockedUsersDates
+      );
+      console.log("list1 ", list1, list2);
+      state.blockedUsersProfiles = "";
+      state.blockedUsersDates = "";
+      state.blockedUsersProfiles = list1;
+      state.blockedUsersDates = list2;
+      console.log("blockedUsersProfiles ", state.blockedUsersProfiles);
       return {
         ...state,
         userUnblocked: action.payload,
@@ -322,17 +327,17 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_BLOCKED_USERS_SUCCESS: {
       console.log("form reducer blocked users", action.payload);
-      let  blockedProfiles = [];
+      let blockedProfiles = [];
       if (action.payload.profiles.length != 0) {
-           blockedProfiles=  map2ArrTo1Arr(
-              action.payload.order,
-              action.payload.profiles
-            );  
+        blockedProfiles = map2ArrTo1Arr(
+          action.payload.order,
+          action.payload.profiles
+        );
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
         state.OffsetBlockedUsers = offset;
         state.scoreHBlockedUsers = SL;
-        if(action.payload.profiles.length < state.limitReturnedItems) {       
-           state.endOfResultBlockedUsers = true;
+        if (action.payload.profiles.length < state.limitReturnedItems) {
+          state.endOfResultBlockedUsers = true;
         }
       } else if (action.payload.profiles.length == 0) {
         state.endOfResultBlockedUsers = true;
@@ -344,10 +349,7 @@ const Interaction = (state = initialProfileState, action) => {
           ...state.blockedUsersProfiles,
           ...blockedProfiles
         ],
-        blockedUsersDates:[
-          ...state.blockedUsersDates,
-          ...action.payload.dates
-        ]
+        blockedUsersDates: [...state.blockedUsersDates, ...action.payload.dates]
       };
     }
     case CLICKED_ID: {
@@ -358,29 +360,84 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
       console.log("form notification ", action.payload);
+      /// love
+      let loveProfiles = [];
+      if (action.payload.unread.Love.length != 0) {
+        loveProfiles = map2ArrTo1Arr(
+          action.payload.order.Love,
+          action.payload.unread.Love
+        );
+        const { offset, SL } = calcValueOfSlAndOffset(
+          action.payload.dates.Love
+        );
+        state.OffsetNotificationLove = offset;
+        state.scoreHNotificationLove = SL;
+        if (action.payload.unread.Love.length < state.limitReturnedItems) {
+          state.endOfResultNotificationLove = true;
+        }
+      } else if (action.payload.unread.Love.length == 0) {
+        state.endOfResultNotificationLove = true;
+      }
+      //pp
+      let ppProfiles = [];
+      if (action.payload.unread.PP.length != 0) {
+        ppProfiles = map2ArrTo1Arr(
+          action.payload.order.PP,
+          action.payload.unread.PP
+        );
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates.PP);
+        state.OffsetNotificationPP = offset;
+        state.scoreHNotificationPP = SL;
+        if (action.payload.unread.PP.length < state.limitReturnedItems) {
+          state.endOfResultNotificationPP = true;
+        }
+      } else if (action.payload.unread.PP.length == 0) {
+        state.endOfResultNotificationPP = true;
+      }
+
+      //View
+      let ViewProfiles = [];
+      if (action.payload.unread.Views.length != 0) {
+        ViewProfiles = map2ArrTo1Arr(
+          action.payload.order.Views,
+          action.payload.unread.Views
+        );
+        const { offset, SL } = calcValueOfSlAndOffset(
+          action.payload.dates.Views
+        );
+        state.OffsetNotificationView = offset;
+        state.scoreHNotificationView = SL;
+        if (action.payload.unread.Views.length < state.limitReturnedItems) {
+          state.endOfResultNotificationView = true;
+        }
+      } else if (action.payload.unread.Views.length == 0) {
+        state.endOfResultNotificationView = true;
+      }
+
       return {
         ...state,
-        notificationViewUnread: action.payload.unread.Views,
+        notificationViewUnread: ViewProfiles,
         notificationViewDates: action.payload.dates.Views,
-        notificationViewOrder: action.payload.order.Views,
         notificationViewCount: action.payload.count.Views,
 
-        notificationPPUnread: action.payload.unread.PP,
+        notificationPPUnread: ppProfiles,
         notificationPPDates: action.payload.dates.PP,
-        notificationPPOrder: action.payload.order.PP,
         notificationPPCount: action.payload.count.PP,
 
-        notificationLoveUnread: action.payload.unread.Love,
+        notificationLoveUnread: loveProfiles,
         notificationLoveDates: action.payload.dates.Love,
-        notificationLoveOrder: action.payload.order.Love,
         notificationLoveCount: action.payload.count.Love
       };
     }
-    case UPDATE_BLOCKED_LIST:{
-      const {list1,list2}=removeUserFromList(state.clicked_id,state.blockedUsersProfiles,state.blockedUsersDates)
-      console.log("list1 ",list1,list2)
-      state.blockedUsersProfiles=list1;
-      state.blockedUsersDates=list2;
+    case UPDATE_BLOCKED_LIST: {
+      const { list1, list2 } = removeUserFromList(
+        state.clicked_id,
+        state.blockedUsersProfiles,
+        state.blockedUsersDates
+      );
+      console.log("list1 ", list1, list2);
+      state.blockedUsersProfiles = list1;
+      state.blockedUsersDates = list2;
       return {
         ...state,
         clicked_id: null
@@ -401,5 +458,4 @@ const Interaction = (state = initialProfileState, action) => {
   }
 };
 
- 
 export default Interaction;

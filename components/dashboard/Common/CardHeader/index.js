@@ -29,7 +29,7 @@ class CardHeader extends React.Component {
           {subHeading && <p className="sub-heading">{subHeading}</p>}
         </div>
 
-        <IconButton
+        {/* <IconButton
           className="icon-btn text-dark"
           onClick={this.onOptionMenuSelect.bind(this)}
         >
@@ -39,7 +39,7 @@ class CardHeader extends React.Component {
           menuState={menuState}
           anchorEl={anchorEl}
           handleRequestClose={this.handleRequestClose.bind(this)}
-        />
+        /> */}
       </div>
     );
   }

@@ -21,6 +21,7 @@ import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
 import { selectedHeaderIcon } from "../../actions/Home";
 import { readMyPhotos } from "../../actions/Profile";
+import { getNotificationViewPPLove } from "../../actions/Interaction";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
@@ -43,7 +44,7 @@ class Header extends React.Component {
     this.setState({
       appNotification: !this.state.appNotification
     });
-    this.props.selectedHeaderIcon("notif");
+    this.props.selectedHeaderIcon("views");
   };
   onMailNotificationSelect = () => {
     this.setState({
@@ -57,21 +58,21 @@ class Header extends React.Component {
       anchorEl: event.currentTarget
     });
   };
-  onSearchBoxSelect = () => {
-    this.setState({
-      searchBox: !this.state.searchBox
-    });
-  };
-  onAppsSelect = () => {
-    this.setState({
-      apps: !this.state.apps
-    });
-  };
-  onUserInfoSelect = () => {
-    this.setState({
-      userInfo: !this.state.userInfo
-    });
-  };
+  // onSearchBoxSelect = () => {
+  //   this.setState({
+  //     searchBox: !this.state.searchBox
+  //   });
+  // };
+  // onAppsSelect = () => {
+  //   this.setState({
+  //     apps: !this.state.apps
+  //   });
+  // };
+  // onUserInfoSelect = () => {
+  //   this.setState({
+  //     userInfo: !this.state.userInfo
+  //   });
+  // };
   handleRequestClose = () => {
     this.setState({
       langSwitcher: false,
@@ -88,75 +89,75 @@ class Header extends React.Component {
     const val = !this.props.navCollapsed;
     this.props.toggleCollapsedNav(val);
   };
-  Apps = () => {
-    return (
-      <ul className="jr-list jr-list-half">
-        <li className="jr-list-item">
-          <Link href="/app/calendar/basic">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-calendar zmdi-hc-fw" />
-              <span className="jr-list-text">
-                <IntlMessages id="sidebar.calendar.basic" />
-              </span>
-            </a>
-          </Link>
-        </li>
+  // Apps = () => {
+  //   return (
+  //     <ul className="jr-list jr-list-half">
+  //       <li className="jr-list-item">
+  //         <Link href="/app/calendar/basic">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-calendar zmdi-hc-fw" />
+  //             <span className="jr-list-text">
+  //               <IntlMessages id="sidebar.calendar.basic" />
+  //             </span>
+  //           </a>
+  //         </Link>
+  //       </li>
 
-        <li className="jr-list-item">
-          <Link href="/app/to-do">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-check-square zmdi-hc-fw" />
-              <span className="jr-list-text">
-                <IntlMessages id="sidebar.appModule.toDo" />
-              </span>
-            </a>
-          </Link>
-        </li>
+  //       <li className="jr-list-item">
+  //         <Link href="/app/to-do">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-check-square zmdi-hc-fw" />
+  //             <span className="jr-list-text">
+  //               <IntlMessages id="sidebar.appModule.toDo" />
+  //             </span>
+  //           </a>
+  //         </Link>
+  //       </li>
 
-        <li className="jr-list-item">
-          <Link href="/app/mail">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-email zmdi-hc-fw" />
-              <span className="jr-list-text">
-                <IntlMessages id="sidebar.appModule.mail" />
-              </span>
-            </a>
-          </Link>
-        </li>
+  //       <li className="jr-list-item">
+  //         <Link href="/app/mail">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-email zmdi-hc-fw" />
+  //             <span className="jr-list-text">
+  //               <IntlMessages id="sidebar.appModule.mail" />
+  //             </span>
+  //           </a>
+  //         </Link>
+  //       </li>
 
-        <li className="jr-list-item">
-          <Link href="/app/chat">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-comment zmdi-hc-fw" />
-              <span className="jr-list-text">
-                <IntlMessages id="sidebar.appModule.chat" />
-              </span>
-            </a>
-          </Link>
-        </li>
+  //       <li className="jr-list-item">
+  //         <Link href="/app/chat">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-comment zmdi-hc-fw" />
+  //             <span className="jr-list-text">
+  //               <IntlMessages id="sidebar.appModule.chat" />
+  //             </span>
+  //           </a>
+  //         </Link>
+  //       </li>
 
-        <li className="jr-list-item">
-          <Link href="/app/contact">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-account-box zmdi-hc-fw" />
-              <span className="jr-list-text">
-                <IntlMessages id="sidebar.appModule.contact" />
-              </span>
-            </a>
-          </Link>
-        </li>
+  //       <li className="jr-list-item">
+  //         <Link href="/app/contact">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-account-box zmdi-hc-fw" />
+  //             <span className="jr-list-text">
+  //               <IntlMessages id="sidebar.appModule.contact" />
+  //             </span>
+  //           </a>
+  //         </Link>
+  //       </li>
 
-        <li className="jr-list-item">
-          <Link href="/">
-            <a className="jr-list-link">
-              <i className="zmdi zmdi-plus-circle-o zmdi-hc-fw" />
-              <span className="jr-list-text">Add New</span>
-            </a>
-          </Link>
-        </li>
-      </ul>
-    );
-  };
+  //       <li className="jr-list-item">
+  //         <Link href="/">
+  //           <a className="jr-list-link">
+  //             <i className="zmdi zmdi-plus-circle-o zmdi-hc-fw" />
+  //             <span className="jr-list-text">Add New</span>
+  //           </a>
+  //         </Link>
+  //       </li>
+  //     </ul>
+  //   );
+  // };
 
   constructor() {
     super();
@@ -173,11 +174,22 @@ class Header extends React.Component {
     };
   }
 
-  updateSearchText(evt) {
-    this.setState({
-      searchText: evt.target.value
-    });
+  componentDidMount() {
+    if (this.props.notificationLoveCount == null) {
+      this.props.getNotificationViewPPLove(
+        "CVPL",
+        this.props.scoreHNotificationView,
+        this.props.scoreHNotificationPP,
+        this.props.scoreHNotificationLove,
+        ""
+      );
+    }
   }
+  // updateSearchText(evt) {
+  //   this.setState({
+  //     searchText: evt.target.value
+  //   });
+  // }
 
   render() {
     const {
@@ -252,8 +264,8 @@ class Header extends React.Component {
             onChange={this.updateSearchText.bind(this)}
             value={this.state.searchText}
           /> */}
-          {navigationStyle === HORIZONTAL_NAVIGATION &&
-            horizontalNavPosition === INSIDE_THE_HEADER && <Menu />}
+          {/* {navigationStyle === HORIZONTAL_NAVIGATION &&
+            horizontalNavPosition === INSIDE_THE_HEADER && <Menu />} */}
 
           <ul className="header-notifications list-inline ml-auto ">
             {/* <li className="list-inline-item">
@@ -316,7 +328,13 @@ class Header extends React.Component {
                   tag="span"
                   data-toggle="dropdown"
                 >
-                  <Link href="/home/love">
+                  <Link
+                    href={
+                      this.props.notificationLoveCount == 0
+                        ? "/home/love"
+                        : "/home/notifications-love"
+                    }
+                  >
                     <IconButton className="icon-btn">
                       <img
                         src={
@@ -328,6 +346,15 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
+                  {console.log(
+                    "this.props.notificationLoveCount",
+                    this.props.notificationLoveCount
+                  )}
+                  {this.props.notificationLoveCount && (
+                    <div className="love-count">
+                      {this.props.notificationLoveCount}
+                    </div>
+                  )}
                 </DropdownToggle>
 
                 {/* <DropdownMenu right>
@@ -339,7 +366,7 @@ class Header extends React.Component {
                 </DropdownMenu> */}
               </Dropdown>
             </li>
-            {/* Notifications */}
+            {/* Notifications Views */}
             <li className="list-inline-item mail-tour">
               <Dropdown
                 className="quick-menu"
@@ -351,26 +378,39 @@ class Header extends React.Component {
                   tag="span"
                   data-toggle="dropdown"
                 >
-                  <IconButton className="icon-btn">
-                    {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
-                    <img
-                      src={
-                        headerSelectedIcon != "notif"
-                          ? "../../static/images/icons/standard/Notifications_Icon_Standard.svg"
-                          : "../../static/images/icons/Highlighted/Notifications_Icon_Highlighted.svg"
-                      }
-                      alt="Notifications"
-                    />
-                  </IconButton>
+                  <Link
+                    href={
+                      this.props.notificationViewCount == 0
+                        ? "/home/views"
+                        : "/home/notifications-love"
+                    }
+                  >
+                    <IconButton className="icon-btn">
+                      {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
+                      <img
+                        src={
+                          headerSelectedIcon != "views"
+                            ? "../../static/images/icons/standard/Profile_view.svg"
+                            : "../../static/images/icons/Highlighted/Profile_view_Highlighted.svg"
+                        }
+                        alt="Notifications"
+                      />
+                    </IconButton>
+                  </Link>
+                  {this.props.notificationViewCount && (
+                    <div className="love-count">
+                      {this.props.notificationViewCount}
+                    </div>
+                  )}
                 </DropdownToggle>
 
-                <DropdownMenu right>
+                {/* <DropdownMenu right>
                   <CardHeader
                     styleName="align-items-center"
                     heading={<IntlMessages id="appNotification.title" />}
                   />
                   <AppNotification />
-                </DropdownMenu>
+                </DropdownMenu> */}
               </Dropdown>
             </li>
 
@@ -421,7 +461,13 @@ class Header extends React.Component {
                   tag="span"
                   data-toggle="dropdown"
                 >
-                  <Link href="/home/private-photos">
+                  <Link
+                    href={
+                      this.props.notificationPPCount == 0
+                        ? "/home/private-photos"
+                        : "/home/notifications-love"
+                    }
+                  >
                     <IconButton className="icon-btn">
                       <img
                         src={
@@ -433,6 +479,11 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
+                  {this.props.notificationPPCount && (
+                    <div className="love-count">
+                      {this.props.notificationPPCount}
+                    </div>
+                  )}
                 </DropdownToggle>
 
                 {/* <DropdownMenu right>
@@ -508,13 +559,21 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings, home }) => {
+const mapStateToProps = ({ settings, home, interaction }) => {
   const {
     drawerType,
     locale,
     navigationStyle,
     horizontalNavPosition
   } = settings;
+  const {
+    notificationViewCount,
+    notificationPPCount,
+    notificationLoveCount,
+    scoreHNotificationView,
+    scoreHNotificationPP,
+    scoreHNotificationLove
+  } = interaction;
   const { headerSelectedIcon } = home;
 
   return {
@@ -522,7 +581,13 @@ const mapStateToProps = ({ settings, home }) => {
     locale,
     navigationStyle,
     horizontalNavPosition,
-    headerSelectedIcon
+    headerSelectedIcon,
+    notificationViewCount,
+    notificationLoveCount,
+    notificationPPCount,
+    scoreHNotificationView,
+    scoreHNotificationPP,
+    scoreHNotificationLove
   };
 };
 
@@ -531,6 +596,7 @@ export default withRouter(
     toggleCollapsedNav,
     switchLanguage,
     selectedHeaderIcon,
-    readMyPhotos
+    readMyPhotos,
+    getNotificationViewPPLove
   })(Header)
 );
