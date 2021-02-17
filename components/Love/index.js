@@ -181,7 +181,7 @@ export default function Love() {
   return (
     <>
       <Grid container>
-          <Grid item xs={12} className="page-title-container">
+          <Grid item xs={12} className="page-title-container page-title-container-2">
          <Typography variant="h6">
                 {loveSelectedIcon == "match"? (
                   <>

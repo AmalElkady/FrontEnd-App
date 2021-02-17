@@ -21,6 +21,11 @@ export default function ListItem({ user, time }) {
     state => state.interaction.loveSelectedIcon
   );
 
+   const headerSelectedIcon = useSelector(
+    state => state.home.headerSelectedIcon
+  );
+
+
   const blockedUsersProfiles = useSelector(
     state => state.interaction.blockedUsersProfiles
   );
@@ -52,7 +57,7 @@ export default function ListItem({ user, time }) {
             <Grid item xs={1}></Grid>
             <Grid item xs={8} className="item-text">
               <Typography variant="body1" component="p">
-                {router.pathname == "/home/love" && (
+                {( (headerSelectedIcon == "love" && router.pathname=="home/notifications-love") || router.pathname == "/home/love") && (
                   <>
                     {loveSelectedIcon == "match" ? (
                       <>
@@ -74,7 +79,7 @@ export default function ListItem({ user, time }) {
                     )}
                   </>
                 )}
-                {router.pathname == "/home/views" && (
+                {((router.pathname == "/home/notifications-love" && headerSelectedIcon == "views") || router.pathname == "/home/views")&& (
                   <>
                     {user.n}
                     <IntlMessages id="viewList.view" />
@@ -82,14 +87,13 @@ export default function ListItem({ user, time }) {
                   </>
                 )}
 
-                {router.pathname == "/home/notifications-love" && (
+                {router.pathname == "/home/notifications-love" && headerSelectedIcon == "love" &&(
                   <>
                     {user.n}
                     <IntlMessages id="Love.notification" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
                 )}
-
                 {router.pathname == "/home/blockedUsers" && (
                   <>
                     <IntlMessages id="blockedList.blocked" />
@@ -102,7 +106,7 @@ export default function ListItem({ user, time }) {
             </Grid>
           </Grid>
         </Grid>
-        {(router.pathname == "/home/love" ||
+        {(router.pathname == "/home/love" ||router.pathname == "/home/views"|| 
           router.pathname == "/home/notifications-love") && (
           <Grid item xs={2}>
             <IconButton

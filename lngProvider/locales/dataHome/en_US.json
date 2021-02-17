@@ -17,7 +17,16 @@
   "loveList.sentTitle": "Users who you sent love to them ",
   "loveList.received": " had sent love to you",
   "loveList.receivedTitle": "Users who sent love to you ",
+
+
+  "Love.notificationTitle": " Recent Love Notifications  ",
   "Love.notification": " Sent Love for you on ",
+  "Love.btn":"All Love Actions",
+  "view.notificationTitle": " Recent Profile Views Notifications  ",
+  "view.btn":"All Profile Views",
+  "PP.notificationTitle": " Recent Private Photos Notifications  ",
+  "PP.notification": " Sent Love for you on ",
+  "PP.btn":"All Private Photos Actions",
 
   "ppList.outgoing": "Your request approved from ",
   "ppList.outgoingTitle": "Users approved you to access their private photos",

@@ -29,6 +29,11 @@ export default function ListItem({ user }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const router = useRouter();
+
+ const headerSelectedIcon = useSelector(
+    state => state.home.headerSelectedIcon
+  );
+
   const privateSelectedIcon = useSelector(
     state => state.interaction.privateSelectedIcon
   );
@@ -89,7 +94,7 @@ export default function ListItem({ user }) {
                     <IntlMessages id="ppList.outgoing" />
                     {user.n}
                   </>
-                ) : privateSelectedIcon == "incomingApproved" ? (
+                ) : privateSelectedIcon == "incomingApproved"||headerSelectedIcon=="private" ? (
                   <>
                     <IntlMessages id="ppList.incomingApproved" />
                     {user.n}

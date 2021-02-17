@@ -320,7 +320,7 @@ function* getNotificationViewPPLoveRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(getNotificationViewPPLoveSuccess(returnedData));
+      yield put(getNotificationViewPPLoveSuccess(unread,returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));

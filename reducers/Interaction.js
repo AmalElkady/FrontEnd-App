@@ -77,25 +77,25 @@ const initialProfileState = {
   blockedUsersProfiles: "",
   blockedUsersDates: "",
 
-  notificationViewUnread: null, //for view notifications
-  notificationViewDates: null,
-  notificationViewOrder: null,
+  notificationViewUnread: "", //for view notifications
+  notificationViewDates: "",
+  notificationViewOrder: "",
   notificationViewCount: null,
   endOfResultNotificationView: false,
   scoreHNotificationView: "",
   OffsetNotificationView: 0,
 
-  notificationPPUnread: null, // for pp notifications
-  notificationPPDates: null,
-  notificationPPOrder: null,
+  notificationPPUnread: "", // for pp notifications
+  notificationPPDates: "",
+  notificationPPOrder: "",
   notificationPPCount: null,
   endOfResultNotificationPP: false,
   scoreHNotificationPP: "",
   OffsetNotificationPP: 0,
 
-  notificationLoveUnread: null, //for love notifications
-  notificationLoveDates: null,
-  notificationLoveOrder: null,
+  notificationLoveUnread: "", //for love notifications
+  notificationLoveDates: "",
+  notificationLoveOrder: "",
   notificationLoveCount: null,
   endOfResultNotificationLove: false,
   scoreHNotificationLove: "",
@@ -104,7 +104,7 @@ const initialProfileState = {
   clicked_id: null,
   loveSelectedIcon: null,
   privateSelectedIcon: null,
-  limitReturnedItems: 5
+  limitReturnedItems: 3
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -216,6 +216,9 @@ const Interaction = (state = initialProfileState, action) => {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
         state.OffsetLoveSentRequests = offset;
         state.scoreHLoveSentRequests = SL;
+         if (action.payload.profiles.length < state.limitReturnedItems) {
+          state.endOfResultLoveSentRequests = true;
+        }
       } else if (action.payload.profiles.length == 0) {
         state.endOfResultLoveSentRequests = true;
       }
@@ -250,6 +253,9 @@ const Interaction = (state = initialProfileState, action) => {
           const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
           state.OffsetLoveMatchedRequests = offset;
           state.scoreHLoveMatchedRequests = SL;
+            if (action.payload.dates.length < state.limitReturnedItems) {
+           state.endOfResultLoveMatchedRequests = true;
+        }
         } else if (action.payload.dates.length === 0) {
           state.endOfResultLoveMatchedRequests = true;
         }
@@ -269,7 +275,10 @@ const Interaction = (state = initialProfileState, action) => {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
         state.OffsetLoveReceivedRequests = offset;
         state.scoreHLoveReceivedRequests = SL;
-        if (action.payload.profiles.length == 0) {
+        if (action.payload.dates.length < state.limitReturnedItems) {
+           state.endOfResultLoveMatchedRequests = true;
+        }
+        if (action.payload.dates.length == 0) {
           state.endOfResultLoveReceivedRequests = true;
         }
       }
@@ -288,6 +297,9 @@ const Interaction = (state = initialProfileState, action) => {
         );
         state.startUserViews += state.limitReturnedItems;
         state.endUserViews += state.limitReturnedItems;
+        if (action.payload.profiles.length <state.limitReturnedItems) {
+        state.endOfResultUserViews = true;
+      }
       } else if (action.payload.profiles.length == 0) {
         state.endOfResultUserViews = true;
       }
@@ -359,74 +371,99 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
-      console.log("form notification ", action.payload);
+      console.log("form notification from reducer ", action.payload);
       /// love
       let loveProfiles = [];
-      if (action.payload.unread.Love.length != 0) {
+      if(action.payload.unread=="CVPL"||action.payload.unread=="CL"){
+        console.log("action.payload.unread==1");
+      if (action.payload.data.unread.Love.length != 0) {
         loveProfiles = map2ArrTo1Arr(
-          action.payload.order.Love,
-          action.payload.unread.Love
+          action.payload.data.order.Love,
+          action.payload.data.unread.Love
         );
         const { offset, SL } = calcValueOfSlAndOffset(
-          action.payload.dates.Love
+          action.payload.data.dates.Love
         );
         state.OffsetNotificationLove = offset;
         state.scoreHNotificationLove = SL;
-        if (action.payload.unread.Love.length < state.limitReturnedItems) {
+        if (action.payload.data.unread.Love.length < state.limitReturnedItems) {
           state.endOfResultNotificationLove = true;
         }
-      } else if (action.payload.unread.Love.length == 0) {
+      } else if (action.payload.data.unread.Love.length == 0) {
         state.endOfResultNotificationLove = true;
+      }
       }
       //pp
       let ppProfiles = [];
-      if (action.payload.unread.PP.length != 0) {
+      if(action.payload.unread=="CVPL"||action.payload.unread=="CP"){
+         console.log("action.payload.unread==2");
+      if (action.payload.data.unread.PP.length != 0) {
         ppProfiles = map2ArrTo1Arr(
-          action.payload.order.PP,
-          action.payload.unread.PP
+          action.payload.data.order.PP,
+          action.payload.data.unread.PP
         );
-        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates.PP);
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.data.dates.PP);
         state.OffsetNotificationPP = offset;
         state.scoreHNotificationPP = SL;
-        if (action.payload.unread.PP.length < state.limitReturnedItems) {
+        if (action.payload.data.unread.PP.length < state.limitReturnedItems) {
           state.endOfResultNotificationPP = true;
         }
-      } else if (action.payload.unread.PP.length == 0) {
+      } else if (action.payload.data.unread.PP.length == 0) {
         state.endOfResultNotificationPP = true;
       }
-
+        }
       //View
       let ViewProfiles = [];
-      if (action.payload.unread.Views.length != 0) {
+      if(action.payload.unread=="CVPL"||action.payload.unread=="CV"){
+         console.log("action.payload.unread==3");
+      if (action.payload.data.unread.Views.length != 0) {
         ViewProfiles = map2ArrTo1Arr(
-          action.payload.order.Views,
-          action.payload.unread.Views
+          action.payload.data.order.Views,
+          action.payload.data.unread.Views
         );
         const { offset, SL } = calcValueOfSlAndOffset(
-          action.payload.dates.Views
+          action.payload.data.dates.Views
         );
         state.OffsetNotificationView = offset;
         state.scoreHNotificationView = SL;
-        if (action.payload.unread.Views.length < state.limitReturnedItems) {
+        if (action.payload.data.unread.Views.length < state.limitReturnedItems) {
           state.endOfResultNotificationView = true;
         }
-      } else if (action.payload.unread.Views.length == 0) {
+      } else if (action.payload.data.unread.Views.length == 0) {
         state.endOfResultNotificationView = true;
       }
-
+      }
       return {
         ...state,
-        notificationViewUnread: ViewProfiles,
-        notificationViewDates: action.payload.dates.Views,
-        notificationViewCount: action.payload.count.Views,
+        notificationViewUnread:  [
+          ...state.notificationViewUnread,
+          ...ViewProfiles
+        ],
+        notificationViewDates:  [
+          ...state.notificationViewDates,
+          ...action.payload.data.dates.Views
+        ],
+        notificationViewCount:action.payload.data.count.Views,
 
-        notificationPPUnread: ppProfiles,
-        notificationPPDates: action.payload.dates.PP,
-        notificationPPCount: action.payload.count.PP,
+        notificationPPUnread:[
+          ...state.notificationPPUnread,
+          ...ppProfiles
+        ],
+        notificationPPDates:[
+          ...state.notificationPPDates,
+          ...action.payload.data.dates.PP
+        ],
+        notificationPPCount:action.payload.data.count.PP,
 
-        notificationLoveUnread: loveProfiles,
-        notificationLoveDates: action.payload.dates.Love,
-        notificationLoveCount: action.payload.count.Love
+        notificationLoveUnread:[
+          ...state.notificationLoveUnread,
+          ...loveProfiles
+        ],
+        notificationLoveDates:[
+          ...state.notificationLoveDates,
+          ...action.payload.data.dates.Love
+        ],
+        notificationLoveCount:action.payload.data.count.Love,
       };
     }
     case UPDATE_BLOCKED_LIST: {

@@ -196,11 +196,11 @@ export const getNotificationViewPPLove = (
   };
 };
 
-export const getNotificationViewPPLoveSuccess = data => {
-  console.log("from success getNotificationViewPPLoveS ", data);
+export const getNotificationViewPPLoveSuccess = (unread,data)=> {
+  console.log("from success getNotificationViewPPLoveS ",unread, data);
   return {
     type: GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
-    payload: data
+    payload: {data,unread}
   };
 };
 
