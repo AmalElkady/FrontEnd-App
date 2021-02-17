@@ -60,14 +60,14 @@ const AppNotification = () => {
     // );
   }, []);
 
-  useEffect(() => {
-    console.log(
-      "notificationViewCount ",
-      notificationViewCount,
-      notificationPPCount,
-      notificationLoveCount
-    );
-  }, [notificationViewCount]);
+  // useEffect(() => {
+  //   console.log(
+  //     "notificationViewCount ",
+  //     notificationViewCount,
+  //     notificationPPCount,
+  //     notificationLoveCount
+  //   );
+  // }, [notificationViewCount]);
 
   return (
     <>

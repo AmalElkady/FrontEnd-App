@@ -8,6 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import Button from "@material-ui/core/Button";
+import Link from "next/link";
 
 import {
   getLoveMatchedAndReceivedRequests,
@@ -43,7 +44,7 @@ export default function LoveNotifications() {
     state => state.home.headerSelectedIcon
   );
 
-  //sent love
+  //love notifications
   const notificationLoveUnread = useSelector(
     state => state.interaction.notificationLoveUnread
   );
@@ -60,27 +61,49 @@ export default function LoveNotifications() {
     state => state.interaction.endOfResultNotificationLove
   );
 
-  useEffect(() => {
-    if (notificationLoveUnread) {
-      dispatch(requestPhotoRead());
-      console.log(
-        "from useEffect notificationLoveUnread ",
-        notificationLoveUnread
-      );
-    }
-  }, [notificationLoveUnread]);
+  // view profile notifications
+  const notificationViewUnread = useSelector(
+    state => state.interaction.notificationViewUnread
+  );
+  const notificationViewDates = useSelector(
+    state => state.interaction.notificationViewDates
+  );
+  const OffsetNotificationView = useSelector(
+    state => state.interaction.OffsetNotificationView
+  );
+  const scoreHNotificationView = useSelector(
+    state => state.interaction.scoreHNotificationView
+  );
+  const endOfResultNotificationView = useSelector(
+    state => state.interaction.endOfResultNotificationView
+  );
 
+  useEffect(() => {
+    if (headerSelectedIcon&&finalUsersProfiles!=null) {
+      setFinalUsersProfiles(null);
+      dispatch(requestPhotoRead());
+    }
+  }, [headerSelectedIcon]);
+  // 
   useEffect(() => {
     if (photoReadSignedRequest != null) {
       setFinalUsersProfiles(null);
-      let finalLoveProfiles = [];
+      let finalProfiles = [];
       if (headerSelectedIcon == "love") {
         if (notificationLoveUnread.length != 0) {
-          finalLoveProfiles = mapSmallUserPhotoUrl(
+          finalProfiles = mapSmallUserPhotoUrl(
             notificationLoveUnread,
             photoReadSignedRequest.signedRequest
           );
-          setFinalUsersProfiles(finalLoveProfiles);
+          setFinalUsersProfiles(finalProfiles);
+        }
+      } else if (headerSelectedIcon == "views") {
+        if (notificationViewUnread.length != 0) {
+          finalProfiles = mapSmallUserPhotoUrl(
+            notificationViewUnread,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalProfiles);
         }
       }
     }
@@ -96,6 +119,16 @@ export default function LoveNotifications() {
     // }
   };
 
+  // handle scroll for list of Love Notifications
+  const handleScrollGetViewProfileNotifications = () => {
+    // if (!endOfResultNotificationView) {
+    //   // view profiles unread requests (next options)
+    //   dispatch(
+    //     getLoveSentRequests(scoreHNotificationView, OffsetNotificationView)
+    //   );
+    // }
+  };
+
   return (
     <>
       <Grid container>
@@ -107,13 +140,13 @@ export default function LoveNotifications() {
           </Typography>
         </Grid>
         {console.log("headerSelectedIcon ", headerSelectedIcon)}
-        {headerSelectedIcon == "love" && finalUsersProfiles && (
+        {finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
-            dataLength={notificationLoveUnread.length}
+            dataLength={headerSelectedIcon == "love"?notificationLoveUnread.length:headerSelectedIcon == "views"?notificationViewUnread.length:""}
             height={300}
-            next={handleScrollGetLoveNotifications}
-            hasMore={!endOfResultNotificationLove}
+            next={headerSelectedIcon == "love"?handleScrollGetLoveNotifications:headerSelectedIcon == "views"?handleScrollGetViewProfileNotifications:""}
+            hasMore={headerSelectedIcon == "love"?!endOfResultNotificationLove:headerSelectedIcon == "views"?!endOfResultNotificationView:""}
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
@@ -126,7 +159,7 @@ export default function LoveNotifications() {
               </p>
             }
           >
-            {notificationLoveUnread.length != 0 && (
+            {headerSelectedIcon == "love" && notificationLoveUnread.length != 0 && (
               <Grid item xs={12} className="items-container">
                 {notificationLoveUnread.map((option, index) => (
                   <ListItem
@@ -137,19 +170,39 @@ export default function LoveNotifications() {
                 ))}
               </Grid>
             )}
+            {headerSelectedIcon == "views" && notificationViewUnread.length != 0 && (
+              <Grid item xs={12} className="items-container">
+                {notificationViewUnread.map((option, index) => (
+                  <ListItem
+                    key={notificationViewDates[index]}
+                    user={option}
+                    time={notificationViewDates[index]}
+                  />
+                ))}
+              </Grid>
+            )}
           </InfiniteScroll>
         )}
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <Button
-            className="linear-g"
-            style={{ color: "white", fontWeight: "bold" }}
-            variant="contained"
+          <Link
+            href={
+              headerSelectedIcon == "love"
+                ? "/home/love"
+                : headerSelectedIcon == "views"
+                ? "/home/views"
+                : ""
+            }
           >
-            All Love Actions
-          </Button>
+            <Button
+              className="linear-g"
+              style={{ color: "white", fontWeight: "bold" }}
+              variant="contained"
+            >
+              All Love Actions
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </>
-    
   );
 }
