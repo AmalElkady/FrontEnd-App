@@ -10,7 +10,8 @@ import {
   blockUserSuccess,
   unblockUserSuccess,
   getBlockedUsersSuccess,
-  getNotificationViewPPLoveSuccess
+  getNotificationViewPPLoveSuccess,
+  cleanNotificationViewPPLoveSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -23,7 +24,8 @@ import {
   BLOCK_USER,
   UNBLOCK_USER,
   GET_BLOCKED_USERS,
-  GET_NOTIFICATION_VIEW_PP_LOVE
+  GET_NOTIFICATION_VIEW_PP_LOVE,
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -109,6 +111,30 @@ const getViewPPLoveNotification = async (
     )
     .then(returnData => returnData)
     .catch(error => error);
+
+
+const cleanViewPPLoveNotification = async (
+  remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+) =>
+  await interaction
+    .cleanNotificationViewPPLove(
+       remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+    )
+    .then(returnData => returnData)
+    .catch(error => error);
+   
 
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
@@ -326,6 +352,45 @@ function* getNotificationViewPPLoveRequest({ payload }) {
     yield put(showProfileMessage(error));
   }
 }
+
+function* cleanNotificationViewPPLoveRequest({ payload }) {
+  const {remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh } = payload;
+  console.log(
+    " clean notification saga ",
+   remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+  );
+  try {
+    const returnedData = yield call(
+      cleanViewPPLoveNotification,
+     remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+    );
+    if (returnedData.message) {
+      yield put(cleanNotificationViewPPLoveSuccess(false));
+    } else {
+      yield put(cleanNotificationViewPPLoveSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
 ///////
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
@@ -385,6 +450,14 @@ export function* requestGetNotificationViewPPLove() {
   );
 }
 
+export function* requestCleanNotificationViewPPLove() {
+  yield takeEvery(
+    CLEAN_NOTIFICATION_VIEW_PP_LOVE,
+    cleanNotificationViewPPLoveRequest
+  );
+}
+
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -397,6 +470,7 @@ export default function* rootSaga() {
     fork(requestBlockUser),
     fork(requestUnblockUser),
     fork(requestBlockedUsers),
-    fork(requestGetNotificationViewPPLove)
+    fork(requestGetNotificationViewPPLove),
+    fork(requestCleanNotificationViewPPLove)
   ]);
 }

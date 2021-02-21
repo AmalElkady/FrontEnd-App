@@ -13,7 +13,8 @@ import {
   SELECTED_LOVE_ICON,
   SELECTED_PRIVATE_ICON,
   CLICKED_ID,
-  UPDATE_BLOCKED_LIST
+  UPDATE_BLOCKED_LIST,
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -83,6 +84,7 @@ const initialProfileState = {
   notificationViewCount: null,
   endOfResultNotificationView: false,
   scoreHNotificationView: "",
+  scoreLNotificationView: "",
   OffsetNotificationView: 0,
 
   notificationPPUnread: "", // for pp notifications
@@ -91,6 +93,7 @@ const initialProfileState = {
   notificationPPCount: null,
   endOfResultNotificationPP: false,
   scoreHNotificationPP: "",
+  scoreLNotificationPP: "",
   OffsetNotificationPP: 0,
 
   notificationLoveUnread: "", //for love notifications
@@ -99,7 +102,11 @@ const initialProfileState = {
   notificationLoveCount: null,
   endOfResultNotificationLove: false,
   scoreHNotificationLove: "",
+  scoreLNotificationLove: "",
   OffsetNotificationLove: 0,
+
+  cleanNotification:false,
+  
 
   clicked_id: null,
   loveSelectedIcon: null,
@@ -386,6 +393,7 @@ const Interaction = (state = initialProfileState, action) => {
         );
         state.OffsetNotificationLove = offset;
         state.scoreHNotificationLove = SL;
+        state.scoreLNotificationLove=action.payload.data.dates[0];
         if (action.payload.data.unread.Love.length < state.limitReturnedItems) {
           state.endOfResultNotificationLove = true;
         }
@@ -405,6 +413,7 @@ const Interaction = (state = initialProfileState, action) => {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.data.dates.PP);
         state.OffsetNotificationPP = offset;
         state.scoreHNotificationPP = SL;
+        state.scoreLNotificationPP=action.payload.data.dates[0];
         if (action.payload.data.unread.PP.length < state.limitReturnedItems) {
           state.endOfResultNotificationPP = true;
         }
@@ -426,6 +435,7 @@ const Interaction = (state = initialProfileState, action) => {
         );
         state.OffsetNotificationView = offset;
         state.scoreHNotificationView = SL;
+        state.scoreLNotificationView=action.payload.data.dates[0];
         if (action.payload.data.unread.Views.length < state.limitReturnedItems) {
           state.endOfResultNotificationView = true;
         }
@@ -464,6 +474,13 @@ const Interaction = (state = initialProfileState, action) => {
           ...action.payload.data.dates.Love
         ],
         notificationLoveCount:action.payload.data.count.Love,
+      };
+    }
+    case CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
+      console.log("form reducer clean notification ", action.payload);
+      return {
+        ...state,
+        cleanNotification: action.payload
       };
     }
     case UPDATE_BLOCKED_LIST: {

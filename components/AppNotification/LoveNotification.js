@@ -13,7 +13,8 @@ import Link from "next/link";
 import {
   getLoveMatchedAndReceivedRequests,
   getLoveSentRequests,
-  getNotificationViewPPLove
+  getNotificationViewPPLove,
+  cleanNotificationViewPPLove
 } from "../../actions/Interaction";
 
 import { mapSmallUserPhotoUrl } from "../../helpers/mapSmallUserPhotoUrl";
@@ -59,6 +60,9 @@ export default function LoveNotifications() {
   const scoreHNotificationLove = useSelector(
     state => state.interaction.scoreHNotificationLove
   );
+   const scoreLNotificationLove = useSelector(
+    state => state.interaction.scoreLNotificationLove
+  );
   const endOfResultNotificationLove = useSelector(
     state => state.interaction.endOfResultNotificationLove
   );
@@ -75,6 +79,9 @@ export default function LoveNotifications() {
   );
   const scoreHNotificationView = useSelector(
     state => state.interaction.scoreHNotificationView
+  );
+    const scoreLNotificationView = useSelector(
+    state => state.interaction.scoreLNotificationView
   );
   const endOfResultNotificationView = useSelector(
     state => state.interaction.endOfResultNotificationView
@@ -93,6 +100,10 @@ export default function LoveNotifications() {
   );
   const scoreHNotificationPP = useSelector(
     state => state.interaction.scoreHNotificationPP
+  );
+
+   const scoreLNotificationPP = useSelector(
+    state => state.interaction.scoreLNotificationPP
   );
   const endOfResultNotificationPP = useSelector(
     state => state.interaction.endOfResultNotificationPP
@@ -159,6 +170,8 @@ export default function LoveNotifications() {
   // handle scroll for list of Love Notifications
   const handleScrollGetLoveNotifications = () => {
     if (!endOfResultNotificationLove) {
+      // clean read notifications
+      dispatch(cleanNotificationViewPPLove("L","","","","",scoreLNotificationLove,scoreHNotificationLove))
       // get love notifications(next options)
       dispatch(
       getNotificationViewPPLove(
@@ -175,6 +188,9 @@ export default function LoveNotifications() {
   // handle scroll for list of view profile Notifications
   const handleScrollGetViewProfileNotifications = () => {
     if (!endOfResultNotificationView) {
+      // clean read notifications
+       dispatch(cleanNotificationViewPPLove("V",scoreLNotificationView,scoreHNotificationView,"","","",""))
+
       // view profiles unread requests (next options)
      dispatch(
       getNotificationViewPPLove(
@@ -191,6 +207,10 @@ export default function LoveNotifications() {
   // handle scroll for list of private photos Notifications
   const handleScrollGetPPNotifications = () => {
     if (!endOfResultNotificationPP) {
+
+       // clean read notifications
+       dispatch(cleanNotificationViewPPLove("P","","",scoreLNotificationPP,scoreHNotificationPP,"",""))
+
       // private photos unread requests (next options)
      dispatch(
       getNotificationViewPPLove(

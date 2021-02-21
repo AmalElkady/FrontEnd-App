@@ -24,7 +24,9 @@ import {
   CLICKED_ID,
   SELECTED_LOVE_ICON,
   SELECTED_PRIVATE_ICON,
-  UPDATE_BLOCKED_LIST
+  UPDATE_BLOCKED_LIST,
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE,
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -203,6 +205,37 @@ export const getNotificationViewPPLoveSuccess = (unread,data)=> {
     payload: {data,unread}
   };
 };
+
+
+export const cleanNotificationViewPPLove = (
+  remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+) => {
+  return {
+    type: CLEAN_NOTIFICATION_VIEW_PP_LOVE,
+    payload: {  remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh }
+  };
+};
+
+export const cleanNotificationViewPPLoveSuccess = (data)=> {
+  console.log("from success cleanNotificationViewPPLoveSuccess ", data);
+  return {
+    type: CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+    payload: data
+  };
+};
+
 
 export const clickedId = id => {
   return {

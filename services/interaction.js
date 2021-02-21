@@ -561,4 +561,69 @@ interaction.getNotificationViewPPLove = function(
   });
 };
 
+interaction.cleanNotificationViewPPLove = function(
+ remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+) {
+  // "viewScoreLow":"",
+	// "viewScoreHigh": "",
+	// "ppScoreLow":"",
+	// "ppScoreHigh": "",
+	// "loveScoreLow":"",
+	// "loveScoreHigh": ""
+
+  console.log(
+    "from service getNotificationViewPPLove ",
+   remove,
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+  );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `getnotificationviewpplove?remove=${remove}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+  viewScoreLow,
+  viewScoreHigh,
+  ppScoreLow,
+  ppScoreHigh,
+  loveScoreLow,
+  loveScoreHigh
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response cleanNotificationViewPPLove", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+
 export { interaction };

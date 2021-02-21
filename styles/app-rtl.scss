@@ -354,9 +354,13 @@
 
 .rtl .quick-menu {
   & .dropdown-menu {
-    // right: auto !important;
-    // left: 0 !important;
-      right: 13rem !important;
+     &:before,
+  &:after {
+    left: 8px !important;
+    right:unset !important;
+  }
+      top:1rem !important;
+      right: -8rem !important;
     @media only screen and (max-width: 575px){
       right: 0 !important;
     }
@@ -369,8 +373,8 @@
 
   &:before,
   &:after {
-    right: 8px;
-    left: auto;
+    left: 8px;
+    // left: auto;
   }
 }
 
