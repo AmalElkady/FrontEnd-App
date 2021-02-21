@@ -2,7 +2,6 @@ export const calcValueOfSlAndOffset = arr => {
   let offset = 0,
     SL = 0;
   if (arr.length !== 0) {
-    console.log("true not = 00000 ");
     offset = 1;
     for (let i = arr.length - 1; i >= 0; i--) {
       if (arr[i] == arr[i - 1]) {
