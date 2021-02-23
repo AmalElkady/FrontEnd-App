@@ -59,7 +59,7 @@ export default function ListItem({ user, time }) {
               <Typography variant="body1" component="p">
                 {( (headerSelectedIcon == "love" && router.pathname=="home/notifications-love") || router.pathname == "/home/love") && (
                   <>
-                    {loveSelectedIcon == "match" ? (
+                    {loveSelectedIcon == "match"? (
                       <>
                         <IntlMessages id="loveList.match" />
                         {user.n}
@@ -69,7 +69,7 @@ export default function ListItem({ user, time }) {
                         <IntlMessages id="loveList.sent" />
                         {user.n}
                       </>
-                    ) : loveSelectedIcon == "received" ? (
+                    ) : loveSelectedIcon == "received"? (
                       <>
                         {user.n}
                         <IntlMessages id="loveList.received" />
@@ -89,9 +89,20 @@ export default function ListItem({ user, time }) {
 
                 {router.pathname == "/home/notifications-love" && headerSelectedIcon == "love" &&(
                   <>
+                  {user.t=="R"&&
+                  <>
                     {user.n}
                     <IntlMessages id="Love.notification" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                    </>
+                  }
+                  {user.t=="M"&&
+                  <>
+                    <IntlMessages id="loveList.match" />
+                    {user.n}
+                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                    </>
+                  }
                   </>
                 )}
                 {router.pathname == "/home/blockedUsers" && (

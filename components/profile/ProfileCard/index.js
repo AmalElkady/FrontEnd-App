@@ -185,7 +185,7 @@ export default function ProfileCard({ mainInfo }) {
     } else if (userBlocked == "error") {
       NotificationManager.error(`You already blocked ${mainInfo.n}`);
     }
-    dispatch(blockUserSuccess(false));
+     dispatch(blockUserSuccess(false));
   }, [userBlocked]);
 
      useEffect(() => {
@@ -199,8 +199,6 @@ export default function ProfileCard({ mainInfo }) {
   ///
   return (
     <>
-      {mainInfo &&
-        console.log("from render mainInfo ", mainInfo, SendLoveMatchRequest)}
       {mainInfo && (
         <div className="profile-card">
           <div className="card-container-img">

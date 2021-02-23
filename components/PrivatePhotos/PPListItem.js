@@ -94,12 +94,12 @@ export default function ListItem({ user }) {
                     <IntlMessages id="ppList.outgoing" />
                     {user.n}
                   </>
-                ) : privateSelectedIcon == "incomingApproved"||headerSelectedIcon=="private" ? (
+                ) : privateSelectedIcon == "incomingApproved"? (
                   <>
                     <IntlMessages id="ppList.incomingApproved" />
                     {user.n}
                   </>
-                ) : privateSelectedIcon == "incomingNotApproved" ? (
+                ) : privateSelectedIcon == "incomingNotApproved" || user.t=="R"? (
                   <>
                     <IntlMessages id="ppList.incomingNotApproved" />
                     {user.n}
@@ -114,8 +114,8 @@ export default function ListItem({ user }) {
         <Grid item xs={12}>
           <Grid container className="item-icons-container">
             {/* access approved */}
-            {privateSelectedIcon == "incomingNotApproved" && (
-              <Grid item xs={3} className="item-icon-container icon-container">
+            {(privateSelectedIcon == "incomingNotApproved"|| user.t=="R") && (
+              <Grid item xs={2} className="icon-container">
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
@@ -142,7 +142,7 @@ export default function ListItem({ user }) {
             )}
 
             {/* View profile */}
-            <Grid item xs={3} className="icon-container">
+            <Grid item xs={2} className="icon-container">
               <IconButton
                 // className="item-btn"
                 onClick={() => {
@@ -158,9 +158,13 @@ export default function ListItem({ user }) {
                 <IntlMessages id="ppList.iconTitleView" />
               </Typography>
             </Grid>
+             {privateSelectedIcon == "incomingApproved" && (
+              <Grid item xs={6}>
+              </Grid>
+            )}
             {/* access removed */}
             {privateSelectedIcon == "incomingApproved" && (
-              <Grid item xs={5} className="icon-container-2">
+              <Grid item xs={2} className="icon-container">
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
@@ -187,8 +191,8 @@ export default function ListItem({ user }) {
             )}
 
             {/* permission pp removed */}
-            {privateSelectedIcon == "incomingNotApproved" && (
-              <Grid item xs={3} className="icon-container">
+            {(privateSelectedIcon == "incomingNotApproved" || user.t=="R" ) && (
+              <Grid item xs={2} className="icon-container">
                 <IconButton
                   // className="item-btn"
                   onClick={() => {

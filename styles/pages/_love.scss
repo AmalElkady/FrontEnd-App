@@ -111,17 +111,13 @@
     justify-content:space-around;
   }
 
-.item-icon-container{
-  flex-basis: 23% !important;
-    padding-top: .3rem;
-}  
 .icon-container{
     text-align: center;
-    color: gray
-}
-.icon-container-2{
-    text-align: end;
-    color: gray
+    color: gray;
+     @media screen and (max-width: 575px) {
+        max-width: 25% !important;
+        flex-basis: 25% !important;
+      }
 }
 
 .page-title-container{

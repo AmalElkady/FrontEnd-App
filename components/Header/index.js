@@ -479,7 +479,7 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
-                  {this.props.notificationPPCount && (
+                  {this.props.notificationPPCount!=0 && (
                     <div className="love-count">
                       {this.props.notificationPPCount}
                     </div>
