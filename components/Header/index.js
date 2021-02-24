@@ -346,11 +346,7 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
-                  {console.log(
-                    "this.props.notificationLoveCount",
-                    this.props.notificationLoveCount
-                  )}
-                  {this.props.notificationLoveCount && (
+                  {this.props.notificationLoveCount != 0 && (
                     <div className="love-count">
                       {this.props.notificationLoveCount}
                     </div>
@@ -397,7 +393,7 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
-                  {this.props.notificationViewCount && (
+                  {this.props.notificationViewCount != 0 && (
                     <div className="love-count">
                       {this.props.notificationViewCount}
                     </div>
@@ -479,7 +475,7 @@ class Header extends React.Component {
                       />
                     </IconButton>
                   </Link>
-                  {this.props.notificationPPCount!=0 && (
+                  {this.props.notificationPPCount != 0 && (
                     <div className="love-count">
                       {this.props.notificationPPCount}
                     </div>

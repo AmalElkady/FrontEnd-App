@@ -21,7 +21,7 @@ import { mapSmallUserPhotoUrl } from "../../helpers/mapSmallUserPhotoUrl";
 
 import { requestPhotoRead } from "../../actions/Home";
 import ListItem from "../Love/ListItem";
-import PPListItem from "../PrivatePhotos/PPListItem"
+import PPListItem from "../PrivatePhotos/PPListItem";
 import {
   NotificationContainer,
   NotificationManager
@@ -47,6 +47,10 @@ export default function LoveNotifications() {
     state => state.home.headerSelectedIcon
   );
 
+  const limitReturnedItems = useSelector(
+    state => state.interaction.limitReturnedItems
+  );
+
   //love notifications
   const notificationLoveUnread = useSelector(
     state => state.interaction.notificationLoveUnread
@@ -60,11 +64,18 @@ export default function LoveNotifications() {
   const scoreHNotificationLove = useSelector(
     state => state.interaction.scoreHNotificationLove
   );
-   const scoreLNotificationLove = useSelector(
-    state => state.interaction.scoreLNotificationLove
+  const scoreLCleanNotificationLove = useSelector(
+    state => state.interaction.scoreLCleanNotificationLove
+  );
+  const scoreHCleanNotificationLove = useSelector(
+    state => state.interaction.scoreHCleanNotificationLove
   );
   const endOfResultNotificationLove = useSelector(
     state => state.interaction.endOfResultNotificationLove
+  );
+
+  const notificationLoveCount = useSelector(
+    state => state.interaction.notificationLoveCount
   );
 
   // view profile notifications
@@ -80,13 +91,19 @@ export default function LoveNotifications() {
   const scoreHNotificationView = useSelector(
     state => state.interaction.scoreHNotificationView
   );
-    const scoreLNotificationView = useSelector(
-    state => state.interaction.scoreLNotificationView
+  const scoreLCleanNotificationView = useSelector(
+    state => state.interaction.scoreLCleanNotificationView
+  );
+  const scoreHCleanNotificationView = useSelector(
+    state => state.interaction.scoreHCleanNotificationView
   );
   const endOfResultNotificationView = useSelector(
     state => state.interaction.endOfResultNotificationView
   );
 
+  const notificationViewCount = useSelector(
+    state => state.interaction.notificationViewCount
+  );
 
   // Private Photos notifications
   const notificationPPUnread = useSelector(
@@ -102,38 +119,79 @@ export default function LoveNotifications() {
     state => state.interaction.scoreHNotificationPP
   );
 
-   const scoreLNotificationPP = useSelector(
-    state => state.interaction.scoreLNotificationPP
+  const scoreLCleanNotificationPP = useSelector(
+    state => state.interaction.scoreLCleanNotificationPP
+  );
+
+  const scoreHCleanNotificationPP = useSelector(
+    state => state.interaction.scoreHCleanNotificationPP
   );
   const endOfResultNotificationPP = useSelector(
     state => state.interaction.endOfResultNotificationPP
   );
 
-
   useEffect(() => {
-    if (headerSelectedIcon&&finalUsersProfiles!=null) {
+    if (headerSelectedIcon && finalUsersProfiles != null) {
       setFinalUsersProfiles(null);
       dispatch(requestPhotoRead());
     }
   }, [headerSelectedIcon]);
   useEffect(() => {
-    if (headerSelectedIcon == "love"&&notificationLoveUnread.length!=0) {
+    if (headerSelectedIcon == "love" && notificationLoveUnread.length != 0) {
       dispatch(requestPhotoRead());
+      if (notificationLoveCount < limitReturnedItems) {
+        // clean read notifications
+        console.log(
+          "items to cleaned ",
+          scoreLCleanNotificationLove,
+          scoreHCleanNotificationLove
+        );
+        dispatch(
+          cleanNotificationViewPPLove(
+            "L",
+            "",
+            "",
+            "",
+            "",
+            scoreLCleanNotificationLove,
+            scoreHCleanNotificationLove
+          )
+        );
+      }
     }
   }, [notificationLoveUnread]);
 
   useEffect(() => {
-    if (headerSelectedIcon == "views"&&notificationViewUnread.length!=0) {
+    if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
       dispatch(requestPhotoRead());
+      if (notificationViewCount < limitReturnedItems) {
+        // clean read notifications
+        console.log(
+          "items to cleaned ",
+          scoreHCleanNotificationView,
+          scoreLCleanNotificationView
+        );
+        dispatch(
+          cleanNotificationViewPPLove(
+            "V",
+            scoreLCleanNotificationView,
+            scoreHCleanNotificationView,
+            "",
+            "",
+            "",
+            ""
+          )
+        );
+      }
     }
   }, [notificationViewUnread]);
 
   useEffect(() => {
-    if (headerSelectedIcon == "private"&&notificationPPUnread.length!=0) {
+    if (headerSelectedIcon == "private" && notificationPPUnread.length != 0) {
       dispatch(requestPhotoRead());
     }
   }, [notificationPPUnread]);
-  // 
+  //
   useEffect(() => {
     if (photoReadSignedRequest != null) {
       setFinalUsersProfiles(null);
@@ -154,8 +212,7 @@ export default function LoveNotifications() {
           );
           setFinalUsersProfiles(finalProfiles);
         }
-      }
-       else if (headerSelectedIcon == "private") {
+      } else if (headerSelectedIcon == "private") {
         if (notificationPPUnread.length != 0) {
           finalProfiles = mapSmallUserPhotoUrl(
             notificationPPUnread,
@@ -171,17 +228,32 @@ export default function LoveNotifications() {
   const handleScrollGetLoveNotifications = () => {
     if (!endOfResultNotificationLove) {
       // clean read notifications
-      dispatch(cleanNotificationViewPPLove("L","","","","",scoreLNotificationLove,scoreHNotificationLove))
+      console.log(
+        "items to cleaned ",
+        scoreLCleanNotificationLove,
+        scoreHCleanNotificationLove
+      );
+      dispatch(
+        cleanNotificationViewPPLove(
+          "L",
+          "",
+          "",
+          "",
+          "",
+          scoreLCleanNotificationLove,
+          scoreHCleanNotificationLove
+        )
+      );
       // get love notifications(next options)
       dispatch(
-      getNotificationViewPPLove(
-        "CL",
-        "",
-        "",
-        scoreHNotificationLove,
-        OffsetNotificationLove
-      )
-    );
+        getNotificationViewPPLove(
+          "CL",
+          "",
+          "",
+          scoreHNotificationLove,
+          OffsetNotificationLove
+        )
+      );
     }
   };
 
@@ -189,38 +261,57 @@ export default function LoveNotifications() {
   const handleScrollGetViewProfileNotifications = () => {
     if (!endOfResultNotificationView) {
       // clean read notifications
-       dispatch(cleanNotificationViewPPLove("V",scoreLNotificationView,scoreHNotificationView,"","","",""))
+      dispatch(
+        cleanNotificationViewPPLove(
+          "V",
+          scoreLCleanNotificationView,
+          scoreHCleanNotificationView,
+          "",
+          "",
+          "",
+          ""
+        )
+      );
 
       // view profiles unread requests (next options)
-     dispatch(
-      getNotificationViewPPLove(
-        "CV",
-        scoreHNotificationView,
-        "",
-        "",
-        OffsetNotificationView
-      )
-    );
+      dispatch(
+        getNotificationViewPPLove(
+          "CV",
+          scoreHNotificationView,
+          "",
+          "",
+          OffsetNotificationView
+        )
+      );
     }
   };
 
   // handle scroll for list of private photos Notifications
   const handleScrollGetPPNotifications = () => {
     if (!endOfResultNotificationPP) {
-
-       // clean read notifications
-       dispatch(cleanNotificationViewPPLove("P","","",scoreLNotificationPP,scoreHNotificationPP,"",""))
+      // clean read notifications
+      dispatch(
+        cleanNotificationViewPPLove(
+          "P",
+          "",
+          "",
+          scoreLCleanNotificationPP,
+          scoreHCleanNotificationPP,
+          "",
+          ""
+        )
+      );
 
       // private photos unread requests (next options)
-     dispatch(
-      getNotificationViewPPLove(
-        "CP",
-        "",
-        scoreHNotificationPP,
-        "",
-        OffsetNotificationPP
-      )
-    );
+      dispatch(
+        getNotificationViewPPLove(
+          "CP",
+          "",
+          scoreHNotificationPP,
+          "",
+          OffsetNotificationPP
+        )
+      );
     }
   };
 
@@ -243,10 +334,34 @@ export default function LoveNotifications() {
         {finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll"
-            dataLength={headerSelectedIcon == "love"?notificationLoveUnread.length:headerSelectedIcon == "views"?notificationViewUnread.length:headerSelectedIcon == "private"?notificationPPUnread.length:""}
+            dataLength={
+              headerSelectedIcon == "love"
+                ? notificationLoveUnread.length
+                : headerSelectedIcon == "views"
+                ? notificationViewUnread.length
+                : headerSelectedIcon == "private"
+                ? notificationPPUnread.length
+                : ""
+            }
             height={300}
-            next={headerSelectedIcon == "love"?handleScrollGetLoveNotifications:headerSelectedIcon == "views"?handleScrollGetViewProfileNotifications:headerSelectedIcon == "private"?handleScrollGetPPNotifications:""}
-            hasMore={headerSelectedIcon == "love"?!endOfResultNotificationLove:headerSelectedIcon == "views"?!endOfResultNotificationView:headerSelectedIcon == "private"?!endOfResultNotificationPP:""}
+            next={
+              headerSelectedIcon == "love"
+                ? handleScrollGetLoveNotifications
+                : headerSelectedIcon == "views"
+                ? handleScrollGetViewProfileNotifications
+                : headerSelectedIcon == "private"
+                ? handleScrollGetPPNotifications
+                : ""
+            }
+            hasMore={
+              headerSelectedIcon == "love"
+                ? !endOfResultNotificationLove
+                : headerSelectedIcon == "views"
+                ? !endOfResultNotificationView
+                : headerSelectedIcon == "private"
+                ? !endOfResultNotificationPP
+                : ""
+            }
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
@@ -259,39 +374,42 @@ export default function LoveNotifications() {
               </p>
             }
           >
-            {headerSelectedIcon == "love" && notificationLoveUnread.length != 0 && (
-              <Grid item xs={12} className="items-container">
-                {notificationLoveUnread.map((option, index) => (
-                  <ListItem
-                    key={notificationLoveDates[index]}
-                    user={option}
-                    time={notificationLoveDates[index]}
-                  />
-                ))}
-              </Grid>
-            )}
-            {headerSelectedIcon == "views" && notificationViewUnread.length != 0 && (
-              <Grid item xs={12} className="items-container">
-                {notificationViewUnread.map((option, index) => (
-                  <ListItem
-                    key={notificationViewDates[index]}
-                    user={option}
-                    time={notificationViewDates[index]}
-                  />
-                ))}
-              </Grid>
-            )}
-             {headerSelectedIcon == "private" && notificationPPUnread.length != 0 && (
-              <Grid item xs={12} className="items-container">
-                {notificationPPUnread.map((option, index) => (
-                  <PPListItem
-                    key={notificationPPDates[index]}
-                    user={option}
-                    time={notificationPPDates[index]}
-                  />
-                ))}
-              </Grid>
-            )}
+            {headerSelectedIcon == "love" &&
+              notificationLoveUnread.length != 0 && (
+                <Grid item xs={12} className="items-container">
+                  {notificationLoveUnread.map((option, index) => (
+                    <ListItem
+                      key={notificationLoveDates[index]}
+                      user={option}
+                      time={notificationLoveDates[index]}
+                    />
+                  ))}
+                </Grid>
+              )}
+            {headerSelectedIcon == "views" &&
+              notificationViewUnread.length != 0 && (
+                <Grid item xs={12} className="items-container">
+                  {notificationViewUnread.map((option, index) => (
+                    <ListItem
+                      key={notificationViewDates[index]}
+                      user={option}
+                      time={notificationViewDates[index]}
+                    />
+                  ))}
+                </Grid>
+              )}
+            {headerSelectedIcon == "private" &&
+              notificationPPUnread.length != 0 && (
+                <Grid item xs={12} className="items-container">
+                  {notificationPPUnread.map((option, index) => (
+                    <PPListItem
+                      key={notificationPPDates[index]}
+                      user={option}
+                      time={notificationPPDates[index]}
+                    />
+                  ))}
+                </Grid>
+              )}
           </InfiniteScroll>
         )}
         <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -301,7 +419,9 @@ export default function LoveNotifications() {
                 ? "/home/love"
                 : headerSelectedIcon == "views"
                 ? "/home/views"
-                : headerSelectedIcon == "private"?"/home/private-photos":""
+                : headerSelectedIcon == "private"
+                ? "/home/private-photos"
+                : ""
             }
           >
             <Button
@@ -309,15 +429,9 @@ export default function LoveNotifications() {
               style={{ color: "white", fontWeight: "bold" }}
               variant="contained"
             >
-               {headerSelectedIcon == "love" && (
-              <IntlMessages id="Love.btn" />
-            )}
-            {headerSelectedIcon == "views" && (
-              <IntlMessages id="view.btn" />
-            )}
-            {headerSelectedIcon == "private" && (
-              <IntlMessages id="PP.btn" />
-            )}
+              {headerSelectedIcon == "love" && <IntlMessages id="Love.btn" />}
+              {headerSelectedIcon == "views" && <IntlMessages id="view.btn" />}
+              {headerSelectedIcon == "private" && <IntlMessages id="PP.btn" />}
             </Button>
           </Link>
         </Grid>
