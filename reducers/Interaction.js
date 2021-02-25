@@ -14,7 +14,8 @@ import {
   SELECTED_PRIVATE_ICON,
   CLICKED_ID,
   UPDATE_BLOCKED_LIST,
-  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  RESET_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -525,6 +526,19 @@ const Interaction = (state = initialProfileState, action) => {
         ...state,
         privateSelectedIcon: action.payload
       };
+    case RESET_COUNT: {
+      if (action.payload === "L") {
+        state.notificationLoveCount = 0;
+      } else if (action.payload === "P") {
+        state.notificationPPCount = 0;
+      } else if (action.payload === "V") {
+        state.notificationViewCount = 0;
+      }
+      return {
+        ...state
+      };
+    }
+
     default:
       return state;
   }

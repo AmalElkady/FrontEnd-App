@@ -26,7 +26,8 @@ import {
   SELECTED_PRIVATE_ICON,
   UPDATE_BLOCKED_LIST,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE,
-  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  RESET_COUNT
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -198,14 +199,13 @@ export const getNotificationViewPPLove = (
   };
 };
 
-export const getNotificationViewPPLoveSuccess = (unread,data)=> {
-  console.log("from success getNotificationViewPPLoveS ",unread, data);
+export const getNotificationViewPPLoveSuccess = (unread, data) => {
+  console.log("from success getNotificationViewPPLoveS ", unread, data);
   return {
     type: GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
-    payload: {data,unread}
+    payload: { data, unread }
   };
 };
-
 
 export const cleanNotificationViewPPLove = (
   remove,
@@ -218,24 +218,25 @@ export const cleanNotificationViewPPLove = (
 ) => {
   return {
     type: CLEAN_NOTIFICATION_VIEW_PP_LOVE,
-    payload: {  remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh }
+    payload: {
+      remove,
+      viewScoreLow,
+      viewScoreHigh,
+      ppScoreLow,
+      ppScoreHigh,
+      loveScoreLow,
+      loveScoreHigh
+    }
   };
 };
 
-export const cleanNotificationViewPPLoveSuccess = (data)=> {
+export const cleanNotificationViewPPLoveSuccess = data => {
   console.log("from success cleanNotificationViewPPLoveSuccess ", data);
   return {
     type: CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
     payload: data
   };
 };
-
 
 export const clickedId = id => {
   return {
@@ -258,9 +259,17 @@ export const selectedPrivateIcon = data => {
   };
 };
 
-export const updateBlockedUsersList=()=>{
-  console.log("from update block action")
+export const updateBlockedUsersList = () => {
+  console.log("from update block action");
   return {
     type: UPDATE_BLOCKED_LIST
   };
-}
+};
+
+export const resetCount = type => {
+  console.log("from reset Count action");
+  return {
+    type: RESET_COUNT,
+    payload: type
+  };
+};

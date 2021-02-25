@@ -14,7 +14,8 @@ import {
   getLoveMatchedAndReceivedRequests,
   getLoveSentRequests,
   getNotificationViewPPLove,
-  cleanNotificationViewPPLove
+  cleanNotificationViewPPLove,
+  resetCount
 } from "../../actions/Interaction";
 
 import { mapSmallUserPhotoUrl } from "../../helpers/mapSmallUserPhotoUrl";
@@ -130,17 +131,20 @@ export default function LoveNotifications() {
     state => state.interaction.endOfResultNotificationPP
   );
 
+  const notificationPPCount = useSelector(
+    state => state.interaction.notificationPPCount
+  );
+
   useEffect(() => {
     if (headerSelectedIcon && finalUsersProfiles != null) {
       setFinalUsersProfiles(null);
       dispatch(requestPhotoRead());
-    }
-  }, [headerSelectedIcon]);
-  useEffect(() => {
-    if (headerSelectedIcon == "love" && notificationLoveUnread.length != 0) {
-      dispatch(requestPhotoRead());
-      if (notificationLoveCount < limitReturnedItems) {
+      if (
+        headerSelectedIcon == "love" &&
+        notificationLoveCount < limitReturnedItems
+      ) {
         // clean read notifications
+        dispatch(resetCount("L"));
         console.log(
           "items to cleaned ",
           scoreLCleanNotificationLove,
@@ -157,20 +161,12 @@ export default function LoveNotifications() {
             scoreHCleanNotificationLove
           )
         );
-      }
-    }
-  }, [notificationLoveUnread]);
-
-  useEffect(() => {
-    if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
-      dispatch(requestPhotoRead());
-      if (notificationViewCount < limitReturnedItems) {
+      } else if (
+        headerSelectedIcon == "views" &&
+        notificationViewCount < limitReturnedItems
+      ) {
         // clean read notifications
-        console.log(
-          "items to cleaned ",
-          scoreHCleanNotificationView,
-          scoreLCleanNotificationView
-        );
+        dispatch(resetCount("V"));
         dispatch(
           cleanNotificationViewPPLove(
             "V",
@@ -182,7 +178,40 @@ export default function LoveNotifications() {
             ""
           )
         );
+      } else if (
+        headerSelectedIcon == "private" &&
+        notificationPPCount < limitReturnedItems
+      ) {
+        // clean read notifications
+        dispatch(resetCount("P"));
+        console.log(
+          "items to cleaned ",
+          scoreLCleanNotificationLove,
+          scoreHCleanNotificationLove
+        );
+        dispatch(
+          cleanNotificationViewPPLove(
+            "P",
+            "",
+            "",
+            scoreLCleanNotificationPP,
+            scoreHCleanNotificationPP,
+            "",
+            ""
+          )
+        );
       }
+    }
+  }, [headerSelectedIcon]);
+  useEffect(() => {
+    if (headerSelectedIcon == "love" && notificationLoveUnread.length != 0) {
+      dispatch(requestPhotoRead());
+    }
+  }, [notificationLoveUnread]);
+
+  useEffect(() => {
+    if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
+      dispatch(requestPhotoRead());
     }
   }, [notificationViewUnread]);
 
