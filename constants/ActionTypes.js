@@ -395,7 +395,8 @@ export const GET_NOTIFICATION_VIEW_PP_LOVE = "get_notification_view_pp_love";
 export const GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
   "get_notification_view_pp_love_success";
 
-export const CLEAN_NOTIFICATION_VIEW_PP_LOVE = "clean_notification_view_pp_love";
+export const CLEAN_NOTIFICATION_VIEW_PP_LOVE =
+  "clean_notification_view_pp_love";
 export const CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
   "clean_notification_view_pp_love_success";
 export const RESET_COUNT = "reset_count";
@@ -404,5 +405,5 @@ export const OPEN_MODAL = "open_modal";
 export const OPEN_MODAL_PP = "open_modal_pp";
 export const CLICKED_ID = "clicked_id";
 
-/// blocked users page 
-export const UPDATE_BLOCKED_LIST="update_blocked_list";
+// UPDATE LISTS
+export const UPDATE_LIST = "update_list";

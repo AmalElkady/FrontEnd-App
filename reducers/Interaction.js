@@ -13,9 +13,9 @@ import {
   SELECTED_LOVE_ICON,
   SELECTED_PRIVATE_ICON,
   CLICKED_ID,
-  UPDATE_BLOCKED_LIST,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
-  RESET_COUNT
+  RESET_COUNT,
+  UPDATE_LIST
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -385,7 +385,6 @@ const Interaction = (state = initialProfileState, action) => {
       /// love
       let loveProfiles = [];
       if (action.payload.unread == "CVPL" || action.payload.unread == "CL") {
-        console.log("action.payload.unread==1");
         if (action.payload.data.unread.Love.length != 0) {
           loveProfiles = map2ArrTo1Arr(
             action.payload.data.order.Love,
@@ -413,7 +412,6 @@ const Interaction = (state = initialProfileState, action) => {
       //pp
       let ppProfiles = [];
       if (action.payload.unread == "CVPL" || action.payload.unread == "CP") {
-        console.log("action.payload.unread==2");
         if (action.payload.data.unread.PP.length != 0) {
           ppProfiles = map2ArrTo1Arr(
             action.payload.data.order.PP,
@@ -439,7 +437,6 @@ const Interaction = (state = initialProfileState, action) => {
       //View
       let ViewProfiles = [];
       if (action.payload.unread == "CVPL" || action.payload.unread == "CV") {
-        console.log("action.payload.unread==3");
         if (action.payload.data.unread.Views.length != 0) {
           ViewProfiles = map2ArrTo1Arr(
             action.payload.data.order.Views,
@@ -502,18 +499,34 @@ const Interaction = (state = initialProfileState, action) => {
         cleanNotification: action.payload
       };
     }
-    case UPDATE_BLOCKED_LIST: {
-      const { list1, list2 } = removeUserFromList(
-        state.clicked_id,
-        state.blockedUsersProfiles,
-        state.blockedUsersDates
-      );
-      console.log("list1 ", list1, list2);
-      state.blockedUsersProfiles = list1;
-      state.blockedUsersDates = list2;
+    case UPDATE_LIST: {
+      if (action.payload == "LNA") {
+        const { list1, list2 } = removeUserFromList(
+          state.clicked_id,
+          state.incomingPPNotApprovedRequestsProfiles,
+          state.incomingPPNotApprovedRequestsDates
+        );
+        state.incomingPPNotApprovedRequestsProfiles = [...list1];
+        state.incomingPPNotApprovedRequestsDates = [...list2];
+      } else if (action.payload == "LA") {
+        const { list1, list2 } = removeUserFromList(
+          state.clicked_id,
+          state.incomingPPApprovedRequestsProfiles,
+          state.incomingPPApprovedRequestsDates
+        );
+        state.incomingPPApprovedRequestsProfiles = [...list1];
+        state.incomingPPApprovedRequestsDates = [...list2];
+      } else if (action.payload == "LB") {
+        const { list1, list2 } = removeUserFromList(
+          state.clicked_id,
+          state.blockedUsersProfiles,
+          state.blockedUsersDates
+        );
+        state.blockedUsersProfiles = [...list1];
+        state.blockedUsersDates = [...list2];
+      }
       return {
-        ...state,
-        clicked_id: null
+        ...state
       };
     }
     case SELECTED_LOVE_ICON:

@@ -10,7 +10,8 @@ import { useRouter } from "next/router";
 import {
   ppAccessApproveRemove,
   ppAccessApproveRemoveSuccess,
-  clickedId
+  clickedId,
+  updateList
 } from "../../actions/Interaction";
 import { permissionPPReadRemove } from "../../actions/Profile";
 
@@ -30,7 +31,7 @@ export default function ListItem({ user }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
- const headerSelectedIcon = useSelector(
+  const headerSelectedIcon = useSelector(
     state => state.home.headerSelectedIcon
   );
 
@@ -89,17 +90,18 @@ export default function ListItem({ user }) {
             <Grid item xs={1}></Grid>
             <Grid item xs={8} className="item-text">
               <Typography variant="body1" component="p">
-                {privateSelectedIcon == "outgoing" ? (
+                {privateSelectedIcon == "outgoing" || user.t == "A" ? (
                   <>
                     <IntlMessages id="ppList.outgoing" />
                     {user.n}
                   </>
-                ) : privateSelectedIcon == "incomingApproved"? (
+                ) : privateSelectedIcon == "incomingApproved" ? (
                   <>
                     <IntlMessages id="ppList.incomingApproved" />
                     {user.n}
                   </>
-                ) : privateSelectedIcon == "incomingNotApproved" || user.t=="R"? (
+                ) : privateSelectedIcon == "incomingNotApproved" ||
+                  user.t == "R" ? (
                   <>
                     <IntlMessages id="ppList.incomingNotApproved" />
                     {user.n}
@@ -114,13 +116,15 @@ export default function ListItem({ user }) {
         <Grid item xs={12}>
           <Grid container className="item-icons-container">
             {/* access approved */}
-            {(privateSelectedIcon == "incomingNotApproved"|| user.t=="R") && (
+            {(privateSelectedIcon == "incomingNotApproved" ||
+              user.t == "R") && (
               <Grid item xs={2} className="icon-container">
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
                     console.log("user ", user);
                     dispatch(clickedId(user.i));
+                    dispatch(updateList("LNA"));
                     dispatch(
                       ppAccessApproveRemove(
                         0,
@@ -158,9 +162,8 @@ export default function ListItem({ user }) {
                 <IntlMessages id="ppList.iconTitleView" />
               </Typography>
             </Grid>
-             {privateSelectedIcon == "incomingApproved" && (
-              <Grid item xs={6}>
-              </Grid>
+            {privateSelectedIcon == "incomingApproved" && (
+              <Grid item xs={6}></Grid>
             )}
             {/* access removed */}
             {privateSelectedIcon == "incomingApproved" && (
@@ -170,6 +173,7 @@ export default function ListItem({ user }) {
                   onClick={() => {
                     console.log("user ", user);
                     dispatch(clickedId(user.i));
+                    dispatch(updateList("LA"));
                     dispatch(
                       ppAccessApproveRemove(
                         1,
@@ -191,13 +195,15 @@ export default function ListItem({ user }) {
             )}
 
             {/* permission pp removed */}
-            {(privateSelectedIcon == "incomingNotApproved" || user.t=="R" ) && (
+            {(privateSelectedIcon == "incomingNotApproved" ||
+              user.t == "R") && (
               <Grid item xs={2} className="icon-container">
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
                     console.log("user ", user);
                     dispatch(clickedId(user.i));
+                    dispatch(updateList("LNA"));
                     dispatch(
                       permissionPPReadRemove(
                         1,

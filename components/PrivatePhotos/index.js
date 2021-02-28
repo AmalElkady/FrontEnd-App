@@ -100,10 +100,12 @@ export default function PrivatePhotos() {
   }, [incomingPPApprovedRequestsProfiles]);
 
   useEffect(() => {
+    console.log("1");
     if (
       privateSelectedIcon == "incomingNotApproved" &&
       incomingPPNotApprovedRequestsProfiles.length != 0
     ) {
+      console.log("2");
       dispatch(requestPhotoRead());
     }
   }, [incomingPPNotApprovedRequestsProfiles]);
@@ -184,25 +186,29 @@ export default function PrivatePhotos() {
   return (
     <>
       <Grid container>
-      <Grid item xs={12} className="page-title-container page-title-container-2">
-         <Typography variant="h6">
-                {privateSelectedIcon == "outgoing" ? (
-                  <>
-                    <IntlMessages id="ppList.outgoingTitle" />
-                  </>
-                ) : privateSelectedIcon == "incomingApproved" ? (
-                  <>
-                    <IntlMessages id="ppList.incomingApprovedTitle" />
-                  </>
-                ) : privateSelectedIcon == "incomingNotApproved" ? (
-                  <>
-                    <IntlMessages id="ppList.incomingNotApprovedTitle" />
-                  </>
-                ) : (
-                  ""
-                )}
-              </Typography>
-       </Grid>
+        <Grid
+          item
+          xs={12}
+          className="page-title-container page-title-container-2"
+        >
+          <Typography variant="h6">
+            {privateSelectedIcon == "outgoing" ? (
+              <>
+                <IntlMessages id="ppList.outgoingTitle" />
+              </>
+            ) : privateSelectedIcon == "incomingApproved" ? (
+              <>
+                <IntlMessages id="ppList.incomingApprovedTitle" />
+              </>
+            ) : privateSelectedIcon == "incomingNotApproved" ? (
+              <>
+                <IntlMessages id="ppList.incomingNotApprovedTitle" />
+              </>
+            ) : (
+              ""
+            )}
+          </Typography>
+        </Grid>
         <Grid item xs={12} className="grid-width-1 page-icons-container">
           <PrivateIcons />
         </Grid>

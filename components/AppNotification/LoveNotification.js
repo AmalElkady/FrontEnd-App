@@ -136,7 +136,7 @@ export default function LoveNotifications() {
   );
 
   useEffect(() => {
-    if (headerSelectedIcon && finalUsersProfiles != null) {
+    if (headerSelectedIcon) {
       setFinalUsersProfiles(null);
       dispatch(requestPhotoRead());
       if (

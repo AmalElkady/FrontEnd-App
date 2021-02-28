@@ -27,7 +27,8 @@ import {
   UPDATE_BLOCKED_LIST,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
-  RESET_COUNT
+  RESET_COUNT,
+  UPDATE_LIST
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -259,17 +260,18 @@ export const selectedPrivateIcon = data => {
   };
 };
 
-export const updateBlockedUsersList = () => {
-  console.log("from update block action");
-  return {
-    type: UPDATE_BLOCKED_LIST
-  };
-};
-
 export const resetCount = type => {
   console.log("from reset Count action");
   return {
     type: RESET_COUNT,
+    payload: type
+  };
+};
+
+export const updateList = type => {
+  console.log("from update list action", type);
+  return {
+    type: UPDATE_LIST,
     payload: type
   };
 };

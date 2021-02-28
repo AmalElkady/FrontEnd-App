@@ -7,11 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import IntlMessages from "../../util/IntlMessages";
 import { useRouter } from "next/router";
 import moment from "moment";
-import {
-  unblockUser,
-  clickedId,
-  updateBlockedUsersList
-} from "../../actions/Interaction";
+import { unblockUser, clickedId, updateList } from "../../actions/Interaction";
 
 export default function ListItem({ user, time }) {
   const dispatch = useDispatch();
@@ -21,10 +17,9 @@ export default function ListItem({ user, time }) {
     state => state.interaction.loveSelectedIcon
   );
 
-   const headerSelectedIcon = useSelector(
+  const headerSelectedIcon = useSelector(
     state => state.home.headerSelectedIcon
   );
-
 
   const blockedUsersProfiles = useSelector(
     state => state.interaction.blockedUsersProfiles
@@ -57,9 +52,11 @@ export default function ListItem({ user, time }) {
             <Grid item xs={1}></Grid>
             <Grid item xs={8} className="item-text">
               <Typography variant="body1" component="p">
-                {( (headerSelectedIcon == "love" && router.pathname=="home/notifications-love") || router.pathname == "/home/love") && (
+                {((headerSelectedIcon == "love" &&
+                  router.pathname == "home/notifications-love") ||
+                  router.pathname == "/home/love") && (
                   <>
-                    {loveSelectedIcon == "match"? (
+                    {loveSelectedIcon == "match" ? (
                       <>
                         <IntlMessages id="loveList.match" />
                         {user.n}
@@ -69,7 +66,7 @@ export default function ListItem({ user, time }) {
                         <IntlMessages id="loveList.sent" />
                         {user.n}
                       </>
-                    ) : loveSelectedIcon == "received"? (
+                    ) : loveSelectedIcon == "received" ? (
                       <>
                         {user.n}
                         <IntlMessages id="loveList.received" />
@@ -79,7 +76,9 @@ export default function ListItem({ user, time }) {
                     )}
                   </>
                 )}
-                {((router.pathname == "/home/notifications-love" && headerSelectedIcon == "views") || router.pathname == "/home/views")&& (
+                {((router.pathname == "/home/notifications-love" &&
+                  headerSelectedIcon == "views") ||
+                  router.pathname == "/home/views") && (
                   <>
                     {user.n}
                     <IntlMessages id="viewList.view" />
@@ -87,24 +86,27 @@ export default function ListItem({ user, time }) {
                   </>
                 )}
 
-                {router.pathname == "/home/notifications-love" && headerSelectedIcon == "love" &&(
-                  <>
-                  {user.t=="R"&&
-                  <>
-                    {user.n}
-                    <IntlMessages id="Love.notification" />
-                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                {router.pathname == "/home/notifications-love" &&
+                  headerSelectedIcon == "love" && (
+                    <>
+                      {user.t == "R" && (
+                        <>
+                          {user.n}
+                          <IntlMessages id="Love.notification" />
+                          {time &&
+                            moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                        </>
+                      )}
+                      {user.t == "M" && (
+                        <>
+                          <IntlMessages id="loveList.match" />
+                          {user.n}
+                          {time &&
+                            moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
+                        </>
+                      )}
                     </>
-                  }
-                  {user.t=="M"&&
-                  <>
-                    <IntlMessages id="loveList.match" />
-                    {user.n}
-                    {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
-                    </>
-                  }
-                  </>
-                )}
+                  )}
                 {router.pathname == "/home/blockedUsers" && (
                   <>
                     <IntlMessages id="blockedList.blocked" />
@@ -117,7 +119,8 @@ export default function ListItem({ user, time }) {
             </Grid>
           </Grid>
         </Grid>
-        {(router.pathname == "/home/love" ||router.pathname == "/home/views"|| 
+        {(router.pathname == "/home/love" ||
+          router.pathname == "/home/views" ||
           router.pathname == "/home/notifications-love") && (
           <Grid item xs={2}>
             <IconButton
@@ -159,6 +162,7 @@ export default function ListItem({ user, time }) {
                   // className="item-btn"
                   onClick={() => {
                     dispatch(clickedId(user.i));
+                    dispatch(updateList("LB"));
                     dispatch(unblockUser(user.i, user.co, user.ci, user.va));
                   }}
                   aria-label="Unblock User"

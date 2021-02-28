@@ -15,20 +15,24 @@ export const map2ArrTo1Arr = (arr1, arr2) => {
       ? (userId = arr1[i].substring(7, arr1[i].length).replace(/_/, ""))
       : (userId = arr1[i].substring(8, arr1[i].length).replace(/_/, ""));
 
-///
-    userId=userId.replace(/_/, "")
-   let type=null; 
-if(userId.substring(userId.length-1,userId.length)==="R"||userId.substring(userId.length-1,userId.length)==="M"){
-       type=userId.substring(userId.length-1,userId.length);
-       userId=userId.substring(0,userId.length-1);
-}
+    ///
+    userId = userId.replace(/_/, "");
+    let type = null;
+    if (
+      userId.substring(userId.length - 1, userId.length) === "R" ||
+      userId.substring(userId.length - 1, userId.length) === "M" ||
+      userId.substring(userId.length - 1, userId.length) === "A"
+    ) {
+      type = userId.substring(userId.length - 1, userId.length);
+      userId = userId.substring(0, userId.length - 1);
+    }
 
     for (let j = 0; j < arr2.length; j++) {
       if (arr2[j].i === userId) {
         arr2[j].co = co;
         arr2[j].ci = ci;
         arr2[j].va = va;
-        arr2[j].t=type;
+        arr2[j].t = type;
       }
     }
   }
