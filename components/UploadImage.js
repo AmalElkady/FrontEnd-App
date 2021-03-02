@@ -10,7 +10,7 @@ import UserCard from "./Cards/UserCard";
 import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../util/IntlMessages";
 import { mpUpload, showAuthLoader } from "../actions/Auth";
-import { ppUpload } from "../actions/Profile";
+import { ppUpload, updateMainP } from "../actions/Profile";
 import {
   NotificationContainer,
   NotificationManager
@@ -64,7 +64,10 @@ export default function UploadImage({ photoNum }) {
     }
   }, [PPPhotoSelected]);
   useEffect(() => {
-    if (MainPhotoSelected != null) onSelectFile(MainPhotoSelected);
+    if (MainPhotoSelected != null) {
+      console.log("main photo num ", photoNum);
+      onSelectFile(MainPhotoSelected);
+    }
   }, [MainPhotoSelected]);
   const onSelectFile = fileInput => {
     setCrop(null);
@@ -247,7 +250,7 @@ export default function UploadImage({ photoNum }) {
               NotificationManager.error(<IntlMessages id="upload.error" />);
             } else {
               if (photoNum == null) {
-                dispatch(mpUpload(finalImg));
+                dispatch(updateMainP(finalImg));
               } else {
                 dispatch(ppUpload(finalImg, photoNum));
               }

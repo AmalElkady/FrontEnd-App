@@ -18,6 +18,7 @@ import {
   REQUEST_PHOTO_READ_PP_FAIL,
   SET_FINAL_PP,
   PP_PHOTO_SELECTED,
+  UPDATE_MAIN_PHOTO_SUCCESS,
   OPEN_MODAL,
   OPEN_MODAL_PP,
   OPEN_MODAL_SEND_PP,
@@ -45,6 +46,7 @@ const initialProfileState = {
   verifyLoginPhoneChanged: false,
   myPhoneAndPwData: null,
   myPaymentsAndSub: null,
+  updateMPselected: null,
   ppPhotoSelected: null,
   openModal: false,
   openModalPP: false,
@@ -52,16 +54,17 @@ const initialProfileState = {
   showMessage: false,
   loader: false,
   alertMessage: "",
-  userBlockedMessage:null
+  mainPhotoUpdated: false,
+  userBlockedMessage: null
 };
 
 const Profile = (state = initialProfileState, action) => {
   switch (action.type) {
     case READ_PROFILE_L2_SUCCESS: {
-      if( action.payload.message){
-        state.userBlockedMessage=action.payload.message
-      }else{
-         state.userBlockedMessage=null
+      if (action.payload.message) {
+        state.userBlockedMessage = action.payload.message;
+      } else {
+        state.userBlockedMessage = null;
       }
       return {
         ...state,
@@ -131,6 +134,13 @@ const Profile = (state = initialProfileState, action) => {
         myPhotoPPSigned: action.payload.signedRequest
       };
     }
+    case UPDATE_MAIN_PHOTO_SUCCESS: {
+      console.log("from reducer update ", action.payload);
+      return {
+        ...state,
+        mainPhotoUpdated: action.payload
+      };
+    }
     case REQUEST_PHOTO_UPLOAD_PP_SUCCESS: {
       return {
         ...state,
@@ -167,7 +177,6 @@ const Profile = (state = initialProfileState, action) => {
         passwordChanged: action.payload
       };
     }
-
     case PP_PHOTO_SELECTED: {
       return {
         ...state,

@@ -327,6 +327,9 @@ export const READ_MY_PAYMENTS_AND_SUB = "read_my_payments_and_sub";
 export const READ_MY_PAYMENTS_AND_SUB_SUCCESS =
   "read_my_payments_and_sub_success";
 
+export const UPDATE_MAIN_PHOTO = "update_main_photo";
+export const UPDATE_MAIN_PHOTO_SUCCESS = "update_main_photo_success";
+
 //PP
 export const PP_PHOTO_SELECTED = "pp_photo_selected";
 export const REQUEST_PHOTO_UPLOAD_PP = "request_photo_upload_pp";

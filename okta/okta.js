@@ -272,7 +272,7 @@ auth.uploadMainProfilePhoto = function (file) {
 
 								let checkMPUploadResponse = await callAxios(optionsCheck);
 								
-								console.log("DATA TO CHECK",checkMPUploadResponse.data);//IF APPROVED RETURN WITH SUCCESS 
+								console.log("DATA TO CHECK3",checkMPUploadResponse.data);//IF APPROVED RETURN WITH SUCCESS 
 								//IF MESSAGE RETURN ERORR
 								//ELSE CONTINUE AND REQUEST PHOTO UPLOAD then USE RETURNED S3 SIGNED REQUEST TO UPLOAD PHOTO
 									//IF UPLOADED --- > CALL (CHECK MP UPLOAD) RETURN SUCCESS

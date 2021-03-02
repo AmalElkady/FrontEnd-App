@@ -18,6 +18,7 @@
   "appModule.profileL2Update": "Update Your information",
   "profile.privateImg": "Private Photos",
   "profile.uploadPP": "Upload your private photo",
+  "profile.uploadMP": "Update Main Photo",
   "profile.notAuthorized": "YOU ARE NOT AUTHORIZED TO ACCESS PRIVATE PHOTOS, SEND REQUEST TO ACCESS",
   "profile.sendPP": "Send Request",
 

@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { openModalPP, ppPhotoSelected } from "../../actions/Profile";
+import {
+  openModalPP,
+  ppPhotoSelected,
+  mpUpdateSelected
+} from "../../actions/Profile";
+
+import { mainPhotoSelected } from "../../actions/Auth";
+
 import UploadImage from "../UploadImage";
 import { DropzoneArea } from "material-ui-dropzone";
 import {
@@ -118,19 +125,6 @@ export default function ModalUploadMPP({ photoNum }) {
     setOpen(false);
     dispatch(openModalPP(false));
   };
-
-  const StyledFormControl = styled(FormControl)({
-    formControl: {
-      margin: 2,
-      "& select": {
-        paddingRight: "22px"
-      }
-    },
-    selectEmpty: {
-      marginTop: 0
-    }
-  });
-
   return (
     <>
       {/*  */}
@@ -152,7 +146,8 @@ export default function ModalUploadMPP({ photoNum }) {
             <div className="app-login-content-2">
               <div className="app-login-header">
                 <h2>
-                  <IntlMessages id="profile.uploadPP" />
+                  {photoNum && <IntlMessages id="profile.uploadPP" />}
+                  {photoNum == null && <IntlMessages id="profile.uploadMP" />}
                 </h2>
               </div>
 
@@ -174,7 +169,12 @@ export default function ModalUploadMPP({ photoNum }) {
                     }}
                     onChange={files => {
                       if (files[0]) {
-                        dispatch(ppPhotoSelected(files[0]));
+                        if (photoNum) {
+                          dispatch(ppPhotoSelected(files[0]));
+                        } else {
+                          // dispatch(mpUpdateSelected(files[0]));
+                          dispatch(mainPhotoSelected(files[0]));
+                        }
                         setSelectedFile(files[0]);
                       }
                     }}

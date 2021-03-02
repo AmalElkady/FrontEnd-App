@@ -8,7 +8,13 @@ import Grid from "@material-ui/core/Grid";
 import About from "./About";
 import Carousel from "../../app/components/carousel";
 import Photos from "./Photos";
-import { readMyProfile, readMyPhotos } from "../../actions/Profile";
+import { NotificationManager } from "react-notifications";
+import {
+  readMyProfile,
+  readMyPhotos,
+  openModalPP,
+  updateMainPSuccess
+} from "../../actions/Profile";
 import { requestPhotoRead } from "../../actions/Home";
 import { mapUserPhotoUrl } from "../../helpers/mapUserPhotoUrl";
 
@@ -17,8 +23,11 @@ export default function Profile() {
   const [profileCard, setProfileCard] = useState({});
   const [aboutInfo, setAboutInfo] = useState({});
   const myProfileL1Data = useSelector(state => state.profile.myProfileDataL1);
+  const mainPhotoUpdated = useSelector(state => state.profile.mainPhotoUpdated);
   const myPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
-  const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
+  const userBlockedMessage = useSelector(
+    state => state.profile.userBlockedMessage
+  );
   const dispatch = useDispatch();
 
   const [finalPhotoSrc, setFinalPhotoSrc] = useState({});
@@ -26,7 +35,7 @@ export default function Profile() {
   useEffect(() => {
     if (router.query) {
       if (router.query.flag == "read") {
-        setAboutInfo(null)
+        setAboutInfo(null);
         setProfileCard({
           id: router.query.i,
           co: router.query.co,
@@ -68,6 +77,15 @@ export default function Profile() {
   }, [myPhotoSigned]);
 
   useEffect(() => {
+    if (mainPhotoUpdated) {
+      NotificationManager.success("Main Photo Updated successfully", "Success");
+      dispatch(readMyProfile("L1"));
+      dispatch(openModalPP(false));
+      dispatch(updateMainPSuccess(false));
+    }
+  }, [mainPhotoUpdated]);
+
+  useEffect(() => {
     if (
       myProfileL1Data != null &&
       finalPhotoSrc != null &&
@@ -99,7 +117,7 @@ export default function Profile() {
           <Grid item xs={6} className="profile-Grid-container">
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
             <br />
-            {router.query.flag == "read" && userBlockedMessage==null&&(
+            {router.query.flag == "read" && userBlockedMessage == null && (
               <Photos
                 id={router.query.i}
                 co={router.query.co}

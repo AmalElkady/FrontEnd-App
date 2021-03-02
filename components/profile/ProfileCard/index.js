@@ -8,7 +8,11 @@ import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import Flag from "react-world-flags";
 import moment from "moment";
-import { updateProfileL1,readProfileL2 } from "../../../actions/Profile";
+import {
+  updateProfileL1,
+  readProfileL2,
+  openModalPP
+} from "../../../actions/Profile";
 import {
   sendLoveMatchRequest,
   sendLoveMatchRequestSuccess,
@@ -18,6 +22,7 @@ import {
   unblockUserSuccess
 } from "../../../actions/Interaction";
 ///Modal
+import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
 import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -113,28 +118,31 @@ Fade.propTypes = {
 export default function ProfileCard({ mainInfo }) {
   const classes = useStyles();
   const searchState = useSelector(state => state.home.searchState);
-   const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
-   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
-    const profileL2Data = useSelector(state => state.profile.profileL2Data);
+  const userBlockedMessage = useSelector(
+    state => state.profile.userBlockedMessage
+  );
+  const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
+  const profileL2Data = useSelector(state => state.profile.profileL2Data);
+
   const returnUpdateMessage = useSelector(
     state => state.profile.returnUpdateMessage
   );
+
+  const OpenModalPP = useSelector(state => state.profile.openModalPP);
 
   const SendLoveMatchRequest = useSelector(
     state => state.interaction.sendLoveMatchRequest
   );
 
-  const userBlocked=useSelector(
-    state => state.interaction.userBlocked
-  );
-   const userUnblocked=useSelector(
-    state => state.interaction.userUnblocked
-  );
+  const userBlocked = useSelector(state => state.interaction.userBlocked);
+  const userUnblocked = useSelector(state => state.interaction.userUnblocked);
 
   const userMartial = useSelector(state => state.profile.userMartial);
-  const gender=useSelector(state => state.auth.gender);
+  const gender = useSelector(state => state.auth.gender);
   const [showMessage, setShowMessage] = useState(false);
-  const [mainGender, setMainGender] = useState(mainInfo.gd?mainInfo.gd:Number(!gender));
+  const [mainGender, setMainGender] = useState(
+    mainInfo.gd ? mainInfo.gd : Number(!gender)
+  );
   const router = useRouter();
   const dispatch = useDispatch();
   ////// modal
@@ -179,18 +187,24 @@ export default function ProfileCard({ mainInfo }) {
     dispatch(sendLoveMatchRequestSuccess(false));
   }, [SendLoveMatchRequest]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (userBlocked == true) {
-      NotificationManager.success(`You block ${mainInfo.n} successfully`, "Success");
+      NotificationManager.success(
+        `You block ${mainInfo.n} successfully`,
+        "Success"
+      );
     } else if (userBlocked == "error") {
       NotificationManager.error(`You already blocked ${mainInfo.n}`);
     }
-     dispatch(blockUserSuccess(false));
+    dispatch(blockUserSuccess(false));
   }, [userBlocked]);
 
-     useEffect(() => {
+  useEffect(() => {
     if (userUnblocked == true) {
-      NotificationManager.success(`You unblock ${mainInfo.n} successfully`, "Success");
+      NotificationManager.success(
+        `You unblock ${mainInfo.n} successfully`,
+        "Success"
+      );
     } else if (userUnblocked == "error") {
       NotificationManager.error(`You already unblocked ${mainInfo.n}`);
     }
@@ -227,56 +241,70 @@ export default function ProfileCard({ mainInfo }) {
                 </div>
               </div>
             )}
-             {router.query.flag == "read" && userBlockedMessage==null&& profileL2Data!=null&& (
-              <div className="card-img-icon-block">
-                 <IconButton
-                  onClick={() => {
-                    dispatch(
-                      blockUser(
-                        mainInfo.id,
-                        mainInfo.co,
-                        mainInfo.ci,
-                        mainInfo.va
-                      )
-                    );
-                    dispatch(
-                      readProfileL2(mainInfo.id,
-                        mainInfo.co,
-                        mainInfo.ci,
-                        mainInfo.va)
+            {router.query.flag == "read" &&
+              userBlockedMessage == null &&
+              profileL2Data != null && (
+                <div className="card-img-icon-block">
+                  <IconButton
+                    onClick={() => {
+                      dispatch(
+                        blockUser(
+                          mainInfo.id,
+                          mainInfo.co,
+                          mainInfo.ci,
+                          mainInfo.va
+                        )
                       );
-                  }}
-                >
-                  <img src="../../../static/images/icons/Block_User.svg" />
-                </IconButton>
-              </div>
-            )}
-               {router.query.flag == "read" && userBlockedMessage!=null&& profileL2Data==null&&(
-              <div className="card-img-icon-block">
-                 <IconButton
-                  onClick={() => {
-                    dispatch(
-                      unblockUser(
-                        mainInfo.id,
-                        mainInfo.co,
-                        mainInfo.ci,
-                        mainInfo.va
-                      )
-                    );
-                     dispatch(
-                      readProfileL2(mainInfo.id,
-                        mainInfo.co,
-                        mainInfo.ci,
-                        mainInfo.va)
+                      dispatch(
+                        readProfileL2(
+                          mainInfo.id,
+                          mainInfo.co,
+                          mainInfo.ci,
+                          mainInfo.va
+                        )
                       );
-                  }}
-                >
-                  <img src="../../../static/images/icons/Unblock_User.svg" />
-                </IconButton>
-              </div>
-            )}
+                    }}
+                  >
+                    <img src="../../../static/images/icons/Block_User.svg" />
+                  </IconButton>
+                </div>
+              )}
+            {router.query.flag == "read" &&
+              userBlockedMessage != null &&
+              profileL2Data == null && (
+                <div className="card-img-icon-block">
+                  <IconButton
+                    onClick={() => {
+                      dispatch(
+                        unblockUser(
+                          mainInfo.id,
+                          mainInfo.co,
+                          mainInfo.ci,
+                          mainInfo.va
+                        )
+                      );
+                      dispatch(
+                        readProfileL2(
+                          mainInfo.id,
+                          mainInfo.co,
+                          mainInfo.ci,
+                          mainInfo.va
+                        )
+                      );
+                    }}
+                  >
+                    <img src="../../../static/images/icons/Unblock_User.svg" />
+                  </IconButton>
+                </div>
+              )}
             {router.query.flag == "readMe" && (
-              <IconButton aria-label="Edit" className="edit-icon-large">
+              <IconButton
+                aria-label="Edit"
+                className="edit-icon-large"
+                onClick={() => {
+                  dispatch(openModalPP(true));
+                }}
+              >
                 <EditIcon></EditIcon>
               </IconButton>
             )}
@@ -328,8 +356,8 @@ export default function ProfileCard({ mainInfo }) {
                 className="card-h-row p-relative"
                 gutterBottom
               >
-               {/* {mainInfo.gd=mainInfo.gd?mainInfo.gd:Number(!gender)} */}
-               {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
+                {/* {mainInfo.gd=mainInfo.gd?mainInfo.gd:Number(!gender)} */}
+                {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
                 {router.query.flag == "readMe" && (
                   <IconButton
                     aria-label="Edit"
@@ -407,6 +435,8 @@ export default function ProfileCard({ mainInfo }) {
         </Modal>
       )}
       {/*  */}
+
+      {OpenModalPP && <ModalUploadMPP photoNum={null}></ModalUploadMPP>}
 
       {/* {console.log("showMessage ", showMessage)} */}
       {showMessage &&

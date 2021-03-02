@@ -17,11 +17,10 @@ import {
   permissionPPReadRemoveSuccess,
   requestPhotoReadPPSuccess,
   requestPhotoReadPPFail,
+  updateMainPSuccess,
   showProfileMessage
 } from "../actions/Profile";
-import {
-  showAuthMessage
-} from "../actions/Auth";
+import { showAuthMessage } from "../actions/Auth";
 import {
   READ_PROFILE_L2,
   READ_MY_PROFILE,
@@ -36,7 +35,8 @@ import {
   REQUEST_REMOVE_PHOTO_PP,
   READ_MY_PHOTOS,
   REQUEST_PERMISSION_PP_READ_REMOVE,
-  REQUEST_PHOTO_READ_PP
+  REQUEST_PHOTO_READ_PP,
+  UPDATE_MAIN_PHOTO
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -114,6 +114,12 @@ const photoRemovePP = async photoNum =>
 const readPaymentsAndSub = async (count, start, end) =>
   await profile
     .readMyPaymentsAndSub(count, start, end)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const updateMainPhoto = async file =>
+  await profile
+    .updateMainPhoto(file)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -342,6 +348,20 @@ function* permissionPPReadRemoveRequest({ payload }) {
   }
 }
 
+function* updateMainPhotoRequest({ payload }) {
+  console.log("update main Photo saga ", payload);
+  try {
+    const returnedData = yield call(updateMainPhoto, payload);
+    if (returnedData.message) {
+      yield put(permissionPPReadRemoveSuccess("error"));
+    } else {
+      yield put(updateMainPSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -400,6 +420,10 @@ export function* requestReadPhotosPP() {
   yield takeEvery(REQUEST_PHOTO_READ_PP, readPhotosPPRequest);
 }
 
+export function* requestUpdateMainPhoto() {
+  yield takeEvery(UPDATE_MAIN_PHOTO, updateMainPhotoRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(readProfileL2Data),
@@ -415,6 +439,7 @@ export default function* rootSaga() {
     fork(requestPhotoUploadPP),
     fork(requestRemovePhotoPP),
     fork(requestPermissionPPReadRemove),
-    fork(requestReadPhotosPP)
+    fork(requestReadPhotosPP),
+    fork(requestUpdateMainPhoto)
   ]);
 }

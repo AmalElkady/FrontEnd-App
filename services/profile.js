@@ -124,7 +124,7 @@ profile.readProfileL2 = function(id, co, ci, va) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-console.log("response about data ",response)
+      console.log("response about data ", response);
 
       if (response) {
         resolve(response);
@@ -638,6 +638,102 @@ profile.requestPermissionPPReadRemove = function(
       }
     } catch (err) {
       resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+profile.updateMainPhoto = function(file) {
+  console.log("from service updateMainPhoto ", file);
+  return new Promise(async (resolve, reject) => {
+    if (file) {
+      try {
+        //http:// /api/checkmpupload
+        //http:// /api/requestphotoupload?photo=0
+        const tokenValue = getCookie("access_token", false);
+
+        let optionsCheck = {
+          url: "/requestphotoupload?photo=0",
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: "Bearer " + tokenValue
+          },
+          data: {
+            filetype: `${file.type}`.slice(5),
+            filesize: file.size
+          }
+        };
+        // optionsCheck.url = "/requestphotoupload?photo=0";
+        // optionsCheck.data = {'filetype':`${file.type}`.slice(5), 'filesize': file.size/*file.size*/}
+
+        let checkUploadRequestResponse = await callAxios(optionsCheck);
+
+        console.log(
+          "checkUploadRequestResponse.data",
+          checkUploadRequestResponse.data
+        );
+
+        if (checkUploadRequestResponse.data.code) {
+          resolve({ message: checkUploadRequestResponse.data.code });
+        } else if (checkUploadRequestResponse.data.signedRequest) {
+          //upload file axios
+
+          const formData = new FormData();
+          Object.keys(
+            checkUploadRequestResponse.data.signedRequest.fields
+          ).forEach(key => {
+            formData.append(
+              key,
+              checkUploadRequestResponse.data.signedRequest.fields[key]
+            );
+          });
+          // Actual file has to be appended last.
+          formData.append("file", file);
+          const xhr = new XMLHttpRequest();
+          xhr.open(
+            "POST",
+            checkUploadRequestResponse.data.signedRequest.url,
+            true
+          );
+          xhr.send(formData);
+          xhr.onload = async function() {
+            if (this.status === 204) {
+              console.log("trueeeeeeee 204");
+              optionsCheck.url = "/checkmpupload";
+              await callAxios(optionsCheck);
+              resolve(true);
+            } else {
+              reject(this.responseText);
+            }
+          };
+
+          // console.log("imageUploadResult ",imageUploadResult);
+
+          // if(imageUploadResult.data.message){
+          // resolve({"message": imageUploadResult.data.message});
+          // }else{
+          // 	optionsCheck.url = "/checkmpupload";
+          // 	await callAxios(optionsCheck);
+          // 	resolve(true);
+          // }
+          //when resolve true refresh page (MPUpload)
+          //when resolve true in create user refresh page (SignUp)
+
+          //   } else {
+          //   resolve({"message": "Error"});
+          // }
+        } else {
+          resolve({ message: checkMPUploadResponse.data.code });
+        }
+      } catch (err) {
+        console.log(err);
+        resolve({ message: err });
+      }
+    } else {
+      resolve({ message: "empty values not allowed !" });
     }
   }).catch(err => {
     console.log(err);

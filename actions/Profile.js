@@ -29,6 +29,8 @@ import {
   REQUEST_PERMISSION_PP_READ_REMOVE,
   REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
   PP_PHOTO_SELECTED,
+  UPDATE_MAIN_PHOTO,
+  UPDATE_MAIN_PHOTO_SUCCESS,
   REQUEST_PHOTO_READ_PP,
   REQUEST_PHOTO_READ_PP_SUCCESS,
   REQUEST_PHOTO_READ_PP_FAIL,
@@ -272,6 +274,21 @@ export const permissionPPReadRemoveSuccess = data => {
   console.log("from action success sent request", data);
   return {
     type: REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
+    payload: data
+  };
+};
+
+export const updateMainP = file => {
+  return {
+    type: UPDATE_MAIN_PHOTO,
+    payload: file
+  };
+};
+
+export const updateMainPSuccess = data => {
+  console.log("from action success update ", data);
+  return {
+    type: UPDATE_MAIN_PHOTO_SUCCESS,
     payload: data
   };
 };
