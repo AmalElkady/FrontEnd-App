@@ -21,6 +21,7 @@ import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
 import { selectedHeaderIcon } from "../../actions/Home";
 import { readMyPhotos } from "../../actions/Profile";
+import { getMessagesTotalUnRCount } from "../../actions/Messages";
 import { getNotificationViewPPLove } from "../../actions/Interaction";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
@@ -176,6 +177,7 @@ class Header extends React.Component {
 
   componentDidMount() {
     if (this.props.notificationLoveCount == null) {
+      this.props.getMessagesTotalUnRCount();
       this.props.getNotificationViewPPLove(
         "CVPL",
         this.props.scoreHNotificationView,
@@ -422,26 +424,32 @@ class Header extends React.Component {
                   tag="span"
                   data-toggle="dropdown"
                 >
-                  <IconButton className="icon-btn">
-                    {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
-                    <img
-                      src={
-                        headerSelectedIcon != "message"
-                          ? "../../static/images/icons/standard/Messages_Icon_Standard.svg"
-                          : "../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"
-                      }
-                      alt="Notifications"
-                    />
-                  </IconButton>
+                  <Link href={"/home/messages"}>
+                    <IconButton className="icon-btn">
+                      {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
+                      <img
+                        src={
+                          headerSelectedIcon != "message"
+                            ? "../../static/images/icons/standard/Messages_Icon_Standard.svg"
+                            : "../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"
+                        }
+                        alt="Notifications"
+                      />
+                    </IconButton>
+                  </Link>
+                  {this.props.totalMessagesUnRCount != 0 && (
+                    <div className="love-count">
+                      {this.props.totalMessagesUnRCount}
+                    </div>
+                  )}
                 </DropdownToggle>
-
-                <DropdownMenu right>
+                {/* <DropdownMenu right>
                   <CardHeader
                     styleName="align-items-center"
                     heading={<IntlMessages id="mailNotification.title" />}
                   />
                   <MailNotification />
-                </DropdownMenu>
+                </DropdownMenu> */}
               </Dropdown>
             </li>
 
@@ -555,7 +563,7 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings, home, interaction }) => {
+const mapStateToProps = ({ settings, home, interaction, messages }) => {
   const {
     drawerType,
     locale,
@@ -570,6 +578,7 @@ const mapStateToProps = ({ settings, home, interaction }) => {
     scoreHNotificationPP,
     scoreHNotificationLove
   } = interaction;
+  const { totalMessagesUnRCount } = messages;
   const { headerSelectedIcon } = home;
 
   return {
@@ -583,7 +592,8 @@ const mapStateToProps = ({ settings, home, interaction }) => {
     notificationPPCount,
     scoreHNotificationView,
     scoreHNotificationPP,
-    scoreHNotificationLove
+    scoreHNotificationLove,
+    totalMessagesUnRCount
   };
 };
 
@@ -593,6 +603,7 @@ export default withRouter(
     switchLanguage,
     selectedHeaderIcon,
     readMyPhotos,
-    getNotificationViewPPLove
+    getNotificationViewPPLove,
+    getMessagesTotalUnRCount
   })(Header)
 );

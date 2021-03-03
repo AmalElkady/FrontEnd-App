@@ -15,7 +15,6 @@ const Conversation = ({ conversationData, selectedUser }) => {
 
   return (
     <div className="chat-main-content">
-      {console.log("messageSent ", messageSent)}
       <SentMessageCell />
       <ReceivedMessageCell />
       <Button
@@ -23,18 +22,18 @@ const Conversation = ({ conversationData, selectedUser }) => {
         style={{ color: "white", fontWeight: "bold" }}
         variant="contained"
         onClick={() => {
-          dispatch(
-            sendMessage(
-              "452dc28a-4991-4557-a1a1-3a641728e5f0",
-              "EG",
-              "6",
-              "1",
-              "how are u?"
-            )
-          );
+          // dispatch(
+          //   sendMessage(
+          //     "452dc28a-4991-4557-a1a1-3a641728e5f0",
+          //     "EG",
+          //     "6",
+          //     "1",
+          //     "how are u?"
+          //   )
+          // );
         }}
       >
-        Send Message
+        send message
       </Button>
 
       {/* {conversationData.map((conversation, index) =>

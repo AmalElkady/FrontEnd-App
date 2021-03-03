@@ -100,4 +100,38 @@ messages.sendMessage = function(profileid, country, city, varea, message) {
     console.log(err);
   });
 };
+
+messages.getMessagesTotalUrCount = function() {
+  console.log("from messages service readmessagestotalurcount ");
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/readmessagestotalurcount",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("readmessagestotalurcount from service ", response);
+      if (response.count) {
+        resolve(response.count);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };
