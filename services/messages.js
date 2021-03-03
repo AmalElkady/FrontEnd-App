@@ -275,4 +275,49 @@ messages.clearConversation = function(profileid, country, city, varea) {
   });
 };
 
+messages.deleteConversation = function(profileid, country, city, varea) {
+  console.log(
+    "from messages service deleteconversation ",
+    profileid,
+    country,
+    city,
+    varea
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/deleteconversation",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("deleteconversation from service ", response);
+      if (response.response[1] == 1 && response.response[2] == 1) {
+        resolve(true);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

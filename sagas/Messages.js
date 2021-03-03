@@ -5,14 +5,16 @@ import {
   getMessagesTotalUnRCountSuccess,
   readConversationSuccess,
   readAllMessagesCoversSuccess,
-  clearConversationSuccess
+  clearConversationSuccess,
+  deleteConversationSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
   GET_MESSAGES_TOTAL_UNREAD_COUNT,
   READ_CONVERSATION,
   READ_ALL_MESSAGES_COVERS,
-  CLEAR_CONVERSATION
+  CLEAR_CONVERSATION,
+  DELETE_CONVERSATION
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -51,6 +53,12 @@ const readAllMessagesCovers = async (scoreL, offset) =>
 const clearConversation = async (profileid, country, city, varea) =>
   await messages
     .clearConversation(profileid, country, city, varea)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const deleteConversation = async (profileid, country, city, varea) =>
+  await messages
+    .deleteConversation(profileid, country, city, varea)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -160,6 +168,27 @@ function* clearConversationRequest({ payload }) {
   }
 }
 
+function* deleteConversationRequest({ payload }) {
+  const { profileid, country, city, varea } = payload;
+  console.log("delete Conversation saga ", profileid, country, city, varea);
+  try {
+    const returnedData = yield call(
+      deleteConversation,
+      profileid,
+      country,
+      city,
+      varea
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(deleteConversationSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -185,12 +214,17 @@ export function* requestClearConversation() {
   yield takeEvery(CLEAR_CONVERSATION, clearConversationRequest);
 }
 
+export function* requestDeleteConversation() {
+  yield takeEvery(DELETE_CONVERSATION, deleteConversationRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
     fork(requestGetMessagesTotalUnCount),
     fork(requestReadConversation),
     fork(requestAllMessagesCovers),
-    fork(requestClearConversation)
+    fork(requestClearConversation),
+    fork(requestDeleteConversation)
   ]);
 }

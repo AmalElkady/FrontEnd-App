@@ -4,7 +4,9 @@ import {
   READ_CONVERSATION_SUCCESS,
   READ_ALL_MESSAGES_COVERS_SUCCESS,
   CLEAR_CONVERSATION_SUCCESS,
-  SHOW_MESSAGE
+  DELETE_CONVERSATION,
+  SHOW_MESSAGE,
+  DELETE_CONVERSATION_SUCCESS
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
@@ -20,6 +22,8 @@ const initialProfileState = {
   allMessagesCoversDates: "",
 
   conversationCleared: false,
+
+  conversationDeleted: false,
 
   loader: false,
   alertMessage: "",
@@ -59,6 +63,12 @@ const Messages = (state = initialProfileState, action) => {
       return {
         ...state,
         conversationCleared: action.payload
+      };
+    }
+    case DELETE_CONVERSATION_SUCCESS: {
+      return {
+        ...state,
+        conversationDeleted: action.payload
       };
     }
     case SHOW_MESSAGE: {

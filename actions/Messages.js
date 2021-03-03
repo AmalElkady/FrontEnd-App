@@ -9,6 +9,8 @@ import {
   READ_ALL_MESSAGES_COVERS_SUCCESS,
   CLEAR_CONVERSATION,
   CLEAR_CONVERSATION_SUCCESS,
+  DELETE_CONVERSATION,
+  DELETE_CONVERSATION_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -85,6 +87,20 @@ export const clearConversation = (profileid, country, city, varea) => {
 export const clearConversationSuccess = data => {
   return {
     type: CLEAR_CONVERSATION_SUCCESS,
+    payload: data
+  };
+};
+
+export const deleteConversation = (profileid, country, city, varea) => {
+  return {
+    type: DELETE_CONVERSATION,
+    payload: { profileid, country, city, varea }
+  };
+};
+
+export const deleteConversationSuccess = data => {
+  return {
+    type: DELETE_CONVERSATION_SUCCESS,
     payload: data
   };
 };

@@ -429,3 +429,6 @@ export const READ_ALL_MESSAGES_COVERS_SUCCESS =
 
 export const CLEAR_CONVERSATION = "clear_conversation";
 export const CLEAR_CONVERSATION_SUCCESS = "clear_conversation_success";
+
+export const DELETE_CONVERSATION = "delete_conversation";
+export const DELETE_CONVERSATION_SUCCESS = "delete_conversation_success";

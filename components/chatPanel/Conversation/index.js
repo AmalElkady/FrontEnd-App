@@ -10,7 +10,8 @@ import {
   sendMessage,
   readConversation,
   readAllMessagesCovers,
-  clearConversation
+  clearConversation,
+  deleteConversation
 } from "../../../actions/Messages";
 
 const Conversation = ({ conversationData, selectedUser }) => {
@@ -29,9 +30,13 @@ const Conversation = ({ conversationData, selectedUser }) => {
     state => state.messages.conversationCleared
   );
 
+  const conversationDeleted = useSelector(
+    state => state.messages.conversationDeleted
+  );
+
   return (
     <div className="chat-main-content">
-      {console.log("conversationCleared ", conversationCleared)}
+      {console.log("conversationDeleted ", conversationDeleted)}
       <SentMessageCell />
       <ReceivedMessageCell />
       <Button
@@ -62,8 +67,17 @@ const Conversation = ({ conversationData, selectedUser }) => {
 
           //dispatch(readAllMessagesCovers("", ""));
 
+          // dispatch(
+          //   clearConversation(
+          //     "452dc28a-4991-4557-a1a1-3a641728e5f0",
+          //     "EG",
+          //     "6",
+          //     "1"
+          //   )
+          // );
+
           dispatch(
-            clearConversation(
+            deleteConversation(
               "452dc28a-4991-4557-a1a1-3a641728e5f0",
               "EG",
               "6",
