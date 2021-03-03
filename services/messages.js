@@ -230,4 +230,49 @@ messages.readAllMessagesCovers = function(scoreL, offset) {
   });
 };
 
+messages.clearConversation = function(profileid, country, city, varea) {
+  console.log(
+    "from messages service clearConversation ",
+    profileid,
+    country,
+    city,
+    varea
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/clearconversation",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("clearConversation from service ", response);
+      if (response.response) {
+        resolve(response.response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

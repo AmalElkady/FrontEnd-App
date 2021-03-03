@@ -7,6 +7,8 @@ import {
   READ_CONVERSATION_SUCCESS,
   READ_ALL_MESSAGES_COVERS,
   READ_ALL_MESSAGES_COVERS_SUCCESS,
+  CLEAR_CONVERSATION,
+  CLEAR_CONVERSATION_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -69,6 +71,20 @@ export const readAllMessagesCovers = (scoreL, offset) => {
 export const readAllMessagesCoversSuccess = data => {
   return {
     type: READ_ALL_MESSAGES_COVERS_SUCCESS,
+    payload: data
+  };
+};
+
+export const clearConversation = (profileid, country, city, varea) => {
+  return {
+    type: CLEAR_CONVERSATION,
+    payload: { profileid, country, city, varea }
+  };
+};
+
+export const clearConversationSuccess = data => {
+  return {
+    type: CLEAR_CONVERSATION_SUCCESS,
     payload: data
   };
 };

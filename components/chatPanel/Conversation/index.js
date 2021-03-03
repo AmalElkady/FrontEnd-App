@@ -9,26 +9,29 @@ import Button from "@material-ui/core/Button";
 import {
   sendMessage,
   readConversation,
-  readAllMessagesCovers
+  readAllMessagesCovers,
+  clearConversation
 } from "../../../actions/Messages";
 
 const Conversation = ({ conversationData, selectedUser }) => {
   const dispatch = useDispatch();
 
   const messageSent = useSelector(state => state.messages.messageSent);
+
   const conversationMessages = useSelector(
     state => state.messages.conversationMessages
   );
-
   const allMessagesCoversProfiles = useSelector(
     state => state.messages.allMessagesCoversProfiles
   );
-
   const seenFlag = useSelector(state => state.messages.seenFlag);
+  const conversationCleared = useSelector(
+    state => state.messages.conversationCleared
+  );
 
   return (
     <div className="chat-main-content">
-      {console.log("allMessagesCoversProfiles ", allMessagesCoversProfiles)}
+      {console.log("conversationCleared ", conversationCleared)}
       <SentMessageCell />
       <ReceivedMessageCell />
       <Button
@@ -57,7 +60,16 @@ const Conversation = ({ conversationData, selectedUser }) => {
           //   )
           // );
 
-          dispatch(readAllMessagesCovers("", ""));
+          //dispatch(readAllMessagesCovers("", ""));
+
+          dispatch(
+            clearConversation(
+              "452dc28a-4991-4557-a1a1-3a641728e5f0",
+              "EG",
+              "6",
+              "1"
+            )
+          );
         }}
       >
         Messages

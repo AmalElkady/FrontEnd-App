@@ -4,13 +4,15 @@ import {
   sendMessageSuccess,
   getMessagesTotalUnRCountSuccess,
   readConversationSuccess,
-  readAllMessagesCoversSuccess
+  readAllMessagesCoversSuccess,
+  clearConversationSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
   GET_MESSAGES_TOTAL_UNREAD_COUNT,
   READ_CONVERSATION,
-  READ_ALL_MESSAGES_COVERS
+  READ_ALL_MESSAGES_COVERS,
+  CLEAR_CONVERSATION
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -43,6 +45,12 @@ const readConversation = async (
 const readAllMessagesCovers = async (scoreL, offset) =>
   await messages
     .readAllMessagesCovers(scoreL, offset)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const clearConversation = async (profileid, country, city, varea) =>
+  await messages
+    .clearConversation(profileid, country, city, varea)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -131,6 +139,27 @@ function* readAllMessagesCoversRequest({ payload }) {
   }
 }
 
+function* clearConversationRequest({ payload }) {
+  const { profileid, country, city, varea } = payload;
+  console.log("clear Conversation saga ", profileid, country, city, varea);
+  try {
+    const returnedData = yield call(
+      clearConversation,
+      profileid,
+      country,
+      city,
+      varea
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(clearConversationSuccess(true));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -152,11 +181,16 @@ export function* requestAllMessagesCovers() {
   yield takeEvery(READ_ALL_MESSAGES_COVERS, readAllMessagesCoversRequest);
 }
 
+export function* requestClearConversation() {
+  yield takeEvery(CLEAR_CONVERSATION, clearConversationRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
     fork(requestGetMessagesTotalUnCount),
     fork(requestReadConversation),
-    fork(requestAllMessagesCovers)
+    fork(requestAllMessagesCovers),
+    fork(requestClearConversation)
   ]);
 }

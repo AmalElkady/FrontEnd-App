@@ -426,3 +426,6 @@ export const READ_CONVERSATION_SUCCESS = "read_conversation_success";
 export const READ_ALL_MESSAGES_COVERS = "read_all_messages_covers";
 export const READ_ALL_MESSAGES_COVERS_SUCCESS =
   "read_all_messages_covers_success";
+
+export const CLEAR_CONVERSATION = "clear_conversation";
+export const CLEAR_CONVERSATION_SUCCESS = "clear_conversation_success";

@@ -3,6 +3,7 @@ import {
   GET_MESSAGES_TOTAL_UNREAD_COUNT_SUCCESS,
   READ_CONVERSATION_SUCCESS,
   READ_ALL_MESSAGES_COVERS_SUCCESS,
+  CLEAR_CONVERSATION_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -17,6 +18,8 @@ const initialProfileState = {
   allMessagesCoversProfiles: "",
   allMessagesCovers: "",
   allMessagesCoversDates: "",
+
+  conversationCleared: false,
 
   loader: false,
   alertMessage: "",
@@ -50,6 +53,12 @@ const Messages = (state = initialProfileState, action) => {
         allMessagesCoversProfiles: action.payload.viewProfiles,
         allMessagesCovers: action.payload.messageCovers,
         allMessagesCoversDates: action.payload.list_convDate
+      };
+    }
+    case CLEAR_CONVERSATION_SUCCESS: {
+      return {
+        ...state,
+        conversationCleared: action.payload
       };
     }
     case SHOW_MESSAGE: {
