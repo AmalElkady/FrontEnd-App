@@ -6,15 +6,24 @@ import ReceivedMessageCell from "./ReceivedMessageCell/index";
 import SentMessageCell from "./SentMessageCell/index";
 import Button from "@material-ui/core/Button";
 
-import { sendMessage } from "../../../actions/Messages";
+import { sendMessage, readConversation } from "../../../actions/Messages";
 
 const Conversation = ({ conversationData, selectedUser }) => {
   const dispatch = useDispatch();
 
   const messageSent = useSelector(state => state.messages.messageSent);
+  const conversationMessages = useSelector(
+    state => state.messages.conversationMessages
+  );
+  const seenFlag = useSelector(state => state.messages.seenFlag);
 
   return (
     <div className="chat-main-content">
+      {console.log(
+        "conversationMessages seen ",
+        conversationMessages,
+        seenFlag
+      )}
       <SentMessageCell />
       <ReceivedMessageCell />
       <Button
@@ -31,9 +40,20 @@ const Conversation = ({ conversationData, selectedUser }) => {
           //     "how are u?"
           //   )
           // );
+          dispatch(
+            readConversation(
+              "452dc28a-4991-4557-a1a1-3a641728e5f0",
+              "EG",
+              "6",
+              "1",
+              "",
+              "",
+              ""
+            )
+          );
         }}
       >
-        send message
+        read conversation
       </Button>
 
       {/* {conversationData.map((conversation, index) =>

@@ -134,4 +134,63 @@ messages.getMessagesTotalUrCount = function() {
   });
 };
 
+messages.readConversation = function(
+  profileid,
+  country,
+  city,
+  varea,
+  scoreL,
+  offset,
+  limit
+) {
+  console.log(
+    "from messages service readConversation ",
+    profileid,
+    country,
+    city,
+    varea,
+    scoreL,
+    offset,
+    limit
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/readconversation",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea,
+          scoreL,
+          offset,
+          limit
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("readConversation from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

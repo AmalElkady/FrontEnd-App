@@ -2,11 +2,13 @@ import { all, call, fork, put, takeEvery } from "redux-saga/effects";
 import { showAuthMessage } from "../actions/Auth";
 import {
   sendMessageSuccess,
-  getMessagesTotalUnRCountSuccess
+  getMessagesTotalUnRCountSuccess,
+  readConversationSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
-  GET_MESSAGES_TOTAL_UNREAD_COUNT
+  GET_MESSAGES_TOTAL_UNREAD_COUNT,
+  READ_CONVERSATION
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -19,6 +21,20 @@ const sendMessage = async (profileid, country, city, varea, message) =>
 const getMessagesTotalUnCount = async () =>
   await messages
     .getMessagesTotalUrCount()
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const readConversation = async (
+  profileid,
+  country,
+  city,
+  varea,
+  scoreL,
+  offset,
+  limit
+) =>
+  await messages
+    .readConversation(profileid, country, city, varea, scoreL, offset, limit)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -59,6 +75,39 @@ function* getMessagesTotalUnCountRequest() {
   }
 }
 
+function* readConversationRequest({ payload }) {
+  const { profileid, country, city, varea, scoreL, offset, limit } = payload;
+  console.log(
+    "read Conversation saga ",
+    profileid,
+    country,
+    city,
+    varea,
+    scoreL,
+    offset,
+    limit
+  );
+  try {
+    const returnedData = yield call(
+      readConversation,
+      profileid,
+      country,
+      city,
+      varea,
+      scoreL,
+      offset,
+      limit
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(readConversationSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -72,6 +121,14 @@ export function* requestGetMessagesTotalUnCount() {
   );
 }
 
+export function* requestReadConversation() {
+  yield takeEvery(READ_CONVERSATION, readConversationRequest);
+}
+
 export default function* rootSaga() {
-  yield all([fork(requestSendMessage), fork(requestGetMessagesTotalUnCount)]);
+  yield all([
+    fork(requestSendMessage),
+    fork(requestGetMessagesTotalUnCount),
+    fork(requestReadConversation)
+  ]);
 }

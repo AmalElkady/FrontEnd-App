@@ -419,3 +419,6 @@ export const GET_MESSAGES_TOTAL_UNREAD_COUNT =
   "get_messages_total_unread_count";
 export const GET_MESSAGES_TOTAL_UNREAD_COUNT_SUCCESS =
   "get_messages_total_unread_count_success";
+
+export const READ_CONVERSATION = "read_conversation";
+export const READ_CONVERSATION_SUCCESS = "read_conversation_success";
