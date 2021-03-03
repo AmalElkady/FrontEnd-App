@@ -31,7 +31,7 @@ export default function UserInfo() {
   }, []);
 
   useEffect(() => {
-    if (MyPhotoSigned != null && MyPhotoSigned.includes("_49x49_mp0")) {
+    if (MyPhotoSigned != null && MyPhotoSigned.includes("_49x49_mp")) {
       setPhotoSrc(MyPhotoSigned);
     }
   }, [MyPhotoSigned]);

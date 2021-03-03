@@ -328,23 +328,9 @@ const Interaction = (state = initialProfileState, action) => {
     }
     case UNBLOCK_USER_SUCCESS: {
       console.log("form reducer User unblock ", action.payload);
-      // const { list1, list2 } = removeUserFromList(
-      //   state.clicked_id,
-      //   state.blockedUsersProfiles,
-      //   state.blockedUsersDates
-      // );
-      // console.log("list1 ", list1, list2);
-      // state.blockedUsersProfiles = "";
-      // state.blockedUsersDates = "";
-      // state.blockedUsersProfiles = list1;
-      // state.blockedUsersDates = list2;
-      // console.log("blockedUsersProfiles ", state.blockedUsersProfiles);
       return {
         ...state,
-        userUnblocked: action.payload,
-        // blockedUsersProfiles:list1,
-        // blockedUsersDates:list2,
-        clicked_id: null
+        userUnblocked: action.payload
       };
     }
     case GET_BLOCKED_USERS_SUCCESS: {

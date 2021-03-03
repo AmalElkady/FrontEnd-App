@@ -58,13 +58,13 @@ export default function UploadImage({ photoNum }) {
     window.addEventListener("resize", handleResize);
   });
   useEffect(() => {
-    if (PPPhotoSelected != null) {
+    if (PPPhotoSelected != null && photoNum != null) {
       console.log("photo num upload ", photoNum);
       onSelectFile(PPPhotoSelected);
     }
   }, [PPPhotoSelected]);
   useEffect(() => {
-    if (MainPhotoSelected != null) {
+    if (MainPhotoSelected != null && photoNum == null) {
       console.log("main photo num ", photoNum);
       onSelectFile(MainPhotoSelected);
     }

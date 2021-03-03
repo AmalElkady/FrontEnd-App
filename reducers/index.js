@@ -13,6 +13,7 @@ import Auth from "./Auth";
 import Home from "./Home";
 import Profile from "./Profile";
 import Interaction from "./Interaction";
+import Messages from "./Messages";
 
 const MIGRATION_DEBUG = false;
 
@@ -85,5 +86,6 @@ export default history =>
     // home: persist(homePersistConfig, Home),
     profile: Profile,
     interaction: Interaction,
-    auth: persist(authPersistConfig, Auth)
+    auth: persist(authPersistConfig, Auth),
+    messages: Messages
   });

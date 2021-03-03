@@ -3,37 +3,44 @@ import React from "react";
 const UserCell = ({ chat, selectedSectionId, onSelectUser }) => {
   return (
     <div
-      key={chat.id}
-      className={`chat-user-item ${
-        selectedSectionId === chat.id ? "active" : ""
-      }`}
-      onClick={() => {
-        onSelectUser(chat);
-      }}
+      // key={chat.id}
+      // ${
+      //   selectedSectionId === chat.id ? "active" : ""
+      // }
+      className={`chat-user-item active 
+      `}
+      // onClick={() => {
+      //   onSelectUser(chat);
+      // }}
     >
       <div className="chat-user-row row">
         <div className="chat-avatar col-xl-2 col-3">
           <div className="chat-avatar-mode">
             <img
-              src={chat.thumb}
+              src="https://via.placeholder.com/150x150"
               className="rounded-circle size-40"
-              alt={chat.name}
+              // alt={chat.name}
             />
-            <span className={`chat-mode small ${chat.status}`} />
+            {/* ${chat.status} */}
+            <span className={`chat-mode small `} />
           </div>
         </div>
 
         <div className="chat-info col-xl-8 col-6">
-          <span className="name h4">{chat.name}</span>
+          {/* {chat.name} */}
+          <span className="name h4">ahmed</span>
           <div className="chat-info-des">
-            {chat.lastMessage.substring(0, 25) + "..."}
+            {/* {chat.lastMessage.substring(0, 25) + "..."} */}
+            typing
           </div>
-          <div className="last-message-time">{chat.lastMessageTime}</div>
+          {/* {chat.lastMessageTime} */}
+          <div className="last-message-time">hello hello</div>
         </div>
 
         <div className="chat-date col-xl-2 col-3">
           <div className="bg-primary rounded-circle badge text-white">
-            {chat.unreadMessage}
+            {/* {chat.unreadMessage} */}
+            unread
           </div>
         </div>
       </div>

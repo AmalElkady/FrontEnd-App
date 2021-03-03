@@ -410,3 +410,7 @@ export const CLICKED_ID = "clicked_id";
 
 // UPDATE LISTS
 export const UPDATE_LIST = "update_list";
+
+// Messages
+export const SEND_MESSAGE = "send_message";
+export const SEND_MESSAGE_SUCCESS = "send_message_success";

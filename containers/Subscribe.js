@@ -129,8 +129,8 @@ export default function Subscribe() {
  <Button
           variant="contained"
           onClick={() => {
-            this.props.showAuthLoader();
-            this.props.userSignOut();
+            dispatch(showAuthLoader());
+            dispatch(userSignOut())
           }}
           color="primary"
           className="linear-g-r out-btn-1"

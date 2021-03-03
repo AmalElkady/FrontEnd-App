@@ -5,14 +5,18 @@ const ReceivedMessageCell = ({ conversation, user }) => {
     <div className="d-flex flex-nowrap chat-item">
       <img
         className="rounded-circle avatar size-40 align-self-end"
-        src={user.thumb}
+        src="https://via.placeholder.com/150x150"
         alt=""
       />
 
       <div className="bubble">
-        <div className="message">{conversation.message}</div>
+        <div className="message">
+          {/* {conversation.message} */}
+          hello2
+        </div>
         <div className="time text-muted text-right mt-2">
-          {conversation.sentAt}
+          {/* {conversation.sentAt} */}
+          2:00 AM
         </div>
       </div>
     </div>
