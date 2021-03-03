@@ -422,3 +422,7 @@ export const GET_MESSAGES_TOTAL_UNREAD_COUNT_SUCCESS =
 
 export const READ_CONVERSATION = "read_conversation";
 export const READ_CONVERSATION_SUCCESS = "read_conversation_success";
+
+export const READ_ALL_MESSAGES_COVERS = "read_all_messages_covers";
+export const READ_ALL_MESSAGES_COVERS_SUCCESS =
+  "read_all_messages_covers_success";

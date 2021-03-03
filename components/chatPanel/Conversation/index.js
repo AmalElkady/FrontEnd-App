@@ -6,7 +6,11 @@ import ReceivedMessageCell from "./ReceivedMessageCell/index";
 import SentMessageCell from "./SentMessageCell/index";
 import Button from "@material-ui/core/Button";
 
-import { sendMessage, readConversation } from "../../../actions/Messages";
+import {
+  sendMessage,
+  readConversation,
+  readAllMessagesCovers
+} from "../../../actions/Messages";
 
 const Conversation = ({ conversationData, selectedUser }) => {
   const dispatch = useDispatch();
@@ -15,15 +19,16 @@ const Conversation = ({ conversationData, selectedUser }) => {
   const conversationMessages = useSelector(
     state => state.messages.conversationMessages
   );
+
+  const allMessagesCoversProfiles = useSelector(
+    state => state.messages.allMessagesCoversProfiles
+  );
+
   const seenFlag = useSelector(state => state.messages.seenFlag);
 
   return (
     <div className="chat-main-content">
-      {console.log(
-        "conversationMessages seen ",
-        conversationMessages,
-        seenFlag
-      )}
+      {console.log("allMessagesCoversProfiles ", allMessagesCoversProfiles)}
       <SentMessageCell />
       <ReceivedMessageCell />
       <Button
@@ -40,20 +45,22 @@ const Conversation = ({ conversationData, selectedUser }) => {
           //     "how are u?"
           //   )
           // );
-          dispatch(
-            readConversation(
-              "452dc28a-4991-4557-a1a1-3a641728e5f0",
-              "EG",
-              "6",
-              "1",
-              "",
-              "",
-              ""
-            )
-          );
+          // dispatch(
+          //   readConversation(
+          //     "452dc28a-4991-4557-a1a1-3a641728e5f0",
+          //     "EG",
+          //     "6",
+          //     "1",
+          //     "",
+          //     "",
+          //     ""
+          //   )
+          // );
+
+          dispatch(readAllMessagesCovers("", ""));
         }}
       >
-        read conversation
+        Messages
       </Button>
 
       {/* {conversationData.map((conversation, index) =>

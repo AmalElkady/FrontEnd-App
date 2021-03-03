@@ -5,6 +5,8 @@ import {
   GET_MESSAGES_TOTAL_UNREAD_COUNT_SUCCESS,
   READ_CONVERSATION,
   READ_CONVERSATION_SUCCESS,
+  READ_ALL_MESSAGES_COVERS,
+  READ_ALL_MESSAGES_COVERS_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -53,6 +55,20 @@ export const readConversation = (
 export const readConversationSuccess = data => {
   return {
     type: READ_CONVERSATION_SUCCESS,
+    payload: data
+  };
+};
+
+export const readAllMessagesCovers = (scoreL, offset) => {
+  return {
+    type: READ_ALL_MESSAGES_COVERS,
+    payload: { scoreL, offset }
+  };
+};
+
+export const readAllMessagesCoversSuccess = data => {
+  return {
+    type: READ_ALL_MESSAGES_COVERS_SUCCESS,
     payload: data
   };
 };

@@ -3,12 +3,14 @@ import { showAuthMessage } from "../actions/Auth";
 import {
   sendMessageSuccess,
   getMessagesTotalUnRCountSuccess,
-  readConversationSuccess
+  readConversationSuccess,
+  readAllMessagesCoversSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
   GET_MESSAGES_TOTAL_UNREAD_COUNT,
-  READ_CONVERSATION
+  READ_CONVERSATION,
+  READ_ALL_MESSAGES_COVERS
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -35,6 +37,12 @@ const readConversation = async (
 ) =>
   await messages
     .readConversation(profileid, country, city, varea, scoreL, offset, limit)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const readAllMessagesCovers = async (scoreL, offset) =>
+  await messages
+    .readAllMessagesCovers(scoreL, offset)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -108,6 +116,21 @@ function* readConversationRequest({ payload }) {
   }
 }
 
+function* readAllMessagesCoversRequest({ payload }) {
+  const { scoreL, offset } = payload;
+  console.log("read All Messages Covers saga ", scoreL, offset);
+  try {
+    const returnedData = yield call(readAllMessagesCovers, scoreL, offset);
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(readAllMessagesCoversSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -125,10 +148,15 @@ export function* requestReadConversation() {
   yield takeEvery(READ_CONVERSATION, readConversationRequest);
 }
 
+export function* requestAllMessagesCovers() {
+  yield takeEvery(READ_ALL_MESSAGES_COVERS, readAllMessagesCoversRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
     fork(requestGetMessagesTotalUnCount),
-    fork(requestReadConversation)
+    fork(requestReadConversation),
+    fork(requestAllMessagesCovers)
   ]);
 }

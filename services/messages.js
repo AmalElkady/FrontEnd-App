@@ -193,4 +193,41 @@ messages.readConversation = function(
   });
 };
 
+messages.readAllMessagesCovers = function(scoreL, offset) {
+  console.log("from messages service readallmessagescovers ", scoreL, offset);
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/readallmessagescovers",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          scoreL,
+          offset
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("readallmessagescovers from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };
