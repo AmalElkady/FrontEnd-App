@@ -36,5 +36,6 @@ export const map2ArrTo1Arr = (arr1, arr2) => {
       }
     }
   }
+  console.log("true map2ArrTo1Arr ", arr2);
   return arr2;
 };

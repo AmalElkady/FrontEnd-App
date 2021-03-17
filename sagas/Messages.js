@@ -65,7 +65,6 @@ const deleteConversation = async (profileid, country, city, varea) =>
 
 function* sendMessageRequest({ payload }) {
   const { profileid, country, city, varea, message } = payload;
-  console.log("send message saga ", profileid, country, city, varea, message);
   try {
     const returnedData = yield call(
       sendMessage,
@@ -86,7 +85,6 @@ function* sendMessageRequest({ payload }) {
 }
 
 function* getMessagesTotalUnCountRequest() {
-  console.log("total count saga ");
   try {
     const returnedData = yield call(getMessagesTotalUnCount);
     if (returnedData.message) {
@@ -101,16 +99,6 @@ function* getMessagesTotalUnCountRequest() {
 
 function* readConversationRequest({ payload }) {
   const { profileid, country, city, varea, scoreL, offset, limit } = payload;
-  console.log(
-    "read Conversation saga ",
-    profileid,
-    country,
-    city,
-    varea,
-    scoreL,
-    offset,
-    limit
-  );
   try {
     const returnedData = yield call(
       readConversation,
@@ -134,7 +122,6 @@ function* readConversationRequest({ payload }) {
 
 function* readAllMessagesCoversRequest({ payload }) {
   const { scoreL, offset } = payload;
-  console.log("read All Messages Covers saga ", scoreL, offset);
   try {
     const returnedData = yield call(readAllMessagesCovers, scoreL, offset);
     if (returnedData.message) {

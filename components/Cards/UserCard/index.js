@@ -19,6 +19,7 @@ import {
   sendLoveMatchRequestSuccess,
   clickedId
 } from "../../../actions/Interaction";
+import { clickedUserChat } from "../../../actions/Messages";
 import { red } from "@material-ui/core/colors";
 import { NotificationManager } from "react-notifications";
 
@@ -324,7 +325,11 @@ export default function UserCard({ user, timeScore }) {
           <IconButton
             className={classes.iconBtn}
             aria-label="Send Message"
-            onClick={handleOpen}
+            // onClick={handleOpen}
+            onClick={() => {
+              dispatch(clickedUserChat(user));
+              Router.push({ pathname: `/home/messages` });
+            }}
           >
             {/* <ChatBubbleIcon /> */}
             {/* <ChatIcon /> */}

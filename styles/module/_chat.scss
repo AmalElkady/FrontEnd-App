@@ -300,7 +300,9 @@
     & .bubble {
       margin-right: 16px;
       margin-left: 0;
-      background-color: lighten($app-primary, 45%);
+      background-color: $secondary;
+      color: white;
+      //background-color: lighten($app-primary, 45%);
       @include border-radius(20px 20px 0 20px);
 
       /*&:before {
@@ -423,5 +425,98 @@
     width: 40px !important;
     height: 40px !important;
     line-height: 40px !important;
+  }
+}
+
+/// messages app
+.rce-citem {
+  background-color: transparent !important;
+}
+.rce-citem-body {
+  border-bottom-color: $secondary !important;
+}
+.rce-citem-body--bottom-status span {
+  background-color: $secondary !important;
+}
+
+.users-main-content {
+  border: 2px solid $secondary;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin-top: 4rem;
+}
+.users-main-content-2 {
+  background-color: #f4f4f7;
+
+  @media screen and (max-width: 575px) {
+    margin-top: 2rem;
+  }
+}
+.text-muted {
+  color: $app-primary !important;
+}
+
+.conv-header-container {
+  border-bottom: 1px solid $secondary;
+  padding: 0.5rem;
+}
+.emoj {
+  position: relative;
+}
+.emoji-mart {
+  position: absolute;
+  bottom: 3rem;
+}
+.send-msg-container {
+  position: relative;
+}
+.send-msg {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 1rem;
+}
+.send-msg:focus {
+  border: unset !important;
+}
+.send-msg-container {
+  border-top: 1px solid $secondary;
+  padding: 0.5rem;
+}
+.conv-head-name {
+  @media screen and (max-width: 575px) {
+    margin-left: 2rem !important;
+  }
+}
+.more-container {
+  text-align: end;
+  & button {
+    padding: 0.4rem 0 0 0 !important;
+  }
+}
+.cover-title {
+  text-align: center;
+  border-bottom: 1px solid;
+  padding: 0.5rem;
+}
+.emoji-mart {
+  @media screen and (max-width: 575px) {
+    width: 298px !important;
+  }
+}
+.default-container {
+  height: 300px;
+  text-align: center;
+  @media screen and (max-width: 575px) {
+    height: auto;
+  }
+}
+
+.default-div {
+  width: 30%;
+  margin: auto;
+  padding: 1rem;
+  @media screen and (max-width: 575px) {
+    padding: 0;
   }
 }

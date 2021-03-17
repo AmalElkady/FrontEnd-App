@@ -432,3 +432,5 @@ export const CLEAR_CONVERSATION_SUCCESS = "clear_conversation_success";
 
 export const DELETE_CONVERSATION = "delete_conversation";
 export const DELETE_CONVERSATION_SUCCESS = "delete_conversation_success";
+
+export const CLICKED_USER_CHAT = "clicked_user_chat";

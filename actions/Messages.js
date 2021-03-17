@@ -11,6 +11,7 @@ import {
   CLEAR_CONVERSATION_SUCCESS,
   DELETE_CONVERSATION,
   DELETE_CONVERSATION_SUCCESS,
+  CLICKED_USER_CHAT,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -102,6 +103,13 @@ export const deleteConversationSuccess = data => {
   return {
     type: DELETE_CONVERSATION_SUCCESS,
     payload: data
+  };
+};
+
+export const clickedUserChat = (user, unread) => {
+  return {
+    type: CLICKED_USER_CHAT,
+    payload: { user, unread }
   };
 };
 

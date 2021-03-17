@@ -5,6 +5,7 @@ import enPMessages from "../locales/dataPrivacy/en_US.json";
 import enProMessages from "../locales/dataProfile/en_US.json";
 import enSMessages from "../locales/dataSetting/en_US.json";
 import enSubMessages from "../locales/dataSubscribe/en_US.json";
+import enMMessages from "../locales/dataMessages/en_US.json";
 const EnLang = {
   messages: {
     ...enMessages,
@@ -12,7 +13,8 @@ const EnLang = {
     ...enPMessages,
     ...enProMessages,
     ...enSMessages,
-    ...enSubMessages
+    ...enSubMessages,
+    ...enMMessages
   },
   locale: "en-US",
   data: appLocaleData

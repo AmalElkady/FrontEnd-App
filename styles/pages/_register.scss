@@ -1,121 +1,124 @@
-.react-tel-input .form-control{
- width: 100% !important
+.react-tel-input .form-control {
+  width: 100% !important;
 }
 
 .grid-width-1 {
-    min-width:50%;
-    padding-right: 1rem;
-      @media screen and (max-width: 575px) {
-       min-width:100%;
+  // min-width:50%;
+  // padding-right: 1rem;
+  @media screen and (max-width: 575px) {
+    min-width: 100%;
   }
-   & .sub-select{
-      min-width:100%;
+  & .sub-select {
+    min-width: 100%;
   }
 }
 
 .grid-width-2 {
-    min-width:30%;
-   margin-right: .5rem !important;
-  & .sub-select{
-      min-width:100%;
+  min-width: 30%;
+  margin-right: 0.5rem !important;
+  & .sub-select {
+    min-width: 100%;
   }
 }
-.m-s{
-      @media screen and (max-width: 575px) {
-      min-width: 100%;
-    margin-bottom: 1rem !important
+.m-s {
+  @media screen and (max-width: 575px) {
+    min-width: 100%;
+    margin-bottom: 1rem !important;
   }
 }
 
-.out-btn{
-    position: absolute !important;
-    top: 10rem;
-    left: 4rem;
- @media screen and (max-width: 575px) {
-      top: 2rem;
+.out-btn {
+  position: absolute !important;
+  top: 10rem;
+  left: 4rem;
+  @media screen and (max-width: 575px) {
+    top: 2rem;
     left: 2rem;
-    }
+  }
 }
 
-.out-btn-1{
-    position: absolute !important;
-       top: -3rem;
+.out-btn-1 {
+  position: absolute !important;
+  top: -3rem;
+  left: 1rem;
+  @media screen and (max-width: 575px) {
+    top: -4rem;
     left: 1rem;
- @media screen and (max-width: 575px) {
-         top: -4rem;
-         left: 1rem;
-    }
+  }
 }
 
-.drag{
-    color: #0000006b;
+.drag {
+  color: #0000006b;
 
-    & svg{
-        color:$secondary !important;
-    }
+  & svg {
+    color: $secondary !important;
+  }
 }
 
-.drag-h{
-
-    & div[tabindex="0"]{
-         min-height:unset;
-    }
-    & p{
-        margin:0;
-    }
+.drag-h {
+  & div[tabindex="0"] {
+    min-height: unset;
+  }
+  & p {
+    margin: 0;
+  }
 }
 
+.sub-option {
+  margin: auto 0 1rem !important;
+  border-radius: 1rem;
+  color: white;
+  padding: 1rem;
 
-
-.sub-option{
-    margin: auto 0 1rem!important;
-    border-radius: 1rem;
-    color: white;
-    padding:1rem;
-
-    & span{
-        margin:auto;
-    }
+  & span {
+    margin: auto;
+  }
 }
 
-.d-none{
-display:none;
+.d-none {
+  display: none;
 }
-.d-f-reverse{
-display: flex;
-flex-direction: row-reverse;
+.d-f-reverse {
+  display: flex;
+  flex-direction: row-reverse;
 }
-.btn-sub-non-active,.btn-sub-active{
-    margin: auto !important;
-    width: 65%;
-    border-radius: .8rem!important;
-    color: #b72051 !important;
+.btn-sub-non-active,
+.btn-sub-active {
+  margin: auto !important;
+  width: 65%;
+  border-radius: 0.8rem !important;
+  color: #b72051 !important;
 }
-.btn-sub-non-active{
-background-color: #e780a3d4 !important;
-}
-
-.btn-sub-active{
-    background-color: white !important;
+.btn-sub-non-active {
+  background-color: #e780a3d4 !important;
 }
 
-.active-aim{
+.btn-sub-active {
+  background-color: white !important;
+}
+
+.active-aim {
   animation-name: act;
   animation-duration: 3s;
-  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 @keyframes act {
-    0%   {transform: scale(1,1)}
-  25%  { transform: scale(.5,.5)}
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.5, 0.5);
+  }
 }
 
-.grid-s-1{
-    text-align: center;
-    margin-bottom: .5rem !important;
+.grid-s-1 {
+  text-align: center;
+  margin-bottom: 0.5rem !important;
 }
-.best-v{
-        width: 23%;
-    position: absolute;
-    top: -30px;
-    left: -41px;
+.best-v {
+  width: 23%;
+  position: absolute;
+  top: -30px;
+  left: -41px;
 }

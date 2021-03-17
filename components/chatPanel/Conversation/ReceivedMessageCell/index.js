@@ -1,22 +1,19 @@
 import React from "react";
+import moment from "moment";
 
 const ReceivedMessageCell = ({ conversation, user }) => {
   return (
     <div className="d-flex flex-nowrap chat-item">
       <img
         className="rounded-circle avatar size-40 align-self-end"
-        src="https://via.placeholder.com/150x150"
-        alt=""
+        src={user._ ? user._ : "https://via.placeholder.com/150x150"}
+        alt={user.n}
       />
 
       <div className="bubble">
-        <div className="message">
-          {/* {conversation.message} */}
-          hello2
-        </div>
+        <div className="message">{conversation.m}</div>
         <div className="time text-muted text-right mt-2">
-          {/* {conversation.sentAt} */}
-          2:00 AM
+          {moment(Number(conversation.d)).format("hh:mm A")}
         </div>
       </div>
     </div>

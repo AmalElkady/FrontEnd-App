@@ -5,6 +5,7 @@ import saPMessages from "../locales/dataPrivacy/ar_SA.json";
 import saProMessages from "../locales/dataProfile/ar_SA.json";
 import saSMessages from "../locales/dataSetting/ar_SA.json";
 import saSubMessages from "../locales/dataSubscribe/ar_SA.json";
+import asMMessages from "../locales/dataMessages/ar_SA.json";
 const saLang = {
   messages: {
     ...saMessages,
@@ -12,7 +13,8 @@ const saLang = {
     ...saPMessages,
     ...saProMessages,
     ...saSMessages,
-    ...saSubMessages
+    ...saSubMessages,
+    ...asMMessages
   },
   locale: "ar-SA",
   data: appLocaleData

@@ -321,6 +321,7 @@ export default function Search() {
       //Get all Countries Offline first time
       //  dispatch(resetEndResUsers());
       //  dispatch(resetEndRes());
+      console.log("CountriesOptionsOffline ", CountriesOptionsOffline.length)
       CountriesOptionsOffline.length == 0
         ? dispatch(allCountriesOffline("", 0))
         : "";

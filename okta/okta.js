@@ -843,12 +843,9 @@ home.getAllCountriesOnline = function (SH, offset) {
 																};
 	
 												let responseX = await callAxios(options);
-												let response = responseX.data;
-												
-												   if(response){
-																	//resolve(response);	
-																	const mapedList =convertListToTwoArrays(response.list_of_results);
-																											   
+												let response = responseX.data;	
+												   if(response){	
+																	const mapedList =convertListToTwoArrays(response.list_of_results);					   
 																   resolve(mapedList);						 
 												   } else {
 													   
