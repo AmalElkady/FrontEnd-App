@@ -2,5 +2,6 @@
   "chat.coverTitle": "المستخدمون الذين تحدثت معهم",
   "chat.default": "ابدأ الدردشة مع أي شخص",
   "chat.delete": "حذف المحادثة",
-  "chat.clear": "حذف رسائل المحادثة"
+  "chat.clear": "حذف رسائل المحادثة",
+  "message.placeholder": "اكتب رسالة"
 }

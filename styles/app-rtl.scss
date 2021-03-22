@@ -354,14 +354,14 @@
 
 .rtl .quick-menu {
   & .dropdown-menu {
-     &:before,
-  &:after {
-    left: 8px !important;
-    right:unset !important;
-  }
-      top:1rem !important;
-      right: -8rem !important;
-    @media only screen and (max-width: 575px){
+    &:before,
+    &:after {
+      left: 8px !important;
+      right: unset !important;
+    }
+    top: 1rem !important;
+    right: -8rem !important;
+    @media only screen and (max-width: 575px) {
       right: 0 !important;
     }
   }
@@ -1549,6 +1549,23 @@
   }
 }
 
+.rtl .MuiListItem-root {
+  text-align: right;
+}
+
+//home page
+.rtl .side-nav {
+  border-radius: 2rem 0rem 0rem 2rem;
+}
+
+.app-sidebar-content.right-sidebar .MuiPaper-root {
+  border-radius: 0 2rem 2rem 0;
+}
+
+.rtl .search-arrow {
+  float: left;
+}
+
 //Profile Page
 .rtl .jr-profile-banner-avatar {
   margin-right: 0;
@@ -1618,59 +1635,78 @@
   left: 10px;
 }
 
-// front page 
-.rtl .bg-layout
-{
-  direction:ltr;
-  & .lang-container{
-    text-align:left;
+// front page
+.rtl .bg-layout {
+  direction: ltr;
+  & .lang-container {
+    text-align: left;
   }
-  & .app-login-main-content-2{
-    direction:rtl;
+  & .app-login-main-content-2 {
+    direction: rtl;
   }
 }
 
 // forms
 
-.rtl .logo-form{
-    width: 20%;
-    position: absolute;
-    left: -2rem;
-    top: -3rem;
-    right:unset;
-     & img{
-       transform: rotateZ(35deg)
-     }
-    @media screen and (max-width: 575px) {
+.rtl .logo-form {
+  width: 20%;
+  position: absolute;
+  left: -2rem;
+  top: -3rem;
+  right: unset;
+  & img {
+    transform: rotateZ(35deg);
+  }
+  @media screen and (max-width: 575px) {
     top: -2rem;
-    left:-1rem;
+    left: -1rem;
   }
 }
-.rtl .react-tel-input .form-control{
-  text-align:left;
-  direction:ltr;
-  padding-left:1rem;
+.rtl .react-tel-input .form-control {
+  text-align: left;
+  direction: ltr;
+  padding-left: 1rem;
 }
-.rtl .react-tel-input .flag-dropdown ,.rtl .react-tel-input .selected-flag{
-      border-radius: 0 3px 3px 0px;
+.rtl .react-tel-input .flag-dropdown,
+.rtl .react-tel-input .selected-flag {
+  border-radius: 0 3px 3px 0px;
 }
-.rtl .react-tel-input .selected-flag .flag{
-      right: 5px;
+.rtl .react-tel-input .selected-flag .flag {
+  right: 5px;
 }
-.rtl .react-tel-input .selected-flag .arrow{
-      left: -1.5rem;
+.rtl .react-tel-input .selected-flag .arrow {
+  left: -1.5rem;
 }
 
-.rtl .to-right{  
-  & label{
-right:0;
+.rtl .to-right {
+  & label {
+    right: 0;
   }
- & svg{
-   right:unset;
-   left:0;
- }
+  & svg {
+    right: unset;
+    left: 0;
+  }
 }
 
-.rtl .out-btn-1{
-  right:1rem;
+.rtl .out-btn-1 {
+  right: 1rem;
+}
+
+.rtl .conv-head-name {
+  @media screen and (max-width: 575px) {
+    text-align: center;
+  }
+}
+
+.rtl .quick-menu {
+  @media screen and (max-width: 575px) {
+    width: 48%;
+    text-align: end;
+  }
+}
+
+.rtl .send-msg-input-container {
+  @media screen and (max-width: 575px) {
+    margin: 0.5rem 1rem 0 0;
+  }
 }

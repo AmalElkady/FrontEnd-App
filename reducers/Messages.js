@@ -6,12 +6,15 @@ import {
   CLEAR_CONVERSATION_SUCCESS,
   SHOW_MESSAGE,
   DELETE_CONVERSATION_SUCCESS,
+  RESET_MESSAGES_COVERS,
+  RESET_MESSAGES_COVERS_UNREAD_COUNT,
+  REMOVE_ITEM_LIST,
   CLICKED_USER_CHAT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
-import { convertListToTwoArrays } from "../helpers/convertListToTwoArrays";
 import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
+import { removeUserFromList } from "../helpers/removeUserFromList";
 
 const initialProfileState = {
   messageSent: false,
@@ -123,7 +126,13 @@ const Messages = (state = initialProfileState, action) => {
     case CLEAR_CONVERSATION_SUCCESS: {
       return {
         ...state,
-        conversationCleared: action.payload
+        conversationCleared: action.payload,
+        conversationMessages: "",
+        conversationDates: "",
+        OffsetConversationMessages: "",
+        scoreLConversationMessages: "",
+        endOfConversationMessages: false,
+        seenFlag: null
       };
     }
     case DELETE_CONVERSATION_SUCCESS: {
@@ -142,6 +151,37 @@ const Messages = (state = initialProfileState, action) => {
         conversationDates: "",
         OffsetConversationMessages: "",
         scoreLConversationMessages: ""
+      };
+    }
+    case RESET_MESSAGES_COVERS: {
+      return {
+        ...state,
+        allMessagesCoversProfiles: "",
+        allMessagesCovers: "",
+        allMessagesCoversDates: "",
+        OffsetMessagesCovers: "",
+        scoreLMessagesCovers: "",
+        endOfMessagesCovers: false
+      };
+    }
+    case RESET_MESSAGES_COVERS_UNREAD_COUNT: {
+      state.allMessagesCovers[action.payload][0] = 0;
+      return {
+        ...state
+      };
+    }
+    case REMOVE_ITEM_LIST: {
+      const { list1, list2, list3 } = removeUserFromList(
+        action.payload.i,
+        state.allMessagesCoversProfiles,
+        state.allMessagesCoversDates,
+        state.allMessagesCovers
+      );
+      state.allMessagesCoversProfiles = [...list1];
+      state.allMessagesCoversDates = [...list2];
+      state.allMessagesCoversDates = [...list3];
+      return {
+        ...state
       };
     }
     case SHOW_MESSAGE: {

@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import SendIcon from "@material-ui/icons/Send";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
+import IntlMessages from "../../../../util/IntlMessages";
 
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
@@ -13,13 +14,22 @@ import { Picker } from "emoji-mart";
 import {
   sendMessage,
   readConversation,
-  sendMessageSuccess
+  sendMessageSuccess,
+  readAllMessagesCovers,
+  clearConversationSuccess,
+  resetMegsCovers
 } from "../../../../actions/Messages";
 
 const SendMessage = () => {
   const dispatch = useDispatch();
   const messageSent = useSelector(state => state.messages.messageSent);
   const clickedUserChat = useSelector(state => state.messages.clickedUserChat);
+
+  const locale = useSelector(state => state.settings.locale);
+
+  const conversationMessages = useSelector(
+    state => state.messages.conversationMessages
+  );
 
   const OffsetConversationMessages = useSelector(
     state => state.messages.OffsetConversationMessages
@@ -36,6 +46,12 @@ const SendMessage = () => {
   ////
   useEffect(() => {
     if (messageSent) {
+      if (conversationMessages == "") {
+        console.log("first message");
+        dispatch(resetMegsCovers());
+        dispatch(readAllMessagesCovers("", ""));
+      }
+      dispatch(clearConversationSuccess(true));
       dispatch(
         readConversation(
           clickedUserChat.i,
@@ -133,12 +149,15 @@ const SendMessage = () => {
               {openEmoji && <Picker onSelect={addEmoji} />}
             </div>
           </Grid>
-          <Grid item xs={9} style={{ margin: ".5rem 0 0 1rem" }}>
+          <Grid item xs={9} className="send-msg-input-container">
             <input
               type="text"
               value={messageText}
               onChange={handleChange}
-              placeholder="Type here..."
+              // placeholder="Type here..."
+              placeholder={
+                locale.locale == "en" ? "Type a message" : "اكتب رسالة"
+              }
               className="send-msg"
               rows="5"
               cols="20"
@@ -149,8 +168,13 @@ const SendMessage = () => {
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={() => {
-                console.log("send message ", messageText);
+                console.log(
+                  "send message conversationMessages ",
+                  messageText,
+                  conversationMessages
+                );
                 setMessageText("");
+
                 dispatch(
                   sendMessage(
                     clickedUserChat.i,

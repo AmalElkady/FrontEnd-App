@@ -121,7 +121,7 @@ messages.getMessagesTotalUrCount = function() {
       let response = responseX.data;
 
       console.log("readmessagestotalurcount from service ", response);
-      if (response.count) {
+      if (response) {
         resolve(response.count);
       } else {
         resolve({ message: "no response !" });

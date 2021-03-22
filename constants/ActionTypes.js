@@ -434,3 +434,7 @@ export const DELETE_CONVERSATION = "delete_conversation";
 export const DELETE_CONVERSATION_SUCCESS = "delete_conversation_success";
 
 export const CLICKED_USER_CHAT = "clicked_user_chat";
+export const RESET_MESSAGES_COVERS = "reset_messages_covers";
+export const REMOVE_ITEM_LIST = "remove_item_list";
+export const RESET_MESSAGES_COVERS_UNREAD_COUNT =
+  "reset_messages_covers_unread_count";

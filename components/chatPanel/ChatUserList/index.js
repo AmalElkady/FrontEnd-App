@@ -16,7 +16,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {
   readAllMessagesCovers,
   deleteConversation,
-  clickedUserChat
+  clickedUserChat,
+  resetMegsCoversUnreadCount,
+  removeListItem
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -25,6 +27,7 @@ const ChatUserList = () => {
   const router = useRouter();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [userMenu, setUserMenu] = React.useState(null);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -136,51 +139,66 @@ const ChatUserList = () => {
             //   </p>
             // }
           >
-            {allMessagesCoversProfiles.map((user, i) => (
-              <>
-                <div className="more-container">
-                  <IconButton
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                  >
-                    <MoreHorizIcon />
-                  </IconButton>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        dispatch(
-                          deleteConversation(user.i, user.co, user.ci, user.va)
-                        );
+            {allMessagesCoversProfiles != "" &&
+              allMessagesCoversProfiles.map((user, i) => (
+                <>
+                  <div className="more-container">
+                    <IconButton
+                      aria-controls={user.i}
+                      aria-haspopup="true"
+                      onClick={event => {
+                        handleClick(event);
+                        setUserMenu(user);
                       }}
                     >
-                      <IntlMessages id="chat.delete" />
-                    </MenuItem>
-                  </Menu>
-                </div>
-                <ChatItem
-                  key={user.id}
-                  avatar={user._}
-                  title={user.n}
-                  subtitle={`${JSON.parse(allMessagesCovers[i][1]).m}`}
-                  date={new Date(Number(allMessagesCoversDates[i]))}
-                  unread={Number(allMessagesCovers[i][0])}
-                  onClick={() => {
-                    console.log("user on click ", user);
-                    dispatch(
-                      clickedUserChat(user, Number(allMessagesCovers[i][0]))
-                    );
-                  }}
-                />
-              </>
-            ))}
+                      <MoreHorizIcon />
+                    </IconButton>
+                    {userMenu && userMenu.i == user.i && (
+                      <Menu
+                        id={user.i}
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem
+                          key={user.i}
+                          onClick={() => {
+                            handleClose();
+                            dispatch(removeListItem(user));
+                            dispatch(
+                              deleteConversation(
+                                user.i,
+                                user.co,
+                                user.ci,
+                                user.va
+                              )
+                            );
+                          }}
+                        >
+                          <IntlMessages id="chat.delete" />
+                        </MenuItem>
+                      </Menu>
+                    )}
+                  </div>
+                  <ChatItem
+                    key={user.n}
+                    avatar={user._}
+                    title={user.n}
+                    subtitle={`${JSON.parse(allMessagesCovers[i][1]).m}`}
+                    date={new Date(Number(allMessagesCoversDates[i]))}
+                    unread={Number(allMessagesCovers[i][0])}
+                    onClick={() => {
+                      if (allMessagesCovers[i][0] > 0) {
+                        dispatch(resetMegsCoversUnreadCount(i));
+                      }
+                      dispatch(
+                        clickedUserChat(user, Number(allMessagesCovers[i][0]))
+                      );
+                    }}
+                  />
+                </>
+              ))}
           </InfiniteScroll>
         )}
       </div>

@@ -12,6 +12,9 @@ import {
   DELETE_CONVERSATION,
   DELETE_CONVERSATION_SUCCESS,
   CLICKED_USER_CHAT,
+  RESET_MESSAGES_COVERS,
+  RESET_MESSAGES_COVERS_UNREAD_COUNT,
+  REMOVE_ITEM_LIST,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -110,6 +113,25 @@ export const clickedUserChat = (user, unread) => {
   return {
     type: CLICKED_USER_CHAT,
     payload: { user, unread }
+  };
+};
+export const resetMegsCovers = () => {
+  return {
+    type: RESET_MESSAGES_COVERS
+  };
+};
+
+export const removeListItem = item => {
+  return {
+    type: REMOVE_ITEM_LIST,
+    payload: item
+  };
+};
+
+export const resetMegsCoversUnreadCount = index => {
+  return {
+    type: RESET_MESSAGES_COVERS_UNREAD_COUNT,
+    payload: index
   };
 };
 

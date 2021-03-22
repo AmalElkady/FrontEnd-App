@@ -483,6 +483,9 @@
   border-top: 1px solid $secondary;
   padding: 0.5rem;
 }
+.send-msg-input-container {
+  margin: 0.5rem 0 0 1rem;
+}
 .conv-head-name {
   @media screen and (max-width: 575px) {
     margin-left: 2rem !important;
