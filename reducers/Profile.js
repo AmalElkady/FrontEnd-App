@@ -89,7 +89,7 @@ const Profile = (state = initialProfileState, action) => {
     case REQUEST_PHOTO_READ_PP_SUCCESS: {
       return {
         ...state,
-        userPhotoPPSigned: action.payload
+        userPhotoPPSigned: action.payload.signedRequest
       };
     }
     case REQUEST_PHOTO_READ_PP_FAIL: {

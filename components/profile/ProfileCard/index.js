@@ -21,6 +21,7 @@ import {
   unblockUser,
   unblockUserSuccess
 } from "../../../actions/Interaction";
+import { clickedUserChat } from "../../../actions/Messages";
 ///Modal
 import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
 import PropTypes from "prop-types";
@@ -217,7 +218,7 @@ export default function ProfileCard({ mainInfo }) {
         <div className="profile-card">
           <div className="card-container-img">
             <div className="card-img">
-              <img src={mainInfo.photo} alt="main photo" />
+              <img src={mainInfo._} alt="main photo" />
             </div>
             {router.query.flag == "read" && (
               <div className="card-img-icon">
@@ -226,7 +227,7 @@ export default function ProfileCard({ mainInfo }) {
                   onClick={() => {
                     dispatch(
                       sendLoveMatchRequest(
-                        mainInfo.id,
+                        mainInfo.i,
                         mainInfo.co,
                         mainInfo.ci,
                         mainInfo.va
@@ -236,7 +237,13 @@ export default function ProfileCard({ mainInfo }) {
                 >
                   <img src="../../../static/images/icons/standard/Love_Icon_Standard.svg" />
                 </div>
-                <div className="card-icon">
+                <div
+                  className="card-icon"
+                  onClick={() => {
+                    dispatch(clickedUserChat(mainInfo));
+                    router.push({ pathname: `/home/messages` });
+                  }}
+                >
                   <img src="../../../static/images/icons/standard/Messages_Icon_Standard.svg" />
                 </div>
               </div>
@@ -249,7 +256,7 @@ export default function ProfileCard({ mainInfo }) {
                     onClick={() => {
                       dispatch(
                         blockUser(
-                          mainInfo.id,
+                          mainInfo.i,
                           mainInfo.co,
                           mainInfo.ci,
                           mainInfo.va
@@ -257,7 +264,7 @@ export default function ProfileCard({ mainInfo }) {
                       );
                       dispatch(
                         readProfileL2(
-                          mainInfo.id,
+                          mainInfo.i,
                           mainInfo.co,
                           mainInfo.ci,
                           mainInfo.va
@@ -277,7 +284,7 @@ export default function ProfileCard({ mainInfo }) {
                     onClick={() => {
                       dispatch(
                         unblockUser(
-                          mainInfo.id,
+                          mainInfo.i,
                           mainInfo.co,
                           mainInfo.ci,
                           mainInfo.va
@@ -285,7 +292,7 @@ export default function ProfileCard({ mainInfo }) {
                       );
                       dispatch(
                         readProfileL2(
-                          mainInfo.id,
+                          mainInfo.i,
                           mainInfo.co,
                           mainInfo.ci,
                           mainInfo.va

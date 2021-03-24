@@ -64,25 +64,30 @@ export default function Photos({ id, co, ci, va }) {
   const dispatch = useDispatch();
   useEffect(() => {
     setPhotosMapped(null);
-    if (myPhotos != null&&router.query.flag == "readMe") {
+    if (myPhotos != null && router.query.flag == "readMe") {
       setPhotosMapped(mapObjectToArray(myPhotos));
       dispatch(readMyPhotos(1));
     }
   }, [myPhotos]);
   useEffect(() => {
-    setPhotosMapped(null)
-    if (userPhotos != null&&router.query.flag == "read") {
+    setPhotosMapped(null);
+    if (userPhotos != null && router.query.flag == "read") {
       setPhotosMapped(mapObjectToArray(userPhotos));
       dispatch(requestPhotoReadPP(id, co, ci, va));
     }
   }, [userPhotos]);
 
   useEffect(() => {
-    if (myPhotoPPSigned != null) {
-      // console.log("photos and signed ", photosMapped, myPhotoPPSigned);
+    if (myPhotoPPSigned != null && router.query.flag == "readMe") {
       dispatch(setFinalPP(mapPPToUrl(photosMapped, myPhotoPPSigned)));
     }
   }, [myPhotoPPSigned]);
+
+  useEffect(() => {
+    if (userPhotoPPSigned != null && router.query.flag == "read") {
+      dispatch(setFinalPP(mapPPToUrl(photosMapped, userPhotoPPSigned)));
+    }
+  }, [userPhotoPPSigned]);
 
   useEffect(() => {
     if (PhotoUploadPP) {
@@ -103,27 +108,28 @@ export default function Photos({ id, co, ci, va }) {
       {
         <Carousel breakPoints={breakPoints}>
           {photosMapped &&
+            finalPP &&
             !userPhotoPPSignedMessage &&
             photosMapped.map(item => (
               <div className="img-div" key={item.id}>
-                {router.query.flag == "read" && (
+                {/* {router.query.flag == "read" && (
                   <div className="img-div-overlay">
                     <Tooltip
                       title="Send request to access photos"
                       onClick={() => {
                         dispatch(openModalSendPP(true));
                       }}
-                    >
-                      {/* <Button>
+                    > */}
+                {/* <Button>
                   <Fab aria-label="Send to access photos"> */}
-                      <Typography variant="body1" gutterBottom>
+                {/* <Typography variant="body1" gutterBottom>
                         <IntlMessages id="profile.privateImg" />
-                      </Typography>
-                      {/* </Fab>
+                      </Typography> */}
+                {/* </Fab>
                 </Button> */}
-                    </Tooltip>
-                  </div>
-                )}
+                {/* </Tooltip>
+                  </div> */}
+                {/* )} */}
                 {router.query.flag == "readMe" && (
                   <>
                     {item.p && (

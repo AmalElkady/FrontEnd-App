@@ -37,12 +37,12 @@ export default function Profile() {
       if (router.query.flag == "read") {
         setAboutInfo(null);
         setProfileCard({
-          id: router.query.i,
+          i: router.query.i,
           co: router.query.co,
           ci: router.query.ci,
           va: router.query.va,
           n: router.query.n,
-          photo: router.query._,
+          _: router.query._,
           b: router.query.b,
           gd: router.query.gd,
           m: router.query.m,
@@ -97,7 +97,7 @@ export default function Profile() {
         co: myProfileL1Data.profile.L1.country,
         ci: myProfileL1Data.profile.L1.city,
         n: myProfileL1Data.profile.L1.profile,
-        photo: finalPhotoSrc,
+        _: finalPhotoSrc,
         b: myProfileL1Data.profile.L1.birth,
         gd: myProfileL1Data.profile.L1.gender,
         m: myProfileL1Data.profile.L1.martial
