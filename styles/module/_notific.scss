@@ -14,3 +14,14 @@
     }
   }
 }
+.notification-success {
+  background-color: $secondary !important;
+  color: white !important;
+  border-radius: 1rem;
+}
+
+.notification-error {
+  background-color: gray !important;
+  color: white !important;
+  border-radius: 1rem;
+}

@@ -37,7 +37,7 @@ const initialProfileState = {
   myPhotoPPSigned: null,
   userPhotoPPSignedMessage: false,
   finalPP: null,
-  returnUpdateMessage: null,
+  returnUpdateMessage: false,
   passwordChanged: false,
   loginPhoneChanged: false,
   photoUploadPP: false,

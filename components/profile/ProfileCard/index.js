@@ -11,7 +11,8 @@ import moment from "moment";
 import {
   updateProfileL1,
   readProfileL2,
-  openModalPP
+  openModalPP,
+  updateProfileL1Success
 } from "../../../actions/Profile";
 import {
   sendLoveMatchRequest,
@@ -181,7 +182,7 @@ export default function ProfileCard({ mainInfo }) {
 
   useEffect(() => {
     if (SendLoveMatchRequest == true) {
-      NotificationManager.success("Love Sent successfully", "Success");
+      NotificationManager.success("Love Sent successfully");
     } else if (SendLoveMatchRequest == "error") {
       NotificationManager.error("love already sent");
     }
@@ -189,11 +190,16 @@ export default function ProfileCard({ mainInfo }) {
   }, [SendLoveMatchRequest]);
 
   useEffect(() => {
+    if (returnUpdateMessage == true) {
+      handleClose();
+      NotificationManager.success("Marital status updated successfully");
+      dispatch(updateProfileL1Success(false, userMartial));
+    }
+  }, [returnUpdateMessage]);
+
+  useEffect(() => {
     if (userBlocked == true) {
-      NotificationManager.success(
-        `You block ${mainInfo.n} successfully`,
-        "Success"
-      );
+      NotificationManager.success(`You block ${mainInfo.n} successfully`);
     } else if (userBlocked == "error") {
       NotificationManager.error(`You already blocked ${mainInfo.n}`);
     }
@@ -202,10 +208,7 @@ export default function ProfileCard({ mainInfo }) {
 
   useEffect(() => {
     if (userUnblocked == true) {
-      NotificationManager.success(
-        `You unblock ${mainInfo.n} successfully`,
-        "Success"
-      );
+      NotificationManager.success(`You unblock ${mainInfo.n} successfully`);
     } else if (userUnblocked == "error") {
       NotificationManager.error(`You already unblocked ${mainInfo.n}`);
     }
@@ -364,7 +367,7 @@ export default function ProfileCard({ mainInfo }) {
                 gutterBottom
               >
                 {/* {mainInfo.gd=mainInfo.gd?mainInfo.gd:Number(!gender)} */}
-                {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
+                {ARRAYS_OF_MARTIAL_STATUS[mainGender][userMartial]}
                 {router.query.flag == "readMe" && (
                   <IconButton
                     aria-label="Edit"
@@ -398,7 +401,7 @@ export default function ProfileCard({ mainInfo }) {
               <form className={classes.positionR} noValidate autoComplete="off">
                 <Typography variant="body1" gutterBottom>
                   <IntlMessages id="updateProfile.martial" />
-                  {ARRAYS_OF_MARTIAL_STATUS[mainGender][mainInfo.m]}
+                  {ARRAYS_OF_MARTIAL_STATUS[mainGender][userMartial]}
                 </Typography>
                 <StyledFormControl style={{ minWidth: "149px" }}>
                   <InputLabel id="martial-label">
@@ -429,7 +432,7 @@ export default function ProfileCard({ mainInfo }) {
                   className={classes.positionA}
                   onClick={() => {
                     handleOnUpdate();
-                    returnUpdateMessage == "true" ? handleClose() : "";
+                    //returnUpdateMessage == "true" ? handleClose() : "";
                   }}
                   variant="contained"
                   color="primary"
@@ -446,11 +449,11 @@ export default function ProfileCard({ mainInfo }) {
       {OpenModalPP && <ModalUploadMPP photoNum={null}></ModalUploadMPP>}
 
       {/* {console.log("showMessage ", showMessage)} */}
-      {showMessage &&
+      {/* {returnUpdateMessage &&
         NotificationManager.success(
           "Marital status updated successfully",
           "Success"
-        )}
+        )}*/}
       <NotificationContainer />
     </>
   );

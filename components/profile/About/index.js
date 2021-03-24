@@ -45,7 +45,9 @@ import {
 export default function About({ aboutInfo }) {
   const router = useRouter();
   const l2Data = useSelector(state => state.profile.profileL2Data);
-  const userBlockedMessage = useSelector(state => state.profile.userBlockedMessage);
+  const userBlockedMessage = useSelector(
+    state => state.profile.userBlockedMessage
+  );
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
   const myPhotos = useSelector(state => state.profile.myPhotos);
   const OpenModal = useSelector(state => state.profile.openModal);
@@ -57,7 +59,6 @@ export default function About({ aboutInfo }) {
   useEffect(() => {
     setDisData(null);
     if (router.query.flag == "read") {
-       console.log("router.query.flag ",router.query.flag,aboutInfo)
       dispatch(
         readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
       );
@@ -68,23 +69,22 @@ export default function About({ aboutInfo }) {
 
   useEffect(() => {
     if (userBlockedMessage) {
-     NotificationManager.error(userBlockedMessage);
-     dispatch(
+      NotificationManager.error(userBlockedMessage);
+      dispatch(
         readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
       );
     }
   }, [userBlockedMessage]);
 
-
   useEffect(() => {
-    setDisData(null)
+    setDisData(null);
     if (l2Data != null && router.query.flag == "read") {
-      console.log("l2Data ",l2Data)
+      console.log("l2Data ", l2Data);
       setDisData(l2Data);
     }
   }, [l2Data]);
   useEffect(() => {
-    setDisData(null)
+    setDisData(null);
     if (myProfileDataL2 != null && router.query.flag == "readMe") {
       setDisData(myProfileDataL2);
     }
@@ -96,7 +96,6 @@ export default function About({ aboutInfo }) {
 
   return (
     <>
-      {console.log("disData about ", disData)}
       {disData != null && (
         <>
           {/* <Photos photos={myPhotos} /> */}

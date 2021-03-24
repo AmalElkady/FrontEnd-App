@@ -63,7 +63,10 @@ export default function UsersOnline() {
   const classes = useStyles();
 
   useEffect(() => {
-    if (AllCountriesSelectedOnlineUsers.length != 0) {
+    if (
+      AllCountriesSelectedOnlineUsers &&
+      AllCountriesSelectedOnlineUsers.length != 0
+    ) {
       dispatch(requestPhotoRead());
     }
   }, [AllCountriesSelectedOnlineUsers]);
@@ -128,7 +131,7 @@ export default function UsersOnline() {
   };
   return (
     <>
-      {searchState == "active" && newUsers.length != 0 && (
+      {searchState == "active" && newUsers && newUsers.length != 0 && (
         <InfiniteScroll
           className="scroll-m"
           dataLength={newUsers.length}

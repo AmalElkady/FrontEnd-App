@@ -86,7 +86,7 @@ export default function UsersOffline() {
   const classes = useStyles();
 
   useEffect(() => {
-    if (AllCountriesOfflineUsers.length != 0) {
+    if (AllCountriesOfflineUsers && AllCountriesOfflineUsers.length != 0) {
       dispatch(requestPhotoRead());
     }
   }, [AllCountriesOfflineUsers]);
@@ -157,7 +157,7 @@ export default function UsersOffline() {
     <>
       {searchState == "most recent" && newUsers.length != 0 && (
         <InfiniteScroll
-        className="scroll-m"
+          className="scroll-m"
           dataLength={newUsers.length}
           height={300}
           next={handleScroll}

@@ -160,7 +160,12 @@ function* readMyProfileRequest({ payload }) {
 function* updateProfileL1Request({ payload }) {
   try {
     const returnedData = yield call(updateL1Profile, payload);
-    yield put(updateProfileL1Success(returnedData, payload));
+    console.log("returnedData saga ", returnedData);
+    if (returnedData.message) {
+      yield put(updateProfileL1Success(false, payload));
+    } else {
+      yield put(updateProfileL1Success(true, payload));
+    }
   } catch (error) {
     yield put(showProfileMessage(error));
   }

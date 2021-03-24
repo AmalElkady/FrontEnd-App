@@ -111,7 +111,6 @@ export const updateProfileL1Success = (data, martial) => {
 };
 
 export const changeMyPassword = (oldPassword, newPassword) => {
-  console.log("oldPassword,newPassword action ", oldPassword, newPassword);
   return {
     type: CHANGE_MY_PASSWORD,
     payload: { oldPassword, newPassword }
@@ -126,7 +125,6 @@ export const changeMyPasswordSuccess = data => {
 };
 
 export const changeUserLoginPhone = (newPhone, password) => {
-  console.log("newPhone,password action ", newPhone, password);
   return {
     type: CHANGE_USER_LOGIN_PHONE,
     payload: { newPhone, password }
