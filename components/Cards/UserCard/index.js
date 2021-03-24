@@ -9,6 +9,8 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
+import { calcOfflineTime } from "../../../helpers/calcOfflineTime";
+import { OfflineTimeInArabic } from "../../../helpers/offlineTimeInArabic";
 import {
   COUNTRY_CITY_MAP,
   ARRAY_OF_AGE_RANGE,
@@ -82,7 +84,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     color: "#d61f5f",
     paddingBottom: "0 !important",
-    height: "7rem",
+    height: "9rem",
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "column",
@@ -181,6 +183,7 @@ Fade.propTypes = {
 export default function UserCard({ user, timeScore }) {
   const classes = useStyles();
   const [clickLove, setClickLove] = useState(false);
+  const locale = useSelector(state => state.settings.locale);
   const searchState = useSelector(state => state.home.searchState);
   const LoveMatchRequestSend = useSelector(
     state => state.interaction.sendLoveMatchRequest
@@ -226,6 +229,17 @@ export default function UserCard({ user, timeScore }) {
       <Card className={`${classes.root} linear-g-r`}>
         <CardMedia className={classes.media} image={user._} title="userPhoto">
           <CardContent className={classes.cardContent}>
+            {searchState == "most recent" && (
+              <Typography
+                variant="body1"
+                component="p"
+                className={classes.fontW}
+              >
+                {locale.locale == "ar" &&
+                  OfflineTimeInArabic(calcOfflineTime(timeScore))}
+                {locale.locale != "ar" && calcOfflineTime(timeScore)}
+              </Typography>
+            )}
             <div className={classes.dFlex}>
               <Typography
                 variant="body1"
