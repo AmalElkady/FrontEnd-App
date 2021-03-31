@@ -962,7 +962,7 @@ export default function Search() {
                       className={classes.displayFlexSB}
                     >
                       <Typography variant="button"  gutterBottom>
-                        No Select
+                        <IntlMessages id="search.noSelect" />
                       </Typography>
                     </MenuItem>
                     {ARRAY_OF_AGE_RANGE.map((option, index) => (
@@ -1006,7 +1006,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            No Select
+                          <IntlMessages id="search.noSelect" />
                           </Typography>
                         </MenuItem>
                         {CountryAgerangesOptionsOnline?.map((option, index) => (
@@ -1039,7 +1039,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            No Select
+                          <IntlMessages id="search.noSelect" />
                           </Typography>
                         </MenuItem>
                         {ARRAY_OF_AGE_RANGE.map((option, index) => (
@@ -1079,7 +1079,7 @@ export default function Search() {
                         className={classes.padding}
                         gutterBottom
                       >
-                        ONLINE
+                        <IntlMessages id="search.online" />
                       </Typography>
                       <MenuItem
                         onClick={() => {
@@ -1089,7 +1089,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
                       {CountryCityAgerangesOptionsOnline?.map(
@@ -1124,7 +1124,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
                       {ARRAY_OF_AGE_RANGE.map((option, index) => (
@@ -1199,7 +1199,7 @@ export default function Search() {
                   className={classes.displayFlexSB}
                 >
                   <Typography variant="button" gutterBottom>
-                    No Select
+                  <IntlMessages id="search.noSelect" />
                   </Typography>
                 </MenuItem>
                 {ARRAY_OF_AGE_RANGE.map((option, index) => (
@@ -1327,7 +1327,7 @@ export default function Search() {
                         className={classes.padding}
                         gutterBottom
                       >
-                        ONLINE
+                         <IntlMessages id="search.online" />
                       </Typography>
                       <MenuItem
                         onClick={() => {
@@ -1337,7 +1337,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
                       {AgerangeCountriesOptionsOnline?.map((option, index) => (
@@ -1372,7 +1372,7 @@ export default function Search() {
                         className={classes.padding}
                         gutterBottom
                       >
-                        ONLINE
+                        <IntlMessages id="search.online" />
                       </Typography>
                       <MenuItem
                         onClick={() => {
@@ -1382,7 +1382,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
 
@@ -1417,7 +1417,7 @@ export default function Search() {
                           className={classes.padding}
                           gutterBottom
                         >
-                          ONLINE
+                          <IntlMessages id="search.online" />
                         </Typography>
                         <MenuItem
                           onClick={() => {
@@ -1427,7 +1427,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            No Select
+                          <IntlMessages id="search.noSelect" />
                           </Typography>
                         </MenuItem>
                         {AgerangeCountriesOptionsOnline?.map(
@@ -1532,7 +1532,7 @@ export default function Search() {
                     className={classes.padding}
                     gutterBottom
                   >
-                    MOST RECENT
+                   <IntlMessages id="search.recent" />
                   </Typography>
                   <MenuItem
                     onClick={() => {
@@ -1542,7 +1542,7 @@ export default function Search() {
                     className={classes.displayFlexSB}
                   >
                     <Typography variant="button" gutterBottom>
-                      No Select
+                    <IntlMessages id="search.noSelect" />
                     </Typography>
                   </MenuItem>
                   {CountriesOptionsOffline?.map((option, index) => (
@@ -1711,7 +1711,7 @@ export default function Search() {
                       className={classes.padding}
                       gutterBottom
                     >
-                      ONLINE
+                      <IntlMessages id="search.online" />
                     </Typography>
                     <MenuItem
                       onClick={() => {
@@ -1721,7 +1721,7 @@ export default function Search() {
                       className={classes.displayFlexSB}
                     >
                       <Typography variant="button" gutterBottom>
-                        No Select
+                      <IntlMessages id="search.noSelect" />
                       </Typography>
                     </MenuItem>
                     {CountryCitiesOptionsOnline?.map((option, index) => (
@@ -1768,7 +1768,7 @@ export default function Search() {
                         className={classes.padding}
                         gutterBottom
                       >
-                        ONLINE
+                        <IntlMessages id="search.online" />
                       </Typography>
                       <MenuItem
                         onClick={() => {
@@ -1778,7 +1778,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
                       {CountryCitiesAgerangeOptionsOnline?.map(
@@ -1827,7 +1827,7 @@ export default function Search() {
                         className={classes.padding}
                         gutterBottom
                       >
-                        ONLINE
+                         <IntlMessages id="search.online" />
                       </Typography>
                       <MenuItem
                         onClick={() => {
@@ -1837,7 +1837,7 @@ export default function Search() {
                         className={classes.displayFlexSB}
                       >
                         <Typography variant="button" gutterBottom>
-                          No Select
+                        <IntlMessages id="search.noSelect" />
                         </Typography>
                       </MenuItem>
                       {CountryCitiesAgerangeOptionsOnline?.map(
@@ -1955,7 +1955,7 @@ export default function Search() {
                           className={classes.padding}
                           gutterBottom
                         >
-                          Most Recent
+                            <IntlMessages id="search.recent" />
                         </Typography>
 
                         <MenuItem
@@ -1966,7 +1966,7 @@ export default function Search() {
                           className={classes.displayFlexSB}
                         >
                           <Typography variant="button" gutterBottom>
-                            No Select
+                          <IntlMessages id="search.noSelect" />
                           </Typography>
                         </MenuItem>
                         {/* apply scroll  */}

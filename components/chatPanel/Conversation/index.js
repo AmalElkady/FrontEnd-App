@@ -63,6 +63,7 @@ const Conversation = ({ myPhoto }) => {
   );
 
   const seenFlag = useSelector(state => state.messages.seenFlag);
+  const indexOfLastMsg = useSelector(state => state.messages.indexOfLastMsg);
 
   ////
   const conversationCleared = useSelector(
@@ -167,13 +168,29 @@ const Conversation = ({ myPhoto }) => {
                 scrollableTarget="scrollableDiv"
                 className="scroll-m"
               >
+                {console.log("indexOfLastMsg ", indexOfLastMsg)}
                 {conversationMessages.map((conversation, index) =>
                   conversation.o === 1 ? (
-                    <SentMessageCell
-                      key={index}
-                      conversation={conversation}
-                      myPhoto={myPhoto}
-                    />
+                    <>
+                      {indexOfLastMsg == index && (
+                        <div style={{ textAlign: "center", color: "#b72051" }}>
+                          <Typography
+                            variant="overline"
+                            display="block"
+                            gutterBottom
+                            style={{ fontWeight: "bold" }}
+                          >
+                            <IntlMessages id="mgs.seen" />
+                          </Typography>
+                        </div>
+                      )}
+                      <SentMessageCell
+                        key={index}
+                        conversation={conversation}
+                        myPhoto={myPhoto}
+                        seen={seenFlag == 0 ? false : true}
+                      />
+                    </>
                   ) : (
                     <ReceivedMessageCell
                       key={index}

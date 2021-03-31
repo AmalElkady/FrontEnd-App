@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
-
-const SentMessageCell = ({ conversation, myPhoto }) => {
+import DoneAllIcon from "@material-ui/icons/DoneAll";
+const SentMessageCell = ({ conversation, myPhoto, seen }) => {
   return (
     <div className="d-flex flex-nowrap chat-item flex-row-reverse">
       <img
@@ -13,6 +13,15 @@ const SentMessageCell = ({ conversation, myPhoto }) => {
       <div className="bubble jambo-card">
         <div className="message">{conversation.m}</div>
         <div className="time text-muted text-right mt-2">
+          <DoneAllIcon
+            fontSize="small"
+            className="seenMgs"
+            style={
+              conversation.seen == false
+                ? { color: "#a1a1a1" }
+                : { color: "white" }
+            }
+          />
           {moment(Number(conversation.d)).format("hh:mm A")}
         </div>
       </div>

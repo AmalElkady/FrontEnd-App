@@ -1710,6 +1710,10 @@
 
 .rtl .send-msg-input-container {
   @media screen and (max-width: 575px) {
-    margin: 0.5rem 1rem 0 0;
+    margin: 0.5rem 1rem 0 0 !important;
   }
+}
+
+.rtl .seenMgs {
+  float: right;
 }

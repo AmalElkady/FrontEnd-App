@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import LockIcon from "@material-ui/icons/Lock";
 
 const ReceivedMessageCell = ({ conversation, user }) => {
   return (
@@ -9,11 +10,13 @@ const ReceivedMessageCell = ({ conversation, user }) => {
         src={user._ ? user._ : "https://via.placeholder.com/150x150"}
         alt={user.n}
       />
-
       <div className="bubble">
-        <div className="message">{conversation.m}</div>
-        <div className="time text-muted text-right mt-2">
+        <div className="message bubble-blur">{conversation.m}</div>
+        <div className="time text-muted text-right mt-2 bubble-blur">
           {moment(Number(conversation.d)).format("hh:mm A")}
+        </div>
+        <div className="lock-mgs">
+          <LockIcon />
         </div>
       </div>
     </div>

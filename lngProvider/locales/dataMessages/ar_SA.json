@@ -3,5 +3,6 @@
   "chat.default": "ابدأ الدردشة مع أي شخص",
   "chat.delete": "حذف المحادثة",
   "chat.clear": "حذف رسائل المحادثة",
-  "message.placeholder": "اكتب رسالة"
+  "message.placeholder": "اكتب رسالة",
+  "mgs.seen": "تمت قرائتها"
 }

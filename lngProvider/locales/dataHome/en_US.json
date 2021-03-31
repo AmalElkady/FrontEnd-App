@@ -4,6 +4,7 @@
   "appModule.search": "Search",
   "search.online": "Online Now",
   "search.recent": "Recent Online",
+  "search.noSelect": "No Select",
   "search.age": "Age",
   "search.ageSelect": "Select Age Range",
   "search.country": "Country",
@@ -18,15 +19,14 @@
   "loveList.received": " had sent love to you",
   "loveList.receivedTitle": "Users who sent love to you ",
 
-
   "Love.notificationTitle": " Recent Love Notifications  ",
   "Love.notification": " Sent Love for you on ",
-  "Love.btn":"All Love Actions",
+  "Love.btn": "All Love Actions",
   "view.notificationTitle": " Recent Profile Views Notifications  ",
-  "view.btn":"All Profile Views",
+  "view.btn": "All Profile Views",
   "PP.notificationTitle": " Recent Private Photos Notifications  ",
   "PP.notification": " Sent Love for you on ",
-  "PP.btn":"All Private Photos Actions",
+  "PP.btn": "All Private Photos Actions",
 
   "ppList.outgoing": "Your request approved from ",
   "ppList.outgoingTitle": "Users approved you to access their private photos",

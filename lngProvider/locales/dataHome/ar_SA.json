@@ -4,6 +4,7 @@
   "appModule.search": "بحث",
   "search.online": "نشط الآن",
   "search.recent": "نشط منذ قليل",
+  "search.noSelect": "لا شئ",
   "search.age": "العمر",
   "search.ageSelect": "اختر العمر",
   "search.country": "البلد",
@@ -18,17 +19,14 @@
   "loveList.received": " أرسل لك اعجاب ",
   "loveList.receivedTitle": "المستخدمين الذين أرسلوا اعجاب لك ",
 
-
-
   "Love.notificationTitle": " Recent Love Notifications  ",
   "Love.notification": "أرسل اعجاب لك في",
-  "Love.btn":"All Love Actions",
+  "Love.btn": "All Love Actions",
   "view.notificationTitle": " Recent Profile Views Notifications  ",
-  "view.btn":"All Profile Views",
+  "view.btn": "All Profile Views",
   "PP.notificationTitle": " Recent Private Photos Notifications  ",
   "PP.notification": " Sent Love for you on ",
-  "PP.btn":"All Private Photos Actions",
-
+  "PP.btn": "All Private Photos Actions",
 
   "viewList.view": " رأى ملفك الشخصي في",
   "viewList.viewTitle": "المستخدمون الذين شاهدوا ملفك الشخصي ",

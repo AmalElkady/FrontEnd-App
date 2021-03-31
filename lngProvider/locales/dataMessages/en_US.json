@@ -3,5 +3,6 @@
   "chat.default": "Start chatting with anyone",
   "chat.clear": "Clear Messages",
   "chat.delete": "Delete Chat",
-  "message.placeholder": "Type a message"
+  "message.placeholder": "Type a message",
+  "mgs.seen": "seen"
 }

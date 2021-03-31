@@ -258,7 +258,7 @@
 
 .chat-item {
   padding: 16px;
-
+  position: relative;
   & .bubble {
     padding: 8px 12px;
     background-color: $white;
@@ -484,7 +484,7 @@
   padding: 0.5rem;
 }
 .send-msg-input-container {
-  margin: 0.5rem 0 0 1rem;
+  margin: 0.5rem 0 0 1rem !important;
 }
 .conv-head-name {
   @media screen and (max-width: 575px) {
@@ -522,4 +522,19 @@
   @media screen and (max-width: 575px) {
     padding: 0;
   }
+}
+
+.seenMgs {
+  float: left;
+}
+
+.bubble-blur {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+.lock-mgs {
+  position: absolute;
+  top: 33%;
+  left: 40%;
+  color: $secondary;
 }

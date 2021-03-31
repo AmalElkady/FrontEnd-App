@@ -15,6 +15,7 @@ import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
 import { removeUserFromList } from "../helpers/removeUserFromList";
+import { addSeenToMgs } from "../helpers/addSeenToMgs";
 
 const initialProfileState = {
   messageSent: false,
@@ -42,6 +43,8 @@ const initialProfileState = {
   clickedUserChat: null,
   clickedUserChatUnread: null,
 
+  indexOfLastMsg: null,
+
   loader: false,
   alertMessage: "",
   showMessage: false,
@@ -65,13 +68,21 @@ const Messages = (state = initialProfileState, action) => {
     }
     case READ_CONVERSATION_SUCCESS: {
       let usersList = [],
-        scoreList = [];
+        scoreList = [],
+        IndexOfMsg = null;
       if (action.payload.conversation.length != 0) {
         const { usersArr, scoreArr } = mapArrayToObjectArr(
           action.payload.conversation
         );
-        usersList = usersArr;
+
+        const { mgsList, indexOfMsg } = addSeenToMgs(
+          usersArr,
+          action.payload.seen
+        );
+        usersList = mgsList;
+        IndexOfMsg = indexOfMsg;
         scoreList = scoreArr;
+
         const { offset, SL } = calcValueOfSlAndOffset(scoreArr);
         state.OffsetConversationMessages = offset;
         state.scoreLConversationMessages = SL;
@@ -86,7 +97,8 @@ const Messages = (state = initialProfileState, action) => {
         ...state,
         conversationMessages: [...state.conversationMessages, ...usersList],
         conversationDates: [...state.conversationDates, ...scoreList],
-        seenFlag: action.payload.seen
+        seenFlag: action.payload.seen,
+        indexOfLastMsg: IndexOfMsg
       };
     }
     case READ_ALL_MESSAGES_COVERS_SUCCESS: {
