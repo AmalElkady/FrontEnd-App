@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   loginForm: {
     //marginLeft: "1rem",
     "@media only screen and (max-width: 575px)": {
-      margin: "2rem",
+      margin: "1rem",
       maxWidth: "100%",
       flexBasis: "100%"
     }

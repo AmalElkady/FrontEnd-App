@@ -59,7 +59,7 @@
 .app-register-container {
   margin-top: -15rem;
   @media screen and (max-width: 575px) {
-    margin-top: -6rem;
+    margin-top: -2rem;
   }
 }
 .app-login-container-2 {
@@ -73,7 +73,7 @@
   font-size: 14px;
   border-radius: 1rem;
   //overflow: hidden;
-  margin: 1rem;
+  // margin: 1rem;
   @media screen and (max-width: 575px) {
     margin: auto 1.5rem;
   }
@@ -203,5 +203,13 @@
     margin: 2rem !important;
     max-width: 50% !important;
     flex-basis: 50% !important;
+  }
+}
+
+.not-robot {
+  & div {
+    & div {
+      margin: 0.5rem auto;
+    }
   }
 }

@@ -11,11 +11,18 @@ import {
 import IntlMessages from "../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
-import { hideMessage, showAuthLoader, userSignIn,formSwitch,formSwitch2 } from "../actions/Auth";
+import {
+  hideMessage,
+  showAuthLoader,
+  userSignIn,
+  formSwitch,
+  formSwitch2
+} from "../actions/Auth";
 
 import { toggleCollapsedNav } from "../actions/Setting";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import ReCAPTCHA from "react-google-recaptcha";
 
 class SignIn extends React.Component {
   constructor() {
@@ -47,6 +54,10 @@ class SignIn extends React.Component {
         ["viewPhone"]: `${this.props.country}${this.props.phone}`
       });
     }
+  }
+
+  onChange(value) {
+    console.log("Captcha value:", value);
   }
 
   render() {
@@ -131,43 +142,59 @@ class SignIn extends React.Component {
                   />
 
                   {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
-                   <Grid container spacing={12}>
+                  <Grid container spacing={12}>
                     <Grid item xs={12}>
-                    <Button
-                      onClick={() => {
-                        this.props.showAuthLoader();
-                        this.props.userSignIn({
-                          phone: phoneSign,
-                          password,
-                          country: countrySign
-                        });
-                        this.props.toggleCollapsedNav(false);
-                      }}
-                      variant="contained"
-                      color="primary"
-                      style={{width:"100%"}}
-                      className="linear-g-r"
+                      <Button
+                        onClick={() => {
+                          this.props.showAuthLoader();
+                          this.props.userSignIn({
+                            phone: phoneSign,
+                            password,
+                            country: countrySign
+                          });
+                          this.props.toggleCollapsedNav(false);
+                        }}
+                        variant="contained"
+                        color="primary"
+                        style={{ width: "100%" }}
+                        className="linear-g-r"
+                      >
+                        <IntlMessages id="appModule.signIn" />
+                      </Button>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{ textAlign: "center", margin: "1rem" }}
                     >
-                      <IntlMessages id="appModule.signIn" />
-                    </Button>
-                     </Grid>
-                      <Grid item xs={12} style={{textAlign:"center",margin: "1rem"}}>
-                    {/* <Link onClick={()=>{this.props.formSwitch(true)}}> */}
-                      <a className="a-underLine-none" onClick={()=>{this.props.formSwitch(true)}} >
+                      {/* <Link onClick={()=>{this.props.formSwitch(true)}}> */}
+                      <a
+                        className="a-underLine-none"
+                        onClick={() => {
+                          this.props.formSwitch(true);
+                        }}
+                      >
                         <IntlMessages id="signIn.signUp" />
                       </a>
-                    {/* </Link> */}
-                  {/* </div> */}
-                      </Grid>
-                      <Grid item xs={12} style={{textAlign:"center"}}>
-                  <Link href="/forgotpassword">
-                  {/* onClick={()=>{this.props.formSwitch2(true)}} */}
-                    <a className="a-underLine-none">
-                      <IntlMessages id="appModule.forgotPassword" />
-                    </a>
-                  </Link>
+                      {/* </Link> */}
+                      {/* </div> */}
+                    </Grid>
+                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                      <Link href="/forgotpassword">
+                        {/* onClick={()=>{this.props.formSwitch2(true)}} */}
+                        <a className="a-underLine-none">
+                          <IntlMessages id="appModule.forgotPassword" />
+                        </a>
+                      </Link>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ReCAPTCHA
+                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        onChange={this.onChange}
+                        className="not-robot"
+                      />
+                    </Grid>
                   </Grid>
-                 </Grid> 
                 </fieldset>
               </form>
             </div>

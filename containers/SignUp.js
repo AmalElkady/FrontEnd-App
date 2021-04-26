@@ -18,6 +18,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Male, Female } from "react-gender";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import {ARRAY_OF_YEARS ,ARRAY_OF_MONTHS, ARRAY_OF_DAYS, COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE, ARRAYS_OF_MARTIAL_STATUS, ARRAYS_OF_MARTIAL_STATUS_VALUES} from '../util/data';
 
@@ -56,6 +57,7 @@ class SignUp extends React.Component {
     }
   }
 
+
   componentDidUpdate() {
     if (this.props.showMessage) {
       setTimeout(() => {
@@ -83,6 +85,9 @@ class SignUp extends React.Component {
     }
   }
 
+  onChange(value) {
+    console.log("Captcha value:", value);
+  }
   render() {
     const {
       firstname,
@@ -380,7 +385,15 @@ class SignUp extends React.Component {
 							  margin="normal"
 							  className="mt-0 mb-3 to-right"
 							/>
-						</Grid>						
+						</Grid>	
+						<Grid item xs={12}>
+                      <ReCAPTCHA
+                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        onChange={this.onChange}
+                        className="not-robot"
+                      />
+                    </Grid>
+                  					
 			</Grid>
 			
 			
