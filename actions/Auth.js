@@ -40,7 +40,7 @@ import {
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
-  CONFIRM_PASSWORD_CASE,
+  CONFIRM_PASSWORD_CASE
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -77,17 +77,23 @@ export const changeUserPhoneBeforeVerif = (
   countryiso2,
   newCity
 ) => {
-  console.log("from action")
+  console.log("from action");
   return {
     type: CHANGE_PHONE_BEFORE_VERIF,
     payload: { newPhone, phonecountrycode, countryiso2, newCity }
   };
 };
 
-export const changeUserPhoneBeforeVerifSuccess = (returnData,newPhone, phonecountrycode, countryiso2, newCity) => {
+export const changeUserPhoneBeforeVerifSuccess = (
+  returnData,
+  newPhone,
+  phonecountrycode,
+  countryiso2,
+  newCity
+) => {
   return {
     type: CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
-    payload: {returnData,newPhone, phonecountrycode, countryiso2, newCity}
+    payload: { returnData, newPhone, phonecountrycode, countryiso2, newCity }
   };
 };
 
@@ -124,14 +130,12 @@ export const userSignUp = user => {
   };
 };
 
-
 export const mainPhotoSelected = photo => {
   return {
     type: MAIN_PHOTO_SELECTED,
     payload: photo
   };
 };
-
 
 export const mpUpload = imageToUpload => {
   return {
@@ -147,6 +151,7 @@ export const userAddProfileL2 = data => {
   };
 };
 export const userAddSubscribe = data => {
+  console.log("from action ", data);
   return {
     type: SUBSCRIBE,
     payload: data
@@ -176,7 +181,6 @@ export const resetPhonechangeFlag = () => {
     type: RESET_PHONE_CHANGE_FLAG
   };
 };
-
 
 export const stepFlagClear = () => {
   return {
@@ -294,25 +298,23 @@ export const resetCheckMpUpload = () => {
   };
 };
 
-
-export const formSwitch = (value) => {
+export const formSwitch = value => {
   return {
     type: SWITCH_FORM,
-    payload:value
+    payload: value
   };
 };
 
-export const formSwitch2 = (value) => {
+export const formSwitch2 = value => {
   return {
     type: SWITCH_FORM_2,
-    payload:value
+    payload: value
   };
 };
 
-export const confirmPasswordCase=(value)=>{
-  console.log("from action confirm",value);
-  return{
-    type:CONFIRM_PASSWORD_CASE,
-    payload:value
-  }
-}
+export const confirmPasswordCase = value => {
+  return {
+    type: CONFIRM_PASSWORD_CASE,
+    payload: value
+  };
+};

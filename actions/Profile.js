@@ -37,6 +37,8 @@ import {
   OPEN_MODAL,
   OPEN_MODAL_PP,
   OPEN_MODAL_SEND_PP,
+  DELETE_MY_ACCOUNT,
+  DELETE_MY_ACCOUNT_SUCCESS,
   SHOW_MESSAGE
 } from "../constants/ActionTypes";
 
@@ -120,7 +122,7 @@ export const changeMyPassword = (oldPassword, newPassword) => {
 export const changeMyPasswordSuccess = data => {
   return {
     type: CHANGE_MY_PASSWORD_SUCCESS,
-    payload: data
+    payload: { data }
   };
 };
 
@@ -295,6 +297,21 @@ export const ppPhotoSelected = photo => {
   return {
     type: PP_PHOTO_SELECTED,
     payload: photo
+  };
+};
+
+export const deleteMyAccount = password => {
+  return {
+    type: DELETE_MY_ACCOUNT,
+    payload: password
+  };
+};
+
+export const deleteMyAccountSuccess = data => {
+  console.log("from action success delete account ", data);
+  return {
+    type: DELETE_MY_ACCOUNT_SUCCESS,
+    payload: data
   };
 };
 

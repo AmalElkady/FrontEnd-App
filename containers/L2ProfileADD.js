@@ -120,7 +120,6 @@ componentDidMount () {
                     <IntlMessages
                       id="appModule.signOut"/>
 				  </Button> */}
-		{console.log("this.props.confirmPasswordFlag ",this.props.confirmPasswordFlag)}
 				{this.props.confirmPasswordFlag && <ModalConfirmPassword phone={this.props.phone} country={this.props.country} tpercent={tpercent} nationality={nationality} workd={workd} title={title} education={education} bio={bio}/>	}	  
 	
       <div
@@ -345,10 +344,13 @@ componentDidMount () {
 				</Grid>
                <div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
-					   if(this.props.sub!=0){
-						console.log("this.props2 ",true);
+					   console.log("this.props.sub ",this.props.sub)
+					   if(this.props.sub!=0&&this.props.sub!=null){
+						   console.log("1")
 						this.props.confirmPasswordCase(true);
-					}else{
+					}
+					else{
+						console.log("2")
 						this.props.showAuthLoader();
 						this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
 					}
@@ -388,8 +390,8 @@ componentDidMount () {
 }
 
 const mapStateToProps = ({auth}) => {
-  const {loader, alertMessage, showMessage, authUser, stepFlag, gender,phone, country,confirmPasswordFlag} = auth;
-  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, phone,country,confirmPasswordFlag}
+  const {loader, alertMessage, showMessage, authUser, stepFlag, gender,phone, country,confirmPasswordFlag,sub} = auth;
+  return {loader, alertMessage, showMessage, authUser, stepFlag, gender, phone,country,confirmPasswordFlag,sub}
 };
 
 

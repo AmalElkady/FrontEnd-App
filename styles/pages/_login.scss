@@ -40,10 +40,10 @@
   max-width: 680px;
   width: 94%;
   margin: 0 auto;
- @media screen and (max-width: 575px) {
+  @media screen and (max-width: 575px) {
     width: 100%;
     order: 2;
-      margin: 2rem auto
+    margin: 2rem auto;
   }
 
   & .loader-view {
@@ -56,14 +56,14 @@
     z-index: 2;
   }
 }
-.app-register-container{
-  margin-top:-15rem;
-   @media screen and (max-width: 575px) {
-     margin-top:-6rem;
+.app-register-container {
+  margin-top: -15rem;
+  @media screen and (max-width: 575px) {
+    margin-top: -6rem;
   }
 }
-.app-login-container-2{
-  margin-top:8rem;
+.app-login-container-2 {
+  margin-top: 8rem;
 }
 .app-login-main-content {
   @include display-flex();
@@ -74,18 +74,17 @@
   border-radius: 1rem;
   //overflow: hidden;
   margin: 1rem;
-   @media screen and (max-width: 575px) {
-       margin: auto 1.5rem;
+  @media screen and (max-width: 575px) {
+    margin: auto 1.5rem;
   }
 }
-.app-login-main-content-2{
-  background-color:#ffffffab;
-      width: 85%;
-   @media screen and (max-width: 575px) {
-     width:100%;
-       margin: 0;
+.app-login-main-content-2 {
+  background-color: #ffffffab;
+  width: 85%;
+  @media screen and (max-width: 575px) {
+    width: 100%;
+    margin: 0;
   }
-
 }
 
 .app-login-content {
@@ -102,6 +101,9 @@
 .app-login-content-2 {
   padding: 35px 35px 20px;
   width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 1rem;
+  }
 }
 .app-login-header {
   margin-bottom: 1rem;
@@ -166,40 +168,40 @@
   }
 }
 
-.logo-form{
+.logo-form {
   width: 20%;
-    position: absolute;
-    top: -3rem;
-    right:-2rem;
-     & img{
-       transform: rotateZ(-35deg)
-     }
-    @media screen and (max-width: 575px) {
+  position: absolute;
+  top: -3rem;
+  right: -2rem;
+  & img {
+    transform: rotateZ(-35deg);
+  }
+  @media screen and (max-width: 575px) {
     top: -2rem;
-    right:-1rem;
+    right: -1rem;
   }
 }
 
-.gender-selected{
-  & svg:nth-child(1){
-    color: rgba(0, 0, 0, 0.54)
+.gender-selected {
+  & svg:nth-child(1) {
+    color: rgba(0, 0, 0, 0.54);
   }
-  & svg:nth-child(2){
-     color:#d61f5f; 
+  & svg:nth-child(2) {
+    color: #d61f5f;
   }
 }
-.login-form{
-  @media only screen and (max-width: 575px){
-      margin: 2rem !important;
-      max-width:100% !important;
-      flex-basis:100% !important
-    }
+.login-form {
+  @media only screen and (max-width: 575px) {
+    margin: 2rem !important;
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
 }
-.main-logo{
-   margin: 1rem !important;
-      @media only screen and (max-width: 575px){
-      margin: 2rem !important;
-      max-width:50% !important;
-      flex-basis:50% !important;
-    }
+.main-logo {
+  margin: 1rem !important;
+  @media only screen and (max-width: 575px) {
+    margin: 2rem !important;
+    max-width: 50% !important;
+    flex-basis: 50% !important;
+  }
 }

@@ -258,6 +258,12 @@ COUNTRY_CITY_MAP_VALUE["eg"] = [
   26,
   27
 ];
+export const ARRAY_OF_SUB_PACK = [
+  <IntlMessages id="pack.0" />,
+  <IntlMessages id="pack.1" />,
+  <IntlMessages id="pack.2" />
+];
+
 COUNTRY_CITY_MAP_VALUE["gb"] = [1, 2];
 
 export const COUNTRY_CODE_TO_NAME_MAP = new Map();

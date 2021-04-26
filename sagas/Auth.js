@@ -83,18 +83,22 @@ const createUserWithPhonePasswordRequest = async (
     )
     .then(authUser => authUser)
     .catch(error => error);
-    
-const changePhoneUserBeforeVerif = async ( newPhone,
+
+const changePhoneUserBeforeVerif = async (
+  newPhone,
   phonecountrycode,
   countryiso2,
-  newCity)=>
-    await auth
-      .changeUserPhoneBeforeVerif( newPhone,
-        phonecountrycode,
-        countryiso2,
-        newCity)
-      .then(uploadMessage => uploadMessage)
-      .catch(error => error);
+  newCity
+) =>
+  await auth
+    .changeUserPhoneBeforeVerif(
+      newPhone,
+      phonecountrycode,
+      countryiso2,
+      newCity
+    )
+    .then(uploadMessage => uploadMessage)
+    .catch(error => error);
 
 const uploadMainProfilePhotoRequest = async file =>
   await auth
@@ -247,7 +251,8 @@ function* createUserWithPhonePassword({ payload }) {
           name: signUpUser.n,
           birth: signUpUser.b,
           martial: signUpUser.m,
-          gender: signUpUser.gender
+          gender: signUpUser.gender,
+          sub: signUpUser.sub
         })
       );
     }
@@ -257,8 +262,8 @@ function* createUserWithPhonePassword({ payload }) {
 }
 
 function* uploadMainProfilePhoto({ payload }) {
-  console.log("from saga img payload ",payload)
- // const { file } = payload;
+  console.log("from saga img payload ", payload);
+  // const { file } = payload;
 
   try {
     const photoUploadS3 = yield call(uploadMainProfilePhotoRequest, payload);
@@ -306,6 +311,7 @@ function* addProfileLayer2({ payload }) {
 }
 
 function* addSubscribe({ payload }) {
+  console.log("from saga ", payload);
   try {
     const subAdded = yield call(addSubRequest, payload);
     if (subAdded.message) {
@@ -396,7 +402,7 @@ function* changePasswordWithTokenForUserPhone({ payload }) {
 }
 
 function* changeUserPhoneBeforeVerifRequest({ payload }) {
-  console.log("from saga")
+  console.log("from saga");
   const { newPhone, phonecountrycode, countryiso2, newCity } = payload;
   try {
     const returnData = yield call(
@@ -406,12 +412,19 @@ function* changeUserPhoneBeforeVerifRequest({ payload }) {
       countryiso2,
       newCity
     );
-     console.log("returnData from data",returnData)
+    console.log("returnData from data", returnData);
     if (returnData.message) {
       yield put(showAuthMessage(returnData.message));
     } else {
-     
-      yield put(changeUserPhoneBeforeVerifSuccess(true,newPhone, phonecountrycode, countryiso2, newCity));
+      yield put(
+        changeUserPhoneBeforeVerifSuccess(
+          true,
+          newPhone,
+          phonecountrycode,
+          countryiso2,
+          newCity
+        )
+      );
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -494,9 +507,6 @@ function* signInUserWithPhonePassword({ payload }) {
     } else {
       //localStorage.setItem('access_token','access_token')
       //tokenManagerOperations.setTokenAndValidate('access_token','token')
-      console.log("123456789");
-      console.log(signInUser);
-      console.log("123456789");
       yield put(
         userSignInSuccess({
           authUser: "access_token",
@@ -505,7 +515,8 @@ function* signInUserWithPhonePassword({ payload }) {
           name: signInUser.n,
           birth: signInUser.b,
           martial: signInUser.m,
-          gender: signInUser.gender
+          gender: signInUser.gender,
+          sub: signInUser.sub
         })
       );
     }

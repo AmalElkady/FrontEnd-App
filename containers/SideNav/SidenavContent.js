@@ -165,7 +165,8 @@ class SidenavContent extends Component {
           </li>
 
           <li className="menu no-arrow">
-            <Link href="/app/chat">
+            {/* <Link href="/app/chat"> */}
+            <Link href="/home/setting">
               <a className="prepend-icon">
                 {/* <i className="zmdi zmdi-comment zmdi-hc-fw" /> */}
                 <span className="nav-text">

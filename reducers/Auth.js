@@ -62,7 +62,8 @@ const INIT_STATE = {
   countryiso2: "",
   name: "",
   birth: "",
-  martial: ""
+  martial: "",
+  sub: null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -79,7 +80,8 @@ export default (state = INIT_STATE, action) => {
         name: action.payload.name,
         birth: action.payload.birth,
         martial: action.payload.martial,
-        gender: action.payload.gender
+        gender: action.payload.gender,
+        sub: action.payload.sub
       };
     }
 
@@ -219,7 +221,8 @@ export default (state = INIT_STATE, action) => {
         name: action.payload.name,
         birth: action.payload.birth,
         martial: action.payload.martial,
-        gender: action.payload.gender
+        gender: action.payload.gender,
+        sub: action.payload.sub
       };
     }
     case INIT_URL: {
@@ -240,6 +243,8 @@ export default (state = INIT_STATE, action) => {
         birth: "",
         martial: "",
         gender: "",
+        sun: null,
+        tokenSent: false,
         confirmPasswordFlag: false
       };
     }

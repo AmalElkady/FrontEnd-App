@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Subscribe() {
+export default function Subscribe({renew}) {
   const subFlag = useSelector(state => state.auth.subFlag);
   const showMessage = useSelector(state => state.auth.showMessage);
   const dispatch = useDispatch();
@@ -95,6 +95,7 @@ export default function Subscribe() {
 
   const onSubscribe = () => {
     showAuthLoader();
+    console.log("onSubscribe ",selectedValue)
     dispatch(userAddSubscribe(selectedValue));
   };
 
@@ -125,8 +126,8 @@ export default function Subscribe() {
     <>
      <div className="container">
 
-      <div className={classes.root}> 
- <Button
+      <div className={renew?"":classes.root}> 
+ {!renew &&<Button
           variant="contained"
           onClick={() => {
             dispatch(showAuthLoader());
@@ -136,7 +137,7 @@ export default function Subscribe() {
           className="linear-g-r out-btn-1"
         >
           <IntlMessages id="appModule.signOut" />
-        </Button>
+        </Button>}
 		
  
  

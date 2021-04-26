@@ -438,3 +438,7 @@ export const RESET_MESSAGES_COVERS = "reset_messages_covers";
 export const REMOVE_ITEM_LIST = "remove_item_list";
 export const RESET_MESSAGES_COVERS_UNREAD_COUNT =
   "reset_messages_covers_unread_count";
+
+//Settings
+export const DELETE_MY_ACCOUNT = "delete_my_account";
+export const DELETE_MY_ACCOUNT_SUCCESS = "delete_my_account_success";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Router from "next/router";
 import Button from "@material-ui/core/Button";
@@ -14,13 +14,13 @@ import mainTheme from "../containers/themes/mainTheme";
 import { makeStyles } from "@material-ui/core/styles";
 import IntlMessages from "../util/IntlMessages";
 
-import SignIn from "../containers/SignIn"
-import SignUp from "../containers/SignUp"
-import ForgotPassword from "../containers/ForgotPassword"
+import SignIn from "../containers/SignIn";
+import SignUp from "../containers/SignUp";
+import ForgotPassword from "../containers/ForgotPassword";
 
 import Page from "../hoc/defaultPage";
 
-import {formSwitch} from "../actions/Auth"
+import { formSwitch } from "../actions/Auth";
 
 const useStyles = makeStyles(theme => ({
   gridSpace1: {
@@ -32,26 +32,26 @@ const useStyles = makeStyles(theme => ({
   btnShadw: {
     boxShadow: "3px 5px 9px rgba(221, 221, 221, 0.5)"
   },
-  dropdownL:{
-        right: "13rem !important",
+  dropdownL: {
+    right: "13rem !important",
     "@media only screen and (max-width: 575px)": {
       right: "0 !important"
     }
   },
-  mainLogo:{
-        marginLeft: "1rem",
-"@media only screen and (max-width: 575px)": {
+  mainLogo: {
+    marginLeft: "1rem",
+    "@media only screen and (max-width: 575px)": {
       margin: "2rem",
-      maxWidth:"50%",
-      flexBasis:"50%"
+      maxWidth: "50%",
+      flexBasis: "50%"
     }
   },
-    loginForm:{
-        //marginLeft: "1rem",
-"@media only screen and (max-width: 575px)": {
+  loginForm: {
+    //marginLeft: "1rem",
+    "@media only screen and (max-width: 575px)": {
       margin: "2rem",
-      maxWidth:"100%",
-      flexBasis:"100%"
+      maxWidth: "100%",
+      flexBasis: "100%"
     }
   },
   posRight: {
@@ -72,50 +72,48 @@ const useStyles = makeStyles(theme => ({
 
 export default Page(() => {
   const classes = useStyles();
-     const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const locale = useSelector(state => state.settings.locale);
   const [langSwitcher, setLangSwitcher] = useState(false);
   const formSwitchFlag = useSelector(state => state.auth.formSwitchFlag);
   const formSwitchFlag2 = useSelector(state => state.auth.formSwitchFlag2);
- // const [formSwitch, setLangSwitcher] = useState(false);
+  // const [formSwitch, setLangSwitcher] = useState(false);
 
   useEffect(() => {
-if(window.location.href=="http://localhost:3000/")  {
-if(formSwitchFlag){
-      console.log("back done 2",formSwitchFlag)
-      history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-        dispatch(formSwitch(false))
+    if (window.location.href == "http://localhost:3000/") {
+      if (formSwitchFlag) {
+        console.log("back done 2", formSwitchFlag);
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+          history.go(1);
+          dispatch(formSwitch(false));
+        };
 
-    };
-
-     //dispatch(formSwitch(false))
-      // window.addEventListener("popstate", e => {
-      //   console.log("popstate ");
-  // Nope, go back to your page
- // this.props.history.go(1);
-//});
-      //  window.history.forward();
-      //  disableBack();
-      //  dispatch(formSwitch(false))
-  }
-else{
-  window.onpopstate = function () {
-         window.location.hash
-         // window.history.back();
-    };
-    //  window.addEventListener("popstate", e => {
-    //     console.log("popstate ");
-    // window.history.back();
-//});
-  //history.popState(null, null, location.href);
-    // window.onpopstate = function () {
-    //     history.go(1);
-    //     dispatch(formSwitch(false))
-    // };
-}
-}
+        //dispatch(formSwitch(false))
+        // window.addEventListener("popstate", e => {
+        //   console.log("popstate ");
+        // Nope, go back to your page
+        // this.props.history.go(1);
+        //});
+        //  window.history.forward();
+        //  disableBack();
+        //  dispatch(formSwitch(false))
+      } else {
+        window.onpopstate = function() {
+          window.location.hash;
+          // window.history.back();
+        };
+        //  window.addEventListener("popstate", e => {
+        //     console.log("popstate ");
+        // window.history.back();
+        //});
+        //history.popState(null, null, location.href);
+        // window.onpopstate = function () {
+        //     history.go(1);
+        //     dispatch(formSwitch(false))
+        // };
+      }
+    }
     //  window.onload=function(){
     //     console.log("back done 1",formSwitchFlag)
     //    if(formSwitchFlag){
@@ -125,15 +123,12 @@ else{
     //    dispatch(formSwitch(false))
     //    }
     //  }
-    // window.onbeforeunload = function() { 
+    // window.onbeforeunload = function() {
     //   console.log("back done 1")
-    //    //window.history.forward(); 
+    //    //window.history.forward();
     //   return null
     //    };
   });
-
-
-
 
   const onLangSwitcherSelect = event => {
     setLangSwitcher(!langSwitcher);
@@ -173,7 +168,7 @@ else{
             </Grid> */}
             <Grid item xs={2} className="lang-container">
               <Dropdown
-                className="quick-menu"
+                className="quick-menu menu-home"
                 isOpen={langSwitcher}
                 toggle={() => onLangSwitcherSelect(event)}
               >
@@ -198,20 +193,22 @@ else{
           </Grid>
           <Grid container spacing={12}>
             <Grid item xs={5} className={classes.mainLogo}>
-            {/* <div > */}
-            {/* style={{width:"100%"}} */}
-             <img src="../static/images/Gila_logo_front_page.svg"
-                     alt="Gila" title="Gila"/> 
-            {/* </div> */}
+              {/* <div > */}
+              {/* style={{width:"100%"}} */}
+              <img
+                src="../static/images/Gila_logo_front_page.svg"
+                alt="Gila"
+                title="Gila"
+              />
+              {/* </div> */}
             </Grid>
           </Grid>
-           <Grid container spacing={12}>
-           <Grid item xs={4} className="">
-            </Grid>
+          <Grid container spacing={12}>
+            <Grid item xs={4} className=""></Grid>
             <Grid item xs={8} className={classes.loginForm}>
-           {!formSwitchFlag  && <SignIn/>}
-          {formSwitchFlag && <SignUp/>}
-          {/* {formSwitchFlag2 &&<ForgotPassword/>} */}
+              {!formSwitchFlag && <SignIn />}
+              {formSwitchFlag && <SignUp />}
+              {/* {formSwitchFlag2 &&<ForgotPassword/>} */}
             </Grid>
           </Grid>
         </div>

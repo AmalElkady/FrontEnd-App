@@ -155,10 +155,8 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 						
 															 
 															tokenManagerOperations.setTokenAndValidate("access_token",res.token);
-															
-
 															if(res.L1)
-															resolve({"accessToken": "access_token", "n": res.L1.n, "m": res.L1.m, "b": res.L1.b, "gender":tokenUserData.gd});
+															resolve({"accessToken": "access_token", "n": res.L1.n, "m": res.L1.m, "b": res.L1.b, "gender":tokenUserData.gd,"sub":tokenUserData.sub});
 															else
 															resolve({"message": "profile not available"});	
 															
@@ -224,9 +222,9 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								
 											if(response.response == "ok") {
 												
-												
+												let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));	
 													await tokenManagerOperations.setTokenAndValidate("access_token",response.token);
-													resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country,"countryiso2":newUser.countryiso2, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender});
+													resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country,"countryiso2":newUser.countryiso2, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender,"sub":tokenUserData.sub});
 											
 											
 											} else {
@@ -598,6 +596,7 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 
 
 auth.subscribe = function (subscribePack) {
+	console.log("from service ",subscribePack)
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);

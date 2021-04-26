@@ -19,6 +19,7 @@ import {
   SET_FINAL_PP,
   PP_PHOTO_SELECTED,
   UPDATE_MAIN_PHOTO_SUCCESS,
+  DELETE_MY_ACCOUNT_SUCCESS,
   OPEN_MODAL,
   OPEN_MODAL_PP,
   OPEN_MODAL_SEND_PP,
@@ -44,10 +45,19 @@ const initialProfileState = {
   photoRemovePP: false,
   permissionReadPP: false,
   verifyLoginPhoneChanged: false,
+
   myPhoneAndPwData: null,
-  myPaymentsAndSub: null,
+  myPaymentsAndSub: [],
+  myPaymentsAndSubCount: null,
+  endOfResultPaymentsAndSub: false,
+  paymentsStart: 0,
+  paymentsEnd: 5,
+  paymentLimit: 5,
+
   updateMPselected: null,
   ppPhotoSelected: null,
+
+  myAccountDeleted: false,
   openModal: false,
   openModalPP: false,
   openModalSendPP: false,
@@ -141,6 +151,13 @@ const Profile = (state = initialProfileState, action) => {
         mainPhotoUpdated: action.payload
       };
     }
+    case DELETE_MY_ACCOUNT_SUCCESS: {
+      console.log("from reducer delete account ", action.payload);
+      return {
+        ...state,
+        myAccountDeleted: action.payload
+      };
+    }
     case REQUEST_PHOTO_UPLOAD_PP_SUCCESS: {
       return {
         ...state,
@@ -160,21 +177,42 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PHONE_AND_PW_DATA_SUCCESS: {
+      let finalData = {};
+      finalData.phoneChangeNum = action.payload.allValues[2];
+      finalData.passwordChangeNum = action.payload.allValues[0];
+      finalData.phonePassData = JSON.parse(action.payload.allValues[1]);
       return {
         ...state,
-        myPhoneAndPwData: action.payload
+        myPhoneAndPwData: finalData
       };
     }
     case READ_MY_PAYMENTS_AND_SUB_SUCCESS: {
+      if (action.payload.dataToSent.payments.length != 0) {
+        state.paymentsStart = state.paymentsEnd;
+        state.paymentsEnd += state.paymentLimit;
+        if (action.payload.dataToSent.payments.length < state.paymentLimit) {
+          state.endOfResultPaymentsAndSub = true;
+        }
+      } else if (action.payload.dataToSent.payments.length == 0) {
+        state.endOfResultPaymentsAndSub = true;
+      }
       return {
         ...state,
-        myPaymentsAndSub: action.payload
+        myPaymentsAndSubCount: action.payload.dataToSent.count,
+        myPaymentsAndSub: [
+          ...state.myPaymentsAndSub,
+          ...action.payload.dataToSent.payments
+        ]
       };
     }
     case CHANGE_MY_PASSWORD_SUCCESS: {
+      let mgsReturned = true;
+      if (!action.payload.data) {
+        mgsReturned = "error";
+      }
       return {
         ...state,
-        passwordChanged: action.payload
+        passwordChanged: mgsReturned
       };
     }
     case PP_PHOTO_SELECTED: {

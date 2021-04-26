@@ -18,7 +18,8 @@ import {
   requestPhotoReadPPSuccess,
   requestPhotoReadPPFail,
   updateMainPSuccess,
-  showProfileMessage
+  showProfileMessage,
+  deleteMyAccountSuccess
 } from "../actions/Profile";
 import { showAuthMessage } from "../actions/Auth";
 import {
@@ -36,7 +37,8 @@ import {
   READ_MY_PHOTOS,
   REQUEST_PERMISSION_PP_READ_REMOVE,
   REQUEST_PHOTO_READ_PP,
-  UPDATE_MAIN_PHOTO
+  UPDATE_MAIN_PHOTO,
+  DELETE_MY_ACCOUNT
 } from "../constants/ActionTypes";
 import { profile } from "../services/profile";
 const readProfileL2 = async (id, co, ci, va) =>
@@ -108,6 +110,12 @@ const photoUploadPP = async (file, photoNum) =>
 const photoRemovePP = async photoNum =>
   await profile
     .requestRemovePhotoPP(photoNum)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const deleteMyAccount = async password =>
+  await profile
+    .deleteMyAccount(password)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -240,7 +248,7 @@ function* changeMyPasswordRequest({ payload }) {
 
 function* changeUserLoginPhoneRequest({ payload }) {
   const { newPhone, password } = payload;
-  console.log("oldPassword,newPassword saga ", newPhone, password);
+  console.log("newPhone ,oldPassword saga ", newPhone, password);
   try {
     const returnedData = yield call(changeUserPhone, newPhone, password);
     if (returnedData.message) {
@@ -367,6 +375,20 @@ function* updateMainPhotoRequest({ payload }) {
   }
 }
 
+function* deleteMyAccountRequest({ payload }) {
+  console.log("delete account from saga ", payload);
+  try {
+    const returnedData = yield call(deleteMyAccount, payload);
+    if (returnedData.message) {
+      yield put(deleteMyAccountSuccess(false));
+    } else {
+      yield put(deleteMyAccountSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
 export function* readProfileL2Data() {
   yield takeEvery(READ_PROFILE_L2, readProfileL2Request);
@@ -429,6 +451,10 @@ export function* requestUpdateMainPhoto() {
   yield takeEvery(UPDATE_MAIN_PHOTO, updateMainPhotoRequest);
 }
 
+export function* requestDeleteMyAccount() {
+  yield takeEvery(DELETE_MY_ACCOUNT, deleteMyAccountRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(readProfileL2Data),
@@ -445,6 +471,7 @@ export default function* rootSaga() {
     fork(requestRemovePhotoPP),
     fork(requestPermissionPPReadRemove),
     fork(requestReadPhotosPP),
-    fork(requestUpdateMainPhoto)
+    fork(requestUpdateMainPhoto),
+    fork(requestDeleteMyAccount)
   ]);
 }

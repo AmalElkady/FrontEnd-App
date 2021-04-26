@@ -39,9 +39,14 @@ let callAxios = options => {
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
             });
+          } else if (response.data.code == "TIME") {
+            console.log("time");
+            resolve({ data: response.data });
           } else {
             resolve(response);
           }
+        } else if (response.data.error) {
+          resolve({ data: { message: "error" } });
         } else {
           resolve(response);
         }
@@ -309,9 +314,9 @@ profile.changePassword = function(oldPassword, newPassword) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
+      console.log("response of change password ", response);
 
       if (response.response) {
-        console.log("response of change password ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -347,6 +352,8 @@ profile.changeUserLoginPhone = function(newPhone, password) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
+
+      console.log("response of change phone", response);
 
       if (response.response) {
         console.log("response of change phone ", response);
@@ -384,9 +391,9 @@ profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
+      console.log("response of verify change phone ", response);
 
       if (response.response) {
-        console.log("response of verify change phone ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -400,6 +407,7 @@ profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
 };
 
 profile.readMyPhoneAndMyPwData = function() {
+  console.log("from readMyPhoneAndMyPwData service");
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -734,6 +742,41 @@ profile.updateMainPhoto = function(file) {
       }
     } else {
       resolve({ message: "empty values not allowed !" });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+profile.deleteMyAccount = function(password) {
+  console.log("from service deleteMyAccount ", password);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        // url: `/requestpermissionppreadaddremove?action=${action}`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          password
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response deleteMyAccount", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
     }
   }).catch(err => {
     console.log(err);
