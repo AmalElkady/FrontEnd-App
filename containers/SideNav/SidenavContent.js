@@ -131,16 +131,16 @@ class SidenavContent extends Component {
             </Link>
           </li>
 
-          <li className="menu no-arrow">
+          {/* <li className="menu no-arrow">
             <Link href="/app/to-do">
               <a className="prepend-icon">
-                {/* <i className="zmdi zmdi-check-square zmdi-hc-fw" /> */}
+                <i className="zmdi zmdi-check-square zmdi-hc-fw" />
                 <span className="nav-text">
                   <IntlMessages id="sidebar.notification" />
                 </span>
               </a>
             </Link>
-          </li>
+          </li> */}
 
           {/* <li className="menu no-arrow">
             <Link href="/app/contact">
@@ -175,6 +175,18 @@ class SidenavContent extends Component {
               </a>
             </Link>
           </li>
+
+          <li className="menu no-arrow">
+            <Link href="/home/privacyterms">
+              <a className="prepend-icon">
+                {/* <i className="zmdi zmdi-comment zmdi-hc-fw" /> */}
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.privacyterms" />
+                </span>
+              </a>
+            </Link>
+          </li>
+
           <li
             className="menu no-arrow"
             onClick={() => {

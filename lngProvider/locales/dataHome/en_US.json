@@ -53,7 +53,11 @@
   "sidebar.views": "My Profile Views",
   "sidebar.blockedUsers": "Blocked Users",
   "sidebar.setting": "Settings",
+  "sidebar.privacyterms": "Privacy and Terms of use",
   "sidebar.logout": "Logout",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",
-  "sidebar.love": "Love Gila ${&copy;} 2021"
+  "sidebar.love": "Love Gila ${&copy;} 2021",
+
+  "privacy.policy": "Privacy and Policy",
+  "terms.conditions": "Terms and Conditions"
 }

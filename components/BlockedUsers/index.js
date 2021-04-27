@@ -21,9 +21,9 @@ import {
   NotificationManager
 } from "react-notifications";
 
-export default function Views() {
+export default function BlockedUsers() {
   const dispatch = useDispatch();
-   const router = useRouter();
+  const router = useRouter();
   const [finalUsersProfiles, setFinalUsersProfiles] = useState(null);
 
   const photoReadSignedRequest = useSelector(
@@ -31,10 +31,18 @@ export default function Views() {
   );
 
   //Users Blocked
-  const blockedUsersProfiles = useSelector(state => state.interaction.blockedUsersProfiles);
-  const blockedUsersDates = useSelector(state => state.interaction.blockedUsersDates);
-  const scoreHBlockedUsers = useSelector(state => state.interaction.scoreHBlockedUsers);
-  const OffsetBlockedUsers = useSelector(state => state.interaction.OffsetBlockedUsers);
+  const blockedUsersProfiles = useSelector(
+    state => state.interaction.blockedUsersProfiles
+  );
+  const blockedUsersDates = useSelector(
+    state => state.interaction.blockedUsersDates
+  );
+  const scoreHBlockedUsers = useSelector(
+    state => state.interaction.scoreHBlockedUsers
+  );
+  const OffsetBlockedUsers = useSelector(
+    state => state.interaction.OffsetBlockedUsers
+  );
   const endOfResultBlockedUsers = useSelector(
     state => state.interaction.endOfResultBlockedUsers
   );
@@ -44,28 +52,27 @@ export default function Views() {
   }, []);
 
   useEffect(() => {
-    if (blockedUsersProfiles.length!=0) {
-       console.log("blockedUsersProfiles2 ", blockedUsersProfiles);
-       dispatch(requestPhotoRead());
+    if (blockedUsersProfiles.length != 0) {
+      console.log("blockedUsersProfiles2 ", blockedUsersProfiles);
+      dispatch(requestPhotoRead());
     }
   }, [blockedUsersProfiles]);
 
-
-    useEffect(() => {
-      if (photoReadSignedRequest != null) {
-        setFinalUsersProfiles(null);
-        let finalUserBlocked = [];
-        if (router.pathname == "/home/blockedUsers") {
+  useEffect(() => {
+    if (photoReadSignedRequest != null) {
+      setFinalUsersProfiles(null);
+      let finalUserBlocked = [];
+      if (router.pathname == "/home/blockedUsers") {
         //   if (user.length != 0) {
-            finalUserBlocked = mapSmallUserPhotoUrl(
-              blockedUsersProfiles,
-              photoReadSignedRequest.signedRequest
-            );
-            setFinalUsersProfiles(finalUserBlocked);
+        finalUserBlocked = mapSmallUserPhotoUrl(
+          blockedUsersProfiles,
+          photoReadSignedRequest.signedRequest
+        );
+        setFinalUsersProfiles(finalUserBlocked);
         //   }
-        }
       }
-    }, [photoReadSignedRequest]);
+    }
+  }, [photoReadSignedRequest]);
 
   // handle scroll for list of Blocked Users
   const handleScrollGetBlockedUsers = () => {
@@ -78,11 +85,11 @@ export default function Views() {
   return (
     <>
       <Grid container>
-            <Grid item xs={12} className="page-title-container">
-         <Typography variant="h6">
-                    <IntlMessages id="blockedList.blockedTitle" />
-              </Typography>
-       </Grid>
+        <Grid item xs={12} className="page-title-container">
+          <Typography variant="h6">
+            <IntlMessages id="blockedList.blockedTitle" />
+          </Typography>
+        </Grid>
         {router.pathname == "/home/blockedUsers" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll-2 "
@@ -105,7 +112,11 @@ export default function Views() {
             {blockedUsersProfiles.length != 0 && (
               <Grid item xs={12} className="items-container ">
                 {blockedUsersProfiles.map((option, index) => (
-                  <ListItem key={blockedUsersDates[index]} user={option} time={blockedUsersDates[index]} />
+                  <ListItem
+                    key={blockedUsersDates[index]}
+                    user={option}
+                    time={blockedUsersDates[index]}
+                  />
                 ))}
               </Grid>
             )}
