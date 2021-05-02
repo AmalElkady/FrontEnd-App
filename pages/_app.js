@@ -16,7 +16,6 @@ const theme = createMuiTheme({
     }
   }
 });
-
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     return {

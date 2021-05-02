@@ -65,8 +65,10 @@ const initialProfileState = {
   incomingPPNotApprovedRequestsProfiles: "",
 
   endOfResultUserViews: false, // for user views
-  startUserViews: 0,
-  endUserViews: 5,
+  // startUserViews: 0,
+  // endUserViews: 5,
+  scoreHViewsUsers: "",
+  OffsetViewsUsers: 0,
   userViewsProfiles: "",
   userViewsDates: "",
 
@@ -297,16 +299,16 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_USER_VIEWS_SUCCESS: {
-      console.log("from reducer User views ", action.payload);
-
+      console.log("from reducer User views *********", action.payload);
       let viewsProfiles = [];
       if (action.payload.profiles.length != 0) {
         viewsProfiles = map2ArrTo1Arr(
           action.payload.order,
           action.payload.profiles
         );
-        state.startUserViews += state.limitReturnedItems;
-        state.endUserViews += state.limitReturnedItems;
+        const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
+        state.scoreHViewsUsers = SL;
+        state.OffsetViewsUsers = offset;
         if (action.payload.profiles.length < state.limitReturnedItems) {
           state.endOfResultUserViews = true;
         }

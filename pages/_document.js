@@ -15,6 +15,7 @@ export default class MyDocument extends Document {
 
           <link rel="stylesheet" href="../static/loader.css" />
           <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places,geometry,drawing&key=AIzaSyA72EHVeUE3qZ4eG6BnHgxgfIWH48dTEDA" />
+          <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
         </Head>
         <body>
           <Main />

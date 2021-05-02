@@ -44,19 +44,19 @@ import Flag from "react-world-flags";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: "20%",
+    width: "20%",
     cursor: "pointer",
     borderRadius: "3rem",
     border: "2.5px solid #d91f5b",
     margin: "1.5rem",
-    "@media only screen and (min-width: 1099px) ": {
-      maxWidth: "20%"
-    },
-    "@media only screen and (max-width: 1099px) ": {
-      maxWidth: "30%"
-    },
-    "@media (max-width:700px)": {
-      maxWidth: "100%"
+    // "@media only screen and (min-width: 1099px) ": {
+    //   maxWidth: "20%"
+    // },
+    // "@media only screen and (max-width: 1099px) ": {
+    //   maxWidth: "30%"
+    // },
+    "@media screen and (max-width: 575px) ": {
+      width: "100%"
     }
   },
   media: {

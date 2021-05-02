@@ -23,7 +23,7 @@ import {
 
 export default function Views() {
   const dispatch = useDispatch();
-   const router = useRouter();
+  const router = useRouter();
   const [finalUsersProfiles, setFinalUsersProfiles] = useState(null);
 
   const photoReadSignedRequest = useSelector(
@@ -31,10 +31,15 @@ export default function Views() {
   );
 
   //User Views
-  const userViewsProfiles = useSelector(state => state.interaction.userViewsProfiles);
+  const userViewsProfiles = useSelector(
+    state => state.interaction.userViewsProfiles
+  );
   const userViewsDates = useSelector(state => state.interaction.userViewsDates);
-  const endUserViews = useSelector(state => state.interaction.endUserViews);
-  const startUserViews = useSelector(state => state.interaction.startUserViews);
+  const endUserViews = useSelector(state => state.interaction.OffsetViewsUsers);
+  const startUserViews = useSelector(
+    state => state.interaction.scoreHViewsUsers
+  );
+
   const endOfResultUserViews = useSelector(
     state => state.interaction.endOfResultUserViews
   );
@@ -45,26 +50,26 @@ export default function Views() {
 
   useEffect(() => {
     if (userViewsProfiles) {
-       console.log("userViewsProfiles ", userViewsProfiles);
-       dispatch(requestPhotoRead());
+      console.log("userViewsProfiles ", userViewsProfiles);
+      dispatch(requestPhotoRead());
     }
   }, [userViewsProfiles]);
 
-    useEffect(() => {
-      if (photoReadSignedRequest != null) {
-        setFinalUsersProfiles(null);
-        let finalUserViewsProfiles = [];
-        if (router.pathname == "/home/views") {
-          if (userViewsProfiles.length != 0) {
-            finalUserViewsProfiles = mapSmallUserPhotoUrl(
-              userViewsProfiles,
-              photoReadSignedRequest.signedRequest
-            );
-            setFinalUsersProfiles(finalUserViewsProfiles);
-          }
+  useEffect(() => {
+    if (photoReadSignedRequest != null) {
+      setFinalUsersProfiles(null);
+      let finalUserViewsProfiles = [];
+      if (router.pathname == "/home/views") {
+        if (userViewsProfiles.length != 0) {
+          finalUserViewsProfiles = mapSmallUserPhotoUrl(
+            userViewsProfiles,
+            photoReadSignedRequest.signedRequest
+          );
+          setFinalUsersProfiles(finalUserViewsProfiles);
         }
       }
-    }, [photoReadSignedRequest]);
+    }
+  }, [photoReadSignedRequest]);
 
   // handle scroll for list of profile views
   const handleScrollGetProfileViews = () => {
@@ -78,10 +83,10 @@ export default function Views() {
     <>
       <Grid container>
         <Grid item xs={12} className="page-title-container">
-         <Typography variant="h6">
-                    <IntlMessages id="viewList.viewTitle" />
-              </Typography>
-       </Grid>
+          <Typography variant="h6">
+            <IntlMessages id="viewList.viewTitle" />
+          </Typography>
+        </Grid>
         {router.pathname == "/home/views" && finalUsersProfiles && (
           <InfiniteScroll
             className="scroll-m items-scroll-2"
@@ -104,7 +109,11 @@ export default function Views() {
             {userViewsProfiles.length != 0 && (
               <Grid item xs={12} className="items-container">
                 {userViewsProfiles.map((option, index) => (
-                  <ListItem key={userViewsDates[index]} user={option} time={userViewsDates[index]} />
+                  <ListItem
+                    key={userViewsDates[index]}
+                    user={option}
+                    time={userViewsDates[index]}
+                  />
                 ))}
               </Grid>
             )}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
+//import Pusher from "pusher-client";
 import base64url from "base64url";
 
 const profile = {};
@@ -781,6 +782,51 @@ profile.deleteMyAccount = function(password) {
   }).catch(err => {
     console.log(err);
   });
+};
+
+profile.pusherAuth = function() {
+  // Enable pusher logging - don't include this in production
+  // Pusher.logToConsole = true;
+
+  let authUrl = "/api/requestnotoficationconnection";
+  const tokenValue = getCookie("access_token", false);
+  let authorizer = (channel, options) => {
+    return {
+      authorize: (socketId, callback) => {
+        fetch(authUrl, {
+          method: "POST",
+          headers: new Headers(
+            // { "Content-Type": "application/json", 'Authorization': "Bearer 0A08DACEF62A50AB89EA8188ABABAFBD6DD94909A78A5BCC089A9E764DC3A866" }
+
+            {
+              Accept: "application/json",
+              "Content-Type": "application/json;charset=UTF-8",
+              Authorization: "Bearer " + tokenValue
+            }
+          ),
+          body: JSON.stringify({
+            socket_id: socketId,
+            channel_name: channel.name
+          })
+        })
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`Received ${res.statusCode} from ${authUrl}`);
+            }
+            return res.json();
+          })
+          .then(data => {
+            callback(null, data);
+          })
+          .catch(err => {
+            callback(new Error(`Error calling auth endpoint: ${err}`), {
+              auth: ""
+            });
+          });
+      }
+    };
+  };
+  return authorizer;
 };
 
 export { profile };
