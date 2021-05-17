@@ -27,7 +27,8 @@ import {
   clearConversation,
   deleteConversation,
   getProfiles,
-  getProfilesOnlineStatus
+  getProfilesOnlineStatus,
+  setActiveConversation
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -44,6 +45,10 @@ const Conversation = ({ myPhoto }) => {
 
   const returnedProfilesOnlineStatus = useSelector(
     state => state.messages.returnedProfilesOnlineStatus
+  );
+
+  const respActiveConversation = useSelector(
+    state => state.messages.respActiveConversation
   );
 
   const clickedUserChatUnread = useSelector(
@@ -96,6 +101,17 @@ const Conversation = ({ myPhoto }) => {
           `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
         ])
       );
+
+      //call it each 20s if closed send activate:false
+      dispatch(
+        setActiveConversation(
+          clickedUserChat.i,
+          clickedUserChat.co,
+          clickedUserChat.ci,
+          clickedUserChat.va,
+          true
+        )
+      );
       if (clickedUserChatUnread > limitReturnedMessages) {
         dispatch(
           readConversation(
@@ -140,6 +156,12 @@ const Conversation = ({ myPhoto }) => {
       console.log("returnedProfilesOnlineStatus", returnedProfilesOnlineStatus);
     }
   }, [returnedProfilesOnlineStatus]);
+
+  useEffect(() => {
+    if (respActiveConversation != null) {
+      console.log("respActiveConversation", respActiveConversation);
+    }
+  }, [respActiveConversation]);
 
   // handle scroll for list of Conversation messages
   const handleScrollConversationMessages = () => {

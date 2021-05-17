@@ -397,4 +397,57 @@ messages.getProfilesOnlineStatus = function(checkProfiles, listForEachProfile) {
   });
 };
 
+messages.setActiveConversation = function(
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) {
+  console.log(
+    "from messages service setActiveConversation ",
+    profileid,
+    country,
+    city,
+    varea,
+    activate
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/setactiveconversation",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea,
+          activate
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("setActiveConversation from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

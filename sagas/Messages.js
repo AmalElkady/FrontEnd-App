@@ -8,7 +8,8 @@ import {
   clearConversationSuccess,
   deleteConversationSuccess,
   getProfilesSuccess,
-  getProfilesOnlineStatusSuccess
+  getProfilesOnlineStatusSuccess,
+  setActiveConversationSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
@@ -18,7 +19,8 @@ import {
   CLEAR_CONVERSATION,
   DELETE_CONVERSATION,
   GET_PROFILES,
-  GET_PROFILES_ONLINE_STATUS
+  GET_PROFILES_ONLINE_STATUS,
+  SET_ACTIVE_CONVERSATION
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -77,6 +79,19 @@ const getProfilesOnlineStatus = async (checkProfiles, listForEachProfile) =>
     .getProfilesOnlineStatus(checkProfiles, listForEachProfile)
     .then(returnedData => returnedData)
     .catch(error => error);
+
+const setActiveConversation = async (
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) =>
+  await messages
+    .setActiveConversation(profileid, country, city, varea, activate)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
 /////
 
 function* sendMessageRequest({ payload }) {
@@ -229,6 +244,35 @@ function* getProfilesOnlineStatusRequest({ payload }) {
   }
 }
 
+function* setActiveConversationRequest({ payload }) {
+  const { profileid, country, city, varea, activate } = payload;
+  console.log(
+    "delete Conversation saga ",
+    profileid,
+    country,
+    city,
+    varea,
+    activate
+  );
+  try {
+    const returnedData = yield call(
+      setActiveConversation,
+      profileid,
+      country,
+      city,
+      varea,
+      activate
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(setActiveConversationSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -266,6 +310,10 @@ export function* requestGetProfilesOnlineStatus() {
   yield takeEvery(GET_PROFILES_ONLINE_STATUS, getProfilesOnlineStatusRequest);
 }
 
+export function* requestSetActiveConversation() {
+  yield takeEvery(SET_ACTIVE_CONVERSATION, setActiveConversationRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
@@ -275,6 +323,7 @@ export default function* rootSaga() {
     fork(requestClearConversation),
     fork(requestDeleteConversation),
     fork(requestGetProfiles),
-    fork(requestGetProfilesOnlineStatus)
+    fork(requestGetProfilesOnlineStatus),
+    fork(requestSetActiveConversation)
   ]);
 }

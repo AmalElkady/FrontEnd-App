@@ -19,6 +19,8 @@ import {
   GET_PROFILES_SUCCESS,
   GET_PROFILES_ONLINE_STATUS,
   GET_PROFILES_ONLINE_STATUS_SUCCESS,
+  SET_ACTIVE_CONVERSATION,
+  SET_ACTIVE_CONVERSATION_SUCCESS,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
@@ -164,6 +166,26 @@ export const getProfilesOnlineStatus = (checkProfiles, listForEachProfile) => {
 export const getProfilesOnlineStatusSuccess = data => {
   return {
     type: GET_PROFILES_ONLINE_STATUS_SUCCESS,
+    payload: data
+  };
+};
+
+export const setActiveConversation = (
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) => {
+  return {
+    type: SET_ACTIVE_CONVERSATION,
+    payload: { profileid, country, city, varea, activate }
+  };
+};
+
+export const setActiveConversationSuccess = data => {
+  return {
+    type: SET_ACTIVE_CONVERSATION_SUCCESS,
     payload: data
   };
 };
