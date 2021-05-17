@@ -26,7 +26,8 @@ import {
   readAllMessagesCovers,
   clearConversation,
   deleteConversation,
-  getProfiles
+  getProfiles,
+  getProfilesOnlineStatus
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -39,6 +40,10 @@ const Conversation = ({ myPhoto }) => {
   const clickedUserChat = useSelector(state => state.messages.clickedUserChat);
   const returnedProfiles = useSelector(
     state => state.messages.returnedProfiles
+  );
+
+  const returnedProfilesOnlineStatus = useSelector(
+    state => state.messages.returnedProfilesOnlineStatus
   );
 
   const clickedUserChatUnread = useSelector(
@@ -122,8 +127,19 @@ const Conversation = ({ myPhoto }) => {
   useEffect(() => {
     if (returnedProfiles != null) {
       console.log("returnedProfiles", returnedProfiles);
+      dispatch(
+        getProfilesOnlineStatus(returnedProfiles, [
+          `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_26-33`
+        ])
+      );
     }
   }, [returnedProfiles]);
+
+  useEffect(() => {
+    if (returnedProfilesOnlineStatus != null) {
+      console.log("returnedProfilesOnlineStatus", returnedProfilesOnlineStatus);
+    }
+  }, [returnedProfilesOnlineStatus]);
 
   // handle scroll for list of Conversation messages
   const handleScrollConversationMessages = () => {

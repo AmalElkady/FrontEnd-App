@@ -17,6 +17,8 @@ import {
   REMOVE_ITEM_LIST,
   GET_PROFILES,
   GET_PROFILES_SUCCESS,
+  GET_PROFILES_ONLINE_STATUS,
+  GET_PROFILES_ONLINE_STATUS_SUCCESS,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
@@ -148,6 +150,20 @@ export const getProfiles = profileKeys => {
 export const getProfilesSuccess = data => {
   return {
     type: GET_PROFILES_SUCCESS,
+    payload: data
+  };
+};
+
+export const getProfilesOnlineStatus = (checkProfiles, listForEachProfile) => {
+  return {
+    type: GET_PROFILES_ONLINE_STATUS,
+    payload: { checkProfiles, listForEachProfile }
+  };
+};
+
+export const getProfilesOnlineStatusSuccess = data => {
+  return {
+    type: GET_PROFILES_ONLINE_STATUS_SUCCESS,
     payload: data
   };
 };

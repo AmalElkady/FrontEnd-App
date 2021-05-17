@@ -7,7 +7,8 @@ import {
   readAllMessagesCoversSuccess,
   clearConversationSuccess,
   deleteConversationSuccess,
-  getProfilesSuccess
+  getProfilesSuccess,
+  getProfilesOnlineStatusSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
@@ -16,7 +17,8 @@ import {
   READ_ALL_MESSAGES_COVERS,
   CLEAR_CONVERSATION,
   DELETE_CONVERSATION,
-  GET_PROFILES
+  GET_PROFILES,
+  GET_PROFILES_ONLINE_STATUS
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -67,6 +69,12 @@ const deleteConversation = async (profileid, country, city, varea) =>
 const getProfiles = async profileKeys =>
   await messages
     .getProfiles(profileKeys)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const getProfilesOnlineStatus = async (checkProfiles, listForEachProfile) =>
+  await messages
+    .getProfilesOnlineStatus(checkProfiles, listForEachProfile)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -198,6 +206,29 @@ function* getProfilesRequest({ payload }) {
   }
 }
 
+function* getProfilesOnlineStatusRequest({ payload }) {
+  const { checkProfiles, listForEachProfile } = payload;
+  console.log(
+    "get profiles online status saga ",
+    checkProfiles,
+    listForEachProfile
+  );
+  try {
+    const returnedData = yield call(
+      getProfilesOnlineStatus,
+      checkProfiles,
+      listForEachProfile
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(getProfilesOnlineStatusSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -231,6 +262,10 @@ export function* requestGetProfiles() {
   yield takeEvery(GET_PROFILES, getProfilesRequest);
 }
 
+export function* requestGetProfilesOnlineStatus() {
+  yield takeEvery(GET_PROFILES_ONLINE_STATUS, getProfilesOnlineStatusRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
@@ -239,6 +274,7 @@ export default function* rootSaga() {
     fork(requestAllMessagesCovers),
     fork(requestClearConversation),
     fork(requestDeleteConversation),
-    fork(requestGetProfiles)
+    fork(requestGetProfiles),
+    fork(requestGetProfilesOnlineStatus)
   ]);
 }

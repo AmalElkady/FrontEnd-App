@@ -224,6 +224,15 @@ export default function Connection() {
       connectionChannel.bind("disconnect_signal", function(data) {
         //  fillData('disconnectsignal-container',data.value);
         console.log("data.value ", data.value);
+        if (data.value == 1) {
+          const tokenValue = getCookie("access_token", false);
+          const tokenUserData = JSON.parse(
+            base64url.decode(`${tokenValue}`.split(".")[1])
+          );
+          connectionPusher.unsubscribe(
+            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
+          );
+        }
       });
 
       // dispatch(addConnectionFlage());

@@ -356,4 +356,45 @@ messages.getProfiles = function(profileKeys) {
   });
 };
 
+messages.getProfilesOnlineStatus = function(checkProfiles, listForEachProfile) {
+  console.log(
+    "from messages service getProfilesOnlineStatus ",
+    checkProfiles,
+    listForEachProfile
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/getprofilesonlinestatus",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          checkProfiles,
+          listForEachProfile
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("getProfilesOnlineStatus from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

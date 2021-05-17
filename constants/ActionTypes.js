@@ -455,3 +455,7 @@ export const DELETE_MY_ACCOUNT_SUCCESS = "delete_my_account_success";
 //RealTime
 export const GET_PROFILES = "get_profiles";
 export const GET_PROFILES_SUCCESS = "get_profiles_success";
+
+export const GET_PROFILES_ONLINE_STATUS = "get_profiles_online_status";
+export const GET_PROFILES_ONLINE_STATUS_SUCCESS =
+  "get_profiles_online_status_success";
