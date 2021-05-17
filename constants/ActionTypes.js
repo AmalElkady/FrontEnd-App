@@ -88,6 +88,9 @@ export const MAIN_PHOTO_SELECTED = "main_photo_selected";
 export const SWITCH_FORM = "switch_form";
 export const SWITCH_FORM_2 = "switch_form_2";
 export const CONFIRM_PASSWORD_CASE = "confirm_password_case";
+
+export const ADD_CONNECTION_FLAG = "add_connection_flag";
+
 // Chat Module const
 
 export const FETCH_ALL_CHAT_USER = "fetch_all_chat_user";
@@ -403,10 +406,14 @@ export const CLEAN_NOTIFICATION_VIEW_PP_LOVE =
 export const CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS =
   "clean_notification_view_pp_love_success";
 export const RESET_COUNT = "reset_count";
+export const INCREASE_COUNT = "increase_count";
 
 export const OPEN_MODAL = "open_modal";
 export const OPEN_MODAL_PP = "open_modal_pp";
 export const CLICKED_ID = "clicked_id";
+
+export const PUSH_IN_NOTIFICATION_VIEW_PP_LOVE =
+  "push_in_notification_view_pp_love";
 
 // UPDATE LISTS
 export const UPDATE_LIST = "update_list";
@@ -438,6 +445,8 @@ export const RESET_MESSAGES_COVERS = "reset_messages_covers";
 export const REMOVE_ITEM_LIST = "remove_item_list";
 export const RESET_MESSAGES_COVERS_UNREAD_COUNT =
   "reset_messages_covers_unread_count";
+
+export const INCREASE_MESSAGES_UNREAD_COUNT = "increase_messages_unread_count";
 
 //Settings
 export const DELETE_MY_ACCOUNT = "delete_my_account";

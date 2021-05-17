@@ -107,34 +107,49 @@
   }
 }
 
-.item-icons-container{
-    justify-content:space-around;
+.item-icons-container {
+  justify-content: space-around;
+}
+
+.icon-container {
+  text-align: center;
+  color: gray;
+  @media screen and (max-width: 575px) {
+    max-width: 25% !important;
+    flex-basis: 25% !important;
   }
-
-.icon-container{
-    text-align: center;
-    color: gray;
-     @media screen and (max-width: 575px) {
-        max-width: 25% !important;
-        flex-basis: 25% !important;
-      }
 }
 
-.page-title-container{
-   margin-top:2rem !important;
-    @media screen and (max-width: 575px) {
-  margin-top:4rem !important;
-      }
+.page-title-container {
+  margin-top: 2rem !important;
+  @media screen and (max-width: 575px) {
+    margin-top: 4rem !important;
+  }
 }
 
-.page-title-container-2{
-   margin-bottom: 4rem !important;
-    @media screen and (max-width: 575px) {
-   margin-bottom: 0 !important;
-      }
+.page-title-container-2 {
+  margin-bottom: 4rem !important;
+  @media screen and (max-width: 575px) {
+    margin-bottom: 0 !important;
+  }
 }
 
+.page-icons-container {
+  margin-top: -4rem !important;
+}
 
-.page-icons-container{
-  margin-top:-4rem !important;
+.notification-container {
+  width: 24rem !important;
+  bottom: 1rem !important;
+  top: unset !important;
+
+  // @media screen and (max-width: 575px) {
+  //   width: 25rem !important;
+  // }
+  & .notif-img {
+    border-radius: 50%;
+    & img {
+      border-radius: 50%;
+    }
+  }
 }

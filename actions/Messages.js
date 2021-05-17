@@ -15,7 +15,8 @@ import {
   RESET_MESSAGES_COVERS,
   RESET_MESSAGES_COVERS_UNREAD_COUNT,
   REMOVE_ITEM_LIST,
-  SHOW_MESSAGE
+  SHOW_MESSAGE,
+  INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
 
 export const sendMessage = (profileid, country, city, varea, message) => {
@@ -132,6 +133,13 @@ export const resetMegsCoversUnreadCount = index => {
   return {
     type: RESET_MESSAGES_COVERS_UNREAD_COUNT,
     payload: index
+  };
+};
+
+export const increaseMgsUnRCount = () => {
+  return {
+    type: INCREASE_MESSAGES_UNREAD_COUNT
+    // payload:
   };
 };
 

@@ -16,5 +16,18 @@ export const mapSmallUserPhotoUrl = (usersArr, signedRequest) => {
       });
       return newUsersArr;
     }
+  } else if (typeof usersArr === "object" && usersArr !== null) {
+    console.log("object to map******");
+    if (signedRequest != null) {
+      if (!usersArr._.includes("MP/")) {
+        usersArr._ = usersArr._.replace(".jpeg", ".jpg");
+        const editSignedRequest = signedRequest.replace(
+          "MP/*?",
+          `MP/${usersArr.cociva}/${usersArr.i}_49x49${usersArr._}?`
+        );
+        usersArr._ = editSignedRequest;
+      }
+      return usersArr;
+    }
   }
 };

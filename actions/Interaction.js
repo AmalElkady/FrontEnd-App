@@ -28,7 +28,9 @@ import {
   CLEAN_NOTIFICATION_VIEW_PP_LOVE,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   RESET_COUNT,
-  UPDATE_LIST
+  UPDATE_LIST,
+  INCREASE_COUNT
+  //PUSH_IN_NOTIFICATION_VIEW_PP_LOVE
 } from "../constants/ActionTypes";
 
 export const ppAccessApproveRemove = (
@@ -268,6 +270,14 @@ export const resetCount = type => {
   };
 };
 
+export const increaseCount = type => {
+  console.log("from increase Count action");
+  return {
+    type: INCREASE_COUNT,
+    payload: type
+  };
+};
+
 export const updateList = type => {
   console.log("from update list action", type);
   return {
@@ -275,3 +285,11 @@ export const updateList = type => {
     payload: type
   };
 };
+
+// export const pushInNotificationViewPPLove = (t, user) => {
+//   console.log("from pushInNotificationViewPPLove action", t, user);
+//   return {
+//     type: PUSH_IN_NOTIFICATION_VIEW_PP_LOVE,
+//     payload: { t, user }
+//   };
+// };

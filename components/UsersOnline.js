@@ -74,7 +74,10 @@ export default function UsersOnline() {
   useEffect(() => {
     if (photoReadSignedRequest != null) {
       if (searchState == "active") {
-        if (AllCountriesSelectedOnlineUsers.length != 0) {
+        if (
+          AllCountriesSelectedOnlineUsers &&
+          AllCountriesSelectedOnlineUsers.length != 0
+        ) {
           const AllCountriesOnlineUsersNew = mapUserPhotoUrl(
             AllCountriesSelectedOnlineUsers,
             photoReadSignedRequest.signedRequest
@@ -88,6 +91,7 @@ export default function UsersOnline() {
   useEffect(() => {
     if (
       endOfResultUsers &&
+      AllCountriesSelectedOnline &&
       AllCountriesSelectedOnline.length != 0 &&
       currentIndexAllCountriesSelectedOnline <=
         AllCountriesSelectedOnline.length - 1
@@ -107,8 +111,9 @@ export default function UsersOnline() {
 
   useEffect(() => {
     if (
+      AllCountriesSelectedOnline &&
       currentIndexAllCountriesSelectedOnline ===
-      AllCountriesSelectedOnline.length - 1
+        AllCountriesSelectedOnline.length - 1
     ) {
       // Get online users other options
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
@@ -117,7 +122,7 @@ export default function UsersOnline() {
   }, [currentIndexAllCountriesSelectedOnline]);
 
   const handleScroll = () => {
-    if (AllCountriesSelectedOnline.length == 1) {
+    if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length == 1) {
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
     } else if (!endOfResultUsers) {
       dispatch(
@@ -161,8 +166,8 @@ export default function UsersOnline() {
           <CircularProgress />
         </div>
       )}
-      {showMessage && NotificationManager.error(alertMessage)}
-      <NotificationContainer />
+      {/* {showMessage && NotificationManager.error(alertMessage)}
+      <NotificationContainer /> */}
     </>
   );
 }

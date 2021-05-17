@@ -339,8 +339,8 @@ interaction.getLoveMatchedAndReceivedRequests = function(
 };
 
 interaction.getUserViews = function(start, end) {
-  // "start": "",
-  // "end": ""
+  // "scoreH": "",
+  // "offset": 0
 
   console.log("from service getuserviews ", start, end);
   return new Promise(async (resolve, reject) => {
@@ -355,8 +355,8 @@ interaction.getUserViews = function(start, end) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-          start,
-          end
+          scoreH: start,
+          offset: end
         }
       };
 
@@ -364,12 +364,11 @@ interaction.getUserViews = function(start, end) {
       let response = responseX.data;
 
       console.log("response getuserviews", response);
-      if (response.order) {
+      if (response) {
         resolve(response);
-      } else if(response.code){
-        resolve({view_profiles:"",view_dates:"",order:""});
-      }
-      else {
+      } else if (response.code) {
+        resolve({ profiles: "", dates: "", order: "" });
+      } else {
         resolve({ message: "no response !" });
       }
     } catch (err) {
@@ -562,7 +561,7 @@ interaction.getNotificationViewPPLove = function(
 };
 
 interaction.cleanNotificationViewPPLove = function(
- remove,
+  remove,
   viewScoreLow,
   viewScoreHigh,
   ppScoreLow,
@@ -571,21 +570,21 @@ interaction.cleanNotificationViewPPLove = function(
   loveScoreHigh
 ) {
   // "viewScoreLow":"",
-	// "viewScoreHigh": "",
-	// "ppScoreLow":"",
-	// "ppScoreHigh": "",
-	// "loveScoreLow":"",
-	// "loveScoreHigh": ""
+  // "viewScoreHigh": "",
+  // "ppScoreLow":"",
+  // "ppScoreHigh": "",
+  // "loveScoreLow":"",
+  // "loveScoreHigh": ""
 
   console.log(
     "from service getNotificationViewPPLove ",
-   remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh
+    remove,
+    viewScoreLow,
+    viewScoreHigh,
+    ppScoreLow,
+    ppScoreHigh,
+    loveScoreLow,
+    loveScoreHigh
   );
   return new Promise(async (resolve, reject) => {
     try {
@@ -599,12 +598,12 @@ interaction.cleanNotificationViewPPLove = function(
           Authorization: "Bearer " + tokenValue
         },
         data: {
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh
+          viewScoreLow,
+          viewScoreHigh,
+          ppScoreLow,
+          ppScoreHigh,
+          loveScoreLow,
+          loveScoreHigh
         }
       };
 
@@ -624,6 +623,5 @@ interaction.cleanNotificationViewPPLove = function(
     console.log(err);
   });
 };
-
 
 export { interaction };

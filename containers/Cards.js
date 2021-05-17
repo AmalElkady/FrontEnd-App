@@ -201,13 +201,13 @@ export default function Cards() {
 
   // online
   useEffect(() => {
-    if (AllCountriesSelectedOnline.length == 0) {
+    if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length == 0) {
       // Get online users options for first call
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
     }
   }, []);
   useEffect(() => {
-    if (AllCountriesSelectedOnline.length != 0) {
+    if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length != 0) {
       // Get users of AllCountriesSelectedOnline (first time)
       dispatch(
         allCountriesSelectedOnlineUsers(
@@ -221,6 +221,7 @@ export default function Cards() {
 
   useEffect(() => {
     if (
+      AgerangeAllCountriesSelectedOnline &&
       AgerangeAllCountriesSelectedOnline.length != 0 &&
       SelectedOnlineUsers.length == 0
     ) {
@@ -236,7 +237,11 @@ export default function Cards() {
   }, [AgerangeAllCountriesSelectedOnline]);
 
   useEffect(() => {
-    if (CountrySelectedOnline.length != 0 && SelectedOnlineUsers.length == 0) {
+    if (
+      CountrySelectedOnline &&
+      CountrySelectedOnline.length != 0 &&
+      SelectedOnlineUsers.length == 0
+    ) {
       // Get users of agerangeAllCountriesSelectedOnlineUsers (first time)
 
       dispatch(
@@ -251,6 +256,7 @@ export default function Cards() {
 
   useEffect(() => {
     if (
+      CountryCitySelectedOnline &&
       CountryCitySelectedOnline.length != 0 &&
       SelectedOnlineUsers.length == 0
     ) {
@@ -268,6 +274,7 @@ export default function Cards() {
 
   useEffect(() => {
     if (
+      CountryCitiesAgerangeSelectedOnline &&
       CountryCitiesAgerangeSelectedOnline.length != 0 &&
       SelectedOnlineUsers.length == 0
     ) {
@@ -301,7 +308,7 @@ export default function Cards() {
   }, [CountryCityAgerangeSelectedOnline]);
 
   useEffect(() => {
-    if (SelectedOnlineUsers.length != 0) {
+    if (SelectedOnlineUsers && SelectedOnlineUsers.length != 0) {
       setSelectedOnlineUsers([]);
       dispatch(requestPhotoRead());
     }
@@ -858,7 +865,8 @@ export default function Cards() {
         ) : (
           ""
         )
-      ) : AllCountriesSelectedOnline.length != 0 ? (
+      ) : AllCountriesSelectedOnline &&
+        AllCountriesSelectedOnline.length != 0 ? (
         <UsersOnline />
       ) : (
         ""

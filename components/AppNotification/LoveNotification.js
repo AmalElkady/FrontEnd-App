@@ -138,66 +138,96 @@ export default function LoveNotifications() {
   useEffect(() => {
     if (headerSelectedIcon) {
       setFinalUsersProfiles(null);
-      dispatch(requestPhotoRead());
+      //dispatch(requestPhotoRead());
       if (
-        headerSelectedIcon == "love" &&
-        notificationLoveCount < limitReturnedItems
+        headerSelectedIcon == "love"
+        // &&
+        // notificationLoveCount < limitReturnedItems
       ) {
         // clean read notifications
-        dispatch(resetCount("L"));
-        console.log(
-          "items to cleaned ",
-          scoreLCleanNotificationLove,
-          scoreHCleanNotificationLove
-        );
+        // dispatch(resetCount("L"));
+        // console.log(
+        //   "items to cleaned ",
+        //   scoreLCleanNotificationLove,
+        //   scoreHCleanNotificationLove
+        // );
+        // dispatch(
+        //   cleanNotificationViewPPLove(
+        //     "L",
+        //     "",
+        //     "",
+        //     "",
+        //     "",
+        //     scoreLCleanNotificationLove,
+        //     scoreHCleanNotificationLove
+        //   )
+        // );
         dispatch(
-          cleanNotificationViewPPLove(
-            "L",
+          getNotificationViewPPLove(
+            "CL",
             "",
             "",
-            "",
-            "",
-            scoreLCleanNotificationLove,
-            scoreHCleanNotificationLove
+            scoreHNotificationLove,
+            OffsetNotificationLove
           )
         );
       } else if (
-        headerSelectedIcon == "views" &&
-        notificationViewCount < limitReturnedItems
+        headerSelectedIcon == "views"
+        //&&
+        //notificationViewCount < limitReturnedItems
       ) {
         // clean read notifications
-        dispatch(resetCount("V"));
+        // dispatch(resetCount("V"));
+        // dispatch(
+        //   cleanNotificationViewPPLove(
+        //     "V",
+        //     scoreLCleanNotificationView,
+        //     scoreHCleanNotificationView,
+        //     "",
+        //     "",
+        //     "",
+        //     ""
+        //   )
+        // );
         dispatch(
-          cleanNotificationViewPPLove(
-            "V",
-            scoreLCleanNotificationView,
-            scoreHCleanNotificationView,
+          getNotificationViewPPLove(
+            "CV",
+            scoreHNotificationView,
             "",
             "",
-            "",
-            ""
+            OffsetNotificationView
           )
         );
       } else if (
-        headerSelectedIcon == "private" &&
-        notificationPPCount < limitReturnedItems
+        headerSelectedIcon == "private"
+        // &&
+        // notificationPPCount < limitReturnedItems
       ) {
         // clean read notifications
-        dispatch(resetCount("P"));
-        console.log(
-          "items to cleaned ",
-          scoreLCleanNotificationLove,
-          scoreHCleanNotificationLove
-        );
+        // dispatch(resetCount("P"));
+        // console.log(
+        //   "items to cleaned ",
+        //   scoreLCleanNotificationLove,
+        //   scoreHCleanNotificationLove
+        // );
+        // dispatch(
+        //   cleanNotificationViewPPLove(
+        //     "P",
+        //     "",
+        //     "",
+        //     scoreLCleanNotificationPP,
+        //     scoreHCleanNotificationPP,
+        //     "",
+        //     ""
+        //   )
+        // );
         dispatch(
-          cleanNotificationViewPPLove(
-            "P",
+          getNotificationViewPPLove(
+            "CP",
             "",
+            scoreHNotificationPP,
             "",
-            scoreLCleanNotificationPP,
-            scoreHCleanNotificationPP,
-            "",
-            ""
+            OffsetNotificationPP
           )
         );
       }
@@ -205,18 +235,54 @@ export default function LoveNotifications() {
   }, [headerSelectedIcon]);
   useEffect(() => {
     if (headerSelectedIcon == "love" && notificationLoveUnread.length != 0) {
+      dispatch(resetCount("L"));
+      dispatch(
+        cleanNotificationViewPPLove(
+          "L",
+          "",
+          "",
+          "",
+          "",
+          scoreLCleanNotificationLove,
+          scoreHCleanNotificationLove
+        )
+      );
       dispatch(requestPhotoRead());
     }
   }, [notificationLoveUnread]);
 
   useEffect(() => {
     if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
+      dispatch(resetCount("V"));
+      dispatch(
+        cleanNotificationViewPPLove(
+          "V",
+          scoreLCleanNotificationView,
+          scoreHCleanNotificationView,
+          "",
+          "",
+          "",
+          ""
+        )
+      );
       dispatch(requestPhotoRead());
     }
   }, [notificationViewUnread]);
 
   useEffect(() => {
     if (headerSelectedIcon == "private" && notificationPPUnread.length != 0) {
+      dispatch(resetCount("P"));
+      dispatch(
+        cleanNotificationViewPPLove(
+          "P",
+          "",
+          "",
+          scoreLCleanNotificationPP,
+          scoreHCleanNotificationPP,
+          "",
+          ""
+        )
+      );
       dispatch(requestPhotoRead());
     }
   }, [notificationPPUnread]);

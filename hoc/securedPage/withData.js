@@ -4,6 +4,7 @@ import redirect from "../../util/redirect";
 import asyncComponent from "../../util/asyncComponent";
 import Pusher from "pusher-js";
 import { profile } from "../../services/profile";
+import { addConnectionFlage } from "../../actions/Auth";
 
 import base64url from "base64url";
 const VerifyEmail = asyncComponent(() =>
@@ -78,81 +79,81 @@ export default ComposedComponent =>
       };
     }
 
-    componentDidMount() {
-      Pusher.logToConsole = true;
-      let authUrl = "http://128.199.32.156/api/requestnotificationconnection";
-      const tokenValue = getCookie("access_token", false);
-      let authorizer = (channel, options) => {
-        return {
-          authorize: (socketId, callback) => {
-            fetch(authUrl, {
-              method: "POST",
-              headers: new Headers(
-                // { "Content-Type": "application/json", 'Authorization': "Bearer 0A08DACEF62A50AB89EA8188ABABAFBD6DD94909A78A5BCC089A9E764DC3A866" }
+    // componentDidMount() {
+    //   Pusher.logToConsole = true;
+    //   let authUrl = "http://128.199.32.156/api/requestnotificationconnection";
+    //   const tokenValue = getCookie("access_token", false);
+    //   let authorizer = (channel, options) => {
+    //     return {
+    //       authorize: (socketId, callback) => {
+    //         fetch(authUrl, {
+    //           method: "POST",
+    //           headers: new Headers(
+    //             // { "Content-Type": "application/json", 'Authorization': "Bearer 0A08DACEF62A50AB89EA8188ABABAFBD6DD94909A78A5BCC089A9E764DC3A866" }
 
-                {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + tokenValue
-                }
-              ),
-              body: JSON.stringify({
-                socket_id: socketId,
-                channel_name: channel.name
-              })
-            })
-              .then(res => {
-                if (!res.ok) {
-                  throw new Error(`Received ${res.statusCode} from ${authUrl}`);
-                }
-                return res.json();
-              })
-              .then(data => {
-                console.log(data);
-                callback(null, data);
-              })
-              .catch(err => {
-                callback(new Error(`Error calling auth endpoint: ${err}`), {
-                  auth: ""
-                });
-              });
-          }
-        };
-      };
+    //             {
+    //               "Content-Type": "application/json",
+    //               Authorization: "Bearer " + tokenValue
+    //             }
+    //           ),
+    //           body: JSON.stringify({
+    //             socket_id: socketId,
+    //             channel_name: channel.name
+    //           })
+    //         })
+    //           .then(res => {
+    //             if (!res.ok) {
+    //               throw new Error(`Received ${res.statusCode} from ${authUrl}`);
+    //             }
+    //             return res.json();
+    //           })
+    //           .then(data => {
+    //             console.log(data);
+    //             callback(null, data);
+    //           })
+    //           .catch(err => {
+    //             callback(new Error(`Error calling auth endpoint: ${err}`), {
+    //               auth: ""
+    //             });
+    //           });
+    //       }
+    //     };
+    //   };
 
-      this.pusher = new Pusher(API_KEY, {
-        cluster: "eu",
-        // authorizer: profile.pusherAuth
-        authorizer: authorizer
-      });
+    //   this.pusher = new Pusher(API_KEY, {
+    //     cluster: "eu",
+    //     // authorizer: profile.pusherAuth
+    //     authorizer: authorizer
+    //   });
 
-      //const tokenValue = getCookie("access_token", false);
+    //   //const tokenValue = getCookie("access_token", false);
 
-      const tokenUserData = JSON.parse(
-        base64url.decode(`${tokenValue}`.split(".")[1])
-      );
-      this.channel = this.pusher.subscribe(
-        `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
-      );
+    //   const tokenUserData = JSON.parse(
+    //     base64url.decode(`${tokenValue}`.split(".")[1])
+    //   );
+    //   this.channel = this.pusher.subscribe(
+    //     `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
+    //   );
 
-      this.channel.bind("message", function(data) {
-        console.log("data.value ", data.value);
-      });
-      this.channel.bind("love", function(data) {
-        console.log("data.value***** ", data.value);
-      });
-      this.channel.bind("view", function(data) {
-        // fillData('view-container',data.value);
-        console.log("data.value ", data.value);
-      });
-      this.channel.bind("privatephoto", function(data) {
-        //  fillData('privatephoto-container',data.value);
-        console.log("data.value ", data.value);
-      });
-      this.channel.bind("disconnect_signal", function(data) {
-        //  fillData('disconnectsignal-container',data.value);
-        console.log("data.value ", data.value);
-      });
-    }
+    //   this.channel.bind("message", function(data) {
+    //     console.log("data.value ", data.value);
+    //   });
+    //   this.channel.bind("love", function(data) {
+    //     console.log("data.value***** ", data.value);
+    //   });
+    //   this.channel.bind("view", function(data) {
+    //     // fillData('view-container',data.value);
+    //     console.log("data.value ", data.value);
+    //   });
+    //   this.channel.bind("privatephoto", function(data) {
+    //     //  fillData('privatephoto-container',data.value);
+    //     console.log("data.value ", data.value);
+    //   });
+    //   this.channel.bind("disconnect_signal", function(data) {
+    //     //  fillData('disconnectsignal-container',data.value);
+    //     console.log("data.value ", data.value);
+    //   });
+    // }
 
     render() {
       console.log("props ", { ...this.props });

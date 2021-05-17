@@ -14,8 +14,10 @@ import {
   SELECTED_PRIVATE_ICON,
   CLICKED_ID,
   CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
+  // PUSH_IN_NOTIFICATION_VIEW_PP_LOVE,
   RESET_COUNT,
-  UPDATE_LIST
+  UPDATE_LIST,
+  INCREASE_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -287,10 +289,10 @@ const Interaction = (state = initialProfileState, action) => {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.dates);
         state.OffsetLoveReceivedRequests = offset;
         state.scoreHLoveReceivedRequests = SL;
-        if (action.payload.dates.length < state.limitReturnedItems) {
-          state.endOfResultLoveMatchedRequests = true;
+        if (action.payload.profiles.length < state.limitReturnedItems) {
+          state.endOfResultLoveReceivedRequests = true;
         }
-        if (action.payload.dates.length == 0) {
+        if (action.payload.profiles.length == 0) {
           state.endOfResultLoveReceivedRequests = true;
         }
       }
@@ -299,7 +301,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_USER_VIEWS_SUCCESS: {
-      console.log("from reducer User views *********", action.payload);
       let viewsProfiles = [];
       if (action.payload.profiles.length != 0) {
         viewsProfiles = map2ArrTo1Arr(
@@ -312,7 +313,10 @@ const Interaction = (state = initialProfileState, action) => {
         if (action.payload.profiles.length < state.limitReturnedItems) {
           state.endOfResultUserViews = true;
         }
-      } else if (action.payload.profiles.length == 0) {
+      } else if (
+        action.payload.profiles.length == 0 ||
+        action.payload.profiles === ""
+      ) {
         state.endOfResultUserViews = true;
       }
       return {
@@ -372,7 +376,7 @@ const Interaction = (state = initialProfileState, action) => {
       console.log("form notification from reducer ", action.payload);
       /// love
       let loveProfiles = [];
-      if (action.payload.unread == "CVPL" || action.payload.unread == "CL") {
+      if (action.payload.unread == "C" || action.payload.unread == "CL") {
         if (action.payload.data.unread.Love.length != 0) {
           loveProfiles = map2ArrTo1Arr(
             action.payload.data.order.Love,
@@ -399,7 +403,7 @@ const Interaction = (state = initialProfileState, action) => {
       }
       //pp
       let ppProfiles = [];
-      if (action.payload.unread == "CVPL" || action.payload.unread == "CP") {
+      if (action.payload.unread == "C" || action.payload.unread == "CP") {
         if (action.payload.data.unread.PP.length != 0) {
           ppProfiles = map2ArrTo1Arr(
             action.payload.data.order.PP,
@@ -424,7 +428,7 @@ const Interaction = (state = initialProfileState, action) => {
       }
       //View
       let ViewProfiles = [];
-      if (action.payload.unread == "CVPL" || action.payload.unread == "CV") {
+      if (action.payload.unread == "C" || action.payload.unread == "CV") {
         if (action.payload.data.unread.Views.length != 0) {
           ViewProfiles = map2ArrTo1Arr(
             action.payload.data.order.Views,
@@ -517,6 +521,21 @@ const Interaction = (state = initialProfileState, action) => {
         ...state
       };
     }
+    // case PUSH_IN_NOTIFICATION_VIEW_PP_LOVE: {
+    //   if (action.payload.t == "NL") {
+    //     console.log("user love reducer", action.payload.user);
+    //     state.notificationLoveUnread.unshift(action.payload.user);
+    //   } else if (action.payload.t == "NV") {
+    //     console.log("user view reducer ", action.payload.user);
+    //     state.notificationViewUnread.unshift(action.payload.user);
+    //   } else if (action.payload.t == "NP") {
+    //     console.log("user pp reducer", action.payload.user);
+    //     state.notificationPPUnread.unshift(action.payload.user);
+    //   }
+    //   return {
+    //     ...state
+    //   };
+    // }
     case SELECTED_LOVE_ICON:
       return {
         ...state,
@@ -534,6 +553,18 @@ const Interaction = (state = initialProfileState, action) => {
         state.notificationPPCount = 0;
       } else if (action.payload === "V") {
         state.notificationViewCount = 0;
+      }
+      return {
+        ...state
+      };
+    }
+    case INCREASE_COUNT: {
+      if (action.payload === "L") {
+        state.notificationLoveCount += 1;
+      } else if (action.payload === "P") {
+        state.notificationPPCount += 1;
+      } else if (action.payload === "V") {
+        state.notificationViewCount += 1;
       }
       return {
         ...state

@@ -9,7 +9,8 @@ import {
   RESET_MESSAGES_COVERS,
   RESET_MESSAGES_COVERS_UNREAD_COUNT,
   REMOVE_ITEM_LIST,
-  CLICKED_USER_CHAT
+  CLICKED_USER_CHAT,
+  INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
@@ -63,7 +64,7 @@ const Messages = (state = initialProfileState, action) => {
     case GET_MESSAGES_TOTAL_UNREAD_COUNT_SUCCESS: {
       return {
         ...state,
-        totalMessagesUnRCount: action.payload
+        totalMessagesUnRCount: Number(action.payload)
       };
     }
     case READ_CONVERSATION_SUCCESS: {
@@ -177,6 +178,9 @@ const Messages = (state = initialProfileState, action) => {
       };
     }
     case RESET_MESSAGES_COVERS_UNREAD_COUNT: {
+      if (state.totalMessagesUnRCount != null)
+        state.totalMessagesUnRCount -=
+          state.allMessagesCovers[action.payload][0];
       state.allMessagesCovers[action.payload][0] = 0;
       return {
         ...state
@@ -192,6 +196,12 @@ const Messages = (state = initialProfileState, action) => {
       state.allMessagesCoversProfiles = [...list1];
       state.allMessagesCoversDates = [...list2];
       state.allMessagesCoversDates = [...list3];
+      return {
+        ...state
+      };
+    }
+    case INCREASE_MESSAGES_UNREAD_COUNT: {
+      state.totalMessagesUnRCount += 1;
       return {
         ...state
       };

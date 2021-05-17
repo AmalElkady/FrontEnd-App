@@ -4,6 +4,7 @@ import { combineReducers } from "redux";
 import { settingsMigration } from "./migrations/Settings";
 import { authMigration } from "./migrations/Auth";
 import { homeMigration } from "./migrations/Home";
+import { messagesMigration } from "./migrations/Messages";
 import { createMigrate } from "redux-persist";
 import Settings from "./Settings";
 import ChatData from "./Chat";
@@ -51,10 +52,22 @@ const authPersistConfig = {
     "martial",
     "stepFlag",
     "gender",
-    "mpUploadFlag"
+    "mpUploadFlag",
+    "haveConnectionChannel"
+    //"haveConnectionPusher"
   ], //
   //transforms: [saveSubsetFilter],
   migrate: createMigrate(authMigration, { debug: MIGRATION_DEBUG })
+};
+
+const messagesPersistConfig = {
+  key: "messages",
+  version: 1,
+  whitelist: [
+    // "clickedUserChat"
+  ], //
+  //transforms: [saveSubsetFilter],
+  migrate: createMigrate(messagesMigration, { debug: MIGRATION_DEBUG })
 };
 
 //persistCombineReducers(authPersistConfig, { form: formReducer });
@@ -87,5 +100,5 @@ export default history =>
     profile: Profile,
     interaction: Interaction,
     auth: persist(authPersistConfig, Auth),
-    messages: Messages
+    messages: persist(messagesPersistConfig, Messages)
   });

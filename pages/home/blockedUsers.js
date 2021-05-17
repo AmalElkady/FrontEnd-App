@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Page from "../../hoc/securedPage/index";
 
-import BlockedUsers from "../../components/BlockedUsers"
+import BlockedUsers from "../../components/BlockedUsers";
+import Connection from "../../hoc/securedPage/Connection";
 
 export default Page(() => (
   <>
@@ -9,7 +10,8 @@ export default Page(() => (
       <title>Love</title>
     </Head>
     <div className="app-wrapper">
-    <BlockedUsers/>
+      <Connection />
+      <BlockedUsers />
     </div>
   </>
 ));

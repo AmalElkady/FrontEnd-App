@@ -112,7 +112,6 @@ const getViewPPLoveNotification = async (
     .then(returnData => returnData)
     .catch(error => error);
 
-
 const cleanViewPPLoveNotification = async (
   remove,
   viewScoreLow,
@@ -124,17 +123,16 @@ const cleanViewPPLoveNotification = async (
 ) =>
   await interaction
     .cleanNotificationViewPPLove(
-       remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh
+      remove,
+      viewScoreLow,
+      viewScoreHigh,
+      ppScoreLow,
+      ppScoreHigh,
+      loveScoreLow,
+      loveScoreHigh
     )
     .then(returnData => returnData)
     .catch(error => error);
-   
 
 /////
 function* ppAccessApproveRemoveRequest({ payload }) {
@@ -280,7 +278,7 @@ function* userBlockRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-       yield put(blockUserSuccess("error"));
+      yield put(blockUserSuccess("error"));
     } else {
       yield put(blockUserSuccess(true));
     }
@@ -346,7 +344,7 @@ function* getNotificationViewPPLoveRequest({ payload }) {
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
     } else {
-      yield put(getNotificationViewPPLoveSuccess(unread,returnedData));
+      yield put(getNotificationViewPPLoveSuccess(unread, returnedData));
     }
   } catch (error) {
     yield put(showProfileMessage(error));
@@ -354,33 +352,35 @@ function* getNotificationViewPPLoveRequest({ payload }) {
 }
 
 function* cleanNotificationViewPPLoveRequest({ payload }) {
-  const {remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh } = payload;
+  const {
+    remove,
+    viewScoreLow,
+    viewScoreHigh,
+    ppScoreLow,
+    ppScoreHigh,
+    loveScoreLow,
+    loveScoreHigh
+  } = payload;
   console.log(
     " clean notification saga ",
-   remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh
+    remove,
+    viewScoreLow,
+    viewScoreHigh,
+    ppScoreLow,
+    ppScoreHigh,
+    loveScoreLow,
+    loveScoreHigh
   );
   try {
     const returnedData = yield call(
       cleanViewPPLoveNotification,
-     remove,
-  viewScoreLow,
-  viewScoreHigh,
-  ppScoreLow,
-  ppScoreHigh,
-  loveScoreLow,
-  loveScoreHigh
+      remove,
+      viewScoreLow,
+      viewScoreHigh,
+      ppScoreLow,
+      ppScoreHigh,
+      loveScoreLow,
+      loveScoreHigh
     );
     if (returnedData.message) {
       yield put(cleanNotificationViewPPLoveSuccess(false));
@@ -456,7 +456,6 @@ export function* requestCleanNotificationViewPPLove() {
     cleanNotificationViewPPLoveRequest
   );
 }
-
 
 export default function* rootSaga() {
   yield all([

@@ -179,7 +179,7 @@ class Header extends React.Component {
     if (this.props.notificationLoveCount == null) {
       this.props.getMessagesTotalUnRCount();
       this.props.getNotificationViewPPLove(
-        "CVPL",
+        "C",
         this.props.scoreHNotificationView,
         this.props.scoreHNotificationPP,
         this.props.scoreHNotificationLove,

@@ -40,7 +40,8 @@ import {
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
-  CONFIRM_PASSWORD_CASE
+  CONFIRM_PASSWORD_CASE,
+  ADD_CONNECTION_FLAG
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -316,5 +317,13 @@ export const confirmPasswordCase = value => {
   return {
     type: CONFIRM_PASSWORD_CASE,
     payload: value
+  };
+};
+
+export const addConnectionFlag = (flag, connValue) => {
+  console.log("flag, connvalue ", flag, connValue);
+  return {
+    type: ADD_CONNECTION_FLAG,
+    payload: { flag, connValue }
   };
 };

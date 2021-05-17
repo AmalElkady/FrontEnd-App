@@ -31,7 +31,8 @@ import {
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
-  CONFIRM_PASSWORD_CASE
+  CONFIRM_PASSWORD_CASE,
+  ADD_CONNECTION_FLAG
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -63,6 +64,9 @@ const INIT_STATE = {
   name: "",
   birth: "",
   martial: "",
+  haveConnection: false,
+  haveConnectionPusher: null,
+  haveConnectionChannel: null,
   sub: null
 };
 
@@ -269,6 +273,24 @@ export default (state = INIT_STATE, action) => {
         alertMessage: "",
         showMessage: false,
         loader: false
+      };
+    }
+
+    case ADD_CONNECTION_FLAG: {
+      console.log(
+        "reducer%%%% ",
+        action.payload.flag,
+        action.payload.connValue
+      );
+      if (action.payload.flag == "p") {
+        //console.log("reducer%%%% 1");
+        state.haveConnectionPusher = action.payload.connValue;
+      } else if (action.payload.flag == "ch") {
+        //console.log("reducer%%%%2");
+        state.haveConnectionChannel = action.payload.connValue;
+      }
+      return {
+        ...state
       };
     }
 
