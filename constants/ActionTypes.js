@@ -451,3 +451,7 @@ export const INCREASE_MESSAGES_UNREAD_COUNT = "increase_messages_unread_count";
 //Settings
 export const DELETE_MY_ACCOUNT = "delete_my_account";
 export const DELETE_MY_ACCOUNT_SUCCESS = "delete_my_account_success";
+
+//RealTime
+export const GET_PROFILES = "get_profiles";
+export const GET_PROFILES_SUCCESS = "get_profiles_success";

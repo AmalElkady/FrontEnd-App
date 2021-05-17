@@ -6,7 +6,8 @@ import {
   readConversationSuccess,
   readAllMessagesCoversSuccess,
   clearConversationSuccess,
-  deleteConversationSuccess
+  deleteConversationSuccess,
+  getProfilesSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
@@ -14,7 +15,8 @@ import {
   READ_CONVERSATION,
   READ_ALL_MESSAGES_COVERS,
   CLEAR_CONVERSATION,
-  DELETE_CONVERSATION
+  DELETE_CONVERSATION,
+  GET_PROFILES
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -59,6 +61,12 @@ const clearConversation = async (profileid, country, city, varea) =>
 const deleteConversation = async (profileid, country, city, varea) =>
   await messages
     .deleteConversation(profileid, country, city, varea)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const getProfiles = async profileKeys =>
+  await messages
+    .getProfiles(profileKeys)
     .then(returnedData => returnedData)
     .catch(error => error);
 /////
@@ -176,6 +184,20 @@ function* deleteConversationRequest({ payload }) {
   }
 }
 
+function* getProfilesRequest({ payload }) {
+  console.log("get profiles saga ", payload);
+  try {
+    const returnedData = yield call(getProfiles, payload);
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(getProfilesSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ///////
 
 export function* requestSendMessage() {
@@ -205,6 +227,10 @@ export function* requestDeleteConversation() {
   yield takeEvery(DELETE_CONVERSATION, deleteConversationRequest);
 }
 
+export function* requestGetProfiles() {
+  yield takeEvery(GET_PROFILES, getProfilesRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
@@ -212,6 +238,7 @@ export default function* rootSaga() {
     fork(requestReadConversation),
     fork(requestAllMessagesCovers),
     fork(requestClearConversation),
-    fork(requestDeleteConversation)
+    fork(requestDeleteConversation),
+    fork(requestGetProfiles)
   ]);
 }

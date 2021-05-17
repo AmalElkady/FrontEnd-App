@@ -10,6 +10,7 @@ import {
   RESET_MESSAGES_COVERS_UNREAD_COUNT,
   REMOVE_ITEM_LIST,
   CLICKED_USER_CHAT,
+  GET_PROFILES_SUCCESS,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
@@ -45,6 +46,8 @@ const initialProfileState = {
   clickedUserChatUnread: null,
 
   indexOfLastMsg: null,
+
+  returnedProfiles: null, //GET_PROFILES
 
   loader: false,
   alertMessage: "",
@@ -204,6 +207,19 @@ const Messages = (state = initialProfileState, action) => {
       state.totalMessagesUnRCount += 1;
       return {
         ...state
+      };
+    }
+    case GET_PROFILES_SUCCESS: {
+      if (action.payload.viewProfiles.length != 0) {
+        for (let i = 0; i < action.payload.viewProfiles.length; i++) {
+          action.payload.viewProfiles[i] = JSON.parse(
+            action.payload.viewProfiles[i]
+          );
+        }
+      }
+      return {
+        ...state,
+        returnedProfiles: action.payload.viewProfiles
       };
     }
     case SHOW_MESSAGE: {

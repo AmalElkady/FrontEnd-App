@@ -25,7 +25,8 @@ import {
   readConversation,
   readAllMessagesCovers,
   clearConversation,
-  deleteConversation
+  deleteConversation,
+  getProfiles
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -36,6 +37,10 @@ const Conversation = ({ myPhoto }) => {
   const [users, setUsers] = useState(null);
 
   const clickedUserChat = useSelector(state => state.messages.clickedUserChat);
+  const returnedProfiles = useSelector(
+    state => state.messages.returnedProfiles
+  );
+
   const clickedUserChatUnread = useSelector(
     state => state.messages.clickedUserChatUnread
   );
@@ -81,6 +86,11 @@ const Conversation = ({ myPhoto }) => {
         clickedUserChat,
         clickedUserChatUnread
       );
+      dispatch(
+        getProfiles([
+          `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+        ])
+      );
       if (clickedUserChatUnread > limitReturnedMessages) {
         dispatch(
           readConversation(
@@ -108,6 +118,12 @@ const Conversation = ({ myPhoto }) => {
       }
     }
   }, [clickedUserChat]);
+
+  useEffect(() => {
+    if (returnedProfiles != null) {
+      console.log("returnedProfiles", returnedProfiles);
+    }
+  }, [returnedProfiles]);
 
   // handle scroll for list of Conversation messages
   const handleScrollConversationMessages = () => {

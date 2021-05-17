@@ -15,6 +15,8 @@ import {
   RESET_MESSAGES_COVERS,
   RESET_MESSAGES_COVERS_UNREAD_COUNT,
   REMOVE_ITEM_LIST,
+  GET_PROFILES,
+  GET_PROFILES_SUCCESS,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
@@ -133,6 +135,20 @@ export const resetMegsCoversUnreadCount = index => {
   return {
     type: RESET_MESSAGES_COVERS_UNREAD_COUNT,
     payload: index
+  };
+};
+
+export const getProfiles = profileKeys => {
+  return {
+    type: GET_PROFILES,
+    payload: profileKeys
+  };
+};
+
+export const getProfilesSuccess = data => {
+  return {
+    type: GET_PROFILES_SUCCESS,
+    payload: data
   };
 };
 
