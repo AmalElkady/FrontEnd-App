@@ -28,7 +28,8 @@ import {
   deleteConversation,
   getProfiles,
   getProfilesOnlineStatus,
-  setActiveConversation
+  setActiveConversation,
+  setConversationTypingIndicator
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -49,6 +50,10 @@ const Conversation = ({ myPhoto }) => {
 
   const respActiveConversation = useSelector(
     state => state.messages.respActiveConversation
+  );
+
+  const respConversationTypingIndicator = useSelector(
+    state => state.messages.respConversationTypingIndicator
   );
 
   const clickedUserChatUnread = useSelector(
@@ -112,6 +117,17 @@ const Conversation = ({ myPhoto }) => {
           true
         )
       );
+      // check each 2s if I'm writing send activate: true else send activate: false
+      dispatch(
+        setConversationTypingIndicator(
+          clickedUserChat.i,
+          clickedUserChat.co,
+          clickedUserChat.ci,
+          clickedUserChat.va,
+          true
+        )
+      );
+
       if (clickedUserChatUnread > limitReturnedMessages) {
         dispatch(
           readConversation(
@@ -162,6 +178,15 @@ const Conversation = ({ myPhoto }) => {
       console.log("respActiveConversation", respActiveConversation);
     }
   }, [respActiveConversation]);
+
+  useEffect(() => {
+    if (respConversationTypingIndicator != null) {
+      console.log(
+        "respConversationTypingIndicator",
+        respConversationTypingIndicator
+      );
+    }
+  }, [respConversationTypingIndicator]);
 
   // handle scroll for list of Conversation messages
   const handleScrollConversationMessages = () => {

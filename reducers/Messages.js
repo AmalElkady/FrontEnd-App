@@ -13,6 +13,7 @@ import {
   GET_PROFILES_SUCCESS,
   GET_PROFILES_ONLINE_STATUS_SUCCESS,
   SET_ACTIVE_CONVERSATION_SUCCESS,
+  SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
@@ -53,6 +54,7 @@ const initialProfileState = {
   returnedProfilesOnlineStatus: null,
 
   respActiveConversation: null,
+  respConversationTypingIndicator: null,
 
   loader: false,
   alertMessage: "",
@@ -237,6 +239,12 @@ const Messages = (state = initialProfileState, action) => {
       return {
         ...state,
         respActiveConversation: action.payload
+      };
+    }
+    case SET_CONVERSATION_TYPING_INDICATOR_SUCCESS: {
+      return {
+        ...state,
+        respConversationTypingIndicator: action.payload
       };
     }
     case SHOW_MESSAGE: {

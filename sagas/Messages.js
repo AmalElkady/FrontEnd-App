@@ -9,7 +9,8 @@ import {
   deleteConversationSuccess,
   getProfilesSuccess,
   getProfilesOnlineStatusSuccess,
-  setActiveConversationSuccess
+  setActiveConversationSuccess,
+  setConversationTypingIndicatorSuccess
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
@@ -20,7 +21,8 @@ import {
   DELETE_CONVERSATION,
   GET_PROFILES,
   GET_PROFILES_ONLINE_STATUS,
-  SET_ACTIVE_CONVERSATION
+  SET_ACTIVE_CONVERSATION,
+  SET_CONVERSATION_TYPING_INDICATOR
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -89,6 +91,18 @@ const setActiveConversation = async (
 ) =>
   await messages
     .setActiveConversation(profileid, country, city, varea, activate)
+    .then(returnedData => returnedData)
+    .catch(error => error);
+
+const setConversationTypingIndicator = async (
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) =>
+  await messages
+    .setConversationTypingIndicator(profileid, country, city, varea, activate)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -247,7 +261,7 @@ function* getProfilesOnlineStatusRequest({ payload }) {
 function* setActiveConversationRequest({ payload }) {
   const { profileid, country, city, varea, activate } = payload;
   console.log(
-    "delete Conversation saga ",
+    "set active Conversation saga ",
     profileid,
     country,
     city,
@@ -267,6 +281,35 @@ function* setActiveConversationRequest({ payload }) {
       yield put(showAuthMessage(returnedData.message));
     } else {
       yield put(setActiveConversationSuccess(returnedData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
+function* setConversationTypingIndicatorRequest({ payload }) {
+  const { profileid, country, city, varea, activate } = payload;
+  console.log(
+    " Conversation typing indicator saga ",
+    profileid,
+    country,
+    city,
+    varea,
+    activate
+  );
+  try {
+    const returnedData = yield call(
+      setConversationTypingIndicator,
+      profileid,
+      country,
+      city,
+      varea,
+      activate
+    );
+    if (returnedData.message) {
+      yield put(showAuthMessage(returnedData.message));
+    } else {
+      yield put(setConversationTypingIndicatorSuccess(returnedData));
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -314,6 +357,13 @@ export function* requestSetActiveConversation() {
   yield takeEvery(SET_ACTIVE_CONVERSATION, setActiveConversationRequest);
 }
 
+export function* requestSetConversationTypingIndicator() {
+  yield takeEvery(
+    SET_CONVERSATION_TYPING_INDICATOR,
+    setConversationTypingIndicatorRequest
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
@@ -324,6 +374,7 @@ export default function* rootSaga() {
     fork(requestDeleteConversation),
     fork(requestGetProfiles),
     fork(requestGetProfilesOnlineStatus),
-    fork(requestSetActiveConversation)
+    fork(requestSetActiveConversation),
+    fork(requestSetConversationTypingIndicator)
   ]);
 }

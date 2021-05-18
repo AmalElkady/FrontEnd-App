@@ -450,4 +450,57 @@ messages.setActiveConversation = function(
   });
 };
 
+messages.setConversationTypingIndicator = function(
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) {
+  console.log(
+    "from messages service setConversationTypingIndicator ",
+    profileid,
+    country,
+    city,
+    varea,
+    activate
+  );
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: "/setconversationtypingindicator",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          profileid,
+          country,
+          city,
+          varea,
+          activate
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("setConversationTypingIndicator from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 export { messages };

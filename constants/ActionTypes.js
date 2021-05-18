@@ -463,3 +463,8 @@ export const GET_PROFILES_ONLINE_STATUS_SUCCESS =
 export const SET_ACTIVE_CONVERSATION = "set_active_conversation";
 export const SET_ACTIVE_CONVERSATION_SUCCESS =
   "set_active_conversation_success";
+
+export const SET_CONVERSATION_TYPING_INDICATOR =
+  "set_conversation_typing_indicator";
+export const SET_CONVERSATION_TYPING_INDICATOR_SUCCESS =
+  "set_conversation_typing_indicator_success";

@@ -21,6 +21,8 @@ import {
   GET_PROFILES_ONLINE_STATUS_SUCCESS,
   SET_ACTIVE_CONVERSATION,
   SET_ACTIVE_CONVERSATION_SUCCESS,
+  SET_CONVERSATION_TYPING_INDICATOR,
+  SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
@@ -186,6 +188,26 @@ export const setActiveConversation = (
 export const setActiveConversationSuccess = data => {
   return {
     type: SET_ACTIVE_CONVERSATION_SUCCESS,
+    payload: data
+  };
+};
+
+export const setConversationTypingIndicator = (
+  profileid,
+  country,
+  city,
+  varea,
+  activate
+) => {
+  return {
+    type: SET_CONVERSATION_TYPING_INDICATOR,
+    payload: { profileid, country, city, varea, activate }
+  };
+};
+
+export const setConversationTypingIndicatorSuccess = data => {
+  return {
+    type: SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
     payload: data
   };
 };
