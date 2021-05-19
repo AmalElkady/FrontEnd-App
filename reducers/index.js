@@ -1,4 +1,5 @@
 import { persist } from "./services/reduxPersist";
+import { createTransform } from "redux-persist";
 //import createFilter from 'redux-persist-transform-filter';
 import { combineReducers } from "redux";
 import { settingsMigration } from "./migrations/Settings";
@@ -60,13 +61,27 @@ const authPersistConfig = {
   migrate: createMigrate(authMigration, { debug: MIGRATION_DEBUG })
 };
 
+// const transformTimestampMap = createTransform(
+//   state => Array.from(state),
+//   state => new Map(state)
+// );
+
+const transformTimestampMap = config =>
+  createTransform(
+    timestampMap => JSON.stringify(Array.from(timestampMap)),
+    timestampMap => new Map(JSON.parse(timestampMap)),
+    config
+  );
+
 const messagesPersistConfig = {
   key: "messages",
   version: 1,
   whitelist: [
+    "timestampMap",
+    "returnedProfilesOnlineStatus"
     // "clickedUserChat"
   ], //
-  //transforms: [saveSubsetFilter],
+  transforms: [transformTimestampMap({ whitelist: "timestampMap" })],
   migrate: createMigrate(messagesMigration, { debug: MIGRATION_DEBUG })
 };
 

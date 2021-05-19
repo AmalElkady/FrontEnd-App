@@ -23,6 +23,7 @@ import {
   SET_ACTIVE_CONVERSATION_SUCCESS,
   SET_CONVERSATION_TYPING_INDICATOR,
   SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
+  SET_MAP_TIMESTAMP,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
@@ -169,6 +170,13 @@ export const getProfilesOnlineStatusSuccess = data => {
   return {
     type: GET_PROFILES_ONLINE_STATUS_SUCCESS,
     payload: data
+  };
+};
+
+export const setTimestampMap = (key, val) => {
+  return {
+    type: SET_MAP_TIMESTAMP,
+    payload: { key, val }
   };
 };
 

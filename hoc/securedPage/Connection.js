@@ -117,16 +117,11 @@ export default function Connection() {
       const tokenUserData = JSON.parse(
         base64url.decode(`${tokenValue}`.split(".")[1])
       );
-      //   setChannel(
-      //     connectionPusher.subscribe(
-      //       `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
-      //     )
-      //   );
       dispatch(
         addConnectionFlag(
           "ch",
           connectionPusher.subscribe(
-            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
+            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}`
           )
         )
       );

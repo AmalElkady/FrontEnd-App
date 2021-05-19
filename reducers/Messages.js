@@ -14,6 +14,7 @@ import {
   GET_PROFILES_ONLINE_STATUS_SUCCESS,
   SET_ACTIVE_CONVERSATION_SUCCESS,
   SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
+  SET_MAP_TIMESTAMP,
   INCREASE_MESSAGES_UNREAD_COUNT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
@@ -21,7 +22,6 @@ import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
 import { removeUserFromList } from "../helpers/removeUserFromList";
 import { addSeenToMgs } from "../helpers/addSeenToMgs";
-
 const initialProfileState = {
   messageSent: false,
 
@@ -52,6 +52,7 @@ const initialProfileState = {
 
   returnedProfiles: null, //GET_PROFILES
   returnedProfilesOnlineStatus: null,
+  timestampMap: new Map(),
 
   respActiveConversation: null,
   respConversationTypingIndicator: null,
@@ -233,6 +234,16 @@ const Messages = (state = initialProfileState, action) => {
       return {
         ...state,
         returnedProfilesOnlineStatus: action.payload.list_of_results
+      };
+    }
+    case SET_MAP_TIMESTAMP: {
+      //state.timestampMap.set(action.payload.key, action.payload.val);
+      let newMap = state.timestampMap;
+      newMap.set(action.payload.key, action.payload.val);
+      console.log("newMap ", newMap);
+      return {
+        ...state,
+        timestampMap: newMap
       };
     }
     case SET_ACTIVE_CONVERSATION_SUCCESS: {

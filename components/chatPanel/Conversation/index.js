@@ -6,6 +6,7 @@ import ReceivedMessageCell from "./ReceivedMessageCell/index";
 import SentMessageCell from "./SentMessageCell/index";
 import ConversationHeader from "./ConversationHeader";
 import IntlMessages from "../../../util/IntlMessages";
+import { getAgeRange } from "../../../helpers/getAgeRange";
 import SendMessage from "./SendMessage";
 import Typography from "@material-ui/core/Typography";
 
@@ -28,6 +29,7 @@ import {
   deleteConversation,
   getProfiles,
   getProfilesOnlineStatus,
+  setTimestampMap,
   setActiveConversation,
   setConversationTypingIndicator
 } from "../../../actions/Messages";
@@ -47,6 +49,8 @@ const Conversation = ({ myPhoto }) => {
   const returnedProfilesOnlineStatus = useSelector(
     state => state.messages.returnedProfilesOnlineStatus
   );
+
+  const timestampMap = useSelector(state => state.messages.timestampMap);
 
   const respActiveConversation = useSelector(
     state => state.messages.respActiveConversation
@@ -94,6 +98,44 @@ const Conversation = ({ myPhoto }) => {
     state => state.messages.conversationDeleted
   );
 
+  // useEffect(() => {
+  //   if (clickedUserChat != null) {
+  //     setInterval(() => {
+  //       console.log("This will run after 3 minutes");
+  //       if (timestampMap.has(clickedUserChat.i)) {
+  //         console.log("map has clickedUserChat.i");
+  //         // check if timestamp > 3M ----> call 2 APIs to get updated status
+  //         let lastTime = timestampMap.get(clickedUserChat.i);
+  //         console.log(
+  //           "map has clickedUserChat.i last time ",
+  //           lastTime,
+  //           Date.now(),
+  //           moment().diff(lastTime, "minutes")
+  //         );
+  //         if (moment().diff(lastTime, "minutes") > 3) {
+  //           dispatch(
+  //             getProfiles([
+  //               `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+  //             ])
+  //           );
+  //         }
+  //       }
+  //       //}
+  //       else {
+  //         //add his id and timestamp to Map and call 2 APIs to get status
+  //         console.log("map hasn't clickedUserChat.i");
+  //         dispatch(setTimestampMap(clickedUserChat.i, Date.now()));
+  //         dispatch(
+  //           getProfiles([
+  //             `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+  //           ])
+  //         );
+  //       }
+  //     }, 1000);
+  //   }
+  //   // return () => clearTimeout(timer);
+  // });
+
   useEffect(() => {
     if (clickedUserChat != null) {
       console.log(
@@ -101,32 +143,95 @@ const Conversation = ({ myPhoto }) => {
         clickedUserChat,
         clickedUserChatUnread
       );
-      dispatch(
-        getProfiles([
-          `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
-        ])
-      );
+
+      // check if have timestamp for clicked user
+      //{
+
+      // if (timestampMap.has(clickedUserChat.i)) {
+      //   console.log("map has clickedUserChat.i");
+      //   // check if timestamp > 3M ----> call 2 APIs to get updated status
+      //   let lastTime = timestampMap.get(clickedUserChat.i);
+      //   console.log(
+      //     "map has clickedUserChat.i last time ",
+      //     lastTime,
+      //     Date.now(),
+      //     moment().diff(lastTime, "minutes")
+      //   );
+      //   if (moment().diff(lastTime, "minutes") > 3) {
+      //     dispatch(
+      //       getProfiles([
+      //         `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+      //       ])
+      //     );
+      //   }
+      // }
+      // //}
+      // else {
+      //   //add his id and timestamp to Map and call 2 APIs to get status
+      //   console.log("map hasn't clickedUserChat.i");
+      //   dispatch(setTimestampMap(clickedUserChat.i, Date.now()));
+      //   dispatch(
+      //     getProfiles([
+      //       `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+      //     ])
+      //   );
+      // }
+
+      ///////////
+
+      setInterval(() => {
+        console.log("This will run after 3 minutes ", timestampMap);
+        if (timestampMap.has(clickedUserChat.i)) {
+          console.log("map has clickedUserChat.i");
+          // check if timestamp > 3M ----> call 2 APIs to get updated status
+          let lastTime = timestampMap.get(clickedUserChat.i);
+          console.log(
+            "map has clickedUserChat.i last time ",
+            lastTime,
+            Date.now(),
+            moment().diff(lastTime, "minutes")
+          );
+          if (moment().diff(lastTime, "minutes") > 3) {
+            dispatch(
+              getProfiles([
+                `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+              ])
+            );
+          }
+        }
+        //}
+        else {
+          //add his id and timestamp to Map and call 2 APIs to get status
+          console.log("map hasn't clickedUserChat.i");
+          dispatch(setTimestampMap(clickedUserChat.i, Date.now()));
+          dispatch(
+            getProfiles([
+              `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${clickedUserChat.i}`
+            ])
+          );
+        }
+      }, 60000);
 
       //call it each 20s if closed send activate:false
-      dispatch(
-        setActiveConversation(
-          clickedUserChat.i,
-          clickedUserChat.co,
-          clickedUserChat.ci,
-          clickedUserChat.va,
-          true
-        )
-      );
+      // dispatch(
+      //   setActiveConversation(
+      //     clickedUserChat.i,
+      //     clickedUserChat.co,
+      //     clickedUserChat.ci,
+      //     clickedUserChat.va,
+      //     true
+      //   )
+      // );
       // check each 2s if I'm writing send activate: true else send activate: false
-      dispatch(
-        setConversationTypingIndicator(
-          clickedUserChat.i,
-          clickedUserChat.co,
-          clickedUserChat.ci,
-          clickedUserChat.va,
-          true
-        )
-      );
+      // dispatch(
+      //   setConversationTypingIndicator(
+      //     clickedUserChat.i,
+      //     clickedUserChat.co,
+      //     clickedUserChat.ci,
+      //     clickedUserChat.va,
+      //     true
+      //   )
+      // );
 
       if (clickedUserChatUnread > limitReturnedMessages) {
         dispatch(
@@ -158,10 +263,11 @@ const Conversation = ({ myPhoto }) => {
 
   useEffect(() => {
     if (returnedProfiles != null) {
-      console.log("returnedProfiles", returnedProfiles);
+      let age_range = getAgeRange(moment().diff(clickedUserChat.b, "years"));
+      console.log("returnedProfiles age", returnedProfiles, age_range);
       dispatch(
         getProfilesOnlineStatus(returnedProfiles, [
-          `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_26-33`
+          `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${age_range}`
         ])
       );
     }

@@ -460,6 +460,8 @@ export const GET_PROFILES_ONLINE_STATUS = "get_profiles_online_status";
 export const GET_PROFILES_ONLINE_STATUS_SUCCESS =
   "get_profiles_online_status_success";
 
+export const SET_MAP_TIMESTAMP = "set_map_timestamp";
+
 export const SET_ACTIVE_CONVERSATION = "set_active_conversation";
 export const SET_ACTIVE_CONVERSATION_SUCCESS =
   "set_active_conversation_success";
