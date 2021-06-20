@@ -27,6 +27,12 @@ export const ARRAYS_OF_TPERCENT = [
   <IntlMessages id="tprecent.4" />
 ];
 
+export const ARRAYS_OF_REASONS = [
+  <IntlMessages id="reason.1" />,
+  <IntlMessages id="reason.2" />,
+  <IntlMessages id="reason.3" />
+];
+
 export const ARRAY_OF_DAYS = [
   "01",
   "02",

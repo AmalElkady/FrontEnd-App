@@ -32,5 +32,12 @@
   "setting.passChange": "تم تغيير كلمة المرور الخاصة بك بنجاح ",
   "setting.oldPass": "كلمة مرورك القديمة غير صحيحة ",
   "setting.verifCode": "تم إرسال رمز التحقق بنجاح ",
-  "setting.fileAdded": "تمت أضافتة"
+  "setting.fileAdded": "تمت أضافتة",
+  "settings.report": "أضف إبلاغك",
+  "report.comment": "التعليق",
+  "report.reason": "السبب",
+  "report.submit": "إرسال",
+  "reason.1": "السبب 1 ",
+  "reason.2": "السبب 2 ",
+  "reason.3": "السبب 3 "
 }

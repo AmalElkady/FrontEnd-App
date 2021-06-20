@@ -5,6 +5,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
 
+import FormGroup from "@material-ui/core/FormGroup";
+import Checkbox from "@material-ui/core/Checkbox";
+
 import { resetPhonechangeFlag } from "../../actions/Auth";
 import {
   openModal,
@@ -30,6 +33,7 @@ import { useSpring, animated } from "react-spring/web.cjs";
 /////
 import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../../util/IntlMessages";
+import { ARRAYS_OF_REASONS } from "../../util/data";
 import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import IconButton from "@material-ui/core/IconButton";
@@ -99,13 +103,26 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function ModalSettings({ phone, password, sub, deleteAcc }) {
+export default function ModalSettings({
+  phone,
+  password,
+  sub,
+  deleteAcc,
+  report
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   ////// modal
   const [open, setOpen] = useState(false);
   const [Phone, setPhone] = useState("");
+
+  const [comment, setComment] = useState("");
+  const [reason, setReason] = useState({
+    0: false,
+    1: false,
+    2: false
+  });
 
   const [oldPass, setOldPass] = useState(null);
   const [newPass, setNewPass] = useState(null);
@@ -183,6 +200,25 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
     setPhone(value);
   };
 
+  const handleChangeReason = event => {
+    console.log(
+      "clicked reason ",
+      event.target.name,
+      event.target.checked,
+      reason
+    );
+    setReason({ ...reason, [event.target.name]: event.target.checked });
+  };
+
+  const checkReasonValues = () => {
+    for (var i in reason) {
+      if (reason[i] === true) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const StyledFormControl = styled(FormControl)({
     formControl: {
       margin: 2,
@@ -233,6 +269,9 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
                   {sub && <IntlMessages id="settings.renewSub" />}
                   {deleteAcc && openDelPass == false && (
                     <IntlMessages id="settings.preDelete" />
+                  )}
+                  {report && openDelPass == false && (
+                    <IntlMessages id="settings.report" />
                   )}
                 </h2>
                 <h2>
@@ -598,6 +637,84 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
                       )}
                     </Grid>
                   </form>
+                )}
+
+                {report && (
+                  <>
+                    <form method="post">
+                      <Grid container>
+                        <Grid item xs={12}>
+                          <InputLabel id="reason-label">
+                            <IntlMessages id="report.reason" />
+                          </InputLabel>
+                          <FormGroup>
+                            {ARRAYS_OF_REASONS.map((value, i) => (
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={reason.i}
+                                    onChange={handleChangeReason}
+                                    name={i}
+                                  />
+                                }
+                                label={value}
+                              />
+                            ))}
+                          </FormGroup>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <InputLabel
+                            id="comment-label"
+                            style={{ marginBottom: ".5rem" }}
+                          >
+                            <IntlMessages id="report.comment" />
+                          </InputLabel>
+                          <TextareaAutosize
+                            onChange={event => {
+                              setComment(event.target.value);
+                            }}
+                            aria-label="minimum height"
+                            defaultValue={comment}
+                            rowsMin={3}
+                            name="comment"
+                            style={{ width: "100%" }}
+                            required
+                          />
+                        </Grid>
+                        {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
+                        <Grid item xs={6}>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              // setOpenEdit(false);
+                              handleClose();
+                            }}
+                            color="primary"
+                            className="linear-g-r"
+                          >
+                            <IntlMessages id="appModule.cancel" />
+                          </Button>
+                        </Grid>
+                        {comment != "" && checkReasonValues() && (
+                          <Grid item xs={6} style={{ textAlign: "end" }}>
+                            <Button
+                              variant="contained"
+                              onClick={() => {
+                                console.log("submit report ", comment, reason);
+
+                                // dispatch(changeMyPassword(oldPass, newPass));
+                              }}
+                              color="primary"
+                              className="linear-g-r"
+                            >
+                              <IntlMessages id="report.submit" />
+                            </Button>
+                          </Grid>
+                        )}
+                        {/* </div> */}
+                      </Grid>
+                    </form>
+                  </>
                 )}
               </div>
             </div>

@@ -23,6 +23,7 @@
   "profile.sendPP": "Send Request",
   "profile.notifMarital": "Marital status updated successfully",
   "profile.notifPhoto": "Main Photo Updated successfully ",
+  "profile.report": "Report The User",
 
   "inputLabel.birthday": "Birthday",
   "inputLabel.city": "City",

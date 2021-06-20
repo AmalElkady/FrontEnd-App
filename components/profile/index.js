@@ -6,7 +6,9 @@ import base64url from "base64url";
 import ProfileCard from "./ProfileCard";
 import IntlMessages from "../../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import About from "./About";
+import ModalSettings from "../Modals/modalSettings";
 import Carousel from "../../app/components/carousel";
 import Photos from "./Photos";
 import { NotificationManager } from "react-notifications";
@@ -14,7 +16,8 @@ import {
   readMyProfile,
   readMyPhotos,
   openModalPP,
-  updateMainPSuccess
+  updateMainPSuccess,
+  openModal
 } from "../../actions/Profile";
 import { requestPhotoRead } from "../../actions/Home";
 import { mapUserPhotoUrl } from "../../helpers/mapUserPhotoUrl";
@@ -30,6 +33,7 @@ export default function Profile() {
     state => state.profile.userBlockedMessage
   );
   const dispatch = useDispatch();
+  const OpenModal = useSelector(state => state.profile.openModal);
 
   const [finalPhotoSrc, setFinalPhotoSrc] = useState({});
 
@@ -114,7 +118,7 @@ export default function Profile() {
   return (
     <>
       <div className="profile-container">
-        <Grid container spacing={12}>
+        <Grid container>
           <Grid item xs={6} className="profile-Grid-container">
             {profileCard.co && <ProfileCard mainInfo={profileCard} />}
             <br />
@@ -131,8 +135,32 @@ export default function Profile() {
           <Grid item xs={6} className="profile-Grid-container">
             {aboutInfo.id && <About aboutInfo={aboutInfo} />}
           </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              textAlign: "end"
+              // marginTop: "1rem",
+              // marginBottom: "1rem"
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={() => {
+                // setClickedBtn("delete");
+                dispatch(openModal(true));
+              }}
+              color="primary"
+              className="linear-g-r"
+            >
+              <IntlMessages id="profile.report" />
+            </Button>
+          </Grid>
         </Grid>
       </div>
+      {OpenModal && router.query.flag == "read" && (
+        <ModalSettings report={true} />
+      )}
     </>
   );
 }

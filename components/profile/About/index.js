@@ -230,7 +230,9 @@ export default function About({ aboutInfo }) {
           </div>
         </>
       )}
-      {OpenModal && <ModalUploadL2 data={disData}></ModalUploadL2>}
+      {OpenModal && router.query.flag == "readMe" && (
+        <ModalUploadL2 data={disData}></ModalUploadL2>
+      )}
     </>
   );
 }

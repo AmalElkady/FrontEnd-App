@@ -32,5 +32,12 @@
   "setting.passChange": "Your password changed successfully",
   "setting.oldPass": "Your old password not correct",
   "setting.verifCode": "Verification Code sent successfully",
-  "setting.fileAdded": "was added"
+  "setting.fileAdded": "was added",
+  "settings.report": "Add Your Report",
+  "report.comment": "Comment",
+  "report.reason": "Reason",
+  "report.submit": "Submit",
+  "reason.1": "Reason 1",
+  "reason.2": "Reason 2",
+  "reason.3": "Reason 3"
 }
