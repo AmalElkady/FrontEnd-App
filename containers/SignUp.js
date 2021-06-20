@@ -65,8 +65,8 @@ class SignUp extends React.Component {
       }, 3000);
     }
     if (this.props.authUser !== null) {
-	    
-		NotificationManager.success('Profile created successfully, you will be redirected to verification phone', 'Success');
+	   
+		NotificationManager.success(<IntlMessages id="appModule.createSuccess"/>);
 		this.props.userCreateClear();
 		this.props.showAuthLoader();
 		
@@ -402,7 +402,7 @@ class SignUp extends React.Component {
 			
                 <div>
                   <Button variant="contained" onClick={() => {
-					  if(password != password_confirm){ NotificationManager.error("Password Mismatch")}
+					  if(password != password_confirm){ NotificationManager.error(<IntlMessages id="error.passMis" />)}
                       else { this.props.showAuthLoader();
                       this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }
                   }} color="primary" style={{width: "100%"}} className="linear-g-r">

@@ -18,7 +18,8 @@ import {
   deleteConversation,
   clickedUserChat,
   resetMegsCoversUnreadCount,
-  removeListItem
+  removeListItem,
+  setActiveConversation
 } from "../../../actions/Messages";
 import { requestPhotoRead } from "../../../actions/Home";
 
@@ -64,6 +65,9 @@ const ChatUserList = () => {
     state => state.messages.allMessagesCoversDates
   );
 
+  ///
+  const ClickedUserChat = useSelector(state => state.messages.clickedUserChat);
+
   useEffect(() => {
     dispatch(readAllMessagesCovers(scoreLMessagesCovers, OffsetMessagesCovers));
   }, []);
@@ -103,7 +107,6 @@ const ChatUserList = () => {
 
   // handle scroll for list of messages covers
   const handleScrollMessagesCovers = () => {
-    console.log("more scroll ", endOfMessagesCovers);
     if (!endOfMessagesCovers) {
       // sent get messages covers (next options)
       dispatch(
@@ -191,6 +194,20 @@ const ChatUserList = () => {
                     onClick={() => {
                       if (allMessagesCovers[i][0] > 0) {
                         dispatch(resetMegsCoversUnreadCount(i));
+                      }
+
+                      console.log("before clickedUserChat ", ClickedUserChat);
+                      if (ClickedUserChat != null) {
+                        console.log("before clickedUserChat !=null");
+                        dispatch(
+                          setActiveConversation(
+                            ClickedUserChat.i,
+                            ClickedUserChat.co,
+                            ClickedUserChat.ci,
+                            ClickedUserChat.va,
+                            false
+                          )
+                        );
                       }
                       dispatch(
                         clickedUserChat(user, Number(allMessagesCovers[i][0]))

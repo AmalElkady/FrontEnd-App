@@ -11,13 +11,27 @@ const ReceivedMessageCell = ({ conversation, user }) => {
         alt={user.n}
       />
       <div className="bubble">
-        <div className="message bubble-blur">{conversation.m}</div>
-        <div className="time text-muted text-right mt-2 bubble-blur">
+        <div
+          className={conversation.h == 1 ? "message bubble-blur" : "message"}
+        >
+          {conversation.m}
+        </div>
+        <div
+          className={
+            conversation.h == 1
+              ? "time text-muted text-right mt-2  bubble-blur"
+              : "time text-muted text-right mt-2"
+          }
+        >
           {moment(Number(conversation.d)).format("hh:mm A")}
         </div>
-        <div className="lock-mgs">
-          <LockIcon />
-        </div>
+        {conversation.h == 1 ? (
+          <div className="lock-mgs">
+            <LockIcon />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

@@ -24,8 +24,11 @@ import {
   SET_CONVERSATION_TYPING_INDICATOR,
   SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
   SET_MAP_TIMESTAMP,
+  SET_TYPING_MARK,
+  SET_TYPING_TIMER,
   SHOW_MESSAGE,
-  INCREASE_MESSAGES_UNREAD_COUNT
+  INCREASE_MESSAGES_UNREAD_COUNT,
+  RESET_PROFILES_ONLINE_STATUS
 } from "../constants/ActionTypes";
 
 export const sendMessage = (profileid, country, city, varea, message) => {
@@ -205,11 +208,12 @@ export const setConversationTypingIndicator = (
   country,
   city,
   varea,
+  jnt,
   activate
 ) => {
   return {
     type: SET_CONVERSATION_TYPING_INDICATOR,
-    payload: { profileid, country, city, varea, activate }
+    payload: { profileid, country, city, varea, jnt, activate }
   };
 };
 
@@ -220,10 +224,30 @@ export const setConversationTypingIndicatorSuccess = data => {
   };
 };
 
+export const setTypingMark = flag => {
+  return {
+    type: SET_TYPING_MARK,
+    payload: flag
+  };
+};
+
+export const setTypingTimer = date => {
+  return {
+    type: SET_TYPING_TIMER,
+    payload: date
+  };
+};
+
 export const increaseMgsUnRCount = () => {
   return {
     type: INCREASE_MESSAGES_UNREAD_COUNT
     // payload:
+  };
+};
+
+export const resetProfilesOnlineStatus = () => {
+  return {
+    type: RESET_PROFILES_ONLINE_STATUS
   };
 };
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
-
+import Router from "next/router";
+import { auth } from "../okta/okta";
 const messages = {};
 
 let axiosRequest = axios.create({
@@ -19,9 +20,19 @@ let callAxios = options => {
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        if (response.data.token && response.data.status != "ACTIVE") {
+        console.log(
+          "********** new token  response.data.token ",
+          response.data.token
+        );
+        if (
+          response.data.token &&
+          (response.data.status != "ACTIVE" || response.data.status == null)
+        ) {
           setCookie("access_token", response.data.token);
-
+          console.log(
+            "********** new token  response.data.token trueeeeeee ",
+            response.data.token
+          );
           if (response.data.verify) {
             resolve({ data: { response: "ok" } });
           } else if (response.data.signedRequest) {
@@ -34,10 +45,21 @@ let callAxios = options => {
         } else if (response.data.message) {
           if (response.data.message == "unauthorized") {
             console.log("**********Authorization*********");
-            removeCookie("access_token");
+            // removeCookie("access_token");
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
             });
+          } else if (
+            // response.data.code == "JWT_7" ||
+            response.data.code == "JWT_8"
+          ) {
+            console.log("**********wrong token*********");
+            removeCookie("access_token");
+            //auth.signOut();
+            //Router.replace("/");
+          } else if (response.data.code == "JWT_7") {
+            console.log("**********expired token*********");
+            resolve({ code: "JWT_7" });
           } else {
             resolve(response);
           }
@@ -122,6 +144,27 @@ messages.getMessagesTotalUrCount = function() {
 
       console.log("readmessagestotalurcount from service ", response);
       if (response) {
+        if (response.code == "JWT_7") {
+          const tokenValueNew = getCookie("access_token", false);
+          if (tokenValue != tokenValueNew) {
+            console.log(
+              "response tokenValue!=tokenValueNew ",
+              tokenValue,
+              tokenValueNew
+            );
+            // hole 2s then
+            setTimeout(() => {
+              console.log("from  hold 2s message notifi");
+              messages.getMessagesTotalUrCount();
+            }, 2000);
+          } else {
+            console.log(
+              "response tokenValue==tokenValueNew ",
+              tokenValue,
+              tokenValueNew
+            );
+          }
+        }
         resolve(response.count);
       } else {
         resolve({ message: "no response !" });
@@ -455,6 +498,7 @@ messages.setConversationTypingIndicator = function(
   country,
   city,
   varea,
+  jnt,
   activate
 ) {
   console.log(
@@ -463,6 +507,7 @@ messages.setConversationTypingIndicator = function(
     country,
     city,
     varea,
+    jnt,
     activate
   );
 
@@ -482,6 +527,7 @@ messages.setConversationTypingIndicator = function(
           country,
           city,
           varea,
+          jnt,
           activate
         }
       };

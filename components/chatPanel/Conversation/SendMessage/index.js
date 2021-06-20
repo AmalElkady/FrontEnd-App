@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Input } from "react-chat-elements";
 import Button from "@material-ui/core/Button";
@@ -17,11 +17,39 @@ import {
   sendMessageSuccess,
   readAllMessagesCovers,
   clearConversationSuccess,
-  resetMegsCovers
+  resetMegsCovers,
+  setConversationTypingIndicator
 } from "../../../../actions/Messages";
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 const SendMessage = () => {
   const dispatch = useDispatch();
+
+  const [preString, setPreString] = useState("");
+  const [currentString, setCurrentString] = useState("");
+  const [userTyping, setUserTyping] = useState(0);
+
+  const [userWrite, setUserWrite] = useState(null);
+
   const messageSent = useSelector(state => state.messages.messageSent);
   const clickedUserChat = useSelector(state => state.messages.clickedUserChat);
 
@@ -44,6 +72,77 @@ const SendMessage = () => {
   const [emojiSelected, setEmojiSelected] = useState(null);
 
   ////
+  ///call each 2s
+  useInterval(() => {
+    console.log(
+      "This will run after 2s For  check ",
+      currentString,
+      preString,
+      userTyping
+    );
+
+    if (preString == currentString && userTyping == 1) {
+      console.log("stoped typing");
+      dispatch(
+        setConversationTypingIndicator(
+          clickedUserChat.i,
+          clickedUserChat.co,
+          clickedUserChat.ci,
+          clickedUserChat.va,
+          clickedUserChat.jnt,
+          false
+        )
+      );
+      setPreString("");
+      setCurrentString("");
+      setUserTyping(0);
+    }
+  }, 2000);
+
+  ///call each 1s
+  useInterval(() => {
+    console.log("This will run after 1s For pre string  ", currentString);
+    setPreString(currentString);
+  }, 1000);
+
+  // useInterval(() => {
+  //   //  console.log("This will run after 2s For  Typing indicator ", userWrite);
+  //   if (userWrite) {
+  //     console.log("user typing");
+  //     dispatch(
+  //       setConversationTypingIndicator(
+  //         clickedUserChat.i,
+  //         clickedUserChat.co,
+  //         clickedUserChat.ci,
+  //         clickedUserChat.va,
+  //         true
+  //       )
+  //     );
+  //     setUserWrite(false);
+  //   } else if (userWrite == false && userWrite != null) {
+  //     console.log("stoped typing");
+  //     dispatch(
+  //       setConversationTypingIndicator(
+  //         clickedUserChat.i,
+  //         clickedUserChat.co,
+  //         clickedUserChat.ci,
+  //         clickedUserChat.va,
+  //         false
+  //       )
+  //     );
+  //     setUserWrite(null);
+  //   } else {
+  //     // console.log("null typing");
+  //     // clearInterval(interval);
+  //   }
+  // }, 2000);
+
+  // useEffect(() => {
+  //   if (currentString.length != 0) {
+  //     console.log("currentString ", currentString);
+  //   }
+  // }, [currentString]);
+
   useEffect(() => {
     if (messageSent) {
       if (conversationMessages == "") {
@@ -74,6 +173,7 @@ const SendMessage = () => {
     //   setMessageText(`${messageText + e.target.value}`);
     // } else {
     //   console.log("2");
+    // setUserWrite(true);
     setMessageText(e.target.value);
     // }
   };
@@ -154,7 +254,33 @@ const SendMessage = () => {
               type="text"
               value={messageText}
               onChange={handleChange}
-              // placeholder="Type here..."
+              onKeyDown={e => {
+                console.log("onKeyDown ", e.key);
+                setCurrentString(`${currentString}${e.key}`);
+              }}
+              onKeyUp={e => {
+                console.log(
+                  "onKeyUp ",
+                  currentString,
+                  currentString.length,
+                  preString
+                );
+                if (currentString.length > 5) {
+                  console.log("onKeyUp ***************");
+                  dispatch(
+                    setConversationTypingIndicator(
+                      clickedUserChat.i,
+                      clickedUserChat.co,
+                      clickedUserChat.ci,
+                      clickedUserChat.va,
+                      clickedUserChat.jnt,
+                      true
+                    )
+                  );
+                  setUserTyping(1);
+                }
+              }}
+              placeholder="Type here..."
               placeholder={
                 locale.locale == "en" ? "Type a message" : "اكتب رسالة"
               }

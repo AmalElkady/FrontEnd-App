@@ -60,6 +60,8 @@ export const CHECK_MP_UPLOAD = "check_mp_upload";
 export const CHECK_MP_UPLOAD_SUCCESS = "check_mp_upload_success";
 export const RESET_CHECK_MP_UPLOAD_FLAG = "reset_check_mp_upload_flag";
 export const RESEND_VERIFICATION_TO_PHONE = "resend_verification_to_phone";
+export const RESEND_VERIFICATION_TO_PHONE_SUCCESS =
+  "resend_verification_to_phone_success";
 export const SEND_VERIFICATION_CODE = "send_verification_code";
 export const SEND_RESET_TOKEN = "send_reset_token";
 export const CLEAR_AUTH_STATE = "clear_auth_state";
@@ -460,6 +462,8 @@ export const GET_PROFILES_ONLINE_STATUS = "get_profiles_online_status";
 export const GET_PROFILES_ONLINE_STATUS_SUCCESS =
   "get_profiles_online_status_success";
 
+export const RESET_PROFILES_ONLINE_STATUS = "reset_profiles_online_status";
+
 export const SET_MAP_TIMESTAMP = "set_map_timestamp";
 
 export const SET_ACTIVE_CONVERSATION = "set_active_conversation";
@@ -470,3 +474,16 @@ export const SET_CONVERSATION_TYPING_INDICATOR =
   "set_conversation_typing_indicator";
 export const SET_CONVERSATION_TYPING_INDICATOR_SUCCESS =
   "set_conversation_typing_indicator_success";
+
+export const SET_TYPING_MARK = "set_typing_mark";
+export const SET_TYPING_TIMER = "set_typing_timer";
+
+export const DISCONNECT_CHANNEL = "disconnect_channel";
+
+export const RESET_SEARCH_FLAG = "reset_search_flag";
+
+export const ERROR_JWT_8 = "error_jwt_8";
+
+export const NOTIFI_ACTION_DONE = "notifi_action_done";
+export const NOTIFI_MSG_ACTION_DONE = "notifi_msg_action_done";
+export const PUSHER_ACTION_DONE = "pusher_action_done";

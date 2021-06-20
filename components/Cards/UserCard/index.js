@@ -214,9 +214,11 @@ export default function UserCard({ user, timeScore }) {
   useEffect(() => {
     if (Clicked_id == user.i) {
       if (LoveMatchRequestSend == true) {
-        NotificationManager.success("Love Sent successfully");
+        NotificationManager.success(
+          <IntlMessages id="Love.notificationAction" />
+        );
       } else if (LoveMatchRequestSend == "error") {
-        NotificationManager.error("love already sent ");
+        NotificationManager.error(<IntlMessages id="Love.notificationError" />);
       }
 
       dispatch(clickedId(null));

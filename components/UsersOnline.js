@@ -67,6 +67,12 @@ export default function UsersOnline() {
       AllCountriesSelectedOnlineUsers &&
       AllCountriesSelectedOnlineUsers.length != 0
     ) {
+      console.log(
+        "allCountriesSelectedOnlineUsers from online users first call ",
+        scoreLOnline,
+        OffsetOnline,
+        AllCountriesSelectedOnlineUsers
+      );
       dispatch(requestPhotoRead());
     }
   }, [AllCountriesSelectedOnlineUsers]);
@@ -82,6 +88,7 @@ export default function UsersOnline() {
             AllCountriesSelectedOnlineUsers,
             photoReadSignedRequest.signedRequest
           );
+          setNewUsers([]);
           setNewUsers(AllCountriesOnlineUsersNew);
         }
       }
@@ -89,14 +96,31 @@ export default function UsersOnline() {
   }, [photoReadSignedRequest]);
 
   useEffect(() => {
+    // console.log(
+    //   "get users of next option from online users ",
+    //   endOfResultUsers,
+    //   AllCountriesSelectedOnline,
+    //   currentIndexAllCountriesSelectedOnline,
+    //   scoreLOnlineUsers,
+    //   OffsetOnlineUsers
+    // );
     if (
       endOfResultUsers &&
       AllCountriesSelectedOnline &&
       AllCountriesSelectedOnline.length != 0 &&
-      currentIndexAllCountriesSelectedOnline <=
-        AllCountriesSelectedOnline.length - 1
+      (currentIndexAllCountriesSelectedOnline <=
+        AllCountriesSelectedOnline.length - 1 ||
+        currentIndexAllCountriesSelectedOnline <=
+          AllCountriesSelectedOnline.length)
     ) {
       // get users of next option
+
+      console.log(
+        "get users of next option from online users first call ",
+        endOfResultUsers,
+        AllCountriesSelectedOnline,
+        currentIndexAllCountriesSelectedOnline
+      );
 
       dispatch(
         allCountriesSelectedOnlineUsers(
@@ -112,10 +136,17 @@ export default function UsersOnline() {
   useEffect(() => {
     if (
       AllCountriesSelectedOnline &&
+      AllCountriesSelectedOnline.length > 1 &&
       currentIndexAllCountriesSelectedOnline ===
         AllCountriesSelectedOnline.length - 1
     ) {
       // Get online users other options
+      console.log(
+        "allCountriesSelectedOnline &&&&&&&&&",
+        currentIndexAllCountriesSelectedOnline,
+        scoreLOnline,
+        OffsetOnline
+      );
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
       dispatch(resetEndRes());
     }

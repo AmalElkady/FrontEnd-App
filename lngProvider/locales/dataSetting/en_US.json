@@ -27,5 +27,10 @@
   "settings.agree": "Agree",
   "settings.disagree": "Disagree",
   "settings.confirmDel": "confirm delete",
-  "settings.deleteText": "once you delete your account all your data will deleted and you can join again after one week."
+  "settings.deleteText": "once you delete your account all your data will deleted and you can join again after one week.",
+  "setting.phoneChange": "Your phone changed successfully",
+  "setting.passChange": "Your password changed successfully",
+  "setting.oldPass": "Your old password not correct",
+  "setting.verifCode": "Verification Code sent successfully",
+  "setting.fileAdded": "was added"
 }

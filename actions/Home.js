@@ -56,7 +56,11 @@ import {
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
   RESET_STATES_LIST_CITY_ONLINE,
-  SELECTED_HEADER_ICON
+  SELECTED_HEADER_ICON,
+  RESET_SEARCH_FLAG,
+  NOTIFI_ACTION_DONE,
+  NOTIFI_MSG_ACTION_DONE,
+  PUSHER_ACTION_DONE
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -462,9 +466,32 @@ export const resetEndResUsersOf = () => {
   };
 };
 
-export const selectedHeaderIcon = (data) => {
+export const selectedHeaderIcon = data => {
   return {
     type: SELECTED_HEADER_ICON,
-    payload:data
+    payload: data
+  };
+};
+export const resetSearchFlag = () => {
+  return {
+    type: RESET_SEARCH_FLAG
+  };
+};
+
+export const notifiActionDone = () => {
+  return {
+    type: NOTIFI_ACTION_DONE
+  };
+};
+
+export const notifiMsgActionDone = () => {
+  return {
+    type: NOTIFI_MSG_ACTION_DONE
+  };
+};
+
+export const pusherActionDone = () => {
+  return {
+    type: PUSHER_ACTION_DONE
   };
 };

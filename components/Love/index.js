@@ -7,7 +7,6 @@ import IntlMessages from "../../util/IntlMessages";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Typography from "@material-ui/core/Typography";
 
-
 import {
   getLoveMatchedAndReceivedRequests,
   getLoveSentRequests
@@ -181,27 +180,31 @@ export default function Love() {
   return (
     <>
       <Grid container>
-          <Grid item xs={12} className="page-title-container page-title-container-2">
-         <Typography variant="h6">
-                {loveSelectedIcon == "match"? (
-                  <>
-                    <IntlMessages id="loveList.matchTitle" />
-                  </>
-                ) : loveSelectedIcon == "sent"? (
-                  <>
-                    <IntlMessages id="loveList.sentTitle" />
-                  </>
-                ) : loveSelectedIcon == "received" ? (
-                  <>
-                    <IntlMessages id="loveList.receivedTitle" />
-                  </>
-                ) : (
-                  ""
-                )}
-              </Typography>
-       </Grid>
+        <Grid
+          item
+          xs={12}
+          className="page-title-container page-title-container-2"
+        >
+          <Typography variant="h6">
+            {loveSelectedIcon == "match" ? (
+              <>
+                <IntlMessages id="loveList.matchTitle" />
+              </>
+            ) : loveSelectedIcon == "sent" ? (
+              <>
+                <IntlMessages id="loveList.sentTitle" />
+              </>
+            ) : loveSelectedIcon == "received" ? (
+              <>
+                <IntlMessages id="loveList.receivedTitle" />
+              </>
+            ) : (
+              ""
+            )}
+          </Typography>
+        </Grid>
         <Grid item xs={12} className="grid-width-1 page-icons-container">
-         <LoveIcons />
+          <LoveIcons />
         </Grid>
         {loveSelectedIcon == "sent" && finalUsersProfiles && (
           <InfiniteScroll
@@ -213,9 +216,9 @@ export default function Love() {
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {LoveSentRequestsProfiles.length != 0 && (
+                {/* {LoveSentRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen sent love requests </b>
-                )}
+                )} */}
                 {LoveSentRequestsProfiles.length === 0 && (
                   <b>Yay! You don't have sent love requests </b>
                 )}
@@ -241,9 +244,9 @@ export default function Love() {
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {LoveMatchedRequestsProfiles.length != 0 && (
+                {/* {LoveMatchedRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen Matched love requests </b>
-                )}
+                )} */}
                 {LoveMatchedRequestsProfiles.length === 0 && (
                   <b>Yay! You don't have Matched love requests </b>
                 )}
@@ -269,9 +272,9 @@ export default function Love() {
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {LoveReceivedRequestsProfiles.length != 0 && (
+                {/* {LoveReceivedRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen received love requests </b>
-                )}
+                )} */}
                 {LoveReceivedRequestsProfiles.length === 0 && (
                   <b>Yay! You don't have received love requests </b>
                 )}

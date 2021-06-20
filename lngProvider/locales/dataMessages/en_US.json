@@ -4,5 +4,6 @@
   "chat.clear": "Clear Messages",
   "chat.delete": "Delete Chat",
   "message.placeholder": "Type a message",
-  "mgs.seen": "seen"
+  "mgs.seen": "seen",
+  "mgs.typing": "typing..."
 }

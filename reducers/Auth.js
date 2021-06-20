@@ -1,3 +1,5 @@
+import { getCookie } from "../util/session";
+import base64url from "base64url";
 import {
   HIDE_MESSAGE,
   INIT_URL,
@@ -27,12 +29,14 @@ import {
   CHECK_MP_UPLOAD_SUCCESS,
   RESET_CHECK_MP_UPLOAD_FLAG,
   CHANGE_PHONE_BEFORE_VERIF_SUCCESS,
+  RESEND_VERIFICATION_TO_PHONE_SUCCESS,
   RESET_PHONE_CHANGE_FLAG,
   MAIN_PHOTO_SELECTED,
   SWITCH_FORM,
   SWITCH_FORM_2,
   CONFIRM_PASSWORD_CASE,
-  ADD_CONNECTION_FLAG
+  ADD_CONNECTION_FLAG,
+  DISCONNECT_CHANNEL
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -67,7 +71,9 @@ const INIT_STATE = {
   haveConnection: false,
   haveConnectionPusher: null,
   haveConnectionChannel: null,
-  sub: null
+  sub: null,
+  resendVerToPhoneSuccess: false,
+  logoutFlag: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -105,6 +111,7 @@ export default (state = INIT_STATE, action) => {
     }
 
     case MP_UPLOAD_SUCCESS: {
+      console.log("from reducer mp uploaded");
       return {
         ...state,
         loader: false,
@@ -178,6 +185,13 @@ export default (state = INIT_STATE, action) => {
         tokenSent: action.payload
       };
     }
+    case RESEND_VERIFICATION_TO_PHONE_SUCCESS: {
+      return {
+        ...state,
+        resendVerToPhoneSuccess: !state.resendVerToPhoneSuccess,
+        loader: false
+      };
+    }
 
     case VERIFICATION_CODE_SUCCESS: {
       return {
@@ -226,7 +240,8 @@ export default (state = INIT_STATE, action) => {
         birth: action.payload.birth,
         martial: action.payload.martial,
         gender: action.payload.gender,
-        sub: action.payload.sub
+        sub: action.payload.sub,
+        logoutFlag: false
       };
     }
     case INIT_URL: {
@@ -249,11 +264,28 @@ export default (state = INIT_STATE, action) => {
         gender: "",
         sun: null,
         tokenSent: false,
-        confirmPasswordFlag: false
+        confirmPasswordFlag: false,
+        haveConnection: false,
+        haveConnectionPusher: null,
+        haveConnectionChannel: null,
+        logoutFlag: true
+      };
+    }
+    case DISCONNECT_CHANNEL: {
+      console.log("disconnect channel reducer ");
+      // const tokenValue = getCookie("access_token", false);
+      // const tokenUserData = JSON.parse(
+      //   base64url.decode(`${tokenValue}`.split(".")[1])
+      // );
+      // state.haveConnectionPusher.unsubscribe(
+      //   `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}_${tokenUserData.jnt}`
+      // );
+      state.haveConnectionPusher.disconnect();
+      return {
+        ...state
       };
     }
     case CONFIRM_PASSWORD_CASE: {
-      console.log("from reducer ", action.payload);
       return {
         ...state,
         confirmPasswordFlag: action.payload

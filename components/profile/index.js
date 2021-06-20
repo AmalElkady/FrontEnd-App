@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getCookie } from "../../util/session";
 import base64url from "base64url";
 import ProfileCard from "./ProfileCard";
+import IntlMessages from "../../util/IntlMessages";
 import Grid from "@material-ui/core/Grid";
 import About from "./About";
 import Carousel from "../../app/components/carousel";
@@ -78,7 +79,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (mainPhotoUpdated) {
-      NotificationManager.success("Main Photo Updated successfully", "Success");
+      NotificationManager.success(<IntlMessages id="profile.notifPhoto" />);
       dispatch(readMyProfile("L1"));
       dispatch(openModalPP(false));
       dispatch(updateMainPSuccess(false));

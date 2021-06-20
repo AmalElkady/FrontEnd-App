@@ -250,7 +250,8 @@ export default function UploadImage({ photoNum }) {
               NotificationManager.error(<IntlMessages id="upload.error" />);
             } else {
               if (photoNum == null) {
-                dispatch(updateMainP(finalImg));
+                //dispatch(updateMainP(finalImg));
+                dispatch(mpUpload(finalImg));
               } else {
                 dispatch(ppUpload(finalImg, photoNum));
               }

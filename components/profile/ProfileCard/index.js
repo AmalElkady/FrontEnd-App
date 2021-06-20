@@ -182,9 +182,11 @@ export default function ProfileCard({ mainInfo }) {
 
   useEffect(() => {
     if (SendLoveMatchRequest == true) {
-      NotificationManager.success("Love Sent successfully");
+      NotificationManager.success(
+        <IntlMessages id="Love.notificationAction" />
+      );
     } else if (SendLoveMatchRequest == "error") {
-      NotificationManager.error("love already sent");
+      NotificationManager.error(<IntlMessages id="Love.notificationError" />);
     }
     dispatch(sendLoveMatchRequestSuccess(false));
   }, [SendLoveMatchRequest]);
@@ -192,25 +194,45 @@ export default function ProfileCard({ mainInfo }) {
   useEffect(() => {
     if (returnUpdateMessage == true) {
       handleClose();
-      NotificationManager.success("Marital status updated successfully");
+      NotificationManager.success(<IntlMessages id="profile.notifMarital" />);
       dispatch(updateProfileL1Success(false, userMartial));
     }
   }, [returnUpdateMessage]);
 
   useEffect(() => {
     if (userBlocked == true) {
-      NotificationManager.success(`You block ${mainInfo.n} successfully`);
+      NotificationManager.success(
+        <>
+          <IntlMessages id="user.notifBlock1" /> {mainInfo.n}{" "}
+          <IntlMessages id="user.notifBlock2" />
+        </>
+      );
     } else if (userBlocked == "error") {
-      NotificationManager.error(`You already blocked ${mainInfo.n}`);
+      NotificationManager.error(
+        <>
+          <IntlMessages id="user.notifBlockErr" />
+          {mainInfo.n}
+        </>
+      );
     }
     dispatch(blockUserSuccess(false));
   }, [userBlocked]);
 
   useEffect(() => {
     if (userUnblocked == true) {
-      NotificationManager.success(`You unblock ${mainInfo.n} successfully`);
+      NotificationManager.success(
+        <>
+          <IntlMessages id="user.notifUnblock1" /> {mainInfo.n}{" "}
+          <IntlMessages id="user.notifBlock2" />
+        </>
+      );
     } else if (userUnblocked == "error") {
-      NotificationManager.error(`You already unblocked ${mainInfo.n}`);
+      NotificationManager.error(
+        <>
+          <IntlMessages id="user.notifUnblockErr" />
+          {mainInfo.n}
+        </>
+      );
     }
     dispatch(unblockUserSuccess(false));
   }, [userUnblocked]);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Link from "next/link";
 import { withRouter } from "next/router";
 import { connect } from "react-redux";
-import { userSignOut } from "../../actions/Auth";
+import { userSignOut, disConnectChannel } from "../../actions/Auth";
 import { resetStates } from "../../actions/Home";
 import Button from "@material-ui/core/Button";
 
@@ -191,6 +191,7 @@ class SidenavContent extends Component {
             className="menu no-arrow"
             onClick={() => {
               this.props.resetStates();
+              this.props.disConnectChannel();
               this.props.userSignOut();
             }}
           >
@@ -219,6 +220,7 @@ const mapStateToProps = ({ auth }) => {
 export default withRouter(
   connect(mapStateToProps, {
     userSignOut,
+    disConnectChannel,
     resetStates
   })(SidenavContent)
 );

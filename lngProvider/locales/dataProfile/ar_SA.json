@@ -16,6 +16,8 @@
   "profile.uploadMP": "تحديث الصوره الاساسيه ",
   "profile.notAuthorized": "غير مصرح لك بالوصول إلى الصور الخاصة ، أرسل طلبًا للوصول إليها ",
   "profile.sendPP": "ارسال طلب",
+  "profile.notifMarital": " تم تحديث الحالة الاجتماعية بنجاح ",
+  "profile.notifPhoto": " تم تحديث الصورة الرئيسية بنجاح ",
 
   "inputLabel.birthday": "تاريخ الميلاد",
   "inputLabel.martial": "الحالة الإجتماعية",
@@ -30,6 +32,7 @@
   "inputLabel.passwordConfirm": "تأكيد كلمة السر",
   "inputLabel.password": "كلمة السر",
   "inputLabel.nationality": "الجنسية",
+  "inputLabel.nationalityCon": "حدد الدولة",
   "inputLabel.tpercent": "نسبة تقبل التعدد %",
   "inputLabel.education": "مستوى التعليم",
   "inputLabel.workd": "مجال العمل",
@@ -63,6 +66,8 @@
   "martialM.2": "مطلق",
   "martialM.3": "أرمل",
   "martialM.4": "متزوج",
+
+  "nationality.EG": "مصرية",
 
   "education.1": "لا يوجد تعليم اساسي",
   "education.2": "مدرسة ثانوية",
@@ -112,5 +117,11 @@
   "eg.24": "الشرقية",
   "eg.25": "سوهاج",
   "eg.26": "جنوب سيناء",
-  "eg.27": "السويس"
+  "eg.27": "السويس",
+
+  "user.notifBlock1": " لقد حجبت ",
+  "user.notifBlock2": " بنجاح",
+  "user.notifBlockErr": " انت بالفعل حجبت",
+  "user.notifUnblock1": " لقد قمت بإلغاء حظر ",
+  "user.notifUnblockErr": " انت بالفعل قمت بإلغاء الحظر  "
 }

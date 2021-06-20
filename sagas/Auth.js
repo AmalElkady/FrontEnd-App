@@ -42,7 +42,9 @@ import {
   clearPersistedAuthState,
   showTimer,
   checkMpUploadSuccess,
-  changeUserPhoneBeforeVerifSuccess
+  changeUserPhoneBeforeVerifSuccess,
+  resendVerificationToPhoneSuccess,
+  userSignIn
 } from "../actions/Auth";
 
 import {
@@ -242,17 +244,23 @@ function* createUserWithPhonePassword({ payload }) {
       yield put(showAuthMessage(signUpUser.message));
     } else {
       yield put(
-        userSignUpSuccess({
-          authUser: "access_token",
-          phone,
-          country: `${country}`,
-          countryiso2,
-          city,
-          name: signUpUser.n,
-          birth: signUpUser.b,
-          martial: signUpUser.m,
-          gender: signUpUser.gender,
-          sub: signUpUser.sub
+        // userSignUpSuccess({
+        //   authUser: "access_token",
+        //   phone,
+        //   country: `${country}`,
+        //   countryiso2,
+        //   city,
+        //   name: signUpUser.n,
+        //   birth: signUpUser.b,
+        //   martial: signUpUser.m,
+        //   gender: signUpUser.gender,
+        //   sub: signUpUser.sub
+        // })
+
+        userSignIn({
+          phone: phone,
+          password,
+          country: country
         })
       );
     }
@@ -354,7 +362,7 @@ function* sendVerificationCodeForUserPhone({ payload }) {
       verificationCode
     );
     if (verifyUser.message) {
-      yield put(showTimer(resetUser.time));
+      // yield put(showTimer(resetUser.time));
       yield put(showAuthMessage(verifyUser.message));
     } else {
       yield put(userSendVerificationCodeSuccess(true));
@@ -371,8 +379,8 @@ function* resendVerificationToUserPhone() {
     if (resendVerification.message) {
       yield put(showAuthMessage(resendVerification.message));
     } else {
-      yield put(showAuthMessage("Message Successfuly Sent"));
-      console.log(resendVerification);
+      yield put(resendVerificationToPhoneSuccess());
+      //  yield put(showAuthMessage("Message Successfuly Sent"));
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -526,6 +534,7 @@ function* signInUserWithPhonePassword({ payload }) {
 }
 
 function* signOut() {
+  console.log("logout from saga");
   try {
     const signOutUser = yield call(signOutRequest);
     if (signOutUser === undefined) {

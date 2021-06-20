@@ -29,7 +29,8 @@ import {
   CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
   RESET_COUNT,
   UPDATE_LIST,
-  INCREASE_COUNT
+  INCREASE_COUNT,
+  ERROR_JWT_8
   //PUSH_IN_NOTIFICATION_VIEW_PP_LOVE
 } from "../constants/ActionTypes";
 
@@ -283,6 +284,13 @@ export const updateList = type => {
   return {
     type: UPDATE_LIST,
     payload: type
+  };
+};
+export const errorJwt8Success = data => {
+  console.log("from errorJwt8Success  action", data);
+  return {
+    type: ERROR_JWT_8,
+    payload: data
   };
 };
 

@@ -167,7 +167,8 @@ componentDidMount () {
 							 disableCountryCode={true}
 							  country={COUNTRY_CODE_TO_NAME_MAP[this.state.nationality] || COUNTRY_CODE_TO_NAME_MAP[country] || COUNTRY_CODE_TO_NAME_MAP["+"+country]}
 							  value={this.state.nationality}
-							  placeholder={'Choose Country'}
+							//  placeholder={`${<IntlMessages id="inputLabel.nationalityCon"/>}`}
+							placeholder={''}
 							  readonly={'readonly'}
 							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.countryCode });}}
 							/>

@@ -1,14 +1,29 @@
 import React, { useState, useEffect, Component } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import moment from "moment";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import LockIcon from "@material-ui/icons/Lock";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import IntlMessages from "../../util/IntlMessages";
+
 import { addConnectionFlag } from "../../actions/Auth";
-import { readAllMessagesCovers, resetMegsCovers } from "../../actions/Messages";
+import {
+  readAllMessagesCovers,
+  resetMegsCovers,
+  clearConversationSuccess,
+  readConversation,
+  setTypingMark,
+  setTypingTimer
+} from "../../actions/Messages";
 import {
   increaseCount
   // pushInNotificationViewPPLove
 } from "../../actions/Interaction";
 import { increaseMgsUnRCount } from "../../actions/Messages";
-import { requestPhotoRead } from "../../actions/Home";
+import { requestPhotoRead, pusherActionDone } from "../../actions/Home";
 import { mapSmallUserPhotoUrl } from "../../helpers/mapSmallUserPhotoUrl";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -35,6 +50,7 @@ export default function Connection() {
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
   );
+  const actionsStatus = useSelector(state => state.home.actionsStatus);
   const ClickedUserChat = useSelector(state => state.messages.clickedUserChat);
   const connectionPusher = useSelector(
     state => state.auth.haveConnectionPusher
@@ -42,13 +58,32 @@ export default function Connection() {
   const connectionChannel = useSelector(
     state => state.auth.haveConnectionChannel
   );
+  const conversationMessages = useSelector(
+    state => state.messages.conversationMessages
+  );
+
+  const typingFlag = useSelector(state => state.messages.typingFlag);
+  const typingTimer = useSelector(state => state.messages.typingTimer);
+
   useEffect(() => {
     console.log(
       "test connectionPusher &&&&&&&&& ",
       connectionPusher,
-      connectionChannel
+      connectionChannel,
+      actionsStatus
     );
-    if (connectionPusher == null && connectionChannel == null) {
+    const subActionsChanged = actionsStatus.slice(0, 3);
+    const subActionsNotChanged = actionsStatus.slice(3, 5);
+    if (
+      connectionPusher == null &&
+      connectionChannel == null &&
+      subActionsChanged.every(action => {
+        return action != null;
+      }) &&
+      subActionsNotChanged.every(action => {
+        return action == null;
+      })
+    ) {
       console.log("test connectionPusher &&&&&&&&& 1", connectionPusher);
       Pusher.logToConsole = true;
       let authUrl = "http://128.199.32.156/api/requestnotificationconnection";
@@ -58,8 +93,14 @@ export default function Connection() {
           authorize: (socketId, callback) => {
             fetch(authUrl, {
               method: "POST",
+              crossDomain: true,
+              xhrFields: {
+                withCredentials: true
+              },
               headers: new Headers({
                 "Content-Type": "application/json",
+                "Access-Control-Request-Headers": "x-requested-with",
+                // "Access-Control-Allow-Origin": "*",
                 Authorization: "Bearer " + tokenValue
               }),
               body: JSON.stringify({
@@ -75,7 +116,37 @@ export default function Connection() {
               })
               .then(data => {
                 console.log(data);
-                callback(null, data);
+                if (data.code == "JWT_7") {
+                  const NewTokenValue = getCookie("access_token", false);
+                  console.log("error from pusher ", tokenValue, NewTokenValue);
+                  // fetch(authUrl, {
+                  //   method: "POST",
+                  //   crossDomain: true,
+                  //   xhrFields: {
+                  //     withCredentials: true
+                  //   },
+                  //   headers: new Headers({
+                  //     "Content-Type": "application/json",
+                  //     "Access-Control-Request-Headers": "x-requested-with",
+                  //     // "Access-Control-Allow-Origin": "*",
+                  //     Authorization: "Bearer " + NewTokenValue
+                  //   }),
+                  //   body: JSON.stringify({
+                  //     socket_id: socketId,
+                  //     channel_name: channel.name
+                  //   })
+                  // }).then(res => {
+                  //   if (!res.ok) {
+                  //     throw new Error(
+                  //       `Received ${res.statusCode} from ${authUrl}`
+                  //     );
+                  //   }
+                  //   return res.json();
+                  // });
+                  authorizer(channel, callback);
+                } else {
+                  callback(null, data);
+                }
               })
               .catch(err => {
                 callback(new Error(`Error calling auth endpoint: ${err}`), {
@@ -101,11 +172,13 @@ export default function Connection() {
           })
         )
       );
+      dispatch(pusherActionDone());
     }
     // }
-  }, []);
+  }, [actionsStatus]);
 
   useEffect(() => {
+    // const tokenValue = getCookie("access_token", false);
     if (connectionPusher && pusher && connectionChannel == null) {
       console.log(
         "test pusher &&&&&&&&& 1",
@@ -121,7 +194,7 @@ export default function Connection() {
         addConnectionFlag(
           "ch",
           connectionPusher.subscribe(
-            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}`
+            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}_${tokenUserData.jnt}`
           )
         )
       );
@@ -216,23 +289,58 @@ export default function Connection() {
           setNotifType("pa");
         }
       });
+
+      connectionChannel.bind("typing", function(data) {
+        console.log("data from typing-----------------------> ", data);
+        // if signal comed ---> write Typing
+        if (data.data) {
+          dispatch(setTypingMark(true));
+          // console.log(
+          //   "data from typing-----------------------> ",
+          //   typingTimer
+          //   // moment().diff(typingTimer, "seconds")
+          // );
+        } else if (
+          !data.data
+          // ||
+          // (typingTimer != null && moment().diff(typingTimer, "seconds") >= 10)
+        ) {
+          // console.log(
+          //   "data from typing-------false----------------> ",
+          //   typingTimer
+          //   // moment().diff(typingTimer, "seconds")
+          // );
+          //after 10s if no signal comed or come not_typing --->remove Typing
+          dispatch(setTypingMark(false));
+        }
+      });
+
       connectionChannel.bind("disconnect_signal", function(data) {
         //  fillData('disconnectsignal-container',data.value);
         console.log("data.value ", data.value);
         if (data.value == 1) {
-          const tokenValue = getCookie("access_token", false);
-          const tokenUserData = JSON.parse(
-            base64url.decode(`${tokenValue}`.split(".")[1])
-          );
-          connectionPusher.unsubscribe(
-            `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}`
-          );
+          // const tokenValue = getCookie("access_token", false);
+          // const tokenUserData = JSON.parse(
+          //   base64url.decode(`${tokenValue}`.split(".")[1])
+          // );
+          // connectionPusher.unsubscribe(
+          //   `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}_${tokenUserData.jnt}`
+          // );
+
+          connectionPusher.disconnect();
         }
       });
 
       // dispatch(addConnectionFlage());
     }
   }, [connectionChannel]);
+
+  // useEffect(() => {
+  //   if (typingFlag) {
+  //     console.log("set typing timer ^^^^^^^^");
+  //     dispatch(setTypingTimer(Date.now()));
+  //   }
+  // }, [typingFlag]);
 
   useEffect(() => {
     if (userProfile != null && userProfile.hasOwnProperty("_")) {
@@ -301,7 +409,8 @@ export default function Connection() {
               <Grid item xs={1}></Grid>
               <Grid item xs={8}>
                 <Typography variant="body1" component="p">
-                  {finalUserProfile.n} saw your profile
+                  <VisibilityIcon /> {finalUserProfile.n}{" "}
+                  <IntlMessages id="notif.view" />
                 </Typography>
               </Grid>
             </Grid>
@@ -328,7 +437,8 @@ export default function Connection() {
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="item-text">
                 <Typography variant="body1" component="p">
-                  {finalUserProfile.n} sent love for you
+                  <FavoriteIcon /> {finalUserProfile.n}{" "}
+                  <IntlMessages id="notif.loveReq" />
                 </Typography>
               </Grid>
             </Grid>
@@ -351,9 +461,18 @@ export default function Connection() {
                 </div>
               </Grid>
               <Grid item xs={1}></Grid>
-              <Grid item xs={8} className="item-text">
+              <Grid
+                item
+                xs={8}
+                className="item-text"
+                style={{ position: "relative" }}
+              >
+                <FavoriteIcon />{" "}
+                <FavoriteBorderIcon
+                  style={{ position: "absolute", left: "1rem" }}
+                />
                 <Typography variant="body1" component="p">
-                  {finalUserProfile.n} sent match love
+                  {finalUserProfile.n} <IntlMessages id="notif.loveMatch" />
                 </Typography>
               </Grid>
             </Grid>
@@ -382,8 +501,8 @@ export default function Connection() {
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="item-text">
                 <Typography variant="body1" component="p">
-                  {finalUserProfile.n} sent request to access your private
-                  photos
+                  <LockIcon /> {finalUserProfile.n}{" "}
+                  <IntlMessages id="notif.ppReq" />
                 </Typography>
               </Grid>
             </Grid>
@@ -408,7 +527,8 @@ export default function Connection() {
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="">
                 <Typography variant="body1" component="p">
-                  {finalUserProfile.n} accepted your request for private photos
+                  <LockOpenIcon /> {finalUserProfile.n}{" "}
+                  <IntlMessages id="notif.ppAcc" />
                 </Typography>
               </Grid>
             </Grid>
@@ -452,6 +572,21 @@ export default function Connection() {
       if (ClickedUserChat == null || ClickedUserChat.i != userId) {
         dispatch(resetMegsCovers());
         dispatch(readAllMessagesCovers("", ""));
+      } else if (ClickedUserChat != null || ClickedUserChat.i == userId) {
+        dispatch(resetMegsCovers());
+        dispatch(readAllMessagesCovers("", ""));
+        dispatch(clearConversationSuccess(true));
+        dispatch(
+          readConversation(
+            ClickedUserChat.i,
+            ClickedUserChat.co,
+            ClickedUserChat.ci,
+            ClickedUserChat.va,
+            "",
+            "",
+            ""
+          )
+        );
       }
       setNotifType(null);
     }

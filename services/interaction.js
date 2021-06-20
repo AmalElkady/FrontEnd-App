@@ -1,5 +1,7 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
+import Router from "next/router";
+import { auth } from "../okta/okta";
 
 const interaction = {};
 
@@ -19,9 +21,19 @@ let callAxios = options => {
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        if (response.data.token && response.data.status != "ACTIVE") {
+        console.log(
+          "********** new token  response.data.token ",
+          response.data.token
+        );
+        if (
+          response.data.token &&
+          (response.data.status != "ACTIVE" || response.data.status == null)
+        ) {
           setCookie("access_token", response.data.token);
-
+          console.log(
+            "********** new token  response.data.token trueeeeeee ",
+            response.data.token
+          );
           if (response.data.verify) {
             resolve({ data: { response: "ok" } });
           } else if (response.data.signedRequest) {
@@ -37,6 +49,19 @@ let callAxios = options => {
             removeCookie("access_token");
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
+            });
+          } else if (response.data.code == "JWT_8") {
+            console.log("**********expired token*********");
+            // removeCookie("access_token");
+            // auth.signOut();
+            // Router.replace("/");
+            resolve({
+              data: { code: "JWT_8" }
+            });
+          } else if (response.data.code == "JWT_7") {
+            console.log("**********expired token*********");
+            resolve({
+              data: { code: "JWT_7" }
             });
           } else {
             resolve(response);
@@ -548,7 +573,43 @@ interaction.getNotificationViewPPLove = function(
 
       console.log("response getNotificationViewPPLove", response);
       if (response) {
-        resolve(response);
+        if (response.code == "JWT_7") {
+          const tokenValueNew = getCookie("access_token", false);
+          console.log(
+            "response getNotificationViewPPLove tokenValue!=tokenValueNew ",
+            tokenValue,
+            tokenValueNew
+          );
+          if (tokenValue != tokenValueNew) {
+            console.log(
+              "response tokenValue!=tokenValueNew ",
+              tokenValue,
+              tokenValueNew
+            );
+            // hole 2s then
+            setTimeout(() => {
+              console.log("from  hold 2s");
+              interaction.getNotificationViewPPLove(
+                unread,
+                viewScoreHigh,
+                ppScoreHigh,
+                loveScoreHigh,
+                offset
+              );
+            }, 2000);
+          } else {
+            console.log(
+              "response tokenValue==tokenValueNew ",
+              tokenValue,
+              tokenValueNew
+            );
+          }
+        } else if (response.code == "JWT_8") {
+          console.log("resolve jwt_8");
+          resolve({ error_jwt8: "true" });
+        } else {
+          resolve(response);
+        }
       } else {
         resolve({ message: "no response !" });
       }

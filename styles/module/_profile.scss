@@ -447,9 +447,14 @@
   }
 }
 
-.card-img-icon-block{
-      position: absolute;
-    top: 0;
-    left: 0;
-    width: 27%;
+.card-img-icon-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 27%;
 }
+
+.MuiDropzoneSnackbar-successAlert {
+  background-color: $secondary !important;
+}
+/*MuiPaper-root MuiSnackbarContent-root MuiDropzoneSnackbar-successAlert MuiPaper-elevation6.*/

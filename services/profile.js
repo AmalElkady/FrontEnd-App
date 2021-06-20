@@ -2,6 +2,8 @@ import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
 //import Pusher from "pusher-client";
 import base64url from "base64url";
+import Router from "next/router";
+import { auth } from "../okta/okta";
 
 const profile = {};
 
@@ -21,7 +23,14 @@ let callAxios = options => {
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        if (response.data.token && response.data.status != "ACTIVE") {
+        console.log(
+          "********** new token  response.data.token ",
+          response.data.token
+        );
+        if (
+          response.data.token &&
+          (response.data.status != "ACTIVE" || response.data.status == null)
+        ) {
           setCookie("access_token", response.data.token);
 
           if (response.data.verify) {
@@ -40,6 +49,14 @@ let callAxios = options => {
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
             });
+          } else if (
+            // response.data.code == "JWT_7" ||
+            response.data.code == "JWT_8"
+          ) {
+            console.log("**********expired token*********");
+            //removeCookie("access_token");
+            //auth.signOut();
+            // Router.replace("/");
           } else if (response.data.code == "TIME") {
             console.log("time");
             resolve({ data: response.data });

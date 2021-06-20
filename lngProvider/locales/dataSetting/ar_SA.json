@@ -27,5 +27,10 @@
   "settings.agree": "أوافق",
   "settings.disagree": "لا اوافق",
   "settings.confirmDel": "تأكيد الحذف",
-  "settings.deleteText": ".بمجرد حذف حسابك ، سيتم حذف جميع بياناتك ويمكنك الانضمام مرة أخرى بعد مرور أسبوع واحد"
+  "settings.deleteText": ".بمجرد حذف حسابك ، سيتم حذف جميع بياناتك ويمكنك الانضمام مرة أخرى بعد مرور أسبوع واحد",
+  "setting.phoneChange": "تم تغيير هاتفك بنجاح ",
+  "setting.passChange": "تم تغيير كلمة المرور الخاصة بك بنجاح ",
+  "setting.oldPass": "كلمة مرورك القديمة غير صحيحة ",
+  "setting.verifCode": "تم إرسال رمز التحقق بنجاح ",
+  "setting.fileAdded": "تمت أضافتة"
 }

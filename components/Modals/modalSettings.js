@@ -138,10 +138,7 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
 
   useEffect(() => {
     if (loginPhoneChanged) {
-      NotificationManager.success(
-        "verification Code sent successfully",
-        "Success"
-      );
+      NotificationManager.success(<IntlMessages id="setting.verifCode" />);
       setVerifyPhone(true);
       dispatch(changeUserLoginPhoneSuccess(false));
       // handleClose();
@@ -150,7 +147,7 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
 
   useEffect(() => {
     if (verifyLoginPhoneChanged) {
-      NotificationManager.success("Your phone changed successfully", "Success");
+      NotificationManager.success(<IntlMessages id="setting.phoneChange" />);
       dispatch(verifyUserLoginPhoneChangeSuccess(false));
       handleClose();
     }
@@ -158,15 +155,12 @@ export default function ModalSettings({ phone, password, sub, deleteAcc }) {
 
   useEffect(() => {
     if (passwordChanged && passwordChanged != "error") {
-      NotificationManager.success(
-        "Your password changed successfully",
-        "Success"
-      );
+      NotificationManager.success(<IntlMessages id="setting.passChange" />);
       dispatch(changeMyPasswordSuccess(false));
       setNewPass(null);
       handleClose();
     } else if (passwordChanged == "error" && newPass != null) {
-      NotificationManager.error("Your old password not correct");
+      NotificationManager.error(<IntlMessages id="setting.oldPass" />);
       dispatch(changeMyPasswordSuccess(false));
       setNewPass(null);
       handleClose();

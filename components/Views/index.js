@@ -97,9 +97,9 @@ export default function Views() {
             loader={<CircularProgress />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                {userViewsProfiles.length != 0 && (
+                {/* {userViewsProfiles.length != 0 && (
                   <b>Yay! You have seen All profile Views </b>
-                )}
+                )} */}
                 {userViewsProfiles.length === 0 && (
                   <b>Yay! You don't have profile Views </b>
                 )}

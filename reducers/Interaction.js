@@ -17,7 +17,8 @@ import {
   // PUSH_IN_NOTIFICATION_VIEW_PP_LOVE,
   RESET_COUNT,
   UPDATE_LIST,
-  INCREASE_COUNT
+  INCREASE_COUNT,
+  ERROR_JWT_8
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -118,7 +119,8 @@ const initialProfileState = {
   clicked_id: null,
   loveSelectedIcon: null,
   privateSelectedIcon: null,
-  limitReturnedItems: 3
+  limitReturnedItems: 3,
+  errorJwt8Flag: false
 };
 
 const Interaction = (state = initialProfileState, action) => {
@@ -556,6 +558,12 @@ const Interaction = (state = initialProfileState, action) => {
       }
       return {
         ...state
+      };
+    }
+    case ERROR_JWT_8: {
+      return {
+        ...state,
+        errorJwt8Flag: action.payload
       };
     }
     case INCREASE_COUNT: {

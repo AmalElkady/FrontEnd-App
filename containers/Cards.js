@@ -37,6 +37,7 @@ import {
   requestPhotoRead,
   resetEndResUsers,
   resetEndRes,
+  resetSearchFlag,
   resetStates
 } from "../actions/Home";
 import { ARRAY_OF_AGE_RANGE } from "../util/data";
@@ -51,6 +52,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Cards() {
   // Online
+  const actionsStatus = useSelector(state => state.home.actionsStatus);
   // countries
   const CountriesOptionsOnline = useSelector(
     state => state.home.allCountriesOnline
@@ -58,6 +60,10 @@ export default function Cards() {
 
   const AgerangeCountriesOptionsOnline = useSelector(
     state => state.home.agerangeCountriesOnline
+  );
+
+  const AllCountriesSelectedOnlineUsers = useSelector(
+    state => state.home.allCountriesSelectedOnlineUsers
   );
 
   //cities
@@ -163,6 +169,7 @@ export default function Cards() {
 
   ////
   const searchState = useSelector(state => state.home.searchState);
+  const searchFlag = useSelector(state => state.home.searchFlag);
   const OffsetOnline = useSelector(state => state.home.OffsetOnline);
   const scoreLOnline = useSelector(state => state.home.scoreLOnline);
   const OffsetOnlineUsers = useSelector(state => state.home.OffsetOnlineUsers);
@@ -203,19 +210,56 @@ export default function Cards() {
   useEffect(() => {
     if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length == 0) {
       // Get online users options for first call
-      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+      if (
+        actionsStatus.every(action => {
+          return action == null;
+        })
+      ) {
+        console.log(
+          "AllCountriesSelectedOnline first call ",
+          scoreLOnline,
+          OffsetOnline
+        );
+        dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+      }
     }
   }, []);
+
   useEffect(() => {
-    if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length != 0) {
+    if (
+      AllCountriesSelectedOnline &&
+      AllCountriesSelectedOnline.length != 0 &&
+      AllCountriesSelectedOnlineUsers.length == 0
+    ) {
       // Get users of AllCountriesSelectedOnline (first time)
+      console.log(
+        "allCountriesSelectedOnlineUsers first call ",
+        scoreLOnline,
+        OffsetOnline,
+        AllCountriesSelectedOnline,
+        AllCountriesSelectedOnlineUsers,
+        currentIndexAllCountriesSelectedOnline
+      );
       dispatch(
         allCountriesSelectedOnlineUsers(
           AllCountriesSelectedOnline[currentIndexAllCountriesSelectedOnline],
-          scoreLOnlineUsers, //SH
-          OffsetOnlineUsers //offset
+          "", //SH
+          0 //offset
         )
       );
+    } else if (
+      AllCountriesSelectedOnline &&
+      AllCountriesSelectedOnline.length == 0 &&
+      AllCountriesSelectedOnlineUsers.length == 0 &&
+      searchFlag
+    ) {
+      console.log(
+        "allCountriesSelectedOnlineUsers call again first call ************ ",
+        scoreLOnline,
+        OffsetOnline
+      );
+      dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+      dispatch(resetSearchFlag());
     }
   }, [AllCountriesSelectedOnline]);
 
@@ -572,7 +616,7 @@ export default function Cards() {
     }
   };
   ////
-  //online
+  //online scroll
   const handleScrollAgerange = () => {
     if (AgerangeAllCountriesSelectedOnline.length == 1) {
       dispatch(
@@ -843,7 +887,7 @@ export default function Cards() {
             className="scroll-m"
             dataLength={SelectedOnlineUsers.length}
             next={handleScrollCountryCityAgerange}
-            height={500}
+            height={350}
             hasMore={!endOfResult}
             loader={<CircularProgress />}
             endMessage={
@@ -905,7 +949,7 @@ export default function Cards() {
             className="scroll-m"
             dataLength={CountryCityRecentActiveUsers.length}
             next={onScrollCountryCityRecentUsers}
-            height={500}
+            height={350}
             hasMore={!endOfResultUsersOfS}
             loader={<CircularProgress />}
             endMessage={

@@ -22,6 +22,9 @@
   "Love.notificationTitle": " الإشعارات الاخيره للاعجاب",
   "Love.notification": "أرسل اعجاب لك في",
   "Love.btn": "كافة تفاعلات الاعجاب الخاصه بك",
+  "Love.notificationAction": " تم إرسال الأعجاب بنجاح ",
+  "Love.notificationError": " بالفعل ارسلت إعجاب ",
+
   "view.notificationTitle": "الإشعارات الاخيرة لمشاهدات الملف الشخصي",
   "view.btn": "كافة مشاهدات الملف الشخصي",
   "PP.notificationTitle": "الإشعارات الأخيرة للصور الخاصة",
@@ -46,6 +49,12 @@
   "blockedList.on": " في ",
   "blockedList.blockedTitle": "المستخدمين المحجوبين ",
   "blockedList.iconTitle": "رفع الحظر ",
+
+  "notif.loveReq": " أرسل إعجاب لك",
+  "notif.loveMatch": " تبادل مع الإعجاب",
+  "notif.view": " رأي ملفك الشخصي ",
+  "notif.ppReq": " أرسل طلبًا لرؤية صورك الخاصة ",
+  "notif.ppAcc": "قبل طلبك لرؤية صوره الخاصة ",
 
   "sidebar.profile": "ملفي الشخصي",
   "sidebar.notification": "إشعارات",

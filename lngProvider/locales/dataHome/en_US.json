@@ -21,6 +21,8 @@
 
   "Love.notificationTitle": " Recent Love Notifications  ",
   "Love.notification": " Sent Love for you on ",
+  "Love.notificationAction": " Love Sent successfully ",
+  "Love.notificationError": " love already sent ",
   "Love.btn": "All Love Actions",
   "view.notificationTitle": " Recent Profile Views Notifications  ",
   "view.btn": "All Profile Views",
@@ -46,6 +48,12 @@
   "blockedList.blockedTitle": "Blocked Users",
   "blockedList.on": " on ",
   "blockedList.iconTitle": "Unblock ",
+
+  "notif.loveReq": "sent love for you",
+  "notif.loveMatch": "sent match love",
+  "notif.view": "saw your profile",
+  "notif.ppReq": "sent request to access your private photos",
+  "notif.ppAcc": "accepted your request for private photos",
 
   "sidebar.profile": "My Profile",
   "sidebar.notification": "Notifications",

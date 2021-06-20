@@ -3,10 +3,13 @@ import Link from "next/link";
 import { withRouter } from "next/router";
 import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
+import Router from "next/router";
 import Avatar from "@material-ui/core/Avatar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+import { setCookie, removeCookie, getCookie } from "../../util/session";
+import { tokenManagerOperations } from "../../okta/okta";
 import {
   BELOW_THE_HEADER,
   COLLAPSED_DRAWER,
@@ -19,10 +22,18 @@ import MailNotification from "../MailNotification/index";
 import AppNotification from "../AppNotification/index";
 import CardHeader from "../../components/dashboard/Common/CardHeader/index";
 import { switchLanguage, toggleCollapsedNav } from "../../actions/Setting";
-import { selectedHeaderIcon } from "../../actions/Home";
+import {
+  selectedHeaderIcon,
+  notifiActionDone,
+  notifiMsgActionDone
+} from "../../actions/Home";
+import { userSignOut, userSignOutSuccess } from "../../actions/Auth";
 import { readMyPhotos } from "../../actions/Profile";
 import { getMessagesTotalUnRCount } from "../../actions/Messages";
-import { getNotificationViewPPLove } from "../../actions/Interaction";
+import {
+  getNotificationViewPPLove,
+  errorJwt8Success
+} from "../../actions/Interaction";
 import IntlMessages from "../../util/IntlMessages";
 import LanguageSwitcher from "../../components/LanguageSwitcher/index";
 import Menu from "../../components/TopNav/Menu";
@@ -177,7 +188,54 @@ class Header extends React.Component {
 
   componentDidMount() {
     if (this.props.notificationLoveCount == null) {
-      this.props.getMessagesTotalUnRCount();
+      // this.props.getMessagesTotalUnRCount();
+      // this.props.getNotificationViewPPLove(
+      //   "C",
+      //   this.props.scoreHNotificationView,
+      //   this.props.scoreHNotificationPP,
+      //   this.props.scoreHNotificationLove,
+      //   ""
+      // );
+      // console.log("actionsStatus from header ", this.props.actionsStatus);
+      // const subActions = this.props.actionsStatus.slice(1, 6);
+      // if (
+      //   this.props.actionsStatus[0] == 1 &&
+      //   subActions.every(action => {
+      //     return action == null;
+      //   })
+      // ) {
+      //   console.log(
+      //     "actionsStatus from header true ",
+      //     this.props.actionsStatus
+      //   );
+      //   this.props.getNotificationViewPPLove(
+      //     "C",
+      //     this.props.scoreHNotificationView,
+      //     this.props.scoreHNotificationPP,
+      //     this.props.scoreHNotificationLove,
+      //     ""
+      //   );
+      // }
+    }
+  }
+  componentDidUpdate() {
+    console.log(
+      "errorJwt8Flag from component ",
+      this.props.errorJwt8Flag,
+      this.props.logoutFlag
+    );
+
+    ///
+    console.log("actionsStatus from header ", this.props.actionsStatus);
+    const subActions = this.props.actionsStatus.slice(1, 5);
+    if (
+      this.props.notificationLoveCount == null &&
+      this.props.actionsStatus[0] == 1 &&
+      subActions.every(action => {
+        return action == null;
+      })
+    ) {
+      console.log("actionsStatus from header true ", this.props.actionsStatus);
       this.props.getNotificationViewPPLove(
         "C",
         this.props.scoreHNotificationView,
@@ -186,7 +244,72 @@ class Header extends React.Component {
         ""
       );
     }
+    if (
+      this.props.notificationLoveCount != null &&
+      this.props.actionsStatus[0] == 1 &&
+      subActions.every(action => {
+        return action == null;
+      })
+    ) {
+      console.log(
+        "notificationLoveCount from header !=null ",
+        this.props.notificationLoveCount
+      );
+      this.props.notifiActionDone();
+    }
+
+    ////
+    if (
+      this.props.totalMessagesUnRCount == null &&
+      this.props.actionsStatus[0] == 1 &&
+      this.props.actionsStatus[1] == 2
+    ) {
+      const subArray = this.props.actionsStatus.slice(2, 6);
+      if (
+        subArray.every(action => {
+          return action == null;
+        })
+      ) {
+        console.log(
+          "subArray messages from header true*** ",
+          this.props.actionsStatus
+        );
+        this.props.getMessagesTotalUnRCount();
+      }
+    }
+
+    ////
+    if (
+      this.props.totalMessagesUnRCount != null &&
+      this.props.actionsStatus[0] == 1 &&
+      this.props.actionsStatus[1] == 2
+    ) {
+      const subArray = this.props.actionsStatus.slice(2, 5);
+      if (
+        subArray.every(action => {
+          return action == null;
+        })
+      ) {
+        console.log("totalMessagesUnRCount !=null ** ");
+        this.props.notifiMsgActionDone();
+      }
+    }
+
+    // && !this.props.logoutFlag
+    if (this.props.errorJwt8Flag) {
+      console.log(
+        "errorJwt8Flag from component true",
+        this.props.errorJwt8Flag
+      );
+      this.props.errorJwt8Success(false);
+      // removeCookie("access_token");
+      // this.props.userSignOut();
+      //tokenManagerOperations.clearAllTokens("access_token");
+      this.props.userSignOutSuccess();
+      Router.replace("/");
+    }
   }
+
   // updateSearchText(evt) {
   //   this.setState({
   //     searchText: evt.target.value
@@ -340,9 +463,11 @@ class Header extends React.Component {
                     <IconButton className="icon-btn">
                       <img
                         src={
-                          headerSelectedIcon != "love"
-                            ? "../../static/images/icons/standard/Love_Icon_Standard.svg"
-                            : "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
+                          Router.pathname == "/home/love" ||
+                          (Router.pathname == "/home/notifications-love" &&
+                            headerSelectedIcon == "love")
+                            ? "../../static/images/icons/Highlighted/Love_Icon_Highlighted.svg"
+                            : "../../static/images/icons/standard/Love_Icon_Standard.svg"
                         }
                         alt="Love Icon"
                       />
@@ -387,9 +512,13 @@ class Header extends React.Component {
                       {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                       <img
                         src={
-                          headerSelectedIcon != "views"
-                            ? "../../static/images/icons/standard/Profile_view.svg"
-                            : "../../static/images/icons/Highlighted/Profile_view_Highlighted.svg"
+                          Router.pathname == "/home/views" ||
+                          (Router.pathname == "/home/notifications-love" &&
+                            headerSelectedIcon == "views")
+                            ? //   ||
+                              // headerSelectedIcon == "views")&&(Router.pathname != "/home/views" )
+                              "../../static/images/icons/Highlighted/Profile_view_Highlighted.svg"
+                            : "../../static/images/icons/standard/Profile_view.svg"
                         }
                         alt="Notifications"
                       />
@@ -429,9 +558,10 @@ class Header extends React.Component {
                       {/* <i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" /> */}
                       <img
                         src={
-                          headerSelectedIcon != "message"
-                            ? "../../static/images/icons/standard/Messages_Icon_Standard.svg"
-                            : "../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"
+                          Router.pathname == "/home/messages" ||
+                          headerSelectedIcon == "message"
+                            ? "../../static/images/icons/Highlighted/Messages_Icon_Highlighted.svg"
+                            : "../../static/images/icons/standard/Messages_Icon_Standard.svg"
                         }
                         alt="Notifications"
                       />
@@ -475,9 +605,11 @@ class Header extends React.Component {
                     <IconButton className="icon-btn">
                       <img
                         src={
-                          headerSelectedIcon != "private"
-                            ? "../../static/images/icons/standard/PP.svg"
-                            : "../../static/images/icons/Highlighted/PP-Highlighted.svg"
+                          Router.pathname == "/home/private-photos" ||
+                          (Router.pathname == "/home/notifications-love" &&
+                            headerSelectedIcon == "private")
+                            ? "../../static/images/icons/Highlighted/PP-Highlighted.svg"
+                            : "../../static/images/icons/standard/PP.svg"
                         }
                         alt="private Photo Icon"
                       />
@@ -563,7 +695,7 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings, home, interaction, messages }) => {
+const mapStateToProps = ({ auth, settings, home, interaction, messages }) => {
   const {
     drawerType,
     locale,
@@ -576,10 +708,12 @@ const mapStateToProps = ({ settings, home, interaction, messages }) => {
     notificationLoveCount,
     scoreHNotificationView,
     scoreHNotificationPP,
-    scoreHNotificationLove
+    scoreHNotificationLove,
+    errorJwt8Flag
   } = interaction;
+  const { logoutFlag } = auth;
   const { totalMessagesUnRCount } = messages;
-  const { headerSelectedIcon } = home;
+  const { headerSelectedIcon, actionsStatus } = home;
 
   return {
     drawerType,
@@ -593,7 +727,10 @@ const mapStateToProps = ({ settings, home, interaction, messages }) => {
     scoreHNotificationView,
     scoreHNotificationPP,
     scoreHNotificationLove,
-    totalMessagesUnRCount
+    totalMessagesUnRCount,
+    errorJwt8Flag,
+    actionsStatus,
+    logoutFlag
   };
 };
 
@@ -604,6 +741,11 @@ export default withRouter(
     selectedHeaderIcon,
     readMyPhotos,
     getNotificationViewPPLove,
-    getMessagesTotalUnRCount
+    getMessagesTotalUnRCount,
+    errorJwt8Success,
+    userSignOutSuccess,
+    userSignOut,
+    notifiActionDone,
+    notifiMsgActionDone
   })(Header)
 );

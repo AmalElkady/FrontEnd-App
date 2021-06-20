@@ -160,12 +160,12 @@ export default function ModalUploadMPP({ photoNum }) {
                     maxFileSize={3000000}
                     // showPreviews={true}
                     showPreviewsInDropzone={false}
-                    getFileRemovedMessage={removedFile => {
-                      return `File ${removedFile} was removed`;
-                    }}
+                    // getFileRemovedMessage={removedFile => {
+                    //   return `File ${removedFile} was removed`;
+                    // }}
                     //getDropRejectMessage={}
                     getFileAddedMessage={addedFile => {
-                      return `File ${addedFile} was added`;
+                      return `${addedFile}`;
                     }}
                     onChange={files => {
                       if (files[0]) {

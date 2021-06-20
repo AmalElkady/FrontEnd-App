@@ -99,10 +99,18 @@ const setConversationTypingIndicator = async (
   country,
   city,
   varea,
+  jnt,
   activate
 ) =>
   await messages
-    .setConversationTypingIndicator(profileid, country, city, varea, activate)
+    .setConversationTypingIndicator(
+      profileid,
+      country,
+      city,
+      varea,
+      jnt,
+      activate
+    )
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -288,13 +296,14 @@ function* setActiveConversationRequest({ payload }) {
 }
 
 function* setConversationTypingIndicatorRequest({ payload }) {
-  const { profileid, country, city, varea, activate } = payload;
+  const { profileid, country, city, varea, jnt, activate } = payload;
   console.log(
     " Conversation typing indicator saga ",
     profileid,
     country,
     city,
     varea,
+    jnt,
     activate
   );
   try {
@@ -304,6 +313,7 @@ function* setConversationTypingIndicatorRequest({ payload }) {
       country,
       city,
       varea,
+      jnt,
       activate
     );
     if (returnedData.message) {

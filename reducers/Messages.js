@@ -15,7 +15,10 @@ import {
   SET_ACTIVE_CONVERSATION_SUCCESS,
   SET_CONVERSATION_TYPING_INDICATOR_SUCCESS,
   SET_MAP_TIMESTAMP,
-  INCREASE_MESSAGES_UNREAD_COUNT
+  SET_TYPING_MARK,
+  SET_TYPING_TIMER,
+  INCREASE_MESSAGES_UNREAD_COUNT,
+  RESET_PROFILES_ONLINE_STATUS
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
@@ -52,10 +55,13 @@ const initialProfileState = {
 
   returnedProfiles: null, //GET_PROFILES
   returnedProfilesOnlineStatus: null,
-  timestampMap: new Map(),
+  timestampMap: [],
 
   respActiveConversation: null,
+  activeUser: null,
   respConversationTypingIndicator: null,
+  typingFlag: false,
+  typingTimer: null,
 
   loader: false,
   alertMessage: "",
@@ -236,20 +242,44 @@ const Messages = (state = initialProfileState, action) => {
         returnedProfilesOnlineStatus: action.payload.list_of_results
       };
     }
-    case SET_MAP_TIMESTAMP: {
-      //state.timestampMap.set(action.payload.key, action.payload.val);
-      let newMap = state.timestampMap;
-      newMap.set(action.payload.key, action.payload.val);
-      console.log("newMap ", newMap);
+    case RESET_PROFILES_ONLINE_STATUS: {
       return {
         ...state,
-        timestampMap: newMap
+        returnedProfilesOnlineStatus: null
+      };
+    }
+    case SET_MAP_TIMESTAMP: {
+      //state.timestampMap.set(action.payload.key, action.payload.val);
+      console.log(" state.timestampMap from reducer ", state.timestampMap);
+      // let newMap = [...state.timestampMap];
+      // // newMap.set(action.payload.key, action.payload.val);
+      // newMap.push({ id: action.payload.key, time: action.payload.val });
+      // console.log("newMap ", newMap);
+      return {
+        ...state,
+        timestampMap: [
+          ...state.timestampMap,
+          { id: action.payload.key, time: action.payload.val }
+        ]
+      };
+    }
+    case SET_TYPING_MARK: {
+      return {
+        ...state,
+        typingFlag: action.payload
+      };
+    }
+    case SET_TYPING_TIMER: {
+      return {
+        ...state,
+        typingTimer: action.payload
       };
     }
     case SET_ACTIVE_CONVERSATION_SUCCESS: {
       return {
         ...state,
-        respActiveConversation: action.payload
+        respActiveConversation: action.payload,
+        activeUser: clickedUserChat
       };
     }
     case SET_CONVERSATION_TYPING_INDICATOR_SUCCESS: {

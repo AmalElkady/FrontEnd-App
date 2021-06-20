@@ -189,6 +189,7 @@ export default function LoveNotifications() {
         //     ""
         //   )
         // );
+        console.log("call from view condition");
         dispatch(
           getNotificationViewPPLove(
             "CV",
@@ -252,6 +253,10 @@ export default function LoveNotifications() {
   }, [notificationLoveUnread]);
 
   useEffect(() => {
+    console.log(
+      "call from view notificationViewUnread **",
+      notificationViewUnread
+    );
     if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
       dispatch(resetCount("V"));
       dispatch(
@@ -300,11 +305,16 @@ export default function LoveNotifications() {
           setFinalUsersProfiles(finalProfiles);
         }
       } else if (headerSelectedIcon == "views") {
+        console.log(
+          "call from view notificationViewUnread photoReadSignedRequest **",
+          notificationViewUnread
+        );
         if (notificationViewUnread.length != 0) {
           finalProfiles = mapSmallUserPhotoUrl(
             notificationViewUnread,
             photoReadSignedRequest.signedRequest
           );
+          console.log("finalProfiles **", finalProfiles);
           setFinalUsersProfiles(finalProfiles);
         }
       } else if (headerSelectedIcon == "private") {

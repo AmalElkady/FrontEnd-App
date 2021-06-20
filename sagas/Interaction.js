@@ -11,7 +11,8 @@ import {
   unblockUserSuccess,
   getBlockedUsersSuccess,
   getNotificationViewPPLoveSuccess,
-  cleanNotificationViewPPLoveSuccess
+  cleanNotificationViewPPLoveSuccess,
+  errorJwt8Success
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -343,6 +344,8 @@ function* getNotificationViewPPLoveRequest({ payload }) {
     );
     if (returnedData.message) {
       yield put(showProfileMessage(returnedData.message));
+    } else if (returnedData.error_jwt8) {
+      yield put(errorJwt8Success(true));
     } else {
       yield put(getNotificationViewPPLoveSuccess(unread, returnedData));
     }

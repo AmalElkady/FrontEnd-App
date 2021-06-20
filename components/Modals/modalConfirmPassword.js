@@ -243,13 +243,13 @@ export default function ModalConfirmPassword({
                         //*logout
                         // dispatch(userSignOut());
                         //* login
-                        dispatch(
-                          userSignIn({
-                            phone,
-                            password,
-                            country
-                          })
-                        );
+                        // dispatch(
+                        //   userSignIn({
+                        //     phone,
+                        //     password,
+                        //     country
+                        //   })
+                        // );
                         dispatch(confirmPasswordCase(false));
                       }}
                       color="primary"

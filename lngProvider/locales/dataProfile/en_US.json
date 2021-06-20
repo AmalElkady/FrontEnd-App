@@ -21,6 +21,8 @@
   "profile.uploadMP": "Update Main Photo",
   "profile.notAuthorized": "YOU ARE NOT AUTHORIZED TO ACCESS PRIVATE PHOTOS, SEND REQUEST TO ACCESS",
   "profile.sendPP": "Send Request",
+  "profile.notifMarital": "Marital status updated successfully",
+  "profile.notifPhoto": "Main Photo Updated successfully ",
 
   "inputLabel.birthday": "Birthday",
   "inputLabel.city": "City",
@@ -35,6 +37,7 @@
   "inputLabel.passwordConfirm": "Confirm Password",
   "inputLabel.password": "Password",
   "inputLabel.nationality": "Nationality",
+  "inputLabel.nationalityCon": "Choose Country",
   "inputLabel.tpercent": "Polygamy acceptance",
   "inputLabel.education": "Education",
   "inputLabel.workd": "Your work domain",
@@ -116,5 +119,11 @@
   "eg.24": "Sharqia",
   "eg.25": "Sohag",
   "eg.26": "South Sinai",
-  "eg.27": "Suez"
+  "eg.27": "Suez",
+
+  "user.notifBlock1": "You block ",
+  "user.notifBlock2": " successfully",
+  "user.notifBlockErr": " You already blocked ",
+  "user.notifUnblock1": "You unblock ",
+  "user.notifUnblockErr": " You already unblocked "
 }

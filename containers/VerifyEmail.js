@@ -27,6 +27,7 @@ import {
   showAuthLoader,
   sendVerificationCode,
   resendVerificationToPhone,
+  resendVerificationToPhoneSuccess,
   userSignOut
 } from "../actions/Auth";
 
@@ -47,6 +48,12 @@ class VerifyEmail extends React.Component {
     }
     if (this.props.authUser !== null && this.props.phoneVerified) {
       Router.replace("/home/content");
+    }
+    if (this.props.resendVerToPhoneSuccess) {
+      NotificationManager.success(
+        <IntlMessages id="appModule.resendVerificationCodeSuccess" />
+      );
+      this.props.resendVerificationToPhoneSuccess();
     }
   }
 
@@ -70,25 +77,26 @@ class VerifyEmail extends React.Component {
 
     return (
       <>
-      <div className="container">
-        {timeReturned && <Timer />}
+        <div className="container">
+          {timeReturned && <Timer />}
 
-        <div
-          className="app-login-container app-login-container-2 d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
-        >
-          <div className="app-login-main-content app-login-main-content-2" style={{position:"relative" ,marginTop:"5rem"}}>
-           <Button
-          variant="contained"
-          onClick={() => {
-            this.props.showAuthLoader();
-            this.props.userSignOut();
-          }}
-          color="primary"
-          className="linear-g-r out-btn-1"
-        >
-          <IntlMessages id="appModule.signOut" />
-        </Button>
-            {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
+          <div className="app-login-container app-login-container-2 d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
+            <div
+              className="app-login-main-content app-login-main-content-2"
+              style={{ position: "relative", marginTop: "5rem" }}
+            >
+              <Button
+                variant="contained"
+                onClick={() => {
+                  this.props.showAuthLoader();
+                  this.props.userSignOut();
+                }}
+                color="primary"
+                className="linear-g-r out-btn-1"
+              >
+                <IntlMessages id="appModule.signOut" />
+              </Button>
+              {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
               <Link href="/">
                 <a>
                   {" "}
@@ -100,91 +108,105 @@ class VerifyEmail extends React.Component {
                 </a>
               </Link>
             </div> */}
-             <div className="logo-form">
-            <img  src="../static/images/Gila_Final_Logo_form.svg"
-                     alt="App" title="App"/>
-                     </div>
-
-            <div className="app-login-content app-login-content-2">
-              <div className="app-login-header">
-                <h1>
-                  {" "}
-                  <IntlMessages id="appModule.verifyPhone" />{" "}
-                </h1>
-                <h1> {`+${country} ${phone}`} </h1>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    // this.props.showAuthLoader();
-                    this.props.openModal(true);
-                  }}
-                  color="primary"
-                  className="linear-g-r float-r"
-                >
-                  <IntlMessages id="appModule.changePhone" />
-                </Button>
+              <div className="logo-form">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                />
               </div>
 
-              <div className="app-login-form">
-                <form>
-                  <TextField
-                    type="number"
-                    onChange={event =>
-                      this.setState({ verificationCode: event.target.value })
-                    }
-                    label={<IntlMessages id="appModule.verificationCode" />}
-                    fullWidth
-                    defaultValue={verificationCode}
-                    margin="normal"
-                    className="mt-0 mb-2 to-right"
-                  />
+              <div className="app-login-content app-login-content-2">
+                <div className="app-login-header">
+                  <h1>
+                    {" "}
+                    <IntlMessages id="appModule.verifyPhone" />{" "}
+                  </h1>
+                  <h1> {`+${country} ${phone}`} </h1>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      // this.props.showAuthLoader();
+                      this.props.openModal(true);
+                    }}
+                    color="primary"
+                    className="linear-g-r float-r"
+                  >
+                    <IntlMessages id="appModule.changePhone" />
+                  </Button>
+                </div>
 
-                  {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
+                <div className="app-login-form">
+                  <form>
+                    <TextField
+                      type="number"
+                      onChange={event =>
+                        this.setState({ verificationCode: event.target.value })
+                      }
+                      label={<IntlMessages id="appModule.verificationCode" />}
+                      fullWidth
+                      defaultValue={verificationCode}
+                      margin="normal"
+                      className="mt-0 mb-2 to-right"
+                    />
+
+                    {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
                     <Grid container style={{ paddingTop: "7px" }} spacing={12}>
-                    <Grid item xs={9} className="m-s" >
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        this.props.showAuthLoader();
-                        this.props.resendVerificationToPhone();
-                      }}
-                      color="primary"
-                      className="linear-g"
-                      disabled={timeReturned ? disabled : ""}
-                    >
-                      <IntlMessages id="appModule.resendVerificationCode" />
-                    </Button>
+                      <Grid item xs={9} className="m-s">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            this.props.showAuthLoader();
+                            this.props.resendVerificationToPhone();
+                          }}
+                          color="primary"
+                          className="linear-g"
+                          disabled={timeReturned ? disabled : ""}
+                        >
+                          <IntlMessages id="appModule.resendVerificationCode" />
+                        </Button>
+                      </Grid>
+                      {this.state.verificationCode != "" && (
+                        <Grid item xs={2}>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              this.props.showAuthLoader();
+                              this.props.sendVerificationCode({
+                                verificationCode
+                              });
+                            }}
+                            color="primary"
+                            className="linear-g"
+                          >
+                            <IntlMessages id="appModule.submit" />
+                          </Button>{" "}
+                        </Grid>
+                      )}
                     </Grid>
-                    <Grid item xs={2}>
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          this.props.showAuthLoader();
-                          this.props.sendVerificationCode({ verificationCode });
-                        }}
-                        color="primary"
-                        className="linear-g"
-                      >
-                        <IntlMessages id="appModule.submit" />
-                      </Button>{" "}
-                   </Grid>
-                     </Grid>
                     {phoneVerified && window.location.reload()}
-                  {/* </div> */}
-                </form>
+                    {/* </div> */}
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          {OpenModal && <ModalChangePhone phone={phone} country={country}city={city} countryiso2={countryiso2}></ModalChangePhone>}
+            {OpenModal && (
+              <ModalChangePhone
+                phone={phone}
+                country={country}
+                city={city}
+                countryiso2={countryiso2}
+              ></ModalChangePhone>
+            )}
 
-          {loader && (
-            <div className="loader-view">
-              <CircularProgress />
-            </div>
-          )}
-          {showMessage && NotificationManager.error(alertMessage)}
-          <NotificationContainer />
-        </div>
+            {loader && (
+              <div className="loader-view">
+                <CircularProgress />
+              </div>
+            )}
+            {showMessage && NotificationManager.error(alertMessage)}
+            <NotificationContainer />
+          </div>
         </div>
       </>
     );
@@ -202,7 +224,8 @@ const mapStateToProps = ({ auth, profile }) => {
     phone,
     country,
     city,
-    countryiso2
+    countryiso2,
+    resendVerToPhoneSuccess
   } = auth;
   const { openModal } = profile;
   const OpenModal = openModal;
@@ -217,13 +240,15 @@ const mapStateToProps = ({ auth, profile }) => {
     country,
     city,
     countryiso2,
-    OpenModal
+    OpenModal,
+    resendVerToPhoneSuccess
   };
 };
 
 export default connect(mapStateToProps, {
   sendVerificationCode,
   resendVerificationToPhone,
+  resendVerificationToPhoneSuccess,
   hideMessage,
   showAuthLoader,
   userSignOut,

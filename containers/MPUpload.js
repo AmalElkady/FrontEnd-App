@@ -15,7 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import "react-phone-input-2/lib/style.css";
 import { DropzoneArea } from "material-ui-dropzone";
 import ModalUpload from "../components/Modals/modalUpload";
-import UploadImage from "../components/UploadImage"
+import UploadImage from "../components/UploadImage";
 
 //sendResetToken ===> mpUpload
 //changePassword ===> mpUploadClear
@@ -111,21 +111,21 @@ class VerifyEmail extends React.Component {
               // style={{ minHeight: "705px" }}
               className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"
             >
-              <div className="app-login-main-content app-login-main-content-2" style={{position:"relative" ,marginTop:"5rem"}}>
-
-         <Button
-          variant="contained"
-          onClick={() => {
-            this.props.showAuthLoader();
-            this.props.userSignOut();
-          }}
-          color="primary"
-          className="linear-g-r out-btn-1"
-        >
-          <IntlMessages id="appModule.signOut" />
-        </Button>
-		
-
+              <div
+                className="app-login-main-content app-login-main-content-2"
+                style={{ position: "relative", marginTop: "5rem" }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    this.props.showAuthLoader();
+                    this.props.userSignOut();
+                  }}
+                  color="primary"
+                  className="linear-g-r out-btn-1"
+                >
+                  <IntlMessages id="appModule.signOut" />
+                </Button>
 
                 {/* <div className="app-logo-content d-flex align-items-center justify-content-center linear-g">
                   <Link href="/">
@@ -139,10 +139,13 @@ class VerifyEmail extends React.Component {
                     </a>
                   </Link>
                 </div> */}
-                 <div className="logo-form">
-            <img  src="../static/images/Gila_Final_Logo_form.svg"
-                     alt="App" title="App"/>
-            </div>
+                <div className="logo-form">
+                  <img
+                    src="../static/images/Gila_Final_Logo_form.svg"
+                    alt="App"
+                    title="App"
+                  />
+                </div>
 
                 <div className="app-login-content app-login-content-2">
                   <div className="app-login-header">
@@ -153,7 +156,7 @@ class VerifyEmail extends React.Component {
                   </div>
 
                   <div className="app-login-form">
-                    <form  className={file?"drag drag-h":"drag"}>
+                    <form className={file ? "drag drag-h" : "drag"}>
                       <DropzoneArea
                         acceptedFiles={["image/*"]}
                         dropzoneText={"Drop Photo"}
@@ -161,16 +164,19 @@ class VerifyEmail extends React.Component {
                         maxFileSize={3000000}
                         // showPreviews={true}
                         showPreviewsInDropzone={false}
-                        getFileRemovedMessage={removedFile => {
-                          return `File ${removedFile} was removed`;
-                        }}
+                        // getFileRemovedMessage={removedFile => {
+                        //   return `File ${removedFile} was removed`;
+                        // }}
                         //getDropRejectMessage={}
                         getFileAddedMessage={addedFile => {
-                          return `File ${addedFile} was added`;
+                          // <>
+                          //   <IntlMessages id="setting.fileAdded" />
+                          // </>;
+                          return `${addedFile}`;
                         }}
                         onChange={files => {
                           if (files[0]) {
-                            this.props.mainPhotoSelected(files[0])
+                            this.props.mainPhotoSelected(files[0]);
                             this.setState({ file: files[0] });
                           }
                         }}
@@ -181,7 +187,7 @@ class VerifyEmail extends React.Component {
                           style={{ paddingTop: "25px" }}
                           spacing={12}
                         >
-                         {file&&<UploadImage/>}
+                          {file && <UploadImage />}
                           {/* <Button
                             variant="contained"
                             onClick={() => {

@@ -35,7 +35,12 @@ import {
   SET_SEARCH_STATE,
   RESET_STATES_LIST_COUNTRY_ONLINE,
   RESET_STATES_LIST_AGERANGE_ONLINE,
-  RESET_STATES_LIST_CITY_ONLINE,SELECTED_HEADER_ICON
+  RESET_STATES_LIST_CITY_ONLINE,
+  SELECTED_HEADER_ICON,
+  RESET_SEARCH_FLAG,
+  NOTIFI_ACTION_DONE,
+  NOTIFI_MSG_ACTION_DONE,
+  PUSHER_ACTION_DONE
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { addUserGender } from "../helpers/addUserGender";
@@ -152,13 +157,17 @@ const initialHomeState = {
   countrySelectedIndex: -1,
   citySelectedIndex: -1,
 
+  ////
+  actionsStatus: [null, null, null, null, null],
+
   photoReadSignedRequest: null,
   searchState: "active",
   limitCount: 5,
   showMessage: false,
   loader: false,
   alertMessage: "",
-  headerSelectedIcon:null
+  headerSelectedIcon: null,
+  searchFlag: false
 };
 
 const home = (state = initialHomeState, action) => {
@@ -308,18 +317,40 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
-      if (action.payload.scoreArr.length >= state.limitCount) {
+      console.log(
+        "from reducer ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS ",
+        action.payload.scoreArr
+      );
+      // if (action.payload.scoreArr.length >= state.limitCount) {
+      //   const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
+      //   state.OffsetOnline = offset;
+      //   state.scoreLOnline = SL;
+      // } else {
+      //   state.OffsetOnline = "0";
+      //   state.scoreLOnline = "0";
+      // }
+
+      // if (action.payload.usersArr.length == 0) {
+      //   state.endOfResult = true;
+      // }
+
+      if (action.payload.scoreArr.length != 0) {
         const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
         state.OffsetOnline = offset;
         state.scoreLOnline = SL;
-      } else {
-        state.OffsetOnline = "0";
-        state.scoreLOnline = "0";
       }
+      // else {
+      //   state.OffsetOnline = "0";
+      //   state.scoreLOnline = "0";
+      // }
 
-      if (action.payload.usersArr.length == 0) {
+      if (
+        action.payload.usersArr.length == 0 ||
+        action.payload.usersArr.length == 1
+      ) {
         state.endOfResult = true;
       }
+
       return {
         ...state,
         allCountriesSelectedOnline: [
@@ -329,13 +360,19 @@ const home = (state = initialHomeState, action) => {
         allCountriesSelectedOnlineCount: [
           ...state.allCountriesSelectedOnlineCount,
           ...action.payload.scoreArr
-        ]
+        ],
+        actionsStatus: [1, null, null, null, null]
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       action.payload.usersArr = addUserGender(action.payload.usersArr);
-
+      console.log(
+        "from reducer ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS ",
+        action.payload.scoreArr,
+        state.allCountriesSelectedOnline,
+        state.currentIndexAllCountriesSelectedOnline
+      );
       if (
         action.payload.usersArr.length == 0 &&
         state.allCountriesSelectedOnline.length > 1
@@ -639,6 +676,12 @@ const home = (state = initialHomeState, action) => {
         scoreHOfflineUsersS: SL
       };
     }
+    case RESET_SEARCH_FLAG: {
+      return {
+        ...state,
+        searchFlag: action.payload
+      };
+    }
     case SELECTED_AGERANGE_INDEX:
       return {
         ...state,
@@ -734,17 +777,56 @@ const home = (state = initialHomeState, action) => {
     case RESET_STATES_LIST_COUNTRY_ONLINE:
       return {
         ...state,
-        endOfResultOnCo: false, // for country list
-        scoreLOnlineCo: "",
-        OffsetonlineCo: 0,
-        agerangeCountriesOnline: [],
-        agerangeCountriesOnlineCount: [],
-        allCountriesOnline: [],
-        allCountriesOnlineCount: [],
+        // endOfResultOnCo: false, // for country list
+        // scoreLOnlineCo: "",
+        // OffsetonlineCo: 0,
+        // agerangeCountriesOnline: [],
+        // agerangeCountriesOnlineCount: [],
+        // allCountriesOnline: [],
+        // allCountriesOnlineCount: [],
         // allCountriesSelectedOnline:[],
         // allCountriesSelectedOnlineCount:[],
         // currentIndexAllCountriesSelectedOnline:0
+        endOfResult: false,
+        endOfResultUsers: false,
+        allCountriesSelectedOnlineUsers: [],
+        allCountriesSelectedOnlineUsersTimeScore: [],
+        OffsetOnline: 0,
+        scoreLOnline: 0,
+        OffsetOnlineUsers: 0,
+        scoreLOnlineUsers: "",
 
+        allCountriesOnline: [],
+        allCountriesOnlineCount: [],
+        allCountriesSelectedOnline: [],
+        allCountriesSelectedOnlineCount: [],
+        currentIndexAllCountriesSelectedOnline: 0,
+
+        agerangeCountriesOnline: [],
+        agerangeCountriesOnlineCount: [],
+
+        countryCitiesOnline: [],
+        countryCitiesOnlineCount: [],
+
+        countryCitiesAgerangeOnline: [],
+        countryCitiesAgerangeOnlineCount: [],
+
+        countryAgerangesOnline: [],
+        countryAgerangesOnlineCount: [],
+
+        countryCityAgerangesOnline: [],
+        countryCityAgerangesOnlineCount: [],
+
+        endOfResultOnCo: false, // for country list
+        scoreLOnlineCo: "",
+        OffsetonlineCo: 0,
+        endOfResultOnCi: false, // for city list
+        scoreLOnlineCi: "",
+        OffsetOnlineCi: 0,
+        endOfResultOnAge: false, //for agerange list
+        scoreLOnlineAge: "",
+        OffsetOnlineAge: 0,
+        searchFlag: true
       };
     case RESET_STATES_LIST_AGERANGE_ONLINE:
       return {
@@ -771,6 +853,24 @@ const home = (state = initialHomeState, action) => {
         ...state,
         headerSelectedIcon: action.payload
       };
+    case NOTIFI_ACTION_DONE: {
+      return {
+        ...state,
+        actionsStatus: [1, 2, null, null, null]
+      };
+    }
+    case NOTIFI_MSG_ACTION_DONE: {
+      return {
+        ...state,
+        actionsStatus: [1, 2, 3, null, null]
+      };
+    }
+    case PUSHER_ACTION_DONE: {
+      return {
+        ...state,
+        actionsStatus: [1, 2, 3, 4, null]
+      };
+    }
     case SHOW_MESSAGE: {
       return {
         ...state,

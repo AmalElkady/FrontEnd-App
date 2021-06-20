@@ -161,6 +161,7 @@ export default function Search() {
 
   const handleChangeOptionValue = event => {
     setOptionValue(event.target.value);
+    dispatch(setSearchState(event.target.value));
   };
 
   const OffsetOnline = useSelector(state => state.home.OffsetOnline);
@@ -277,18 +278,21 @@ export default function Search() {
   };
 
   const handleMenuItemClick = (event, index) => {
+    console.log("age index ",index)
     setSelectedIndex(index);
     setAnchorEl(null);
   };
 
   //for Countries
   const handleMenuItemClickC = (event, index) => {
+    console.log("country index ",index)
     setSelectedIndexC(index);
     setAnchorElC(null);
   };
 
   //for Cities
   const handleMenuItemClickCit = (event, index) => {
+    console.log("city index ",index)
     setSelectedIndexCit(index);
     setAnchorElCit(null);
   };
@@ -315,18 +319,19 @@ export default function Search() {
     setSelectedIndexC(-1);
     setSelectedIndexCit(-1);
     dispatch(resetStatesOnline());
-    dispatch(setSearchState(optionValue));
+   // dispatch(setSearchState(optionValue));
     // fill dropdowns based on optionValue
     if (optionValue == "most recent") {
       //Get all Countries Offline first time
-      //  dispatch(resetEndResUsers());
-      //  dispatch(resetEndRes());
+       dispatch(resetEndResUsers());
+       dispatch(resetEndRes());
       console.log("CountriesOptionsOffline ", CountriesOptionsOffline.length)
       CountriesOptionsOffline.length == 0
         ? dispatch(allCountriesOffline("", 0))
         : "";
     } else {
       // Get all Countries Online first time
+      console.log("get all countries online init state ))))))))))", CountriesOptionsOnline.length)
       dispatch(resetStatesListCountryOnline());
       CountriesOptionsOnline.length == 0
         ? dispatch(allCountriesOnline("", 0))
@@ -411,7 +416,7 @@ export default function Search() {
         );
       }
       // Get cities based on agerange and country
-      else if (selectedIndexC != -1 && selectedIndex != -1) {
+      else if (selectedIndexC != -1 && selectedIndex != -1&&selectedIndexCit==-1) {
         dispatch(resetStatesListCityOnline());
         if (
           CountryAgerangesOptionsOnline.length != 0 &&
@@ -473,6 +478,7 @@ export default function Search() {
         selectedIndexCit != -1 &&
         selectedIndex == -1
       ) {
+        console.log("$$$$$$$$$$$$$$$")
         dispatch(resetStatesListAgerangeOnline());
         dispatch(
           countryCityAgerangesOnline(
@@ -489,13 +495,16 @@ export default function Search() {
   /// online
   // useEffect(() => {
   //   if (
-  //     CountriesOptionsOnline.length != 0 &&
-  //     AllCountriesSelectedOnline.length == 0
+  //     CountriesOptionsOnline.length == 0&&optionValue == "active"
   //   ) {
   //     // Get online users options for first call
-  //     dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+  //     //dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
+  //     console.log("++++++++++++++++++++++++")
+  //     dispatch(allCountriesOnline("", 0))
   //   }
   // }, [CountriesOptionsOnline]);
+
+
 
   //offline
   useEffect(() => {
@@ -714,15 +723,27 @@ export default function Search() {
           CountryAgerangesOptionsOnline.length != 0 &&
           AgerangeCountriesOptionsOnline.length == 0
         ) {
-          dispatch(
-            countryCityAgerangeSelectedOnline(
-              CountriesOptionsOnline[selectedIndexC],
-              CountryCitiesOptionsOnline[selectedIndexCit],
-              CountryAgerangesOptionsOnline[selectedIndex],
-              "",
-              0
-            )
-          );
+          if(CountryCitiesOptionsOnline.length!=0){
+            dispatch(
+              countryCityAgerangeSelectedOnline(
+                CountriesOptionsOnline[selectedIndexC],
+                CountryCitiesOptionsOnline[selectedIndexCit],
+                CountryAgerangesOptionsOnline[selectedIndex],
+                "",
+                0
+              )
+            );
+          }else if(CountryCitiesAgerangeOptionsOnline.length!=0){
+            dispatch(
+              countryCityAgerangeSelectedOnline(
+                CountriesOptionsOnline[selectedIndexC],
+                CountryCitiesAgerangeOptionsOnline[selectedIndexCit],
+                CountryAgerangesOptionsOnline[selectedIndex],
+                "",
+                0
+              )
+              )
+          }
         } else {
           dispatch(
             countryCityAgerangeSelectedOnline(
@@ -829,118 +850,148 @@ export default function Search() {
                     secondary={
                       selectedIndexC == -1
                         ? selectedIndex == -1
-                          ? <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                         <IntlMessages id="search.ageSelect" />
-                          <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                          :<Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        > {ARRAY_OF_AGE_RANGE[selectedIndex]}
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                        : selectedIndexCit == -1
-                        ? CountryAgerangesOptionsOnline.length != 0
-                          ? selectedIndex == -1
-                            ?  <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                         <IntlMessages id="search.ageSelect" />
-                          <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                            : <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >{CountryAgerangesOptionsOnline[selectedIndex]}
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                          : selectedIndex == -1
-                          ?  <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                         <IntlMessages id="search.ageSelect" />
-                          <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                          :<Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >{ ARRAY_OF_AGE_RANGE[selectedIndex]}
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                        : CountryCityAgerangesOptionsOnline.length != 0
-                        ? selectedIndex == -1
-                          ?  <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                         <IntlMessages id="search.ageSelect" />
-                          <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                          : <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >{CountryCityAgerangesOptionsOnline[selectedIndex]}
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                        : selectedIndex == -1
-                        ?  <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                         <IntlMessages id="search.ageSelect" />
-                          <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                        : <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >{ARRAY_OF_AGE_RANGE[selectedIndex]}
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
+                                  ? <Typography
+                                  variant="body1"
+                                  className="select-search"
+                                  gutterBottom
+                                >
+                                <IntlMessages id="search.ageSelect" />
+                                  <div className="search-arrow">
+                                    <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                      alt="App" title="App"/>
+                                  </div>
+                                </Typography>
+                                  :<Typography
+                                  variant="body1"
+                                  className="select-search"
+                                  gutterBottom
+                                > {ARRAY_OF_AGE_RANGE[selectedIndex]}
+                                <div className="search-arrow">
+                                    <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                      alt="App" title="App"/>
+                                  </div>
+                                </Typography>
+                        //else country index !=-1
+                       : 
+                      //  selectedIndexCit == -1
+                      //      ? 
+                            CountryAgerangesOptionsOnline.length != 0
+                                ? selectedIndex == -1
+                                          ?  <Typography
+                                        variant="body1"
+                                        className="select-search"
+                                        gutterBottom
+                                      >
+                                      <IntlMessages id="search.ageSelect" />
+                                        <div className="search-arrow">
+                                          <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                            alt="App" title="App"/>
+                                        </div>
+                                      </Typography>
+                                          : <Typography
+                                        variant="body1"
+                                        className="select-search"
+                                        gutterBottom
+                                      >{CountryAgerangesOptionsOnline[selectedIndex]}
+                                      <div className="search-arrow">
+                                          <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                            alt="App" title="App"/>
+                                        </div>
+                                      </Typography>
+                                  //else    CountryAgerangesOptionsOnline.length != 0
+
+                                 : CountryCityAgerangesOptionsOnline.length != 0
+                                    ? selectedIndex == -1
+                                            ?  <Typography
+                                            variant="body1"
+                                            className="select-search"
+                                            gutterBottom
+                                          >
+                                          <IntlMessages id="search.ageSelect" />
+                                            <div className="search-arrow">
+                                              <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                alt="App" title="App"/>
+                                            </div>
+                                          </Typography>
+                                            : <Typography
+                                            variant="body1"
+                                            className="select-search"
+                                            gutterBottom
+                                          >{CountryCityAgerangesOptionsOnline[selectedIndex]}
+                                          <div className="search-arrow">
+                                              <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                alt="App" title="App"/>
+                                            </div>
+                                          </Typography>
+                                    :
+                                        selectedIndex == -1
+                                          ?  <Typography
+                                          variant="body1"
+                                          className="select-search"
+                                          gutterBottom
+                                        >
+                                        <IntlMessages id="search.ageSelect" />
+                                          <div className="search-arrow">
+                                            <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                              alt="App" title="App"/>
+                                          </div>
+                                        </Typography>
+                                          :<Typography
+                                          variant="body1"
+                                          className="select-search"
+                                          gutterBottom
+                                        >{ ARRAY_OF_AGE_RANGE[selectedIndex]}
+                                        <div className="search-arrow">
+                                            <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                              alt="App" title="App"/>
+                                          </div>
+                                        </Typography>
+                                     
+                        // : CountryCityAgerangesOptionsOnline.length != 0
+                        //       ? selectedIndex == -1
+                        //         ?  <Typography
+                        //         variant="body1"
+                        //         className="select-search"
+                        //         gutterBottom
+                        //       >
+                        //       <IntlMessages id="search.ageSelect" />
+                        //         <div className="search-arrow">
+                        //           <img  src="../static/images/icons/search_Arraw_icon.svg"
+                        //             alt="App" title="App"/>
+                        //         </div>
+                        //       </Typography>
+                        //         : <Typography
+                        //         variant="body1"
+                        //         className="select-search"
+                        //         gutterBottom
+                        //       >{CountryCityAgerangesOptionsOnline[selectedIndex]}
+                        //       <div className="search-arrow">
+                        //           <img  src="../static/images/icons/search_Arraw_icon.svg"
+                        //             alt="App" title="App"/>
+                        //         </div>
+                        //       </Typography>
+                        //       : selectedIndex == -1
+                        //       ?  <Typography
+                        //         variant="body1"
+                        //         className="select-search"
+                        //         gutterBottom
+                        //       >
+                        //       <IntlMessages id="search.ageSelect" />
+                        //         <div className="search-arrow">
+                        //           <img  src="../static/images/icons/search_Arraw_icon.svg"
+                        //             alt="App" title="App"/>
+                        //         </div>
+                        //       </Typography>
+                        //       : <Typography
+                        //         variant="body1"
+                        //         className="select-search"
+                        //         gutterBottom
+                        //       >{ARRAY_OF_AGE_RANGE[selectedIndex]}
+                        //       <div className="search-arrow">
+                        //           <img  src="../static/images/icons/search_Arraw_icon.svg"
+                        //             alt="App" title="App"/>
+                        //         </div>
+                        //       </Typography>
                     }
                   />
                 </ListItem>
@@ -1620,9 +1671,72 @@ export default function Search() {
                         </Typography>
                         : //else index!=0
                         CountryCitiesAgerangeOptionsOnline.length != 0
-                        ? CountriesOptionsOnline.length != 0
-                          ? selectedIndexCit == -1
-                            ? <Typography
+                             ? CountriesOptionsOnline.length != 0
+                                    ?     selectedIndexCit == -1
+                                                  ? <Typography
+                                                variant="body1"
+                                                className="select-search"
+                                                gutterBottom
+                                              ><IntlMessages id="search.citySelect" />
+                                              <div className="search-arrow">
+                                                  <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                    alt="App" title="App"/>
+                                                </div>
+                                              </Typography>
+                                                  : <Typography
+                                                variant="body1"
+                                                className="select-search"
+                                                gutterBottom
+                                              >
+                                                  { COUNTRY_CITY_MAP[
+                                                      CountriesOptionsOnline[
+                                                        selectedIndexC
+                                                      ].toLowerCase()
+                                                    ][
+                                                      CountryCitiesAgerangeOptionsOnline[selectedIndexCit] - 1
+                                                    ]}
+                                                    <div className="search-arrow">
+                                                  <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                    alt="App" title="App"/>
+                                                </div>
+                                                    </Typography>
+
+
+
+                                     : AgerangeCountriesOptionsOnline.length != 0
+                                                  ? selectedIndexCit == -1
+                                                            ? <Typography
+                                                          variant="body1"
+                                                          className="select-search"
+                                                          gutterBottom
+                                                          ><IntlMessages id="search.citySelect" />
+                                                          <div className="search-arrow">
+                                                            <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                              alt="App" title="App"/>
+                                                          </div>
+                                                          </Typography>
+                                                            :  <Typography
+                                                          variant="body1"
+                                                          className="select-search"
+                                                          gutterBottom
+                                                          >{COUNTRY_CITY_MAP[
+                                                                AgerangeCountriesOptionsOnline[
+                                                                  selectedIndexC
+                                                                ].toLowerCase()
+                                                              ][
+                                                                CountryCitiesAgerangeOptionsOnline[
+                                                                  selectedIndexCit
+                                                                ] - 1
+                                                              ]}
+                                                              <div className="search-arrow">
+                                                            <img  src="../static/images/icons/search_Arraw_icon.svg"
+                                                              alt="App" title="App"/>
+                                                          </div>
+                                                              </Typography>
+                                                    :"helo"
+    
+                          :CountryCitiesOptionsOnline.length!=0?
+                          selectedIndexCit == -1 ? <Typography
                           variant="body1"
                           className="select-search"
                           gutterBottom
@@ -1631,46 +1745,16 @@ export default function Search() {
                              <img  src="../static/images/icons/search_Arraw_icon.svg"
                                alt="App" title="App"/>
                           </div>
-                        </Typography>
-                            : <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        >
-                            { COUNTRY_CITY_MAP[
-                                CountriesOptionsOnline[
-                                  selectedIndexC
-                                ].toLowerCase()
-                              ][
-                                CountryCitiesOptionsOnline[selectedIndexCit] - 1
-                              ]}
-                               <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                              </Typography>
-                          : AgerangeCountriesOptionsOnline.length != 0
-                          ? selectedIndexCit == -1
-                            ? <Typography
-                          variant="body1"
-                          className="select-search"
-                          gutterBottom
-                        ><IntlMessages id="search.citySelect" />
-                         <div className="search-arrow">
-                             <img  src="../static/images/icons/search_Arraw_icon.svg"
-                               alt="App" title="App"/>
-                          </div>
-                        </Typography>
-                            :  <Typography
+                        </Typography>:  <Typography
                           variant="body1"
                           className="select-search"
                           gutterBottom
                         >{COUNTRY_CITY_MAP[
-                                AgerangeCountriesOptionsOnline[
+                          CountriesOptionsOnline[
                                   selectedIndexC
                                 ].toLowerCase()
                               ][
-                                CountryCitiesAgerangeOptionsOnline[
+                                CountryCitiesOptionsOnline[
                                   selectedIndexCit
                                 ] - 1
                               ]}
@@ -1679,7 +1763,9 @@ export default function Search() {
                                alt="App" title="App"/>
                           </div>
                               </Typography>
-                          : ""
+
+                         
+                          // : ""
                         : ""
                     }
                   />

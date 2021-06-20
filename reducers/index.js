@@ -66,12 +66,40 @@ const authPersistConfig = {
 //   state => new Map(state)
 // );
 
-const transformTimestampMap = config =>
-  createTransform(
-    timestampMap => JSON.stringify(Array.from(timestampMap)),
-    timestampMap => new Map(JSON.parse(timestampMap)),
-    config
-  );
+// const transformTimestampMap = config =>
+//   createTransform(
+//     // timestampMap => JSON.stringify(Array.from(timestampMap)),
+//     // timestampMap => new Map(JSON.parse(timestampMap)),
+//     // config
+//     (inbound, key) => {
+//       // convert mySet to an Array.
+//       console.log("inbound.timestampMap++++++++++ ", inbound);
+//       return [...inbound];
+//       // {
+//       //   ...inbound,
+//       //   timestampMap: [...inbound.timestampMap]
+//       // };
+//     },
+//     // transform state being rehydrated
+//     (outbound, key) => {
+//       // convert mySet back to a Set.
+//       console.log("inbound.timestampMap++++++++++ ", outbound);
+//       return new Map(outbound);
+//       //  {
+//       //   ...outbound,
+//       //   timestampMap: new Map(outbound.timestampMap)
+//       // };
+//     },
+//     config
+//     // {
+//     //   whitelist: [
+//     //     "messages"
+//     //     //   "returnedProfilesOnlineStatus"
+//     //     //   // "clickedUserChat"
+//     //     // ]
+//     //   ]
+//     // }
+//   );
 
 const messagesPersistConfig = {
   key: "messages",
@@ -81,7 +109,15 @@ const messagesPersistConfig = {
     "returnedProfilesOnlineStatus"
     // "clickedUserChat"
   ], //
-  transforms: [transformTimestampMap({ whitelist: "timestampMap" })],
+  // transforms: [
+  //   transformTimestampMap({
+  //     whitelist: [
+  //       "timestampMap"
+  //       // "returnedProfilesOnlineStatus"
+  //       // "clickedUserChat"
+  //     ]
+  //   })
+  // ],
   migrate: createMigrate(messagesMigration, { debug: MIGRATION_DEBUG })
 };
 

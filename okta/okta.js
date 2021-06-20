@@ -1,8 +1,10 @@
 import axios from "axios";
 import {setCookie,removeCookie,getCookie} from '../util/session';
+import IntlMessages from "../util/IntlMessages";
 import base64url from 'base64url';
 import {mapUserPhotoPath} from "../helpers/mapUserPhotoPath";
 import {convertListToTwoArrays} from "../helpers/convertListToTwoArrays";
+import Router from "next/router"
 import imageCompression from 'browser-image-compression';
 
 const auth = {};
@@ -59,9 +61,15 @@ let callAxios = (options) => {
 				if(!response.data){
 				resolve({"data" : {"message":"error"}});
 				} else {
+					console.log(
+						"********** new token  response.data.token ",
+						response.data.token
+					  );
 					
-						if(response.data.token && response.data.status != "ACTIVE") {
+						if(response.data.token && (response.data.status != "ACTIVE"||response.data.status == null)) {
+							// && response.data.status != "ACTIVE"
 								setCookie("access_token",response.data.token);
+								console.log("update access_token &&&&&&&& trueeeeee",response.data.token)
 															
 								if(response.data.verify) {
 									resolve({"data" : {"response":"ok"}})
@@ -79,7 +87,17 @@ let callAxios = (options) => {
 									console.log("**********Authorization*********");
 									removeCookie("access_token");
 									resolve({"data" : {"code":"unauthorized","message":"unauthorized"}})
-								} else {
+								}else if(response.data.code=="JWT_8"){
+									console.log("**********wrong token*********");
+									//removeCookie("access_token");
+									//auth.signOut();
+								//	Router.replace('/');
+								}
+								else if(response.data.code=="JWT_7"){
+									console.log("**********expired token*********");
+									resolve({"code":"JWT_7"})
+								}
+								 else {
 									resolve(response);
 								}
 								
@@ -130,7 +148,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 										  url: '/loginaccess',
 										  method: 'POST',
 										  headers: {
-											'Accept': 'application/json',
+											'Accept': 'application-json',
 											'Content-Type': 'application/json;charset=UTF-8',
 											
 										  },
@@ -162,7 +180,13 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 															
 													
 													} else {
-														resolve({"message": res.message});
+														// resolve({"message": res.message});
+														if(res.code=="LOGINACCESS_1"){
+															resolve({"message": <IntlMessages id="error.notCorrectPhone" />});
+														}
+														else if(res.code=="LOGINACCESS_2"){
+															resolve({"message": <IntlMessages id="error.notCorrectPass" />});
+														}
 													}
 													
 								
@@ -173,7 +197,14 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 			  }
 										  
 			  }	else {
-				  resolve({"message": "EMPTY"});
+				  if(!username && password && !country){
+					resolve({"message": <IntlMessages id="error.emptyPhone" />});
+				  }else if(username && !password && country){
+
+					  resolve({"message":   <IntlMessages id="error.emptyPass" />});
+				  }else{
+					resolve({"message":   <IntlMessages id="error.emptyPhonePass" />});
+				  }
 			  }															
 									
       }).catch((err) => {console.log(err)});	
@@ -203,7 +234,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 						
 						console.log("newUser", newUser);
 						
-						if( (`${username}`.trim() !== '') && (`${password}`.trim() !== '') && (`${firstName}`.trim() !== '') && (`${lastName}`.trim() !== '') && (parseInt(gender) == 0 || parseInt(gender) == 1) ) {
+						if( (`${username}`.trim() !== '') && (`${password}`.trim() !== '') && (`${firstName}`.trim() !== '') && (`${lastName}`.trim() !== '') && (parseInt(gender) == 0 || parseInt(gender) == 1)&& martial!==''&& month!==''&& year!==''&& day!=='' && city!=='' ) {
 
 							try {
 								
@@ -221,14 +252,28 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								let response =	responseX.data;
 								
 											if(response.response == "ok") {
-												
-												let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));	
-													await tokenManagerOperations.setTokenAndValidate("access_token",response.token);
-													resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country,"countryiso2":newUser.countryiso2, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender,"sub":tokenUserData.sub});
-											
-											
+												console.log("response.token ",newUser.phone,password,newUser.phonecountrycode)
+												//let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));	
+												//	await tokenManagerOperations.setTokenAndValidate("access_token",response.token);
+												// login API
+												//auth.signInWithPhoneAndPassword(newUser.phone,password,newUser.phonecountrycode)
+											 //  resolve({"accessToken": "access_token","phone": newUser.phone, "country": newUser.country,"countryiso2":newUser.countryiso2, "n": newUser.name, "m": newUser.martial, "b": `${newUser.year}${newUser.month}${newUser.day}`,"gender" : newUser.gender,"sub":tokenUserData.sub});
+											 resolve({"response":"ok"})
+								
 											} else {
-												resolve({"message": response.code});
+												if(response.code=="CREATEUSER_9"){
+													//resolve({"message": response.message});
+													resolve({"message":<IntlMessages id="error.wrongPass" />});
+												}
+												else if(response.code=="CREATEUSER_10"){
+													
+													resolve({"message":<IntlMessages id="error.wrongPhone" />});
+												}
+												else if(response.code=="CREATEUSER_4"){
+													resolve({"message":<IntlMessages id="error.userAlready" />});
+												}else if(response.code=="CREATEUSER_14"){
+
+												}
 											}
 												
 										
@@ -239,8 +284,39 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								resolve({"message": err});
 							}									
 				  } else {
+
+					if((`${firstName}`.trim() === '')){
+						resolve({"message": <IntlMessages id="error.emptyFirstName" />});
+					}
+					else if((`${lastName}`.trim() === '')){
+						resolve({"message": <IntlMessages id="error.emptyLastName" />});
+					}
+					else if((`${username}`.trim()=== '')){
+						resolve({"message": <IntlMessages id="error.emptyPhone" />});
+					}
+				    else if( (parseInt(gender) != 0 && parseInt(gender) != 1)){
+						resolve({"message": <IntlMessages id="error.emptyGender" />});
+					}
+					else if(day===''){
+						resolve({"message": <IntlMessages id="error.emptyDay" />});
+					}
+					else if(month===''){
+						resolve({"message": <IntlMessages id="error.emptyMonth" />});
+					}
+					else if(year===''){
+						resolve({"message": <IntlMessages id="error.emptyYear" />});
+					}
+					else if(city===''){
+						resolve({"message": <IntlMessages id="error.emptyCity" />});
+					}
+					else if(martial===''){
+						resolve({"message": <IntlMessages id="error.emptyMartial" />});
+					}
+					else if((`${password}`.trim() === '')){
+						resolve({"message": <IntlMessages id="error.emptyPass" />});
+					}
 					  
-					  resolve({"message": "empty values not allowed !"});
+					//   resolve({"message": "empty values not allowed !"});
 					  
 				  }
 										
@@ -261,9 +337,14 @@ auth.uploadMainProfilePhoto = function (file) {
 								let optionsCheck = {
 											  url: '/checkmpupload',
 											  method: 'POST',
+											  crossDomain: true,
+												xhrFields: {
+													withCredentials: true
+												},
 											  headers: {
 												'Accept': 'application/json',
 												'Content-Type': 'application/json;charset=UTF-8',
+												//"Access-Control-Allow-Origin": "*",
 												'Authorization': "Bearer " + tokenValue
 											  }
 											};		
@@ -284,7 +365,7 @@ auth.uploadMainProfilePhoto = function (file) {
 									
 								    let checkUploadRequestResponse = await callAxios(optionsCheck);
 								    
-									console.log(checkUploadRequestResponse.data);
+									console.log("checkUploadRequestResponse.data **",checkUploadRequestResponse.data);
 									
 								    		if(checkUploadRequestResponse.data.code) {
 								    			resolve({"message": checkUploadRequestResponse.data.code});
@@ -341,8 +422,10 @@ auth.uploadMainProfilePhoto = function (file) {
     xhr.onload = async function() {
      if(this.status === 204 ){
 		 console.log("trueeeeeeee 204");
-    		optionsCheck.url = "/checkmpupload";
-														await callAxios(optionsCheck);
+			optionsCheck.url = "/checkmpupload";
+			let checkUploadRequestResponseNew = await callAxios(optionsCheck);
+			console.log("checkUploadRequestResponseNew ",checkUploadRequestResponseNew)
+														//await callAxios(optionsCheck);
 														resolve(true);
 	 } else{
 		 reject(this.responseText);
@@ -541,8 +624,28 @@ auth.addUpdateProfileLayer2 = function (addUpdateFlag,nationality,tpercent,workd
 								resolve({"message": err});
 							}									
 				  } else {
-					  
-					  resolve({"message": "empty values not allowed !"});
+					  console.log("tpercent*** ",tpercent,education,workd)
+					if((`${nationality}`.trim() === '')){
+						resolve({"message": <IntlMessages id="error.emptyNationality" />});
+					}
+					else if(parseInt(tpercent) == 0){
+						resolve({"message": <IntlMessages id="error.emptyTpercent" />});
+					}
+					else if(education == ''){
+						resolve({"message": <IntlMessages id="error.emptyEducation" />});
+					}
+				    else if(workd ==''){
+						resolve({"message": <IntlMessages id="error.emptyWorkd" />});
+					}
+					else if((`${title}`.trim()=== '')){
+						resolve({"message": <IntlMessages id="error.emptyTitle" />});
+					}
+					else if((`${bio}`.trim() === '')){
+						resolve({"message": <IntlMessages id="error.emptyBio" />});
+					}
+			
+
+					  //resolve({"message": "empty values not allowed !"});
 					  
 				  }
 										
@@ -578,7 +681,17 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 														 if(response.response == "ok"){
 															resolve({...response});
 														 } else if(response.code) {
-															resolve({"message": response.message,"code":response.code,"time":response.time});
+															 if(response.code =="TIME"){
+																resolve({"message": <><IntlMessages id="error.codeTime" />{response.time} <IntlMessages id="error.codeTimeM" /> </>});
+															 }else if(response.code =="VERIFYUSER_9"){
+																resolve({"message": <IntlMessages id="error.wrongCode" />});
+															}else if(response.code =="VERIFYUSER_2"){
+																resolve({"message": <IntlMessages id="error.tooWrongCode" />});
+															}
+															else{
+
+																 resolve({"message": response.message,"code":response.code});
+															 }
 														 } else {
 															 resolve({"message": "error call"});
 														 }
@@ -662,7 +775,14 @@ auth.resendVerificationToUserPhone = function () {
 														 if(response.response == "ok"){
 															resolve({...response});
 														 } else if(response.code) {
-															resolve({"message": response.message,"code":response.code,"time":response.time});
+															//resolve({"message": response.message,"code":response.code,"time":response.time});
+															if(response.code =="TIME"){
+															   resolve({"message": <><IntlMessages id="error.codeTime" />{response.time} <IntlMessages id="error.codeTimeM" /> </>});
+															}
+															else{
+
+																resolve({"message": response.message,"code":response.code});
+															}
 														 } else {
 															 resolve({"message": "error call"});
 														 }

@@ -28,11 +28,13 @@ export const map2ArrTo1Arr = (arr1, arr2) => {
     }
 
     for (let j = 0; j < arr2.length; j++) {
-      if (arr2[j].i === userId) {
-        arr2[j].co = co;
-        arr2[j].ci = ci;
-        arr2[j].va = va;
-        arr2[j].t = type;
+      if (arr2[j] != null) {
+        if (arr2[j].i === userId) {
+          arr2[j].co = co;
+          arr2[j].ci = ci;
+          arr2[j].va = va;
+          arr2[j].t = type;
+        }
       }
     }
   }

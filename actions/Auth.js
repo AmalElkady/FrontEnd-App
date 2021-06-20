@@ -31,6 +31,7 @@ import {
   SEND_RESET_TOKEN,
   SEND_VERIFICATION_CODE,
   RESEND_VERIFICATION_TO_PHONE,
+  RESEND_VERIFICATION_TO_PHONE_SUCCESS,
   CLEAR_AUTH_STATE,
   CHANGE_PASSWORD,
   RESET_CHECK_MP_UPLOAD_FLAG,
@@ -41,7 +42,8 @@ import {
   SWITCH_FORM,
   SWITCH_FORM_2,
   CONFIRM_PASSWORD_CASE,
-  ADD_CONNECTION_FLAG
+  ADD_CONNECTION_FLAG,
+  DISCONNECT_CHANNEL
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -111,6 +113,12 @@ export const resendVerificationToPhone = () => {
   };
 };
 
+export const resendVerificationToPhoneSuccess = () => {
+  return {
+    type: RESEND_VERIFICATION_TO_PHONE_SUCCESS
+  };
+};
+
 export const clearPersistedAuthState = () => {
   return {
     type: CLEAR_AUTH_STATE
@@ -166,6 +174,7 @@ export const userSignIn = user => {
   };
 };
 export const userSignOut = () => {
+  console.log("logout from action");
   return {
     type: SIGNOUT_USER
   };
@@ -325,5 +334,11 @@ export const addConnectionFlag = (flag, connValue) => {
   return {
     type: ADD_CONNECTION_FLAG,
     payload: { flag, connValue }
+  };
+};
+
+export const disConnectChannel = () => {
+  return {
+    type: DISCONNECT_CHANNEL
   };
 };
