@@ -22,7 +22,7 @@ import {
   unblockUser,
   unblockUserSuccess
 } from "../../../actions/Interaction";
-import { clickedUserChat } from "../../../actions/Messages";
+import { clickedUserChat, getProfiles } from "../../../actions/Messages";
 ///Modal
 import ModalUploadMPP from "../../../components/Modals/modalUploadMPP";
 import PropTypes from "prop-types";
@@ -36,6 +36,7 @@ import Radio from "@material-ui/core/Radio";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Link from "next/link";
 /////
 import {
   NotificationContainer,
@@ -123,11 +124,19 @@ export default function ProfileCard({ mainInfo }) {
   const userBlockedMessage = useSelector(
     state => state.profile.userBlockedMessage
   );
+
+  const sub = useSelector(state => state.auth.sub);
+  let diffJnt = moment().diff(sub, "hours");
+
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
   const profileL2Data = useSelector(state => state.profile.profileL2Data);
 
   const returnUpdateMessage = useSelector(
     state => state.profile.returnUpdateMessage
+  );
+
+  const userClickedProfile = useSelector(
+    state => state.home.userClickedProfile
   );
 
   const OpenModalPP = useSelector(state => state.profile.openModalPP);
@@ -138,12 +147,17 @@ export default function ProfileCard({ mainInfo }) {
 
   const userBlocked = useSelector(state => state.interaction.userBlocked);
   const userUnblocked = useSelector(state => state.interaction.userUnblocked);
+  const returnedProfiles = useSelector(
+    state => state.messages.returnedProfiles
+  );
 
   const userMartial = useSelector(state => state.profile.userMartial);
   const gender = useSelector(state => state.auth.gender);
   const [showMessage, setShowMessage] = useState(false);
   const [mainGender, setMainGender] = useState(
-    mainInfo.gd ? mainInfo.gd : Number(!gender)
+    userClickedProfile && userClickedProfile.gd
+      ? userClickedProfile.gd
+      : Number(!gender)
   );
   const router = useRouter();
   const dispatch = useDispatch();
@@ -203,7 +217,7 @@ export default function ProfileCard({ mainInfo }) {
     if (userBlocked == true) {
       NotificationManager.success(
         <>
-          <IntlMessages id="user.notifBlock1" /> {mainInfo.n}{" "}
+          <IntlMessages id="user.notifBlock1" /> {userClickedProfile.n}{" "}
           <IntlMessages id="user.notifBlock2" />
         </>
       );
@@ -211,7 +225,7 @@ export default function ProfileCard({ mainInfo }) {
       NotificationManager.error(
         <>
           <IntlMessages id="user.notifBlockErr" />
-          {mainInfo.n}
+          {userClickedProfile.n}
         </>
       );
     }
@@ -219,10 +233,37 @@ export default function ProfileCard({ mainInfo }) {
   }, [userBlocked]);
 
   useEffect(() => {
+    if (userClickedProfile == null) {
+      // console.log("router.query card ==null ", router.query.id);
+      // const va = router.query.id
+      //   .substring(router.query.id.length, router.query.id.length - 2)
+      //   .replace(/_/, "");
+      // console.log("va ** ", va);
+      // const ci = router.query.id
+      //   .substring(router.query.id.length - 2, router.query.id.length - 4)
+      //   .replace(/_/, "");
+      // console.log("ci ** ", ci);
+      // const co = router.query.id
+      //   .substring(router.query.id.length - 4, router.query.id.length - 7)
+      //   .replace(/_/, "");
+      // console.log("co ** ", co);
+      // const id = router.query.id
+      //   .substring(router.query.id.length - 7, 0)
+      //   .replace(/_/, "");
+      // console.log("id ** ", id);
+      // dispatch(getProfiles([`${co}_${ci}_${va}_${id}`]));
+      // let va = 0;
+      // ci.length == 1
+      //   ? (va = arr1[i].substring(5, 7).replace(/_/, ""))
+      //   : (va = arr1[i].substring(6, 8).replace(/_/, ""));
+    }
+  }, []);
+
+  useEffect(() => {
     if (userUnblocked == true) {
       NotificationManager.success(
         <>
-          <IntlMessages id="user.notifUnblock1" /> {mainInfo.n}{" "}
+          <IntlMessages id="user.notifUnblock1" /> {userClickedProfile.n}{" "}
           <IntlMessages id="user.notifBlock2" />
         </>
       );
@@ -230,7 +271,7 @@ export default function ProfileCard({ mainInfo }) {
       NotificationManager.error(
         <>
           <IntlMessages id="user.notifUnblockErr" />
-          {mainInfo.n}
+          {userClickedProfile.n}
         </>
       );
     }
@@ -245,17 +286,17 @@ export default function ProfileCard({ mainInfo }) {
             <div className="card-img">
               <img src={mainInfo._} alt="main photo" />
             </div>
-            {router.query.flag == "read" && (
+            {mainInfo.flag == "read" && (
               <div className="card-img-icon">
                 <div
                   className="card-icon"
                   onClick={() => {
                     dispatch(
                       sendLoveMatchRequest(
-                        mainInfo.i,
-                        mainInfo.co,
-                        mainInfo.ci,
-                        mainInfo.va
+                        userClickedProfile.i,
+                        userClickedProfile.co,
+                        userClickedProfile.ci,
+                        userClickedProfile.va
                       )
                     );
                   }}
@@ -265,7 +306,7 @@ export default function ProfileCard({ mainInfo }) {
                 <div
                   className="card-icon"
                   onClick={() => {
-                    dispatch(clickedUserChat(mainInfo));
+                    dispatch(clickedUserChat(userClickedProfile));
                     router.push({ pathname: `/home/messages` });
                   }}
                 >
@@ -273,7 +314,7 @@ export default function ProfileCard({ mainInfo }) {
                 </div>
               </div>
             )}
-            {router.query.flag == "read" &&
+            {mainInfo.flag == "read" &&
               userBlockedMessage == null &&
               profileL2Data != null && (
                 <div className="card-img-icon-block">
@@ -281,18 +322,18 @@ export default function ProfileCard({ mainInfo }) {
                     onClick={() => {
                       dispatch(
                         blockUser(
-                          mainInfo.i,
-                          mainInfo.co,
-                          mainInfo.ci,
-                          mainInfo.va
+                          userClickedProfile.i,
+                          userClickedProfile.co,
+                          userClickedProfile.ci,
+                          userClickedProfile.va
                         )
                       );
                       dispatch(
                         readProfileL2(
-                          mainInfo.i,
-                          mainInfo.co,
-                          mainInfo.ci,
-                          mainInfo.va
+                          userClickedProfile.i,
+                          userClickedProfile.co,
+                          userClickedProfile.ci,
+                          userClickedProfile.va
                         )
                       );
                     }}
@@ -301,7 +342,8 @@ export default function ProfileCard({ mainInfo }) {
                   </IconButton>
                 </div>
               )}
-            {router.query.flag == "read" &&
+
+            {mainInfo.flag == "read" &&
               userBlockedMessage != null &&
               profileL2Data == null && (
                 <div className="card-img-icon-block">
@@ -309,18 +351,18 @@ export default function ProfileCard({ mainInfo }) {
                     onClick={() => {
                       dispatch(
                         unblockUser(
-                          mainInfo.i,
-                          mainInfo.co,
-                          mainInfo.ci,
-                          mainInfo.va
+                          userClickedProfile.i,
+                          userClickedProfile.co,
+                          userClickedProfile.ci,
+                          userClickedProfile.va
                         )
                       );
                       dispatch(
                         readProfileL2(
-                          mainInfo.i,
-                          mainInfo.co,
-                          mainInfo.ci,
-                          mainInfo.va
+                          userClickedProfile.i,
+                          userClickedProfile.co,
+                          userClickedProfile.ci,
+                          userClickedProfile.va
                         )
                       );
                     }}
@@ -329,6 +371,18 @@ export default function ProfileCard({ mainInfo }) {
                   </IconButton>
                 </div>
               )}
+            {router.query.flag == "readMe" && diffJnt < 0 && (
+              <div
+                className="card-img-icon-block"
+                style={{ padding: "0.5rem 0 0 .5rem", cursor: "pointer" }}
+              >
+                {" "}
+                <Link href="/home/paymentSubscription">
+                  <img src="../../../static/images/sub_mark.svg" />
+                </Link>
+              </div>
+            )}
+
             {router.query.flag == "readMe" && (
               <IconButton
                 aria-label="Edit"
@@ -389,7 +443,10 @@ export default function ProfileCard({ mainInfo }) {
                 gutterBottom
               >
                 {/* {mainInfo.gd=mainInfo.gd?mainInfo.gd:Number(!gender)} */}
-                {ARRAYS_OF_MARTIAL_STATUS[mainGender][userMartial]}
+                {mainInfo.flag == "read" &&
+                  ARRAYS_OF_MARTIAL_STATUS[mainInfo.gd][mainInfo.m]}
+                {router.query.flag == "readMe" &&
+                  ARRAYS_OF_MARTIAL_STATUS[mainGender][userMartial]}
                 {router.query.flag == "readMe" && (
                   <IconButton
                     aria-label="Edit"

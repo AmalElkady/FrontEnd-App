@@ -25,7 +25,10 @@ import {
   RESEND_VERIFICATION_TO_PHONE,
   CHANGE_PASSWORD,
   CHECK_MP_UPLOAD,
-  CHANGE_PHONE_BEFORE_VERIF
+  CHANGE_PHONE_BEFORE_VERIF,
+  ADD_PAYING_CUSTOMER,
+  CREATE_CHECK_OUT_SESSION,
+  CREATE_CHECK_OUT_SESSION_SUCCESS
 } from "../constants/ActionTypes";
 
 import {
@@ -44,7 +47,10 @@ import {
   checkMpUploadSuccess,
   changeUserPhoneBeforeVerifSuccess,
   resendVerificationToPhoneSuccess,
-  userSignIn
+  userSignIn,
+  mpUploadToken0Success,
+  addPayingCustomerSuccess,
+  createCheckOutSessionSuccess
 } from "../actions/Auth";
 
 import {
@@ -135,9 +141,9 @@ const addProfileLayer2Request = async (
     .then(authUser => authUser)
     .catch(error => error);
 
-const addSubRequest = async subscribePack =>
+const addSubRequest = async (subscribePack,sessionId) =>
   await auth
-    .subscribe(subscribePack)
+    .subscribe(subscribePack,sessionId)
     .then(authUser => authUser)
     .catch(error => error);
 
@@ -183,6 +189,18 @@ const changePasswordWithTokenForUserPhoneRequest = async (
   await auth
     .changePasswordWithTokenForUserPhone(token, newpassword, hw)
     .then(changeMessage => changeMessage)
+    .catch(error => error);
+
+const addPayingCustomerRequest = async () =>
+  await auth
+    .addPayingCustomer()
+    .then(returedData => returedData)
+    .catch(error => error);
+
+const createCheckOutSessionRequest = async pack =>
+  await auth
+    .createCheckOutSession(pack)
+    .then(returedData => returedData)
     .catch(error => error);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,8 +296,11 @@ function* uploadMainProfilePhoto({ payload }) {
 
     if (photoUploadS3.message) {
       yield put(showAuthMessage(photoUploadS3.message));
+    } else if (photoUploadS3.token0) {
+      console.log("token0 from saga ");
+      yield put(mpUploadToken0Success(true));
     } else {
-      yield put(mpUploadSuccess());
+      yield put(mpUploadSuccess(true));
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -320,8 +341,9 @@ function* addProfileLayer2({ payload }) {
 
 function* addSubscribe({ payload }) {
   console.log("from saga ", payload);
+  const { pack, sessionId } = payload;
   try {
-    const subAdded = yield call(addSubRequest, payload);
+    const subAdded = yield call(addSubRequest, pack, sessionId);
     if (subAdded.message) {
       yield put(showAuthMessage(subAdded.message));
     } else {
@@ -439,6 +461,36 @@ function* changeUserPhoneBeforeVerifRequest({ payload }) {
   }
 }
 
+function* customerAddPayingRequest() {
+  console.log("from saga add paying customer");
+  try {
+    const returnData = yield call(addPayingCustomerRequest);
+    console.log("returnData from data", returnData);
+    if (returnData.message) {
+      yield put(showAuthMessage(returnData.message));
+    } else {
+      yield put(addPayingCustomerSuccess(returnData));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
+function* requestCreateCheckOutSession({ payload }) {
+  console.log("from saga requestCreateCheckOutSession ", payload);
+  try {
+    const returnData = yield call(createCheckOutSessionRequest, payload);
+    console.log("returnData from data", returnData);
+    if (returnData.message) {
+      yield put(showAuthMessage(returnData.message));
+    } else {
+      yield put(createCheckOutSessionSuccess(returnData, payload));
+    }
+  } catch (error) {
+    yield put(showAuthMessage(error));
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //function* signInUserWithGoogle() {
@@ -512,6 +564,14 @@ function* signInUserWithPhonePassword({ payload }) {
     );
     if (signInUser.message) {
       yield put(showAuthMessage(signInUser.message));
+    } else if (signInUser.loginAgain) {
+      yield put(
+        userSignIn({
+          phone: phone,
+          password,
+          country: country
+        })
+      );
     } else {
       //localStorage.setItem('access_token','access_token')
       //tokenManagerOperations.setTokenAndValidate('access_token','token')
@@ -524,7 +584,8 @@ function* signInUserWithPhonePassword({ payload }) {
           birth: signInUser.b,
           martial: signInUser.m,
           gender: signInUser.gender,
-          sub: signInUser.sub
+          sub: signInUser.sub,
+          jnt: signInUser.jnt
         })
       );
     }
@@ -613,6 +674,12 @@ export function* signOutUser() {
   yield takeEvery(SIGNOUT_USER, signOut);
 }
 
+export function* requestAddPayingCustomer() {
+  yield takeEvery(ADD_PAYING_CUSTOMER, customerAddPayingRequest);
+}
+export function* createCheckOutSession() {
+  yield takeEvery(CREATE_CHECK_OUT_SESSION, requestCreateCheckOutSession);
+}
 export default function* rootSaga() {
   yield all([
     fork(signInUser),
@@ -630,6 +697,8 @@ export default function* rootSaga() {
     //        fork(signInWithGithub),
     fork(signOutUser),
     fork(checkMpUpload),
-    fork(changeUserPhoneBeforeVerif)
+    fork(changeUserPhoneBeforeVerif),
+    fork(requestAddPayingCustomer),
+    fork(createCheckOutSession)
   ]);
 }

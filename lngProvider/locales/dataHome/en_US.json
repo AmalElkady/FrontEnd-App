@@ -60,12 +60,50 @@
   "sidebar.match": "Mactch",
   "sidebar.views": "My Profile Views",
   "sidebar.blockedUsers": "Blocked Users",
+  "sidebar.PaymentSubscription": "Payments & Subscriptions",
   "sidebar.setting": "Settings",
-  "sidebar.privacyterms": "Privacy and Terms of use",
+  "sidebar.termsConditions": " Terms and Conditions ",
+  "sidebar.privacyStatements": " Privacy Statements ",
   "sidebar.logout": "Logout",
   "sidebar.privacy": "Privacy .Terms .Advertising .Ad Choices .Cookies",
   "sidebar.love": "Love Gila ${&copy;} 2021",
+  "sidebar.subMark": "Your Subscription will expire on ",
+  "sub.expireToday":"Your subscription will expire today at ",
 
-  "privacy.policy": "Privacy and Policy",
-  "terms.conditions": "Terms and Conditions"
+  "privacy.policy": "Privacy Statements",
+
+  "privacy.generalTitle": "1 General Information",
+  "privacy.generalInfo": "LoveGila.com (this Website) is fully operated and owned by (Hoot Ammo, INC) a company registered in the United States Of America. Hoot Ammo is committed to protecting users privacy, all our users should not be worried or concerned about the confidentiality and security of their personal data provided to us, as we work hard to protect all our users privacy",
+
+  "privacy.diffTitle": "2 Privacy Policy & Different Jurisdictions",
+  "privacy.diffInfo": "Any conflict regarding the privacy of personal information between our privacy statement 'this statement' and the applicable law in the regions where our users live, the applicable law will govern.",
+
+  "privacy.personalTitle": "3 Personal Data Collection and Usage",
+  "privacy.personalInfo": "When you access LoveGila.com (this website) and register to use our services, by default you accept the terms in this statement regarding your personal data collection and usage. We save and use the personal data according to this privacy statement, you may cancel this agreement by deleting your account from the profile settings page.",
+
+  "privacy.question1Title": "4 What Type Of Data Do We Collect and Use ?",
+  "privacy.questionSub1Title": "(a) Personal Data",
+  "privacy.questionSub1Info": "We collect data including but not limited to (your Full Name, Phone number, Age, Residential Country and City, Occupation, Photographs 'Provided by you'). We donot collect your debit/credit card information 'see section (9)'.",
+  "privacy.questionSub2Title": "(b) Non Personal - Anonymous Data",
+  "privacy.questionSub2Info": "We collect such data for statistical purposes, these data may include (your Browser type, IP Address used, Website Access Date and Time, The Number Of Viewed Pages)",
+
+  "privacy.cookiesTitle": "5 Cookies and Similar Technologies",
+  "privacy.cookiesInfo": "We use  may use (cookies, pixel tags, web beacons, device ID's ..etc) We use Google Analytics which in order transmits our website traffic data to Google servers, data transmitted to google servers will not be linked to any other data google collected from you.",
+
+  "privacy.question2Title": "6 How do we handle your personal data ?",
+  "privacy.question2Info": "We work hard to keep your data safe, as we check our systems regulary for detecting possible vulnerabilities and to keep your personal data secured from any unauthorized access. Although, we do not promise that your data will always be fully secured. If you believe that any breach occured or your account is not safe; please contact us at the following email: customersupport@hootammo.com",
+
+  "privacy.question3Title": "7 How do we use and share your personal data ?",
+  "privacy.question3Info": "Hoot Ammo takes inconsideration that your personal data should not be exposed or misused by any means. Your phone number will not be shared with other 'LoveGila.com' users, we only share the information appears on your profile page including (name, age, main profile picture, nationality, ..etc). Your private photos will not be shared with all 'LoveGila.com' users, it will be only accessible to the users you gave them the permission for viewing your private photos. Our admins can view your profile content showed to other users (including main profile pictures and private photos). We may also share your personal data with trusted third parties and legal authorities.",
+
+  "privacy.question4Title": "8 How long do we keep your personal data ?",
+  "privacy.question4Info": "We will keep your Personal Data only for as long as we need it for legitimate business purposes and as required by applicable law. We will erase any Personal Data that we hold about you, where we no longer need the Personal Data for the purposes it was collected for and where we are not required or obligated by law to retain your personal data. You can delete your account anytime, after account deletion other users will not be able to see your profile or contact you. you cannot retrieve your account after deletion, we may delete/susspend your account without any notice in case of website rules violation see terms and conditions.",
+
+  "privacy.paymentsTitle": "9 Credit/Debit Card Payments and Other payment methods",
+  "privacy.paymentsInfo": "We do not save any of your credit card details on our servers, credit and debit card payments are done through sessions provided by 'Stripe' and our backend only request and check those sessions status. We can check your payments through 'Stripe' dashboard or through secured API's provided to us by 'Stripe'. 'Stripe' is an Irish-American financial services and software as a service (SaaS) company dual-headquartered in San Francisco, United States and Dublin, Ireland. The company 'Stripe' primarily offers payment processing software and application programming interfaces (APIs) for e-commerce websites and mobile applications.",
+
+  "terms.conditions": "Terms and Conditions",
+
+  "users.onlineNotFound": "There are no active users now",
+  "users.recentNotFound": "There are no recent active users now"
 }

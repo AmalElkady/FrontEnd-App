@@ -122,3 +122,25 @@
   top: -30px;
   left: -41px;
 }
+
+.phone-input {
+  margin-bottom: 1rem !important;
+}
+
+.phone-input .form-control {
+  display: none;
+}
+
+.phone-input .flag-dropdown {
+  height: 30px;
+  width: 50px;
+}
+
+.icon-done {
+  color: $secondary !important;
+  font-size: 5rem !important;
+}
+
+.SubmitButton {
+  background-color: $secondary !important;
+}

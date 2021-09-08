@@ -35,6 +35,14 @@ export const map2ArrTo1Arr = (arr1, arr2) => {
           arr2[j].va = va;
           arr2[j].t = type;
         }
+      } else {
+        console.log(" map2ArrTo1Arr e =null", arr2);
+        arr2[j] = {};
+        arr2[j].i = userId;
+        arr2[j].co = co;
+        arr2[j].ci = ci;
+        arr2[j].va = va;
+        arr2[j].t = type;
       }
     }
   }

@@ -40,7 +40,8 @@ import {
   RESET_SEARCH_FLAG,
   NOTIFI_ACTION_DONE,
   NOTIFI_MSG_ACTION_DONE,
-  PUSHER_ACTION_DONE
+  PUSHER_ACTION_DONE,
+  PROFILE_USER_CLICKED
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { addUserGender } from "../helpers/addUserGender";
@@ -159,6 +160,7 @@ const initialHomeState = {
 
   ////
   actionsStatus: [null, null, null, null, null],
+  userClickedProfile: null,
 
   photoReadSignedRequest: null,
   searchState: "active",
@@ -361,7 +363,7 @@ const home = (state = initialHomeState, action) => {
           ...state.allCountriesSelectedOnlineCount,
           ...action.payload.scoreArr
         ],
-        actionsStatus: [1, null, null, null, null]
+        actionsStatus: [1, 2, 3, null, null]
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
@@ -682,6 +684,12 @@ const home = (state = initialHomeState, action) => {
         searchFlag: action.payload
       };
     }
+    case PROFILE_USER_CLICKED: {
+      return {
+        ...state,
+        userClickedProfile: action.payload
+      };
+    }
     case SELECTED_AGERANGE_INDEX:
       return {
         ...state,
@@ -856,13 +864,13 @@ const home = (state = initialHomeState, action) => {
     case NOTIFI_ACTION_DONE: {
       return {
         ...state,
-        actionsStatus: [1, 2, null, null, null]
+        actionsStatus: [1, null, null, null, null]
       };
     }
     case NOTIFI_MSG_ACTION_DONE: {
       return {
         ...state,
-        actionsStatus: [1, 2, 3, null, null]
+        actionsStatus: [1, 2, null, null, null]
       };
     }
     case PUSHER_ACTION_DONE: {

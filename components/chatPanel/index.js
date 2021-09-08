@@ -10,12 +10,24 @@ import "react-chat-elements/dist/main.css";
 import ChatUserList from "./ChatUserList";
 import Conversation from "./Conversation";
 import { readMyPhotos } from "../../actions/Profile";
+import { hideMessageChat } from "../../actions/Messages";
+import ModalSettings from "../Modals/modalSettings";
+
+import {
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
 
 const ChatPanel = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const messageSent = useSelector(state => state.messages.messageSent);
+  const alertMessageChat = useSelector(
+    state => state.messages.alertMessageChat
+  );
+  const showMessageChat = useSelector(state => state.messages.showMessageChat);
+
+  const ClickedUserChat = useSelector(state => state.messages.clickedUserChat);
 
   const conversationMessages = useSelector(
     state => state.messages.conversationMessages
@@ -23,6 +35,8 @@ const ChatPanel = () => {
   const [users, setUsers] = useState(null);
   const [photoSrc, setPhotoSrc] = useState(null);
   const MyPhotoSigned = useSelector(state => state.profile.myPhotoSigned);
+
+  const OpenModal = useSelector(state => state.profile.openModal);
 
   useEffect(() => {
     dispatch(readMyPhotos(0, "small"));
@@ -33,6 +47,14 @@ const ChatPanel = () => {
       setPhotoSrc(MyPhotoSigned);
     }
   }, [MyPhotoSigned]);
+
+  useEffect(() => {
+    console.log("showMessageChat ", showMessageChat);
+    if (showMessageChat) {
+      NotificationManager.error(alertMessageChat);
+      dispatch(hideMessageChat());
+    }
+  }, [showMessageChat]);
 
   return (
     <>
@@ -45,6 +67,8 @@ const ChatPanel = () => {
           {photoSrc && <Conversation myPhoto={photoSrc} />}
         </Grid>
       </Grid>
+
+      {OpenModal && <ModalSettings reportConv={true} user={ClickedUserChat} />}
     </>
   );
 };

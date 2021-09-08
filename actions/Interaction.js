@@ -30,7 +30,11 @@ import {
   RESET_COUNT,
   UPDATE_LIST,
   INCREASE_COUNT,
-  ERROR_JWT_8
+  ERROR_JWT_8,
+  ADD_USER_ONLINE_OFFLINE,
+  ADD_USER_ONLINE_OFFLINE_SUCCESS,
+  REPORT_USER,
+  REPORT_USER_SUCCESS
   //PUSH_IN_NOTIFICATION_VIEW_PP_LOVE
 } from "../constants/ActionTypes";
 
@@ -287,9 +291,26 @@ export const updateList = type => {
   };
 };
 export const errorJwt8Success = data => {
-  console.log("from errorJwt8Success  action", data);
+  console.log("from errorJwt8Success interaction action", data);
   return {
     type: ERROR_JWT_8,
+    payload: data
+  };
+};
+
+export const addUserOnlineOffline = action => {
+  return {
+    type: ADD_USER_ONLINE_OFFLINE,
+    payload: {
+      action
+    }
+  };
+};
+
+export const addUserOnlineOfflineSuccess = data => {
+  console.log("from success addUserOnlineOfflineSuccess ", data);
+  return {
+    type: ADD_USER_ONLINE_OFFLINE_SUCCESS,
     payload: data
   };
 };
@@ -301,3 +322,32 @@ export const errorJwt8Success = data => {
 //     payload: { t, user }
 //   };
 // };
+
+export const reportUser = (
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) => {
+  return {
+    type: REPORT_USER,
+    payload: {
+      reasonid,
+      profileid,
+      country,
+      city,
+      varea,
+      comment
+    }
+  };
+};
+
+export const reportUserSuccess = data => {
+  console.log("from success reportUserSuccess ", data);
+  return {
+    type: REPORT_USER_SUCCESS,
+    payload: data
+  };
+};

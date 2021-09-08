@@ -98,16 +98,16 @@ export default function BlockedUsers() {
             next={handleScrollGetBlockedUsers}
             hasMore={!endOfResultBlockedUsers}
             loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                {blockedUsersProfiles.length != 0 && (
-                  <b>Yay! You have seen All blocked Users </b>
-                )}
-                {blockedUsersProfiles.length === 0 && (
-                  <b>Yay! You don't have blocked Users </b>
-                )}
-              </p>
-            }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     {blockedUsersProfiles.length != 0 && (
+            //       <b>Yay! You have seen All blocked Users </b>
+            //     )}
+            //     {blockedUsersProfiles.length === 0 && (
+            //       <b>Yay! You don't have blocked Users </b>
+            //     )}
+            //   </p>
+            // }
           >
             {blockedUsersProfiles.length != 0 && (
               <Grid item xs={12} className="items-container ">

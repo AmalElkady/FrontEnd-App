@@ -18,6 +18,8 @@ import {
   setTimestampMap
 } from "../../../../actions/Messages";
 
+import { openModal } from "../../../../actions/Profile";
+
 const ConversationHeader = ({ user }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -137,7 +139,7 @@ const ConversationHeader = ({ user }) => {
         </Grid>
         <Grid item xs={8} className="conv-head-name">
           <Typography variant="subtitle1" gutterBottom>
-            {user.n}
+            {user.n ? user.n : <IntlMessages id="chat.user" />}
           </Typography>
           {returnedProfilesOnlineStatus && (
             <Typography variant="overline" display="block" gutterBottom>
@@ -185,6 +187,14 @@ const ConversationHeader = ({ user }) => {
               }}
             >
               <IntlMessages id="chat.clear" />
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                dispatch(openModal(true));
+              }}
+            >
+              <IntlMessages id="chat.report" />
             </MenuItem>
           </Menu>
         </Grid>

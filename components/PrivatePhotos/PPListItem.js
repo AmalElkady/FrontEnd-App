@@ -93,18 +93,18 @@ export default function ListItem({ user }) {
                 {privateSelectedIcon == "outgoing" || user.t == "A" ? (
                   <>
                     <IntlMessages id="ppList.outgoing" />
-                    {user.n}
+                    {user.n ? user.n : <IntlMessages id="chat.user" />}
                   </>
                 ) : privateSelectedIcon == "incomingApproved" ? (
                   <>
                     <IntlMessages id="ppList.incomingApproved" />
-                    {user.n}
+                    {user.n ? user.n : <IntlMessages id="chat.user" />}
                   </>
                 ) : privateSelectedIcon == "incomingNotApproved" ||
                   user.t == "R" ? (
                   <>
                     <IntlMessages id="ppList.incomingNotApproved" />
-                    {user.n}
+                    {user.n ? user.n : <IntlMessages id="chat.user" />}
                   </>
                 ) : (
                   ""
@@ -146,22 +146,24 @@ export default function ListItem({ user }) {
             )}
 
             {/* View profile */}
-            <Grid item xs={2} className="icon-container">
-              <IconButton
-                // className="item-btn"
-                onClick={() => {
-                  //  user.timeScore = timeScore;
-                  user.flag = "read";
-                  router.push({ pathname: `/home/profile`, query: user });
-                }}
-                aria-label="View Profile"
-              >
-                <img src="../../static/images/icons/Profile_icon_2.svg" />
-              </IconButton>
-              <Typography variant="body1" component="p">
-                <IntlMessages id="ppList.iconTitleView" />
-              </Typography>
-            </Grid>
+            {user.n && (
+              <Grid item xs={2} className="icon-container">
+                <IconButton
+                  // className="item-btn"
+                  onClick={() => {
+                    //  user.timeScore = timeScore;
+                    user.flag = "read";
+                    router.push({ pathname: `/home/profile`, query: user });
+                  }}
+                  aria-label="View Profile"
+                >
+                  <img src="../../static/images/icons/Profile_icon_2.svg" />
+                </IconButton>
+                <Typography variant="body1" component="p">
+                  <IntlMessages id="ppList.iconTitleView" />
+                </Typography>
+              </Grid>
+            )}
             {privateSelectedIcon == "incomingApproved" && (
               <Grid item xs={6}></Grid>
             )}

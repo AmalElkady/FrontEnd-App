@@ -19,8 +19,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Male, Female } from "react-gender";
 import ReCAPTCHA from "react-google-recaptcha";
+import FormGroup from "@material-ui/core/FormGroup";
+import Checkbox from "@material-ui/core/Checkbox";
+import ModalSettings from "../components/Modals/modalSettings";
 
-import {ARRAY_OF_YEARS ,ARRAY_OF_MONTHS, ARRAY_OF_DAYS, COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE, ARRAYS_OF_MARTIAL_STATUS, ARRAYS_OF_MARTIAL_STATUS_VALUES} from '../util/data';
+import {ARRAY_OF_YEARS ,ARRAY_OF_MONTHS, ARRAY_OF_DAYS, COUNTRY_CITY_MAP, COUNTRY_CITY_MAP_VALUE, ARRAYS_OF_MARTIAL_STATUS, ARRAYS_OF_MARTIAL_STATUS_VALUES,ARRAYS_OF_TERMS} from '../util/data';
 
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -37,9 +40,14 @@ import {
   formSwitch
 } from '../actions/Auth';
 
+import {
+	openModal
+  } from "../actions/Profile";
+
+
 class SignUp extends React.Component {
   constructor() {
-    super();
+	super();
     this.state = {
       firstname: '',
 	  lastname: '',
@@ -53,7 +61,10 @@ class SignUp extends React.Component {
  	  month: '',
  	  year: '',
       password: '',
-	  password_confirm: ''
+	  password_confirm: '',
+      terms:{
+		0: false
+	  }
     }
   }
 
@@ -102,7 +113,8 @@ class SignUp extends React.Component {
  	  month,
  	  year,
       password,
-	  password_confirm
+	  password_confirm,
+	  terms
     } = this.state;
 	
 	
@@ -139,6 +151,27 @@ class SignUp extends React.Component {
   const handleChange = (event) => {
     this.setState({[`${event.target.name}`] : `${event.target.value}`})
   };
+
+  const handleChangeTerms = event => {
+    console.log(
+      "clicked terms ",
+      event.target.name,
+      event.target.checked,
+      terms
+    );
+//	setReason({ ...reason, [event.target.name]: event.target.checked });
+	this.setState({terms:{ ...terms, [event.target.name]: event.target.checked }})
+  };
+
+  const checkTermsValues = () => {
+    for (var i in terms) {
+      if (terms[i] != true) {
+        return false;
+      }
+    }
+    return true;
+  };
+
     const {showMessage, loader, alertMessage} = this.props;
 	
     return (
@@ -312,6 +345,7 @@ class SignUp extends React.Component {
 												  onChange={handleChange}
 												  name="city"
 												>
+													{console.log("this.state.countryiso2 ",this.state.countryiso2)}
 												
 														{COUNTRY_CITY_MAP[this.state.countryiso2].map((value,i) => (
 																  <MenuItem
@@ -387,11 +421,25 @@ class SignUp extends React.Component {
 							/>
 						</Grid>	
 						<Grid item xs={12}>
-                      <ReCAPTCHA
+                      {/* <ReCAPTCHA
                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                         onChange={this.onChange}
                         className="not-robot"
-                      />
+					  /> */}
+					     <FormGroup>
+                            {/* {ARRAYS_OF_TERMS.map((value, i) => ( */}
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={terms[0]}
+                                    onChange={handleChangeTerms}
+                                    name={0}
+                                  />
+                                }
+                                label={<><IntlMessages id="singup.term1"/> <Link href="/home/privacyStatements"><a className="prepend-icon link-1"><IntlMessages id="sidebar.privacyStatements"/></a></Link><IntlMessages id="singup.term2"/>  <Link href="/home/termsAndConditions"><a className="prepend-icon link-1"><IntlMessages id="sidebar.termsConditions"/></a></Link></>}
+                              />
+                            {/* ))} */}
+                          </FormGroup>
                     </Grid>
                   					
 			</Grid>
@@ -401,14 +449,20 @@ class SignUp extends React.Component {
 			{/* d-flex align-items-center justify-content-between */}
 			
                 <div>
-                  <Button variant="contained" onClick={() => {
+                 {phone!=''&& password!=''&& firstname!=''&& lastname!=''&& country!=''&&countryiso2!=''&& gender!='5'&& year!=''&& month!=''&& day!=''&& city!=''&& martial!=''&& password_confirm!=''&&  checkTermsValues() && <Button variant="contained" onClick={() => {
 					  if(password != password_confirm){ NotificationManager.error(<IntlMessages id="error.passMis" />)}
-                      else { this.props.showAuthLoader();
-                      this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}); }
+                      else {
+				    //  this.props.showAuthLoader();
+					//   this.props.userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial});
+					this.props.openModal(true)
+					
+					}
                   }} color="primary" style={{width: "100%"}} className="linear-g-r">
                     <IntlMessages
                       id="appModule.regsiter"/>
                   </Button>
+				 }
+
 				<div style={{marginTop: ".4rem",textAlign:"center"}}>	
                   {/* <Link href="/signin"> */}
                     <a className="a-underLine-none" onClick={()=>{this.props.formSwitch(false)}} ><IntlMessages id="signUp.alreadyMember"/></a>
@@ -428,7 +482,10 @@ class SignUp extends React.Component {
           <div className="loader-view">
             <CircularProgress/>
           </div>
-        }
+		}
+		{this.props.OpenModal &&(
+        <ModalSettings confirmTerms={true} user={{phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}} />
+      )}
         {showMessage && NotificationManager.error(alertMessage)}
         <NotificationContainer/>
       </div>
@@ -436,9 +493,11 @@ class SignUp extends React.Component {
   }
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth,profile}) => {
   const {loader, alertMessage, showMessage, authUser} = auth;
-  return {loader, alertMessage, showMessage, authUser}
+  const {openModal}=profile;
+  const OpenModal=openModal;
+  return {loader, alertMessage, showMessage, authUser,OpenModal}
 };
 
 
@@ -449,5 +508,6 @@ export default connect(mapStateToProps, {
   showAuthLoader,
   hideAuthLoader,
   userSignIn,
-  formSwitch
+  formSwitch,
+  openModal
 })(SignUp);

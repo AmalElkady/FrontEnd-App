@@ -88,11 +88,16 @@ const ChatUserList = () => {
             allMessagesCoversProfiles,
             photoReadSignedRequest.signedRequest
           );
+          console.log(
+            "allMessagesCoversProfiles ",
+            allMessagesCoversProfiles,
+            finalUsersProfiles
+          );
           setUsers(
             finalUsersProfiles.map((e, i) => {
               e = {
                 avatar: e._,
-                title: e.n,
+                title: e.n ? e.n : <IntlMessages id="chat.user" />,
                 subtitle: `${JSON.parse(allMessagesCovers[i][1]).m}`,
                 date: new Date(Number(allMessagesCoversDates[i])),
                 unread: Number(allMessagesCovers[i][0])

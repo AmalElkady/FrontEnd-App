@@ -141,3 +141,45 @@ img {
     fill: #d3316e;
   }
 }
+
+.link-1{
+  text-decoration: revert !important
+}
+
+
+.rotateimg180 {
+  -webkit-transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.rotate {
+  animation: rotation 2s;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.linear {
+  animation-timing-function: linear;
+}
+.infinite {
+  animation-iteration-count: infinite;
+}
+
+.rotate-image {
+  animation: rotation 2s linear infinite;
+}
+
+.loader-img{
+  width: 100px;
+    position: absolute;
+}

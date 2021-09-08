@@ -23,6 +23,8 @@ export const BELOW_THE_HEADER = "below_the_header";
 
 export const SHOW_MESSAGE = "show_message";
 export const HIDE_MESSAGE = "hide_message";
+export const SHOW_MESSAGE_CHAT = "show_message";
+export const HIDE_MESSAGE_CHAT = "hide_message";
 
 export const FETCH_ALL_CONTACT = "fetch_all_contact";
 export const FETCH_ALL_CONTACT_SUCCESS = "fetch_all_contact_success";
@@ -487,3 +489,29 @@ export const ERROR_JWT_8 = "error_jwt_8";
 export const NOTIFI_ACTION_DONE = "notifi_action_done";
 export const NOTIFI_MSG_ACTION_DONE = "notifi_msg_action_done";
 export const PUSHER_ACTION_DONE = "pusher_action_done";
+
+export const PROFILE_USER_CLICKED = "profile_user_clicked";
+
+export const ADD_USER_ONLINE_OFFLINE = "add_user_online_offline";
+export const ADD_USER_ONLINE_OFFLINE_SUCCESS =
+  "add_user_online_offline_success";
+
+export const MP_UPLOAD_TOKEN0_SUCCESS = "mp_upload_token0_success";
+
+export const REPORT_USER = "report_user";
+export const REPORT_USER_SUCCESS = "report_user_success";
+
+export const REPORT_USER_CONVERSATION = "report_user_conversation";
+export const REPORT_USER_CONVERSATION_SUCCESS =
+  "report_user_conversaion_success";
+
+export const MODAL_PP_INFO = "modal_pp_info";
+
+export const ADD_PAYING_CUSTOMER = "add_paying_customer";
+export const ADD_PAYING_CUSTOMER_SUCCESS = "add_paying_customer_success";
+
+export const CREATE_CHECK_OUT_SESSION = "create_check_out_session";
+export const CREATE_CHECK_OUT_SESSION_SUCCESS =
+  "create_check_out_session_success";
+
+export const RESET_NOTE_FLAG = "reset_note_flag";

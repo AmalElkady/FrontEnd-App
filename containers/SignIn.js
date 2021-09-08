@@ -23,6 +23,7 @@ import { toggleCollapsedNav } from "../actions/Setting";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import ReCAPTCHA from "react-google-recaptcha";
+import moment from "moment";
 
 class SignIn extends React.Component {
   constructor() {
@@ -42,6 +43,11 @@ class SignIn extends React.Component {
       }, 100);
     }
     if (this.props.authUser != null) {
+      // console.log(
+      //   "jnt from login %%%%%% ",
+      //   this.props.c,
+      //   moment().diff(this.props.jnt, "hours")
+      // );
       Router.replace("/home/content");
     }
   }
@@ -82,21 +88,82 @@ class SignIn extends React.Component {
                 </InputLabel>
                 <PhoneInput
                   onlyCountries={[
-                    "gb",
                     "us",
                     "fr",
-                    "de",
                     "eg",
                     "ma",
                     "sa",
                     "dz",
-                    "bh",
                     "kw",
-                    "tn",
-                    "ae",
-                    "my",
+                    "ar",
+                    "ca",
+                    "sg",
+                    "ua",
+                    "pt",
+                    "af",
+                    "al",
+                    "az",
+                    "ba",
+                    "bd",
+                    "bf",
+                    "bg",
+                    "bh",
+                    "bj",
+                    "ci",
+                    "cm",
+                    "cn",
+                    "de",
+                    "dj",
+                    "es",
+                    "gb",
+                    "gm",
+                    "gn",
+                    "gw",
+                    "id",
+                    "in",
+                    "iq",
+                    "ir",
+                    "it",
+                    "jo",
+                    "ke",
+                    "kg",
+                    "km",
+                    "lb",
+                    "lr",
+                    "ly",
+                    "me",
+                    "mg",
+                    "mk",
+                    "ml",
+                    "mm",
                     "mr",
-                    "af"
+                    "mv",
+                    "mw",
+                    "my",
+                    "ne",
+                    "ng",
+                    "om",
+                    "ph",
+                    "pk",
+                    "ps",
+                    "qa",
+                    "ru",
+                    "sd",
+                    "sl",
+                    "sn",
+                    "so",
+                    "sy",
+                    "td",
+                    "tg",
+                    "th",
+                    "tj",
+                    "tm",
+                    "tn",
+                    "tr",
+                    "tz",
+                    "ug",
+                    "uz",
+                    "ye"
                   ]}
                   countryCodeEditable={false}
                   country={"eg"}
@@ -144,6 +211,13 @@ class SignIn extends React.Component {
                   {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
                   <Grid container spacing={12}>
                     <Grid item xs={12}>
+                      <ReCAPTCHA
+                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        onChange={this.onChange}
+                        className="not-robot"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
                       <Button
                         onClick={() => {
                           this.props.showAuthLoader();
@@ -187,13 +261,6 @@ class SignIn extends React.Component {
                         </a>
                       </Link>
                     </Grid>
-                    <Grid item xs={12}>
-                      <ReCAPTCHA
-                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                        onChange={this.onChange}
-                        className="not-robot"
-                      />
-                    </Grid>
                   </Grid>
                 </fieldset>
               </form>
@@ -201,12 +268,18 @@ class SignIn extends React.Component {
           </div>
         </div>
 
-        {loader && (
-          <div className="loader-view">
-            <div className="loader2"></div>
-            {/* <CircularProgress /> */}
-          </div>
-        )}
+        {/* {loader && ( */}
+          {/* //  <div className="loader-view"> */}
+          <img
+            src="../static/images/Gila_Final_Logo_form.svg"
+            alt="App"
+            title="App"
+            className="rotate-image loader-img"
+          />
+          {/* // <div className="loader2"></div>
+          // <CircularProgress />
+          // </div> */}
+        {/* )} */}
 
         {showMessage && NotificationManager.error(alertMessage)}
         <NotificationContainer />
@@ -216,8 +289,16 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  const { loader, alertMessage, showMessage, authUser, phone, country } = auth;
-  return { loader, alertMessage, showMessage, authUser, phone, country };
+  const {
+    loader,
+    alertMessage,
+    showMessage,
+    authUser,
+    jnt,
+    phone,
+    country
+  } = auth;
+  return { loader, alertMessage, showMessage, authUser, jnt, phone, country };
 };
 
 export default connect(mapStateToProps, {

@@ -20,6 +20,12 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
+import { userSignOutSuccess } from "../actions/Auth";
+import { readMyProfile, readProfileL2, modalPPInfo } from "../actions/Profile";
+import { errorJwt8Success } from "../actions/Interaction";
+import { removeCookie } from "../util/session";
+
+import ModalPPInfo from "../components/Modals/modalPPInfo";
 
 import {
   allCountriesSelectedOnline,
@@ -41,6 +47,8 @@ import {
   resetStates
 } from "../actions/Home";
 import { ARRAY_OF_AGE_RANGE } from "../util/data";
+
+import moment from "moment";
 
 const useStyles = makeStyles(theme => ({
   displayF: {
@@ -203,15 +211,71 @@ export default function Cards() {
   const photoReadSignedRequest = useSelector(
     state => state.home.photoReadSignedRequest
   );
+
+  const errorJwt8Flag = useSelector(state => state.interaction.errorJwt8Flag);
+
   //const showMessage = useSelector(state => state.auth.showMessage);
   const dispatch = useDispatch();
+
+  const authUser = useSelector(state => state.auth.authUser);
+
+  const jnt = useSelector(state => state.auth.jnt);
+  const sub = useSelector(state => state.auth.sub);
+  let diffJnt = moment().diff(jnt * 100000, "hours");
+  let diffSub = moment().diff(sub, "hours") * -1;
+
+  const [popSub, setPopSub] = useState(false);
+
+  const myPhotos = useSelector(state => state.profile.myPhotos);
+  const ppInfoModal = useSelector(state => state.profile.ppInfoModal);
+  useEffect(() => {
+    if (authUser != null) {
+      console.log(
+        "jnt from home %%%%%% ",
+        authUser,
+        jnt,
+        moment().diff(jnt * 100000, "hours")
+      );
+      //  let diffJnt = moment().diff(jnt * 100000, "hours");
+      //dispatch(readMyProfile("L2"));
+      if (diffJnt >= 0 && diffJnt <= 24) dispatch(readMyProfile("L2"));
+    }
+  }, [jnt]);
+
+  useEffect(() => {
+    if (authUser != null) {
+      console.log("sub from home %%%%%%12345 ", authUser, sub, diffSub);
+      if (diffSub >= 0 && diffSub <= 202) setPopSub(true);
+    }
+  }, [sub]);
+
+  useEffect(() => {
+    if (popSub) {
+      if (diffSub >= 0 && diffSub <= 202) dispatch(modalPPInfo(true));
+    }
+  }, [popSub]);
+
+  useEffect(() => {
+    console.log("from cards see photos $$$$$ ", myPhotos);
+    // let diffJnt = moment().diff(jnt * 100000, "hours");
+    if (myPhotos == null && diffJnt >= 0 && diffJnt <= 24) {
+      dispatch(modalPPInfo(true));
+    }
+  }, [myPhotos]);
 
   // online
   useEffect(() => {
     if (AllCountriesSelectedOnline && AllCountriesSelectedOnline.length == 0) {
       // Get online users options for first call
+      const subArray = actionsStatus.slice(2, 6);
       if (
-        actionsStatus.every(action => {
+        // actionsStatus.every(action => {
+        //   return action == null;
+        // })
+
+        actionsStatus[0] == 1 &&
+        actionsStatus[1] == 2 &&
+        subArray.every(action => {
           return action == null;
         })
       ) {
@@ -223,7 +287,20 @@ export default function Cards() {
         dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
       }
     }
-  }, []);
+  }, [actionsStatus]);
+
+  useEffect(() => {
+    if (errorJwt8Flag) {
+      console.log("errorJwt8Flag from component cards", errorJwt8Flag);
+
+      // removeCookie("access_token");
+      // this.props.userSignOut();
+      //tokenManagerOperations.clearAllTokens("access_token");
+      dispatch(userSignOutSuccess());
+      Router.replace("/");
+      dispatch(errorJwt8Success(false));
+    }
+  }, [errorJwt8Flag]);
 
   useEffect(() => {
     if (
@@ -753,6 +830,41 @@ export default function Cards() {
   return (
     <>
       {/* Display Online Users */}
+
+      {searchState == "active" &&
+        AllCountriesSelectedOnline &&
+        AllCountriesSelectedOnline.length == 0 && (
+          <div className="users-main-content users-main-content-2 default-container-2">
+            <div className="default-div">
+              <img
+                src="../static/images/Gila_Final_Logo_form.svg"
+                alt="Gila"
+                title="Gila"
+              />
+            </div>
+            <Typography variant="h5" gutterBottom>
+              <IntlMessages id="users.onlineNotFound" />
+            </Typography>
+          </div>
+        )}
+
+      {searchState == "most recent" &&
+        CountriesOptionsOffline &&
+        CountriesOptionsOffline.length == 0 && (
+          <div className="users-main-content users-main-content-2 default-container-2">
+            <div className="default-div">
+              <img
+                src="../static/images/Gila_Final_Logo_form.svg"
+                alt="Gila"
+                title="Gila"
+              />
+            </div>
+            <Typography variant="h5" gutterBottom>
+              <IntlMessages id="users.recentNotFound" />
+            </Typography>
+          </div>
+        )}
+
       {searchState == "active" &&
       // Display online users searched by agerange
       AgerangeAllCountriesSelectedOnline.length != 0 ? (
@@ -971,6 +1083,8 @@ export default function Cards() {
         ) : (
           <UsersOffline />
         ))}
+
+      {ppInfoModal && <ModalPPInfo popSub={popSub} />}
     </>
   );
 }

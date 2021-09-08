@@ -43,7 +43,13 @@ import {
   SWITCH_FORM_2,
   CONFIRM_PASSWORD_CASE,
   ADD_CONNECTION_FLAG,
-  DISCONNECT_CHANNEL
+  DISCONNECT_CHANNEL,
+  MP_UPLOAD_TOKEN0_SUCCESS,
+  ADD_PAYING_CUSTOMER,
+  ADD_PAYING_CUSTOMER_SUCCESS,
+  CREATE_CHECK_OUT_SESSION,
+  CREATE_CHECK_OUT_SESSION_SUCCESS,
+  RESET_NOTE_FLAG
 } from "../constants/ActionTypes";
 
 export const userSendResetTokenSuccess = resetMessage => {
@@ -159,11 +165,11 @@ export const userAddProfileL2 = data => {
     payload: data
   };
 };
-export const userAddSubscribe = data => {
-  console.log("from action ", data);
+export const userAddSubscribe = (pack, sessionId) => {
+  console.log("from action ", pack, sessionId);
   return {
     type: SUBSCRIBE,
-    payload: data
+    payload: { pack, sessionId }
   };
 };
 
@@ -217,9 +223,10 @@ export const userSignUpSuccess = authUser => {
   };
 };
 
-export const mpUploadSuccess = () => {
+export const mpUploadSuccess = data => {
   return {
-    type: MP_UPLOAD_SUCCESS
+    type: MP_UPLOAD_SUCCESS,
+    payload: data
   };
 };
 
@@ -289,6 +296,13 @@ export const hideAuthLoader = () => {
   };
 };
 
+export const mpUploadToken0Success = data => {
+  return {
+    type: MP_UPLOAD_TOKEN0_SUCCESS,
+    payload: data
+  };
+};
+
 export const checkMpUpload = () => {
   return {
     type: CHECK_MP_UPLOAD
@@ -340,5 +354,41 @@ export const addConnectionFlag = (flag, connValue) => {
 export const disConnectChannel = () => {
   return {
     type: DISCONNECT_CHANNEL
+  };
+};
+
+////////
+
+export const addPayingCustomer = () => {
+  return {
+    type: ADD_PAYING_CUSTOMER
+  };
+};
+
+export const addPayingCustomerSuccess = data => {
+  return {
+    type: ADD_PAYING_CUSTOMER_SUCCESS,
+    payload: data
+  };
+};
+
+export const createCheckOutSession = pack => {
+  return {
+    type: CREATE_CHECK_OUT_SESSION,
+    payload: pack
+  };
+};
+
+export const createCheckOutSessionSuccess = (data, pack) => {
+  return {
+    type: CREATE_CHECK_OUT_SESSION_SUCCESS,
+    payload: { data, pack }
+  };
+};
+
+export const resetNoteFlag = flag => {
+  return {
+    type: RESET_NOTE_FLAG,
+    payload: flag
   };
 };

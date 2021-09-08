@@ -18,7 +18,10 @@ import {
   SET_TYPING_MARK,
   SET_TYPING_TIMER,
   INCREASE_MESSAGES_UNREAD_COUNT,
-  RESET_PROFILES_ONLINE_STATUS
+  RESET_PROFILES_ONLINE_STATUS,
+  REPORT_USER_CONVERSATION_SUCCESS,
+  SHOW_MESSAGE_CHAT,
+  HIDE_MESSAGE_CHAT
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { mapArrayToObjectArr } from "../helpers/mapArrayToObjectArr";
@@ -63,9 +66,11 @@ const initialProfileState = {
   typingFlag: false,
   typingTimer: null,
 
+  conversationReported: false,
+
   loader: false,
-  alertMessage: "",
-  showMessage: false,
+  alertMessageChat: "",
+  showMessageChat: false,
   limitReturnedItems: 5,
   limitReturnedMessages: 10
 };
@@ -279,7 +284,7 @@ const Messages = (state = initialProfileState, action) => {
       return {
         ...state,
         respActiveConversation: action.payload,
-        activeUser: clickedUserChat
+        activeUser: state.clickedUserChat
       };
     }
     case SET_CONVERSATION_TYPING_INDICATOR_SUCCESS: {
@@ -288,11 +293,26 @@ const Messages = (state = initialProfileState, action) => {
         respConversationTypingIndicator: action.payload
       };
     }
-    case SHOW_MESSAGE: {
+    case REPORT_USER_CONVERSATION_SUCCESS: {
+      console.log("form reducer report user CONVERSATION", action.payload);
       return {
         ...state,
-        alertMessage: action.payload,
-        showMessage: true,
+        conversationReported: action.payload
+      };
+    }
+    case SHOW_MESSAGE_CHAT: {
+      return {
+        ...state,
+        alertMessageChat: action.payload,
+        showMessageChat: true,
+        loader: false
+      };
+    }
+    case HIDE_MESSAGE_CHAT: {
+      return {
+        ...state,
+        alertMessageChat: "",
+        showMessageChat: false,
         loader: false
       };
     }

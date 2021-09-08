@@ -47,6 +47,8 @@ import {
   fetchSelectedOnlineUsersSuccess
 } from "../actions/Home";
 import { home } from "../okta/okta";
+import { showProfileMessage } from "../actions/Profile";
+import { errorJwt8Success } from "../actions/Interaction";
 
 // Age-Range
 const getCountryAgerangesOnline = async (country, SL, offset) =>
@@ -300,9 +302,17 @@ function* allCountriesSelectedOnlineRequest({ payload }) {
       offset
     );
 
-    yield put(
-      fetchAllCountriesSelectedOnlineSuccess(fetchedAllCountriesSelestedOnline)
-    );
+    if (fetchedAllCountriesSelestedOnline.message) {
+      yield put(showProfileMessage(fetchedAllCountriesSelestedOnline.message));
+    } else if (fetchedAllCountriesSelestedOnline.error_jwt8) {
+      yield put(errorJwt8Success(true));
+    } else {
+      yield put(
+        fetchAllCountriesSelectedOnlineSuccess(
+          fetchedAllCountriesSelestedOnline
+        )
+      );
+    }
   } catch (error) {
     yield put(showHomeMessage(error));
   }

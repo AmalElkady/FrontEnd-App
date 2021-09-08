@@ -12,7 +12,9 @@ import {
   getBlockedUsersSuccess,
   getNotificationViewPPLoveSuccess,
   cleanNotificationViewPPLoveSuccess,
-  errorJwt8Success
+  errorJwt8Success,
+  addUserOnlineOfflineSuccess,
+  reportUserSuccess
 } from "../actions/Interaction";
 import {
   REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -26,7 +28,9 @@ import {
   UNBLOCK_USER,
   GET_BLOCKED_USERS,
   GET_NOTIFICATION_VIEW_PP_LOVE,
-  CLEAN_NOTIFICATION_VIEW_PP_LOVE
+  CLEAN_NOTIFICATION_VIEW_PP_LOVE,
+  ADD_USER_ONLINE_OFFLINE,
+  REPORT_USER
 } from "../constants/ActionTypes";
 import { showProfileMessage } from "../actions/Profile";
 import { interaction } from "../services/interaction";
@@ -135,7 +139,43 @@ const cleanViewPPLoveNotification = async (
     .then(returnData => returnData)
     .catch(error => error);
 
+const addUserOnlineOffline = async action =>
+  await interaction
+    .addUserOnlineOffline(action)
+    .then(returnData => returnData)
+    .catch(error => error);
+
+const reportUserRequest = async (
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) =>
+  await interaction
+    .reportUser(reasonid, profileid, country, city, varea, comment)
+    .then(returnData => returnData)
+    .catch(error => error);
+
 /////
+
+function* addUserOnlineOfflineRequest({ payload }) {
+  const { action } = payload;
+  console.log("addUserOnlineOfflineRequest saga ", action);
+  try {
+    const returnedData = yield call(addUserOnlineOffline, action);
+    if (returnedData.message) {
+      // yield put(ppAccessApproveRemoveSuccess(returnedData.message));
+      yield put(addUserOnlineOfflineSuccess(true));
+    } else {
+      yield put(addUserOnlineOfflineSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
   console.log("access pp read saga ", action, profileid, country, city, varea);
@@ -394,7 +434,44 @@ function* cleanNotificationViewPPLoveRequest({ payload }) {
     yield put(showProfileMessage(error));
   }
 }
+
+function* userReportRequest({ payload }) {
+  const { reasonid, profileid, country, city, varea, comment } = payload;
+  console.log(
+    "userReportRequest saga ",
+    reasonid,
+    profileid,
+    country,
+    city,
+    varea,
+    comment
+  );
+  try {
+    const returnedData = yield call(
+      reportUserRequest,
+      reasonid,
+      profileid,
+      country,
+      city,
+      varea,
+      comment
+    );
+    if (returnedData.message) {
+      yield put(showProfileMessage(returnedData.message));
+    } else {
+      yield put(reportUserSuccess(true));
+    }
+  } catch (error) {
+    yield put(showProfileMessage(error));
+  }
+}
+
 ///////
+
+export function* requestAddUserOnlineOfflineRequest() {
+  yield takeEvery(ADD_USER_ONLINE_OFFLINE, addUserOnlineOfflineRequest);
+}
+
 export function* requestPPAccessApproveRemove() {
   yield takeEvery(
     REQUEST_PP_ACCESS_APPROVE_REMOVE,
@@ -460,6 +537,10 @@ export function* requestCleanNotificationViewPPLove() {
   );
 }
 
+export function* requestReportUser() {
+  yield takeEvery(REPORT_USER, userReportRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestPPAccessApproveRemove),
@@ -473,6 +554,8 @@ export default function* rootSaga() {
     fork(requestUnblockUser),
     fork(requestBlockedUsers),
     fork(requestGetNotificationViewPPLove),
-    fork(requestCleanNotificationViewPPLove)
+    fork(requestCleanNotificationViewPPLove),
+    fork(requestAddUserOnlineOfflineRequest),
+    fork(requestReportUser)
   ]);
 }

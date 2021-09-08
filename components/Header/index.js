@@ -216,40 +216,69 @@ class Header extends React.Component {
       //     ""
       //   );
       // }
+      console.log("actionsStatus from header ", this.props.actionsStatus);
+      // const subActions = this.props.actionsStatus.slice(1, 5);
+       if (
+         this.props.notificationLoveCount == null &&
+        // this.props.actionsStatus[0] == 1 &&
+         this.props.actionsStatus.every(action => {
+           return action == null;
+         })
+       ) {
+         // if (
+         //   actionsStatus.every(action => {
+         //     return action == null;
+         //   })
+         console.log("actionsStatus from header true ", this.props.actionsStatus);
+         this.props.getNotificationViewPPLove(
+           "C",
+           this.props.scoreHNotificationView,
+           this.props.scoreHNotificationPP,
+           this.props.scoreHNotificationLove,
+           ""
+         );
+       }
     }
   }
   componentDidUpdate() {
-    console.log(
-      "errorJwt8Flag from component ",
-      this.props.errorJwt8Flag,
-      this.props.logoutFlag
-    );
+    // console.log(
+    //   "errorJwt8Flag from Header component ",
+    //   this.props.errorJwt8Flag,
+    //   this.props.logoutFlag
+    // );
 
     ///
-    console.log("actionsStatus from header ", this.props.actionsStatus);
-    const subActions = this.props.actionsStatus.slice(1, 5);
-    if (
-      this.props.notificationLoveCount == null &&
-      this.props.actionsStatus[0] == 1 &&
-      subActions.every(action => {
-        return action == null;
-      })
-    ) {
-      console.log("actionsStatus from header true ", this.props.actionsStatus);
-      this.props.getNotificationViewPPLove(
-        "C",
-        this.props.scoreHNotificationView,
-        this.props.scoreHNotificationPP,
-        this.props.scoreHNotificationLove,
-        ""
-      );
-    }
+  //   console.log("actionsStatus from header ", this.props.actionsStatus);
+  //  // const subActions = this.props.actionsStatus.slice(1, 5);
+  //   if (
+  //     this.props.notificationLoveCount == null &&
+  //    // this.props.actionsStatus[0] == 1 &&
+  //     this.props.every(action => {
+  //       return action == null;
+  //     })
+  //   ) {
+  //     // if (
+  //     //   actionsStatus.every(action => {
+  //     //     return action == null;
+  //     //   })
+  //     console.log("actionsStatus from header true ", this.props.actionsStatus);
+  //     this.props.getNotificationViewPPLove(
+  //       "C",
+  //       this.props.scoreHNotificationView,
+  //       this.props.scoreHNotificationPP,
+  //       this.props.scoreHNotificationLove,
+  //       ""
+  //     );
+  //   }
     if (
       this.props.notificationLoveCount != null &&
-      this.props.actionsStatus[0] == 1 &&
-      subActions.every(action => {
-        return action == null;
-      })
+      // this.props.actionsStatus[0] == 1 &&
+      // subActions.every(action => {
+      //   return action == null;
+      // })
+        this.props.actionsStatus.every(action => {
+          return action == null;
+        })
     ) {
       console.log(
         "notificationLoveCount from header !=null ",
@@ -260,16 +289,27 @@ class Header extends React.Component {
 
     ////
     if (
-      this.props.totalMessagesUnRCount == null &&
-      this.props.actionsStatus[0] == 1 &&
-      this.props.actionsStatus[1] == 2
+      this.props.totalMessagesUnRCount == null 
+      // this.props.actionsStatus[0] == 1 &&
+      // this.props.actionsStatus[1] == 2
+
     ) {
-      const subArray = this.props.actionsStatus.slice(2, 6);
+      // const subArray = this.props.actionsStatus.slice(2, 6);
+      // if (
+      //   subArray.every(action => {
+      //     return action == null
+      //   })
+      // ) 
+      
+     const subActions = this.props.actionsStatus.slice(1, 5);
       if (
-        subArray.every(action => {
+        this.props.actionsStatus[0] == 1 &&
+        subActions.every(action => {
           return action == null;
         })
-      ) {
+      )
+
+      {
         console.log(
           "subArray messages from header true*** ",
           this.props.actionsStatus
@@ -280,34 +320,42 @@ class Header extends React.Component {
 
     ////
     if (
-      this.props.totalMessagesUnRCount != null &&
-      this.props.actionsStatus[0] == 1 &&
-      this.props.actionsStatus[1] == 2
+      this.props.totalMessagesUnRCount != null 
+      // this.props.actionsStatus[0] == 1 &&
+      // this.props.actionsStatus[1] == 2
     ) {
-      const subArray = this.props.actionsStatus.slice(2, 5);
+      // const subArray = this.props.actionsStatus.slice(2, 5);
+      // if (
+      //   subArray.every(action => {
+      //     return action == null;
+      //   })
+      // ) 
+      const subActions = this.props.actionsStatus.slice(1, 5);
       if (
-        subArray.every(action => {
+        this.props.actionsStatus[0] == 1 &&
+        subActions.every(action => {
           return action == null;
         })
-      ) {
+      )
+      {
         console.log("totalMessagesUnRCount !=null ** ");
         this.props.notifiMsgActionDone();
       }
     }
 
     // && !this.props.logoutFlag
-    if (this.props.errorJwt8Flag) {
-      console.log(
-        "errorJwt8Flag from component true",
-        this.props.errorJwt8Flag
-      );
-      this.props.errorJwt8Success(false);
-      // removeCookie("access_token");
-      // this.props.userSignOut();
-      //tokenManagerOperations.clearAllTokens("access_token");
-      this.props.userSignOutSuccess();
-      Router.replace("/");
-    }
+    // if (this.props.errorJwt8Flag) {
+    //   console.log(
+    //     "errorJwt8Flag from component true",
+    //     this.props.errorJwt8Flag
+    //   );
+    //   // removeCookie("access_token");
+    //   // this.props.userSignOut();
+    //   //tokenManagerOperations.clearAllTokens("access_token");
+    //   this.props.userSignOutSuccess();
+    //   Router.replace("/");
+    //   this.props.errorJwt8Success(false);
+    // }
   }
 
   // updateSearchText(evt) {

@@ -1,10 +1,12 @@
 import axios from "axios";
+import {useDispatch } from "react-redux";
 import {setCookie,removeCookie,getCookie} from '../util/session';
 import IntlMessages from "../util/IntlMessages";
 import base64url from 'base64url';
 import {mapUserPhotoPath} from "../helpers/mapUserPhotoPath";
 import {convertListToTwoArrays} from "../helpers/convertListToTwoArrays";
 import Router from "next/router"
+import {userSignOutSuccess}from "../actions/Auth"
 import imageCompression from 'browser-image-compression';
 
 const auth = {};
@@ -52,7 +54,6 @@ let callAxios = (options) => {
 
 		return new Promise(  async (resolve, reject) => {			
 				try{
-
 				let response = await axiosRequest(options);
 				console.log("**********data*********");
 				console.log(response);
@@ -69,13 +70,17 @@ let callAxios = (options) => {
 						if(response.data.token && (response.data.status != "ACTIVE"||response.data.status == null)) {
 							// && response.data.status != "ACTIVE"
 								setCookie("access_token",response.data.token);
-								console.log("update access_token &&&&&&&& trueeeeee",response.data.token)
+								
+								console.log("update access_token &&&&&&&& trueeeeee",response.data.token,getCookie("access_token",false))
 															
 								if(response.data.verify) {
 									resolve({"data" : {"response":"ok"}})
 								} else if(response.data.signedRequest){
 									 resolve({"data" : {"signedRequest":response.data.signedRequest}});
-								}else {
+								}else if(response.data.responseMP){
+									console.log("true check responseMP ")
+									resolve(response);
+							   }else {
 									options.headers.Authorization = "Bearer " + response.data.token;
 									response = await axiosRequest(options);
 									resolve(response);								
@@ -87,16 +92,25 @@ let callAxios = (options) => {
 									console.log("**********Authorization*********");
 									removeCookie("access_token");
 									resolve({"data" : {"code":"unauthorized","message":"unauthorized"}})
-								}else if(response.data.code=="JWT_8"){
+								}else if(response.data.code=="JWT_8"||response.data.code=="JWT_7"){
 									console.log("**********wrong token*********");
 									//removeCookie("access_token");
 									//auth.signOut();
 								//	Router.replace('/');
+								resolve({
+									data: { code: "JWT_8" }
+								  });
 								}
-								else if(response.data.code=="JWT_7"){
-									console.log("**********expired token*********");
-									resolve({"code":"JWT_7"})
-								}
+								// else if(response.data.code=="JWT_7"){
+								// 	console.log("**********expired token*********");
+								// 	//resolve({"code":"JWT_7"})
+								// 	// const dispatch = useDispatch();
+								// 	// dispatch(userSignOutSuccess());
+								//   //  Router.replace("/");
+								//   resolve({
+								// 	data: { code: "JWT_8" }
+								//   });
+								// }
 								 else {
 									resolve(response);
 								}
@@ -165,27 +179,48 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 													
 													let res = resX.data;
 													
-													console.log("RES FROM LOGIN ",res);
+													console.log("RES FROM LOGIN 1",res);
 											
 													if(res.response && res.status == "ACTIVE" && res.token){
+														console.log("1")
 											
-															 let tokenUserData = JSON.parse(base64url.decode(`${res.token}`.split(".")[1]));															 
+															 let tokenUserData = JSON.parse(base64url.decode(`${res.token}`.split(".")[1]));	
+															 console.log("tokenUserData from login ###### ",tokenUserData)														 
 						
 															 
 															tokenManagerOperations.setTokenAndValidate("access_token",res.token);
-															if(res.L1)
-															resolve({"accessToken": "access_token", "n": res.L1.n, "m": res.L1.m, "b": res.L1.b, "gender":tokenUserData.gd,"sub":tokenUserData.sub});
-															else
-															resolve({"message": "profile not available"});	
+															if(res.L1){
+																console.log("2")
+																resolve({"accessToken": "access_token", "n": res.L1.n, "m": res.L1.m, "b": res.L1.b, "gender":tokenUserData.gd,"sub":tokenUserData.sub,"jnt":tokenUserData.jnt});
+															}
+															else{
+																console.log("3")
+																resolve({"message": "profile not available"});	
+															}
 															
 													
-													} else {
+													}else if(res.message.code=="ADDINGUSERONLINE_9"){
+														console.log("auth.signInWithPhoneAndPassword 2 ")
+														await new Promise(resolve => setTimeout(resolve, 5000));
+														//auth.signInWithPhoneAndPassword(username,password,country)
+														resolve({"loginAgain":true});	
+
+													} 
+													
+													else {
 														// resolve({"message": res.message});
 														if(res.code=="LOGINACCESS_1"){
 															resolve({"message": <IntlMessages id="error.notCorrectPhone" />});
 														}
-														else if(res.code=="LOGINACCESS_2"){
+														else if(res.code=="LOGINACCESS_2"&& !res.aws=="NotAuthorizedException"){
 															resolve({"message": <IntlMessages id="error.notCorrectPass" />});
+														}else if(res.code=="LOGINACCESS_2"&& res.aws=="NotAuthorizedException"){
+															resolve({"message": <IntlMessages id="error.userSuspended" />});
+														}
+														else if(res.code=="ADDINGUSERONLINE_9"){
+															console.log("auth.signInWithPhoneAndPassword ")
+															auth.signInWithPhoneAndPassword(username,password,country)
+
 														}
 													}
 													
@@ -325,6 +360,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 }
 
 auth.uploadMainProfilePhoto = function (file) {
+	console.log("upload imag from service ",file);
 			      return new Promise(  async (resolve, reject) => {				
 					  
 						if(file) {
@@ -357,7 +393,7 @@ auth.uploadMainProfilePhoto = function (file) {
 									//IF UPLOADED --- > CALL (CHECK MP UPLOAD) RETURN SUCCESS
 									//ELSE ------> RETURN ERROR
 								
-								if(checkMPUploadResponse.data.code == "CHECKMPUPLOAD_4" || checkMPUploadResponse.data.code == "CHECKMPUPLOAD_9") {
+								if(checkMPUploadResponse.data.code == "CHECKMPUPLOAD_4" ||checkMPUploadResponse.data.code == "CHECKMPUPLOAD_6" || checkMPUploadResponse.data.code == "CHECKMPUPLOAD_9") {
 									
 									
 									optionsCheck.url = "/requestphotoupload?photo=0";
@@ -426,7 +462,31 @@ auth.uploadMainProfilePhoto = function (file) {
 			let checkUploadRequestResponseNew = await callAxios(optionsCheck);
 			console.log("checkUploadRequestResponseNew ",checkUploadRequestResponseNew)
 														//await callAxios(optionsCheck);
-														resolve(true);
+														if(checkUploadRequestResponseNew.data.token != 0 && checkUploadRequestResponseNew.data.token){
+															console.log("if 1")
+															setCookie("access_token",checkUploadRequestResponseNew.data.token);
+															resolve(true);
+														}
+														else if(checkUploadRequestResponseNew.data.token==0){
+															console.log("if 2")
+															resolve({"token0": true});
+														}
+														else if(checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_6"){
+															resolve(true);
+														}
+														else if(checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_11"||checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_12"){
+															console.log("error checkmp_11 ,12");
+															checkUploadRequestResponseNew = await callAxios(optionsCheck);
+															if(checkUploadRequestResponseNew.data.token!=0){
+																setCookie("access_token",checkUploadRequestResponseNew.data.token);
+																resolve(true);
+															}
+															else if(checkUploadRequestResponseNew.data.token==0){
+																resolve({"token0": true});
+															}
+
+														}
+														
 	 } else{
 		 reject(this.responseText);
 	 }
@@ -708,8 +768,8 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 
 
 
-auth.subscribe = function (subscribePack) {
-	console.log("from service ",subscribePack)
+auth.subscribe = function (subscribePack,sessionId) {
+	console.log("from service ",subscribePack,sessionId)
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);
@@ -722,12 +782,13 @@ auth.subscribe = function (subscribePack) {
 									   'Authorization': "Bearer " + tokenValue
 									},
 									data : {
-										  "subscribePack" : subscribePack
+										subscribePack,sessionId
 									  }
 								  };
-				  
+						
 									  let responseX = await callAxios(options);
 									  let response = responseX.data;
+									  console.log("response ",response)
 									 if(response){
 										  
 										   if(response.token){
@@ -747,6 +808,91 @@ auth.subscribe = function (subscribePack) {
 					  
 }).catch((err) => {console.log(err)});		
 }
+
+///////
+
+auth.addPayingCustomer = function () {
+	console.log("from service addPayingCustomer")
+	return new Promise(  async (resolve, reject) => {				
+	
+				  const tokenValue = getCookie("access_token",false);
+				  const options = {
+									url: '/addpayingcustomer',
+									method: 'POST',
+									headers: {
+									  'Accept': 'application/json',
+									  'Content-Type': 'application/json;charset=UTF-8',
+									   'Authorization': "Bearer " + tokenValue
+									}
+								  };
+				  
+									  let responseX = await callAxios(options);
+									  let response = responseX.data;
+									  console.log("from service addPayingCustomer response ",response)
+									 if(response){
+										   if(response.stripe_id){
+											  resolve(response.stripe_id);
+										   } else if(response.code) {
+											  resolve({"message": response.code});
+										   } else {
+											   resolve({"message": "error call"});
+										   }
+
+										  
+									 } else {
+										 resolve({"message": "Something Went Wrong !"});
+									 }
+				  
+								  
+					  
+}).catch((err) => {console.log(err)});		
+}
+
+
+auth.createCheckOutSession = function (pack) {
+	console.log("from service createCheckOutSession ",pack)
+	return new Promise(  async (resolve, reject) => {				
+	
+				  const tokenValue = getCookie("access_token",false);
+				  const options = {
+									url: '/createcheckoutsession',
+									method: 'POST',
+									headers: {
+									  'Accept': 'application/json',
+									  'Content-Type': 'application/json;charset=UTF-8',
+									   'Authorization': "Bearer " + tokenValue
+									},
+									data : {
+										 pack
+									  }
+								  };
+				  
+									  let responseX = await callAxios(options);
+									  let response = responseX.data;
+									  console.log("from service createCheckOutSession response ",response)
+									 if(response){
+										   if(response.url){
+											  resolve(response);
+										   } else if(response.code) {
+											  resolve({"message": response.code});
+										   } else {
+											   resolve({"message": "error call"});
+										   }
+
+										  
+									 } else {
+										 resolve({"message": "Something Went Wrong !"});
+									 }
+				  
+								  
+					  
+}).catch((err) => {console.log(err)});		
+}
+
+
+
+
+///////
 
 
 
@@ -1286,9 +1432,16 @@ home.getAllCountriesSelectedOnline = function (SH,offset) {
 											
 																							
 																							if(response){
-																								const mapedList =convertListToTwoArrays(response.list_of_results);
-																								
-																								resolve(mapedList);
+																							   if (response.code == "JWT_8") {
+																									console.log("resolve jwt_8");
+																									resolve({ error_jwt8: "true" });
+																								  } else{
+
+																									  const mapedList =convertListToTwoArrays(response.list_of_results);
+																									  
+																									  resolve(mapedList);
+																								  }
+
 																									 
 																							   } else {
 																								   

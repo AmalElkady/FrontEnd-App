@@ -2,7 +2,7 @@ export const mapUserPhotoUrl = (usersArr, signedRequest) => {
   if (Array.isArray(usersArr)) {
     if (signedRequest != null && usersArr.length != 0) {
       const newUsersArr = usersArr.map((e, i) => {
-        if (!e._.includes("MP/")) {
+        if (e != null && !e._.includes("MP/")) {
           const editSignedRequest = signedRequest.replace(
             "MP/*?",
             `MP/${e._}?`

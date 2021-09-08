@@ -54,7 +54,10 @@ const authPersistConfig = {
     "stepFlag",
     "gender",
     "mpUploadFlag",
-    "haveConnectionChannel"
+    "haveConnectionChannel",
+    "jnt",
+    "sub",
+    "noteFlag"
     //"haveConnectionPusher"
   ], //
   //transforms: [saveSubsetFilter],

@@ -49,40 +49,94 @@ export default function About({ aboutInfo }) {
     state => state.profile.userBlockedMessage
   );
   const myProfileDataL2 = useSelector(state => state.profile.myProfileDataL2);
-  const myPhotos = useSelector(state => state.profile.myPhotos);
   const OpenModal = useSelector(state => state.profile.openModal);
-  const notificationViewCount = useSelector(
-    state => state.interaction.notificationViewCount
+
+  const userClickedProfile = useSelector(
+    state => state.home.userClickedProfile
   );
+
   const [disData, setDisData] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
     setDisData(null);
-    if (router.query.flag == "read") {
+    console.log("about page ########## ");
+    if (
+      aboutInfo == null &&
+      userClickedProfile &&
+      userClickedProfile.flag == "read"
+    ) {
       dispatch(
-        readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
+        readProfileL2(
+          userClickedProfile.i,
+          userClickedProfile.co,
+          userClickedProfile.ci,
+          userClickedProfile.va
+        )
       );
-    } else if (router.query.flag == "readMe") {
+    } else if (aboutInfo != null && router.query.flag == "readMe") {
+      console.log("########## ");
       dispatch(readMyProfile("L2"));
     }
-  }, [router.query]);
+  }, [aboutInfo]);
+
+  useEffect(() => {
+    if (userClickedProfile == null && router.query.flag != "readMe") {
+      console.log("router.query about ==null ", router.query.id);
+      const va = router.query.id
+        .substring(router.query.id.length, router.query.id.length - 2)
+        .replace(/_/, "");
+      console.log("va ** ", va);
+      const ci = router.query.id
+        .substring(router.query.id.length - 2, router.query.id.length - 4)
+        .replace(/_/, "");
+      console.log("ci ** ", ci);
+
+      const co = router.query.id
+        .substring(router.query.id.length - 4, router.query.id.length - 7)
+        .replace(/_/, "");
+      console.log("co ** ", co);
+
+      const id = router.query.id
+        .substring(router.query.id.length - 7, 0)
+        .replace(/_/, "");
+      console.log("id ** ", id);
+
+      // let va = 0;
+      // ci.length == 1
+      //   ? (va = arr1[i].substring(5, 7).replace(/_/, ""))
+      //   : (va = arr1[i].substring(6, 8).replace(/_/, ""));
+
+      dispatch(readProfileL2(id, co, ci, va));
+    }
+  }, []);
 
   useEffect(() => {
     if (userBlockedMessage) {
       NotificationManager.error(userBlockedMessage);
       dispatch(
-        readProfileL2(aboutInfo.id, aboutInfo.co, aboutInfo.ci, aboutInfo.va)
+        readProfileL2(
+          userClickedProfile.i,
+          userClickedProfile.co,
+          userClickedProfile.ci,
+          userClickedProfile.va
+        )
       );
     }
   }, [userBlockedMessage]);
 
   useEffect(() => {
     setDisData(null);
-    if (l2Data != null && router.query.flag == "read") {
+    if (
+      l2Data != null
+      // &&
+      // userClickedProfile &&
+      // userClickedProfile.flag == "read"
+    ) {
       console.log("l2Data ", l2Data);
       setDisData(l2Data);
     }
   }, [l2Data]);
+
   useEffect(() => {
     setDisData(null);
     if (myProfileDataL2 != null && router.query.flag == "readMe") {
@@ -100,7 +154,7 @@ export default function About({ aboutInfo }) {
         <>
           {/* <Photos photos={myPhotos} /> */}
           <div className="profile-about">
-            <Grid container spacing={12}>
+            <Grid container>
               <Grid item xs={12} className="margin-TB">
                 <Grid container spacing={12}>
                   <Grid item xs={3}>
@@ -120,7 +174,7 @@ export default function About({ aboutInfo }) {
               </Grid>
               {disData.tpercent && (
                 <Grid item xs={12} className="margin-TB">
-                  <Grid container spacing={12}>
+                  <Grid container>
                     <Grid item xs={3}>
                       <div
                         className="profile-icon-2"
@@ -139,7 +193,7 @@ export default function About({ aboutInfo }) {
                 </Grid>
               )}
               <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}>
+                <Grid container>
                   <Grid item xs={3}>
                     <div
                       className="profile-icon-2"
@@ -157,7 +211,7 @@ export default function About({ aboutInfo }) {
               </Grid>
 
               <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}>
+                <Grid container>
                   <Grid item xs={3}>
                     <div
                       className="profile-icon-2"
@@ -175,7 +229,7 @@ export default function About({ aboutInfo }) {
               </Grid>
 
               <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}>
+                <Grid container>
                   <Grid item xs={3}>
                     <div
                       className="profile-icon-2"
@@ -189,16 +243,17 @@ export default function About({ aboutInfo }) {
                       {router.query.flag == "readMe" && (
                         <IntlMessages id={`workd.${disData.workd - 1}`} />
                       )}
-                      {router.query.flag == "read" && (
-                        <IntlMessages id={`workd.${disData.workd}`} />
-                      )}
+                      {userClickedProfile &&
+                        userClickedProfile.flag == "read" && (
+                          <IntlMessages id={`workd.${disData.workd}`} />
+                        )}
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
 
               <Grid item xs={12} className="margin-TB">
-                <Grid container spacing={12}>
+                <Grid container>
                   <Grid item xs={3}>
                     <div
                       className="profile-icon-2"

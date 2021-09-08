@@ -28,7 +28,11 @@ import {
   SET_TYPING_TIMER,
   SHOW_MESSAGE,
   INCREASE_MESSAGES_UNREAD_COUNT,
-  RESET_PROFILES_ONLINE_STATUS
+  RESET_PROFILES_ONLINE_STATUS,
+  REPORT_USER_CONVERSATION,
+  REPORT_USER_CONVERSATION_SUCCESS,
+  SHOW_MESSAGE_CHAT,
+  HIDE_MESSAGE_CHAT
 } from "../constants/ActionTypes";
 
 export const sendMessage = (profileid, country, city, varea, message) => {
@@ -224,6 +228,35 @@ export const setConversationTypingIndicatorSuccess = data => {
   };
 };
 
+export const reportUserConversation = (
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) => {
+  return {
+    type: REPORT_USER_CONVERSATION,
+    payload: {
+      reasonid,
+      profileid,
+      country,
+      city,
+      varea,
+      comment
+    }
+  };
+};
+
+export const reportUserConversationSuccess = data => {
+  console.log("from success reportUserConversationSuccess ", data);
+  return {
+    type: REPORT_USER_CONVERSATION_SUCCESS,
+    payload: data
+  };
+};
+
 export const setTypingMark = flag => {
   return {
     type: SET_TYPING_MARK,
@@ -251,9 +284,16 @@ export const resetProfilesOnlineStatus = () => {
   };
 };
 
-export const showAuthMessage = message => {
+export const showMessageChat = message => {
+  console.log("returnedData.message 2******** ", message);
   return {
-    type: SHOW_MESSAGE,
+    type: SHOW_MESSAGE_CHAT,
     payload: message
+  };
+};
+
+export const hideMessageChat = () => {
+  return {
+    type: HIDE_MESSAGE_CHAT
   };
 };

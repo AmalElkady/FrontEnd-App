@@ -9,6 +9,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import InfiniteScroll from "react-infinite-scroll-component";
 import UserCard from "../components/Cards/UserCard";
 
+import csc from "country-state-city";
+import { Country, State, City } from "country-state-city";
+
 import { mapUserPhotoUrl } from "../helpers/mapUserPhotoUrl";
 
 import {
@@ -61,6 +64,37 @@ export default function UsersOnline() {
   );
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  useEffect(() => {
+    // let isocon = "SG";
+    // console.log(
+    //   "test get country cities states  ",
+    //   State.getStatesOfCountry(isocon)
+    // );
+    // for (
+    //   let index = 0;
+    //   index < State.getStatesOfCountry(isocon).length;
+    //   index++
+    // ) {
+    //   console.log(
+    //     `"${isocon}.${index + 1}":"${
+    //       State.getStatesOfCountry(isocon)[index].name
+    //     }",`
+    //   );
+    // }
+    // for (
+    //   let index = 0;
+    //   index < City.getCitiesOfCountry(isocon).length;
+    //   index++
+    // ) {
+    //   console.log(
+    //     `"${isocon}.${index + 1}":"${
+    //       City.getCitiesOfCountry(isocon)[index].name
+    //     }",`
+    //   );
+    // }
+    // console.log("test get country cities  ", City.getCitiesOfCountry(isocon));
+  }, []);
 
   useEffect(() => {
     if (

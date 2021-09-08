@@ -5,13 +5,19 @@ export const mapSmallUserPhotoUrl = (usersArr, signedRequest) => {
       const newUsersArr = usersArr.map((e, i) => {
         // e = JSON.parse(e);
         if (e != null) {
-          if (!e._.includes("MP/")) {
-            e._ = e._.replace(".jpeg", ".jpg");
-            const editSignedRequest = signedRequest.replace(
-              "MP/*?",
-              `MP/${e.co}_${e.ci}_${e.va}/${e.i}_49x49${e._}?`
-            );
-            e._ = editSignedRequest;
+          if (e._) {
+            if (!e._.includes("MP/")) {
+              e._ = e._.replace(".jpeg", ".jpg");
+              const editSignedRequest = signedRequest.replace(
+                "MP/*?",
+                `MP/${e.co}_${e.ci}_${e.va}/${e.i}_49x49${e._}?`
+              );
+              e._ = editSignedRequest;
+            }
+          } else {
+            console.log("parse null e", e);
+            e._ =
+              "https://www.gitstartup.com/site/images/logo/user-placeholder.jpg";
           }
           return e;
         }

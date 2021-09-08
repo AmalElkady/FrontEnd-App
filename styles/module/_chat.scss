@@ -514,6 +514,23 @@
     height: auto;
   }
 }
+.default-container-2 {
+  height: auto;
+  text-align: center;
+  @media screen and (max-width: 575px) {
+    margin-top: 10rem;
+  }
+  & .default-div {
+    width: 26%;
+    @media screen and (max-width: 575px) {
+      width: 40%;
+    }
+  }
+
+  & .MuiTypography-gutterBottom {
+    margin: 1rem 0 1rem 0;
+  }
+}
 
 .default-div {
   width: 30%;

@@ -36,7 +36,11 @@ import {
   SWITCH_FORM_2,
   CONFIRM_PASSWORD_CASE,
   ADD_CONNECTION_FLAG,
-  DISCONNECT_CHANNEL
+  DISCONNECT_CHANNEL,
+  MP_UPLOAD_TOKEN0_SUCCESS,
+  ADD_PAYING_CUSTOMER_SUCCESS,
+  CREATE_CHECK_OUT_SESSION_SUCCESS,
+  RESET_NOTE_FLAG
 } from "../constants/ActionTypes";
 
 const INIT_STATE = {
@@ -72,8 +76,15 @@ const INIT_STATE = {
   haveConnectionPusher: null,
   haveConnectionChannel: null,
   sub: null,
+  jnt: null,
   resendVerToPhoneSuccess: false,
-  logoutFlag: false
+  logoutFlag: false,
+  token0: false,
+  customerIdPayment: null,
+  checkoutSessionDataUrl: null,
+  checkoutSessionId: null,
+  selectedPack: null,
+  noteFlag: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -92,6 +103,13 @@ export default (state = INIT_STATE, action) => {
         martial: action.payload.martial,
         gender: action.payload.gender,
         sub: action.payload.sub
+      };
+    }
+
+    case RESET_NOTE_FLAG: {
+      return {
+        ...state,
+        noteFlag: action.payload
       };
     }
 
@@ -115,10 +133,16 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loader: false,
-        mpUploadFlag: true
+        mpUploadFlag: action.payload
       };
     }
-
+    case MP_UPLOAD_TOKEN0_SUCCESS: {
+      console.log("from reducer mp uploaded token0");
+      return {
+        ...state,
+        token0: action.payload
+      };
+    }
     case CHECK_MP_UPLOAD_SUCCESS: {
       return {
         ...state,
@@ -200,6 +224,7 @@ export default (state = INIT_STATE, action) => {
         phoneVerified: action.payload
       };
     }
+
     case CHANGE_PHONE_BEFORE_VERIF_SUCCESS: {
       newPhone, phonecountrycode, countryiso2, newCity;
       return {
@@ -230,6 +255,7 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case SIGNIN_USER_SUCCESS: {
+      console.log("SIGNIN_USER_SUCCESS ***** ", action.payload);
       return {
         ...state,
         loader: false,
@@ -241,7 +267,9 @@ export default (state = INIT_STATE, action) => {
         martial: action.payload.martial,
         gender: action.payload.gender,
         sub: action.payload.sub,
-        logoutFlag: false
+        jnt: action.payload.jnt,
+        logoutFlag: false,
+        noteFlag: true
       };
     }
     case INIT_URL: {
@@ -262,7 +290,9 @@ export default (state = INIT_STATE, action) => {
         birth: "",
         martial: "",
         gender: "",
-        sun: null,
+        sub: null,
+        jnt: null,
+        noteFlag: false,
         tokenSent: false,
         confirmPasswordFlag: false,
         haveConnection: false,
@@ -280,7 +310,9 @@ export default (state = INIT_STATE, action) => {
       // state.haveConnectionPusher.unsubscribe(
       //   `private-${tokenUserData.co}_${tokenUserData.ci}_${tokenUserData.va}_${tokenUserData.id}_${tokenUserData.gd}_${tokenUserData.jnt}`
       // );
-      state.haveConnectionPusher.disconnect();
+      if (state.haveConnectionPusher) {
+        state.haveConnectionPusher.disconnect();
+      }
       return {
         ...state
       };
@@ -289,6 +321,25 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         confirmPasswordFlag: action.payload
+      };
+    }
+    case ADD_PAYING_CUSTOMER_SUCCESS: {
+      console.log("ADD_PAYING_CUSTOMER_SUCCESS from reducer ", action.payload);
+      return {
+        ...state,
+        customerIdPayment: action.payload
+      };
+    }
+    case CREATE_CHECK_OUT_SESSION_SUCCESS: {
+      console.log(
+        "CREATE_CHECK_OUT_SESSION_SUCCESS from reducer ",
+        action.payload
+      );
+      return {
+        ...state,
+        checkoutSessionDataUrl: action.payload.data.url,
+        checkoutSessionId: action.payload.data.id,
+        selectedPack: action.payload.pack
       };
     }
     case SHOW_MESSAGE: {

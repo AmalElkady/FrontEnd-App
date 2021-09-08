@@ -165,6 +165,17 @@ class SidenavContent extends Component {
           </li>
 
           <li className="menu no-arrow">
+            <Link href="/home/paymentSubscription">
+              <a className="prepend-icon">
+                {/* <i className="zmdi zmdi-account-box zmdi-hc-fw" /> */}
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.PaymentSubscription" />
+                </span>
+              </a>
+            </Link>
+          </li>
+
+          <li className="menu no-arrow">
             {/* <Link href="/app/chat"> */}
             <Link href="/home/setting">
               <a className="prepend-icon">
@@ -177,11 +188,22 @@ class SidenavContent extends Component {
           </li>
 
           <li className="menu no-arrow">
-            <Link href="/home/privacyterms">
+            <Link href="/home/privacyStatements">
               <a className="prepend-icon">
                 {/* <i className="zmdi zmdi-comment zmdi-hc-fw" /> */}
                 <span className="nav-text">
-                  <IntlMessages id="sidebar.privacyterms" />
+                  <IntlMessages id="sidebar.privacyStatements" />
+                </span>
+              </a>
+            </Link>
+          </li>
+
+          <li className="menu no-arrow">
+            <Link href="/home/termsAndConditions">
+              <a className="prepend-icon">
+                {/* <i className="zmdi zmdi-comment zmdi-hc-fw" /> */}
+                <span className="nav-text">
+                  <IntlMessages id="sidebar.termsConditions" />
                 </span>
               </a>
             </Link>

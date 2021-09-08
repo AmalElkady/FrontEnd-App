@@ -10,6 +10,10 @@ import UserCard from "./Cards/UserCard";
 import Grid from "@material-ui/core/Grid";
 import IntlMessages from "../util/IntlMessages";
 import { mpUpload, showAuthLoader } from "../actions/Auth";
+import {
+  addUserOnlineOffline,
+  addUserOnlineOfflineSuccess
+} from "../actions/Interaction";
 import { ppUpload, updateMainP } from "../actions/Profile";
 import {
   NotificationContainer,
@@ -30,6 +34,10 @@ export default function UploadImage({ photoNum }) {
   const MainPhotoSelected = useSelector(state => state.auth.mainPhotoSelected);
   const PPPhotoSelected = useSelector(state => state.profile.ppPhotoSelected);
   const PhotoUploadPP = useSelector(state => state.profile.photoUploadPP);
+
+  const addUserOnlineOfflineResponse = useSelector(
+    state => state.interaction.addUserOnlineOfflineResponse
+  );
   /////////
   const [crop, setCrop] = useState(null);
   let myRef = React.createRef();
@@ -63,6 +71,19 @@ export default function UploadImage({ photoNum }) {
       onSelectFile(PPPhotoSelected);
     }
   }, [PPPhotoSelected]);
+
+  useEffect(() => {
+    //ADDINGUSEROFFLINE_2
+    if (addUserOnlineOfflineResponse != false) {
+      // console.log(
+      //   "addUserOnlineOfflineResponse ",
+      //   addUserOnlineOfflineResponse
+      // );
+      // dispatch(mpUpload(finalImg));
+      // dispatch(addUserOnlineOfflineSuccess(false));
+    }
+  }, [addUserOnlineOfflineResponse]);
+
   useEffect(() => {
     if (MainPhotoSelected != null && photoNum == null) {
       console.log("main photo num ", photoNum);
@@ -243,7 +264,7 @@ export default function UploadImage({ photoNum }) {
       <Grid container style={{ paddingTop: "25px" }} spacing={12}>
         <Button
           variant="contained"
-          onClick={() => {
+          onClick={async () => {
             dispatch(showAuthLoader());
             console.log("onSubmit ", finalImg, finalImg.size);
             if (finalImg.size <= 3500 || finalImg.size >= 32000) {
@@ -251,6 +272,9 @@ export default function UploadImage({ photoNum }) {
             } else {
               if (photoNum == null) {
                 //dispatch(updateMainP(finalImg));
+                console.log("update main image from component");
+                dispatch(addUserOnlineOffline("channel_vacated"));
+                await new Promise(resolve => setTimeout(resolve, 5000));
                 dispatch(mpUpload(finalImg));
               } else {
                 dispatch(ppUpload(finalImg, photoNum));

@@ -58,3 +58,47 @@
     margin: auto 1.5rem;
   }
 }
+
+.card-cont {
+  padding: 1rem;
+  box-shadow: 6px 9px 11px grey;
+  border-radius: 1rem;
+  background-color: #f4f4f7;
+  margin-bottom: 1rem;
+}
+
+.note {
+  position: relative;
+}
+.note div {
+  position: absolute;
+  width: 19rem;
+  background: #7a7a7b;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  right: -1.5rem;
+  bottom: -3rem;
+  animation: hideAnimation 0s ease-in 10s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+.MuiTooltip-popper {
+  display: block !important;
+  background-color: $secondary !important;
+  position: relative !important;
+  visibility: visible;
+}
+
+.timer {
+  color: $secondary;
+  font-weight: bold;
+  font-size: larger;
+}

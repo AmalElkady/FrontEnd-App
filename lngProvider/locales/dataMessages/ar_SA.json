@@ -3,7 +3,13 @@
   "chat.default": "ابدأ الدردشة مع أي شخص",
   "chat.delete": "حذف المحادثة",
   "chat.clear": "حذف رسائل المحادثة",
+  "chat.report": "الإبلاغ عن المحادثة",
+  "chat.user": "المستخدم ",
   "message.placeholder": "اكتب رسالة",
   "mgs.seen": "تمت قرائتها",
-  "mgs.typing": "يكتب الأن ... "
+  "mgs.typing": "يكتب الأن ... ",
+  "reasonConv.1": "السبب 1 ",
+  "reasonConv.2": "السبب 2 ",
+  "reasonConv.3": "السبب 3 ",
+  "error.clearConv": "لا يمكن مسح المحادثة المبلغ عنها"
 }

@@ -60,7 +60,9 @@ import {
   RESET_SEARCH_FLAG,
   NOTIFI_ACTION_DONE,
   NOTIFI_MSG_ACTION_DONE,
-  PUSHER_ACTION_DONE
+  PUSHER_ACTION_DONE,
+  PROFILE_USER_CLICKED,
+  RESET_END_RES_USERS_OF
 } from "../constants/ActionTypes";
 
 // Age Range
@@ -493,5 +495,12 @@ export const notifiMsgActionDone = () => {
 export const pusherActionDone = () => {
   return {
     type: PUSHER_ACTION_DONE
+  };
+};
+
+export const profileUserClicked = user => {
+  return {
+    type: PROFILE_USER_CLICKED,
+    payload: user
   };
 };

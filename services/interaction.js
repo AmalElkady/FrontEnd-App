@@ -1,6 +1,8 @@
 import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
 import Router from "next/router";
+import { useDispatch } from "react-redux";
+import { userSignOutSuccess } from "../actions/Auth";
 import { auth } from "../okta/okta";
 
 const interaction = {};
@@ -50,7 +52,10 @@ let callAxios = options => {
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
             });
-          } else if (response.data.code == "JWT_8") {
+          } else if (
+            response.data.code == "JWT_8" ||
+            response.data.code == "JWT_7"
+          ) {
             console.log("**********expired token*********");
             // removeCookie("access_token");
             // auth.signOut();
@@ -58,12 +63,17 @@ let callAxios = options => {
             resolve({
               data: { code: "JWT_8" }
             });
-          } else if (response.data.code == "JWT_7") {
-            console.log("**********expired token*********");
-            resolve({
-              data: { code: "JWT_7" }
-            });
-          } else {
+          }
+          // else if (response.data.code == "JWT_7") {
+          //   console.log("**********expired token*********");
+          //   // resolve({
+          //   //   data: { code: "JWT_7" }
+          //   // });
+          //   const dispatch = useDispatch();
+          //   //dispatch(userSignOutSuccess());
+          //   Router.replace("/");
+          // }
+          else {
             resolve(response);
           }
         } else {
@@ -573,39 +583,8 @@ interaction.getNotificationViewPPLove = function(
 
       console.log("response getNotificationViewPPLove", response);
       if (response) {
-        if (response.code == "JWT_7") {
-          const tokenValueNew = getCookie("access_token", false);
-          console.log(
-            "response getNotificationViewPPLove tokenValue!=tokenValueNew ",
-            tokenValue,
-            tokenValueNew
-          );
-          if (tokenValue != tokenValueNew) {
-            console.log(
-              "response tokenValue!=tokenValueNew ",
-              tokenValue,
-              tokenValueNew
-            );
-            // hole 2s then
-            setTimeout(() => {
-              console.log("from  hold 2s");
-              interaction.getNotificationViewPPLove(
-                unread,
-                viewScoreHigh,
-                ppScoreHigh,
-                loveScoreHigh,
-                offset
-              );
-            }, 2000);
-          } else {
-            console.log(
-              "response tokenValue==tokenValueNew ",
-              tokenValue,
-              tokenValueNew
-            );
-          }
-        } else if (response.code == "JWT_8") {
-          console.log("resolve jwt_8");
+        if (response.code == "JWT_8") {
+          console.log("resolve jwt_8 from getNotificationViewPPLove");
           resolve({ error_jwt8: "true" });
         } else {
           resolve(response);
@@ -672,6 +651,110 @@ interaction.cleanNotificationViewPPLove = function(
       let response = responseX.data;
 
       console.log("response cleanNotificationViewPPLove", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+interaction.addUserOnlineOffline = function(action) {
+  // "viewScoreLow":"",
+  // "viewScoreHigh": "",
+  // "ppScoreLow":"",
+  // "ppScoreHigh": "",
+  // "loveScoreLow":"",
+  // "loveScoreHigh": ""
+
+  console.log("from service addUserOnlineOffline ", action);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `adduseronlineoffline`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          action
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response adduseronlineoffline", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+interaction.reportUser = function(
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) {
+  // "reasonid":""
+  // "profileid": "1511edf6-5f16-4813-801f-a40ce8e355a2",
+  // "country": "EG",
+  // "city": "1",
+  // "varea": "1"
+  //"comment:""
+
+  console.log(
+    "from service reportUser ",
+    reasonid,
+    profileid,
+    country,
+    city,
+    varea,
+    comment
+  );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/reportuser`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          reasonid,
+          profileid,
+          country,
+          city,
+          varea,
+          comment
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response reasonid", response);
       if (response) {
         resolve(response);
       } else {

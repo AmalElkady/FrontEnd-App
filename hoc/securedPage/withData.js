@@ -63,7 +63,11 @@ export default ComposedComponent =>
         return { isLoggedIn, path: context.pathname, login: false };
       }
       console.log("----------------------------------");
-      let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
+      console.log("token ****  ", token);
+      const tokenUserData = JSON.parse(
+        base64url.decode(`${token}`.split(".")[1])
+      );
+      // let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
       console.log("token  ", tokenUserData);
       //check tokenUserData.profile (L2|MP|MPA)
       //MPA ===> Call api/checkMPUpload
@@ -189,6 +193,7 @@ export default ComposedComponent =>
       } else if (this.props.sub === 0) {
         return <ComponentSubscribe {...this.props} />;
       } else {
+        console.log("44444$$$$$$$$$$$");
         return <ComposedComponent {...this.props} />;
       }
     }

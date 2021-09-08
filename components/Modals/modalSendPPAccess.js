@@ -37,6 +37,13 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     right: ".5rem",
     bottom: "0"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: "1rem",
+    boxShadow: theme.shadows[5],
+    // padding: "1rem",
+    position: "relative"
   }
   ////
 }));
@@ -90,12 +97,12 @@ export default function ModalSendPPAccess({ id, co, ci, va }) {
   }, [OpenModalSendPP]);
 
   useEffect(() => {
-    if (permissionReadPP==true) {
+    if (permissionReadPP == true) {
       NotificationManager.success("Your Request Sent Successfully", "Success");
-       handleClose();
+      handleClose();
     } else if (permissionReadPP == "error") {
       NotificationManager.error("Request already sent");
-       handleClose();
+      handleClose();
     }
     dispatch(permissionPPReadRemoveSuccess(false));
   }, [permissionReadPP]);
@@ -124,45 +131,54 @@ export default function ModalSendPPAccess({ id, co, ci, va }) {
       >
         <Fade in={open}>
           {/* <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"> */}
-          <div className="app-login-main-content">
-            <div className="app-login-content-2">
-              <div className="app-login-header">
-                <h2>
-                  <IntlMessages id="profile.notAuthorized" />
-                </h2>
-              </div>
-
-              <div className="app-login-form">
-                <form method="post" className={classes.positionR}>
-                  <div className="mb-3 d-flex align-items-center justify-content-between">
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        handleClose();
-                      }}
-                      color="primary"
-                      className="linear-g-r"
-                    >
-                      <IntlMessages id="appModule.cancel" />
-                    </Button>
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        dispatch(permissionPPReadRemove(0, id, co, ci, va));
-                      }}
-                      color="primary"
-                      className="linear-g-r"
-                    >
-                      <IntlMessages id="profile.sendPP" />
-                    </Button>
-                  </div>
-                </form>
-              </div>
+          <div className={classes.paper}>
+            <div className="logo-form">
+              <img
+                src="../../static/images/Gila_Final_Logo_form.svg"
+                alt="App"
+                title="App"
+              />
             </div>
-          </div>
-          {/* </div> */}
+            {/* <div className="app-login-main-content"> */}
+              <div className="app-login-content-2">
+                <div className="app-login-header">
+                  <h2>
+                    <IntlMessages id="profile.notAuthorized" />
+                  </h2>
+                </div>
 
-          {/* </form> */}
+                <div className="app-login-form">
+                  <form method="post" className={classes.positionR}>
+                    <div className="mb-3 d-flex align-items-center justify-content-between">
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          handleClose();
+                        }}
+                        color="primary"
+                        className="linear-g-r"
+                      >
+                        <IntlMessages id="appModule.cancel" />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          dispatch(permissionPPReadRemove(0, id, co, ci, va));
+                        }}
+                        color="primary"
+                        className="linear-g-r"
+                      >
+                        <IntlMessages id="profile.sendPP" />
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            {/* </div> */}
+            {/* </div> */}
+
+            {/* </form> */}
+          </div>
         </Fade>
       </Modal>
       {/*  */}

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { changeUserPhoneBeforeVerif,resetPhonechangeFlag } from "../../actions/Auth";
+import {
+  changeUserPhoneBeforeVerif,
+  resetPhonechangeFlag
+} from "../../actions/Auth";
 import { openModal, updateProfileL2 } from "../../actions/Profile";
 import {
   COUNTRY_CODE_TO_NAME_MAP,
@@ -30,7 +33,10 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Radio from "@material-ui/core/Radio";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
 const useStyles = makeStyles(theme => ({
   ///modal
   modal: {
@@ -46,6 +52,13 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     right: ".5rem",
     bottom: "0"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: "1rem",
+    boxShadow: theme.shadows[5],
+    // padding: "1rem",
+    position: "relative"
   }
   ////
 }));
@@ -82,7 +95,12 @@ Fade.propTypes = {
   onExited: PropTypes.func
 };
 
-export default function ModalChangePhone({ phone,country,countryiso2,city }) {
+export default function ModalChangePhone({
+  phone,
+  country,
+  countryiso2,
+  city
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -93,11 +111,13 @@ export default function ModalChangePhone({ phone,country,countryiso2,city }) {
   const [City, setCity] = useState("");
 
   const OpenModal = useSelector(state => state.profile.openModal);
-  const phoneChangedBefore = useSelector(state => state.auth.phoneChangedBefore);
+  const phoneChangedBefore = useSelector(
+    state => state.auth.phoneChangedBefore
+  );
 
   useEffect(() => {
-    console.log("first dataaaaa ", phone,country,countryiso2);
-    console.log("first dataaaaa countryiso2",countryiso2,city);
+    console.log("first dataaaaa ", phone, country, countryiso2);
+    console.log("first dataaaaa countryiso2", countryiso2, city);
     setCity(city);
     setPhone(phone);
   }, []);
@@ -109,8 +129,8 @@ export default function ModalChangePhone({ phone,country,countryiso2,city }) {
 
   useEffect(() => {
     if (phoneChangedBefore) {
-        NotificationManager.success('Your phone changed successfully', 'Success');
-       dispatch(resetPhonechangeFlag());
+      NotificationManager.success("Your phone changed successfully", "Success");
+      dispatch(resetPhonechangeFlag());
       handleClose();
     }
   }, [phoneChangedBefore]);
@@ -127,12 +147,12 @@ export default function ModalChangePhone({ phone,country,countryiso2,city }) {
     dispatch(openModal(false));
   };
 
- const handleChangeCity = (event) => {
-     console.log("")
+  const handleChangeCity = event => {
+    console.log("");
     setCity(event.target.value);
   };
 
-   const handleChangePhone = (value) => {
+  const handleChangePhone = value => {
     setPhone(value);
   };
 
@@ -164,45 +184,53 @@ export default function ModalChangePhone({ phone,country,countryiso2,city }) {
         }}
       >
         <Fade in={open}>
-          {/* <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"> */}
-          <div className="app-login-main-content">
-            <div className="app-login-content-2">
-              <div className="app-login-header">
-                <h2>
-                  <IntlMessages id="appModule.changeYourPhone" />
-                </h2>
-                <h2>
-                  {" "}
-                  {`+${country} ${phone}`}
-                  <IconButton
-                    aria-label="Edit"
-                    onClick={handleOpenEdit}
-                    className="edit-icon-2 linear-g-r"
-                  >
-                    <EditIcon fontSize="small"></EditIcon>
-                  </IconButton>
-                </h2>
-              </div>
-
-              <div className="app-login-form">
-                {openEdit && (
-                  <form method="post" className={classes.positionR}>
-                    {/* old phone */}
-                    <Grid
-                      container
-                      spacing={12}
-                      style={{ minWidth: "149px", paddingBottom: "9px" }}
+          <div className={classes.paper}>
+            <div className="logo-form">
+              <img
+                src="../../static/images/Gila_Final_Logo_form.svg"
+                alt="App"
+                title="App"
+              />
+            </div>
+            {/* <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"> */}
+            {/* <div className="app-login-main-content"> */}
+              <div className="app-login-content-2">
+                <div className="app-login-header">
+                  <h2>
+                    <IntlMessages id="appModule.changeYourPhone" />
+                  </h2>
+                  <h2>
+                    {" "}
+                    {`+${country} ${phone}`}
+                    <IconButton
+                      aria-label="Edit"
+                      onClick={handleOpenEdit}
+                      className="edit-icon-2 linear-g-r"
                     >
-                      <Grid item xs={12}>
-                        <InputLabel
-                          id="phone-label"
-                          style={{ paddingBottom: "7px" }}
-                        >
-                          <IntlMessages id="inputLabel.changePhone" />
-                        </InputLabel>
-                      </Grid>
-                      <Grid item xs={12}>
-                        {/* <PhoneInput
+                      <EditIcon fontSize="small"></EditIcon>
+                    </IconButton>
+                  </h2>
+                </div>
+
+                <div className="app-login-form">
+                  {openEdit && (
+                    <form method="post" className={classes.positionR}>
+                      {/* old phone */}
+                      <Grid
+                        container
+                        spacing={12}
+                        style={{ minWidth: "149px", paddingBottom: "9px" }}
+                      >
+                        <Grid item xs={12}>
+                          <InputLabel
+                            id="phone-label"
+                            style={{ paddingBottom: "7px" }}
+                          >
+                            <IntlMessages id="inputLabel.changePhone" />
+                          </InputLabel>
+                        </Grid>
+                        <Grid item xs={12}>
+                          {/* <PhoneInput
                         countryCodeEditable={false}
                         disableCountryCode={true}
                         // country={
@@ -217,108 +245,176 @@ export default function ModalChangePhone({ phone,country,countryiso2,city }) {
                         //  // setNationality(country.countryCode);
                         // }}
                       /> */}
-                        <PhoneInput
-                          onlyCountries={[
-                            "gb",
-                            "us",
-                            "fr",
-                            "de",
-                            "eg",
-                            "ma",
-                            "sa",
-                            "dz",
-                            "bh",
-                            "kw",
-                            "tn",
-                            "ae",
-                            "my",
-                            "mr",
-                            "af"
-                          ]}
-                         countryCodeEditable={true}
-                        disableCountryCode={true}
-                          country={countryiso2}
-                          value={Phone}
-                          placeholder={""}
+                          <PhoneInput
+                            onlyCountries={[
+                              "us",
+                              "fr",
+                              "eg",
+                              "ma",
+                              "sa",
+                              "dz",
+                              "kw",
+                              "ar",
+                              "ca",
+                              "sg",
+                              "ua",
+                              "pt",
+                              "af",
+                              "al",
+                              "az",
+                              "ba",
+                              "bd",
+                              "bf",
+                              "bg",
+                              "bh",
+                              "bj",
+                              "ci",
+                              "cm",
+                              "cn",
+                              "de",
+                              "dj",
+                              "es",
+                              "gb",
+                              "gm",
+                              "gn",
+                              "gw",
+                              "id",
+                              "in",
+                              "iq",
+                              "ir",
+                              "it",
+                              "jo",
+                              "ke",
+                              "kg",
+                              "km",
+                              "lb",
+                              "lr",
+                              "ly",
+                              "me",
+                              "mg",
+                              "mk",
+                              "ml",
+                              "mm",
+                              "mr",
+                              "mv",
+                              "mw",
+                              "my",
+                              "ne",
+                              "ng",
+                              "om",
+                              "ph",
+                              "pk",
+                              "ps",
+                              "qa",
+                              "ru",
+                              "sd",
+                              "sl",
+                              "sn",
+                              "so",
+                              "sy",
+                              "td",
+                              "tg",
+                              "th",
+                              "tj",
+                              "tm",
+                              "tn",
+                              "tr",
+                              "tz",
+                              "ug",
+                              "uz",
+                              "ye"
+                            ]}
+                            countryCodeEditable={true}
+                            disableCountryCode={true}
+                            country={countryiso2}
+                            value={Phone}
+                            placeholder={""}
                             onChange={(value, country, e, formattedValue) => {
-                            //   this.setState({ countrySign: country.dialCode });
-                            //   this.setState({
-                            //     phoneSign: value.slice(country.dialCode.length)
-                            //   });
-                            console.log("valueee ",value);
+                              //   this.setState({ countrySign: country.dialCode });
+                              //   this.setState({
+                              //     phoneSign: value.slice(country.dialCode.length)
+                              //   });
+                              console.log("valueee ", value);
                               handleChangePhone(value);
                             }}
-                        />
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{ minWidth: "90px", paddingRight: "18px" }}
+                        >
+                          <StyledFormControl style={{ minWidth: "90px" }}>
+                            <InputLabel id="city-label">
+                              <IntlMessages id="inputLabel.city" />
+                            </InputLabel>
+                            <Select
+                              labelId="city-label"
+                              id="city"
+                              value={City}
+                              onChange={handleChangeCity}
+                              name="city"
+                            >
+                              {COUNTRY_CITY_MAP[countryiso2].map((value, i) => (
+                                <MenuItem
+                                  key={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
+                                  value={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
+                                  control={<Radio />}
+                                  label={value}
+                                >
+                                  {value}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </StyledFormControl>
+                        </Grid>
                       </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        style={{ minWidth: "90px", paddingRight: "18px" }}
-                      >
-                        <StyledFormControl style={{ minWidth: "90px" }}>
-                          <InputLabel id="city-label">
-                            <IntlMessages id="inputLabel.city" />
-                          </InputLabel>
-                          <Select
-                            labelId="city-label"
-                            id="city"
-                            value={City}
-                            onChange={handleChangeCity}
-                            name="city"
-                          >
-                            {COUNTRY_CITY_MAP[countryiso2].map((value,i) => (
-                                                <MenuItem
-                                                  key={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
-                                                  value={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
-                                                  control={<Radio />}
-                                                  label={value}>
-                                                      {value}
-                                                </MenuItem>
-                                              ))}
-                          </Select>
-                        </StyledFormControl>
-                      </Grid>
-                    </Grid>
 
-                    <div className="mb-3 d-flex align-items-center justify-content-between">
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setOpenEdit(false);
-                          handleClose();
-                        }}
-                        color="primary"
-                        className="linear-g-r"
-                      >
-                        <IntlMessages id="appModule.cancel" />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                           console.log("change phone");
-                           console.log("city ",City);
-                           console.log("phone ",Phone);
-                            console.log("country ",country);
-                            console.log("countryiso2 ",countryiso2);
+                      <div className="mb-3 d-flex align-items-center justify-content-between">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setOpenEdit(false);
+                            handleClose();
+                          }}
+                          color="primary"
+                          className="linear-g-r"
+                        >
+                          <IntlMessages id="appModule.cancel" />
+                        </Button>
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            console.log("change phone");
+                            console.log("city ", City);
+                            console.log("phone ", Phone);
+                            console.log("country ", country);
+                            console.log("countryiso2 ", countryiso2);
 
-                          dispatch(
-                              changeUserPhoneBeforeVerif(Phone,country,countryiso2.toUpperCase(),City)
-                          );
-                        }}
-                        color="primary"
-                        className="linear-g-r"
-                      >
-                        <IntlMessages id="appModule.change" />
-                      </Button>
-                    </div>
-                  </form>
-                )}
+                            dispatch(
+                              changeUserPhoneBeforeVerif(
+                                Phone,
+                                country,
+                                countryiso2.toUpperCase(),
+                                City
+                              )
+                            );
+                          }}
+                          color="primary"
+                          className="linear-g-r"
+                        >
+                          <IntlMessages id="appModule.change" />
+                        </Button>
+                      </div>
+                    </form>
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
-          {/* </div> */}
+            {/* </div> */}
+            {/* </div> */}
 
-          {/* </form> */}
+            {/* </form> */}
+          </div>
         </Fade>
       </Modal>
       {/*  */}

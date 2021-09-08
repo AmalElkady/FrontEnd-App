@@ -18,6 +18,21 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
+
+
+//////////
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+import { Elements } from "@stripe/react-stripe-js";
+
+import CheckoutForm from "../components/PaymentsSubs/CheckoutForm";
+
+////
+
+
 
 
 
@@ -26,7 +41,9 @@ import {
   showAuthLoader,
   userAddSubscribe,
   subFlagClear,
-  userSignOut
+  userSignOut,
+  addPayingCustomer,
+  createCheckOutSession
 } from "../actions/Auth";
 
 function TabPanel(props) {
@@ -76,7 +93,24 @@ const useStyles = makeStyles(theme => ({
 export default function Subscribe({renew}) {
   const subFlag = useSelector(state => state.auth.subFlag);
   const showMessage = useSelector(state => state.auth.showMessage);
+  const customerIdPayment=useSelector(state => state.auth.customerIdPayment);
+  const checkoutSessionDataUrl=useSelector(state => state.auth.checkoutSessionDataUrl);
+  const checkoutSessionId=useSelector(state => state.auth.checkoutSessionId);
+  const selectedPack = useSelector(state => state.auth.selectedPack);
+  const loader = useSelector(state => state.auth.loader);
   const dispatch = useDispatch();
+
+  
+
+  //////
+  const promise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+ // const stripe = Stripe('pk_test_STWavksAuk5ZVcrEvGHFPKMd')
+
+  ////
+
+
+
+const urlPath=window.location.pathname
 
   useEffect(() => {
     if (showMessage) {
@@ -85,25 +119,60 @@ export default function Subscribe({renew}) {
       }, 3000);
     }
     if (subFlag == true) {
-      showAuthLoader();
+      dispatch(showAuthLoader());
       setTimeout(() => {
         subFlagClear();
         Router.replace("/home/content");
       }, 300);
     }
+
+  
+
   });
+
+  useEffect(() => {
+    if(urlPath=="/paymentsuccess"){
+      console.log("selectedValue $$$ ",selectedValue,Router.query.sessionId)
+ dispatch(showAuthLoader());
+ dispatch(userAddSubscribe(selectedValue,Router.query.sessionId));
+    }
+  },[urlPath]);
+
+  useEffect(() => {
+    if(customerIdPayment!=null){
+      console.log("customerIdPayment from component selectedValue",customerIdPayment ,selectedValue)
+      dispatch(createCheckOutSession(selectedValue))
+    }
+
+  },[customerIdPayment]);
+
+  
+  useEffect(() => {
+    if(checkoutSessionDataUrl!=null){
+      console.log("checkoutSessionDataUrl from component ",checkoutSessionDataUrl)
+      window.location.href=checkoutSessionDataUrl;
+     // stripe.redirectToCheckout({ sessionId: checkoutSessionId });
+
+
+    }
+
+  },[checkoutSessionDataUrl]);
 
   const onSubscribe = () => {
     showAuthLoader();
     console.log("onSubscribe ",selectedValue)
-    dispatch(userAddSubscribe(selectedValue));
+    if(selectedValue==1){
+    dispatch(userAddSubscribe(selectedValue,""));
+    }else if(selectedValue==2||selectedValue==3){
+    dispatch(addPayingCustomer())
+    }
   };
 
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(1);
 
-  const [selectedValue, setSelectedValue] = useState("1");
+  const [selectedValue, setSelectedValue] = useState("2");
 
   const handleChangeSub = event => {
     setSelectedValue(event.target.value);
@@ -124,7 +193,7 @@ export default function Subscribe({renew}) {
 
   return (
     <>
-     <div className="container">
+    <div className="container">
 
       <div className={renew?"":classes.root}> 
  {!renew &&<Button
@@ -144,11 +213,11 @@ export default function Subscribe({renew}) {
  
  
  
- <FormControl component="fieldset" style={{minWidth:"70%"}}>
+        {window.location.pathname!=="/paymentsuccess"&&checkoutSessionId==null&&<FormControl component="fieldset" style={{minWidth:"70%"}}>
       <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange2}>
-        <FormControlLabel value="0" className={selectedValue === "0"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="0"  checked={selectedValue === "0"}  onChange={handleChangeSub} className="d-none"/>} label={
+        <FormControlLabel value="1" className={selectedValue === "1"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="1"  checked={selectedValue === "1"}  onChange={handleChangeSub} className="d-none"/>} label={
               <>
-            <Grid container spacing={12} >
+            <Grid container  >
 				    <Grid item xs={9}>
             <Grid item xs={12}>
             <h2 style={{color:"white"}}>
@@ -168,15 +237,15 @@ export default function Subscribe({renew}) {
 					</Grid>
 				</Grid>
 
-    <Grid container spacing={12} style={{marginTop: "1rem"}} >
+    <Grid container  style={{marginTop: "1rem"}} >
 				   <Button
-           disabled={selectedValue === "0"?false:true}
+           disabled={selectedValue === "1"?false:true}
         variant="contained"
        onClick={() => {
                 onSubscribe();
               }}
         color="primary"
-        className={selectedValue === "0"?"btn-sub-active":"btn-sub-non-active"}
+        className={selectedValue === "1"?"btn-sub-active":"btn-sub-non-active"}
       >
         <IntlMessages id="subscription.sub" />
       </Button>
@@ -184,7 +253,7 @@ export default function Subscribe({renew}) {
 </>
         } />
 
-        <FormControlLabel value="1"  className={selectedValue === "1"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="1"  checked={selectedValue === "1"} onChange={handleChangeSub} className="d-none"/>}
+        <FormControlLabel value="2"  className={selectedValue === "2"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="2"  checked={selectedValue === "2"} onChange={handleChangeSub} className="d-none"/>}
          label={
           
        <>
@@ -193,16 +262,16 @@ export default function Subscribe({renew}) {
         <img style={{width:"100%"}} src="../static/images/icons/Best_Value_Icon.svg"
                      alt="free" title="free"/> 
         </div>
-       <Grid container spacing={12} style={{borderBottom: ".1px solid #ffffff4d"}} >
+       <Grid container  style={{borderBottom: ".1px solid #ffffff4d"}} >
 
         <Grid item xs={9}>
 				      <Grid item xs={12} className="grid-s-1">
                     <h3 style={{color:"white"}}>
-                    <IntlMessages id="subscription.trial"/>
+                    <IntlMessages id="subscription.trial2"/>
                    
                     </h3>
 					    </Grid>
-              <Grid item xs={12} className="grid-s-1">
+              {/* <Grid item xs={12} className="grid-s-1">
                  <img style={{width:"10%"}} src="../static/images/icons/plus.svg"
                      alt="plus" title="plus"/> 
 					     </Grid>
@@ -210,13 +279,13 @@ export default function Subscribe({renew}) {
                     <h2 style={{color:"white"}}>
                     <IntlMessages id="subscription.3month"/>
                     </h2>
-					      </Grid>
+					      </Grid> */}
 
                <Grid item xs={12}>
-                    <p style={{color:"white"}}>
-                   <IntlMessages id="subscription.1monthOption1"/>
+                    <p style={{color:"white",textAlign:"center"}}>
+                   <IntlMessages id="subscription.2PackOption1"/>
                     <br/>
-                    <IntlMessages id="subscription.1monthOption2"/>
+                    <IntlMessages id="subscription.2PackOption2"/>
                     </p>
 					      </Grid>  
             
@@ -227,21 +296,21 @@ export default function Subscribe({renew}) {
                      alt="active_gila" title="active_gila"/> 
 					</Grid>
 			</Grid>
-      <Grid container spacing={12} style={{marginTop: "1rem"}} >
+      <Grid container  style={{marginTop: "1rem"}} >
            <Grid item xs={4} style={{padding: ".5rem"}} >
             <h2 style={{color:"white"}}>
-            <IntlMessages id="subscription.3monthCost"/>
+            <IntlMessages id="subscription.2PackCost"/>
             </h2>
           </Grid>
            <Grid item xs={8} style={{padding: ".5rem"}} >
 				   <Button
-            disabled={selectedValue === "1"?false:true}
+            disabled={selectedValue === "2"?false:true}
         variant="contained"
         onClick={() => {
                 onSubscribe();
               }}
         color="primary"
-        className={selectedValue === "1"?"btn-sub-active":"btn-sub-non-active"}
+        className={selectedValue === "2"?"btn-sub-active":"btn-sub-non-active"}
         style={{width: "100%"}} 
            >
         <IntlMessages id="subscription.sub" />
@@ -253,17 +322,17 @@ export default function Subscribe({renew}) {
 </>
         } >
         </FormControlLabel>
-        <FormControlLabel value="2"  className={selectedValue === "2"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="2"   checked={selectedValue === "2"} onChange={handleChangeSub} className="d-none"/>} label={
+        <FormControlLabel value="3"  className={selectedValue === "3"?"active-aim sub-option linear-g" :" sub-option linear-g"} control={<Radio value="3"   checked={selectedValue === "3"} onChange={handleChangeSub} className="d-none"/>} label={
         <>  
-   <Grid container spacing={12} style={{borderBottom: ".1px solid #ffffff4d"}} >
+   <Grid container  style={{borderBottom: ".1px solid #ffffff4d"}} >
 
         <Grid item xs={9}>
 				      <Grid item xs={12} className="grid-s-1">
                     <h3 style={{color:"white"}}>
-                    <IntlMessages id="subscription.trial"/>
+                    <IntlMessages id="subscription.trial3"/>
                     </h3>
 					    </Grid>
-             <Grid item xs={12} className="grid-s-1">
+             {/* <Grid item xs={12} className="grid-s-1">
                  <img style={{width:"10%"}} src="../static/images/icons/plus.svg"
                      alt="plus" title="plus"/> 
 					     </Grid>
@@ -271,13 +340,13 @@ export default function Subscribe({renew}) {
                     <h2 style={{color:"white"}}>
                     <IntlMessages id="subscription.1month"/>
                     </h2>
-					      </Grid>
+					      </Grid> */}
 
                <Grid item xs={12}>
                     <p style={{color:"white"}}>
-                    <IntlMessages id="subscription.1monthOption1"/>
+                    <IntlMessages id="subscription.2PackOption1"/>
                     <br/>
-                    <IntlMessages id="subscription.1monthOption2"/>
+                    <IntlMessages id="subscription.2PackOption2"/>
                     </p>
 					      </Grid>  
             
@@ -288,21 +357,21 @@ export default function Subscribe({renew}) {
                      alt="active_gile" title="active_gile"/> 
 					</Grid>
 			</Grid>
-      <Grid container spacing={12} style={{marginTop: "1rem"}} >
+      <Grid container  style={{marginTop: "1rem"}} >
            <Grid item xs={4} style={{padding: ".5rem"}} >
             <h2 style={{color:"white"}}>
-            <IntlMessages id="subscription.1monthCost"/>
+            <IntlMessages id="subscription.3PackCost"/>
             </h2>
           </Grid>
            <Grid item xs={8} style={{padding: ".5rem"}} >
 				   <Button
         variant="contained"
-         disabled={selectedValue === "2"?false:true}
+         disabled={selectedValue === "3"?false:true}
       onClick={() => {
                 onSubscribe();
               }}
         color="primary"
-       className={selectedValue === "2"?"btn-sub-active":"btn-sub-non-active"}
+       className={selectedValue === "3"?"btn-sub-active":"btn-sub-non-active"}
         style={{width: "100%"}} 
            >
         <IntlMessages id="subscription.sub" />
@@ -312,11 +381,38 @@ export default function Subscribe({renew}) {
 </>
         } />
       </RadioGroup>
-    </FormControl>
+    </FormControl>}
+
+{window.location.pathname==="/paymentsuccess"&&
+<>
+<div style={{padding:"6rem 0 0"}}>
+<CheckCircleIcon className="icon-done"/>
+
+<Typography variant="h5" gutterBottom>
+<IntlMessages id="subscription.pending" />
+</Typography>
+
+{loader && (
+          <div className="loader-view">
+            <div className="loader2"></div>
+            {/* <CircularProgress /> */}
+          </div>
+        )}
+</div>
+</>
+}
+
+
+
 
 
       </div>
       </div>
+
+     
+
+
+
     </>
   );
 }

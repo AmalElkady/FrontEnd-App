@@ -2,6 +2,7 @@ import axios from "axios";
 import { setCookie, removeCookie, getCookie } from "../util/session";
 import Router from "next/router";
 import { auth } from "../okta/okta";
+import IntlMessages from "../util/IntlMessages";
 const messages = {};
 
 let axiosRequest = axios.create({
@@ -307,6 +308,9 @@ messages.clearConversation = function(profileid, country, city, varea) {
       console.log("clearConversation from service ", response);
       if (response.response) {
         resolve(response.response);
+      } else if (response.code == "CLEARCONVERSATION_5") {
+        console.log("2");
+        resolve({ message: <IntlMessages id="error.clearConv" /> });
       } else {
         resolve({ message: "no response !" });
       }
@@ -536,6 +540,68 @@ messages.setConversationTypingIndicator = function(
       let response = responseX.data;
 
       console.log("setConversationTypingIndicator from service ", response);
+      if (response) {
+        resolve(response);
+      } else {
+        resolve({ message: "no response !" });
+      }
+    } catch (err) {
+      resolve({ message: err.message });
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+messages.reportUserConversation = function(
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) {
+  // "reasonid":""
+  // "profileid": "1511edf6-5f16-4813-801f-a40ce8e355a2",
+  // "country": "EG",
+  // "city": "1",
+  // "varea": "1"
+  //"comment:""
+
+  console.log(
+    "from service reportuserconversation ",
+    reasonid,
+    profileid,
+    country,
+    city,
+    varea,
+    comment
+  );
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tokenValue = getCookie("access_token", false);
+      const options = {
+        url: `/reportuserconversation`,
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+          Authorization: "Bearer " + tokenValue
+        },
+        data: {
+          reasonid,
+          profileid,
+          country,
+          city,
+          varea,
+          comment
+        }
+      };
+
+      let responseX = await callAxios(options);
+      let response = responseX.data;
+
+      console.log("response reportuserconversation", response);
       if (response) {
         resolve(response);
       } else {

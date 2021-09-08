@@ -39,7 +39,8 @@ import {
   OPEN_MODAL_SEND_PP,
   DELETE_MY_ACCOUNT,
   DELETE_MY_ACCOUNT_SUCCESS,
-  SHOW_MESSAGE
+  SHOW_MESSAGE,
+  MODAL_PP_INFO
 } from "../constants/ActionTypes";
 
 export const readProfileL2 = (id, co, ci, va) => {
@@ -325,6 +326,13 @@ export const openModal = flag => {
 export const openModalPP = flag => {
   return {
     type: OPEN_MODAL_PP,
+    payload: flag
+  };
+};
+
+export const modalPPInfo = flag => {
+  return {
+    type: MODAL_PP_INFO,
     payload: flag
   };
 };

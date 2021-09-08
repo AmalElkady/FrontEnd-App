@@ -3,7 +3,13 @@
   "chat.default": "Start chatting with anyone",
   "chat.clear": "Clear Messages",
   "chat.delete": "Delete Chat",
+  "chat.report": "Report Conversation",
+  "chat.user": "User",
   "message.placeholder": "Type a message",
   "mgs.seen": "seen",
-  "mgs.typing": "typing..."
+  "mgs.typing": "typing...",
+  "reasonConv.1": "Reason 1",
+  "reasonConv.2": "Reason 2",
+  "reasonConv.3": "Reason 3",
+  "error.clearConv": "Cannot clear reported conversation"
 }

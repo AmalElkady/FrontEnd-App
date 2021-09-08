@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeEvery } from "redux-saga/effects";
-import { showAuthMessage } from "../actions/Auth";
+
 import {
   sendMessageSuccess,
   getMessagesTotalUnRCountSuccess,
@@ -10,7 +10,9 @@ import {
   getProfilesSuccess,
   getProfilesOnlineStatusSuccess,
   setActiveConversationSuccess,
-  setConversationTypingIndicatorSuccess
+  setConversationTypingIndicatorSuccess,
+  reportUserConversationSuccess,
+  showMessageChat
 } from "../actions/Messages";
 import {
   SEND_MESSAGE,
@@ -22,7 +24,8 @@ import {
   GET_PROFILES,
   GET_PROFILES_ONLINE_STATUS,
   SET_ACTIVE_CONVERSATION,
-  SET_CONVERSATION_TYPING_INDICATOR
+  SET_CONVERSATION_TYPING_INDICATOR,
+  REPORT_USER_CONVERSATION
 } from "../constants/ActionTypes";
 import { messages } from "../services/messages";
 
@@ -114,6 +117,19 @@ const setConversationTypingIndicator = async (
     .then(returnedData => returnedData)
     .catch(error => error);
 
+const reportUserConversationRequest = async (
+  reasonid,
+  profileid,
+  country,
+  city,
+  varea,
+  comment
+) =>
+  await messages
+    .reportUserConversation(reasonid, profileid, country, city, varea, comment)
+    .then(returnData => returnData)
+    .catch(error => error);
+
 /////
 
 function* sendMessageRequest({ payload }) {
@@ -128,12 +144,12 @@ function* sendMessageRequest({ payload }) {
       message
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(sendMessageSuccess(true));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -141,12 +157,12 @@ function* getMessagesTotalUnCountRequest() {
   try {
     const returnedData = yield call(getMessagesTotalUnCount);
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(getMessagesTotalUnRCountSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -164,12 +180,14 @@ function* readConversationRequest({ payload }) {
       limit
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      console.log("returnedData.message 1");
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(readConversationSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    console.log("returnedData.message 2");
+    yield put(showMessageChat(error));
   }
 }
 
@@ -178,12 +196,12 @@ function* readAllMessagesCoversRequest({ payload }) {
   try {
     const returnedData = yield call(readAllMessagesCovers, scoreL, offset);
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(readAllMessagesCoversSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -199,12 +217,13 @@ function* clearConversationRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      console.log("message clear");
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(clearConversationSuccess(true));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -220,12 +239,12 @@ function* deleteConversationRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(deleteConversationSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -234,12 +253,12 @@ function* getProfilesRequest({ payload }) {
   try {
     const returnedData = yield call(getProfiles, payload);
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(getProfilesSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -257,12 +276,12 @@ function* getProfilesOnlineStatusRequest({ payload }) {
       listForEachProfile
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(getProfilesOnlineStatusSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -286,12 +305,12 @@ function* setActiveConversationRequest({ payload }) {
       activate
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(setActiveConversationSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
   }
 }
 
@@ -317,12 +336,43 @@ function* setConversationTypingIndicatorRequest({ payload }) {
       activate
     );
     if (returnedData.message) {
-      yield put(showAuthMessage(returnedData.message));
+      yield put(showMessageChat(returnedData.message));
     } else {
       yield put(setConversationTypingIndicatorSuccess(returnedData));
     }
   } catch (error) {
-    yield put(showAuthMessage(error));
+    yield put(showMessageChat(error));
+  }
+}
+
+function* userReportConversationRequest({ payload }) {
+  const { reasonid, profileid, country, city, varea, comment } = payload;
+  console.log(
+    "userReporConversationtRequest saga ",
+    reasonid,
+    profileid,
+    country,
+    city,
+    varea,
+    comment
+  );
+  try {
+    const returnedData = yield call(
+      reportUserConversationRequest,
+      reasonid,
+      profileid,
+      country,
+      city,
+      varea,
+      comment
+    );
+    if (returnedData.message) {
+      yield put(showMessageChat(returnedData.message));
+    } else {
+      yield put(reportUserConversationSuccess(true));
+    }
+  } catch (error) {
+    yield put(showMessageChat(error));
   }
 }
 
@@ -374,6 +424,10 @@ export function* requestSetConversationTypingIndicator() {
   );
 }
 
+export function* requestReportUserConversation() {
+  yield takeEvery(REPORT_USER_CONVERSATION, userReportConversationRequest);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(requestSendMessage),
@@ -385,6 +439,7 @@ export default function* rootSaga() {
     fork(requestGetProfiles),
     fork(requestGetProfilesOnlineStatus),
     fork(requestSetActiveConversation),
-    fork(requestSetConversationTypingIndicator)
+    fork(requestSetConversationTypingIndicator),
+    fork(requestReportUserConversation)
   ]);
 }

@@ -59,16 +59,16 @@ export default function ListItem({ user, time }) {
                     {loveSelectedIcon == "match" ? (
                       <>
                         <IntlMessages id="loveList.match" />
-                        {user.n}
+                        {user.n ? user.n : <IntlMessages id="chat.user" />}
                       </>
                     ) : loveSelectedIcon == "sent" ? (
                       <>
                         <IntlMessages id="loveList.sent" />
-                        {user.n}
+                        {user.n ? user.n : <IntlMessages id="chat.user" />}
                       </>
                     ) : loveSelectedIcon == "received" ? (
                       <>
-                        {user.n}
+                        {user.n ? user.n : <IntlMessages id="chat.user" />}
                         <IntlMessages id="loveList.received" />
                       </>
                     ) : (
@@ -80,7 +80,7 @@ export default function ListItem({ user, time }) {
                   headerSelectedIcon == "views") ||
                   router.pathname == "/home/views") && (
                   <>
-                    {user.n}
+                    {user.n ? user.n : <IntlMessages id="chat.user" />}
                     <IntlMessages id="viewList.view" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
@@ -91,7 +91,7 @@ export default function ListItem({ user, time }) {
                     <>
                       {user.t == "R" && (
                         <>
-                          {user.n}
+                          {user.n ? user.n : <IntlMessages id="chat.user" />}
                           <IntlMessages id="Love.notification" />
                           {time &&
                             moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
@@ -100,7 +100,7 @@ export default function ListItem({ user, time }) {
                       {user.t == "M" && (
                         <>
                           <IntlMessages id="loveList.match" />
-                          {user.n}
+                          {user.n ? user.n : <IntlMessages id="chat.user" />}
                           {time &&
                             moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                         </>
@@ -110,7 +110,7 @@ export default function ListItem({ user, time }) {
                 {router.pathname == "/home/blockedUsers" && (
                   <>
                     <IntlMessages id="blockedList.blocked" />
-                    {user.n}
+                    {user.n ? user.n : <IntlMessages id="chat.user" />}
                     <IntlMessages id="blockedList.on" />
                     {time && moment(Number(time)).format("YYYY-MM-DD hh:mm A")}
                   </>
@@ -121,21 +121,22 @@ export default function ListItem({ user, time }) {
         </Grid>
         {(router.pathname == "/home/love" ||
           router.pathname == "/home/views" ||
-          router.pathname == "/home/notifications-love") && (
-          <Grid item xs={2}>
-            <IconButton
-              className="item-btn"
-              onClick={() => {
-                //  user.timeScore = timeScore;
-                user.flag = "read";
-                router.push({ pathname: `/home/profile`, query: user });
-              }}
-              aria-label="View Profile"
-            >
-              <img src="../../static/images/icons/Profile_icon_2.svg" />
-            </IconButton>
-          </Grid>
-        )}
+          router.pathname == "/home/notifications-love") &&
+          user.n && (
+            <Grid item xs={2}>
+              <IconButton
+                className="item-btn"
+                onClick={() => {
+                  //  user.timeScore = timeScore;
+                  user.flag = "read";
+                  router.push({ pathname: `/home/profile`, query: user });
+                }}
+                aria-label="View Profile"
+              >
+                <img src="../../static/images/icons/Profile_icon_2.svg" />
+              </IconButton>
+            </Grid>
+          )}
 
         {router.pathname == "/home/blockedUsers" && (
           <Grid item xs={12}>

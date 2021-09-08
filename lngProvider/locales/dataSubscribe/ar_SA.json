@@ -1,5 +1,19 @@
 {
   "pack.0": "اشتراك محدود مجاني ",
   "pack.1": "اشتراك لمدة شهر ",
-  "pack.2": "اشتراك لمدة 3 أشهر"
+  "pack.2": "اشتراك لمدة 3 أشهر",
+  "subscription.sub": "اشترك",
+  "subscription.free": "اشتراك محدود مجاني",
+  "subscription.1month": "اشتراك شهر واحد",
+  "subscription.3month": "اشتراك ثلاثه اشهور",
+  "subscription.freeOption": "لا يمكنك بدأ محادثه -",
+  "subscription.2PackOption1": "رسائل مباشرة غير محدودة -",
+  "subscription.2PackOption2": "قابلية عالية للوصول -",
+  "subscription.3monthOption1": "رسائل مباشرة غير محدودة -",
+  "subscription.3monthOption2": "قابلية عالية للوصول -",
+  "subscription.trial2": "حزمة تجريبية لمدة خمسة أيام ",
+  "subscription.trial3": "حزمة تجريبية لمدة عشرين أيام ",
+  "subscription.2PackCost": "9.99 $",
+  "subscription.3PackCost": "19.99 $",
+  "subscription.pending": "في انتظار الاشتراك "
 }

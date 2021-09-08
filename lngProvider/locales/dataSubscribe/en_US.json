@@ -1,5 +1,19 @@
 {
   "pack.0": "Free Subscription Pack",
   "pack.1": "1 Months Subscription",
-  "pack.2": "3 Months Subscription"
+  "pack.2": "3 Months Subscription",
+  "subscription.sub": "Subscripe",
+  "subscription.free": "Free Limited Subscription",
+  "subscription.1month": "1 Months Subscription",
+  "subscription.3month": "3 Months Subscription",
+  "subscription.freeOption": "- Can't start conversation",
+  "subscription.2PackOption1": "- Unlimited Direct Messages",
+  "subscription.2PackOption2": "- High reachability",
+  "subscription.3monthOption1": "- Unlimited Direct Messages",
+  "subscription.3monthOption2": "- High reachability",
+  "subscription.trial2": "5 Days Trial Pack",
+  "subscription.trial3": "20 Days Trial Pack",
+  "subscription.2PackCost": "9.99 $",
+  "subscription.3PackCost": "19.99 $",
+  "subscription.pending": "pending for subscription"
 }

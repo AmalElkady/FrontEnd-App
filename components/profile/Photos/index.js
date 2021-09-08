@@ -29,7 +29,7 @@ import {
 import { mapObjectToArray } from "../../../helpers/mapObjectToArray";
 import { mapPPToUrl } from "../../../helpers/mapPPToUrl";
 
-export default function Photos({ id, co, ci, va }) {
+export default function Photos({ newUser }) {
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -57,6 +57,9 @@ export default function Photos({ id, co, ci, va }) {
   const userPhotoPPSigned = useSelector(
     state => state.profile.userPhotoPPSigned
   );
+  const userClickedProfile = useSelector(
+    state => state.home.userClickedProfile
+  );
   const userPhotoPPSignedMessage = useSelector(
     state => state.profile.userPhotoPPSignedMessage
   );
@@ -71,9 +74,20 @@ export default function Photos({ id, co, ci, va }) {
   }, [myPhotos]);
   useEffect(() => {
     setPhotosMapped(null);
-    if (userPhotos != null && router.query.flag == "read") {
+    if (
+      userPhotos != null &&
+      userClickedProfile &&
+      userClickedProfile.flag == "read"
+    ) {
       setPhotosMapped(mapObjectToArray(userPhotos));
-      dispatch(requestPhotoReadPP(id, co, ci, va));
+      dispatch(
+        requestPhotoReadPP(
+          userClickedProfile.i,
+          userClickedProfile.co,
+          userClickedProfile.ci,
+          userClickedProfile.va
+        )
+      );
     }
   }, [userPhotos]);
 
@@ -84,7 +98,7 @@ export default function Photos({ id, co, ci, va }) {
   }, [myPhotoPPSigned]);
 
   useEffect(() => {
-    if (userPhotoPPSigned != null && router.query.flag == "read") {
+    if (userPhotoPPSigned != null && userClickedProfile.flag == "read") {
       dispatch(setFinalPP(mapPPToUrl(photosMapped, userPhotoPPSigned)));
     }
   }, [userPhotoPPSigned]);
@@ -103,6 +117,7 @@ export default function Photos({ id, co, ci, va }) {
       dispatch(ppRemoveSuccess(false));
     }
   }, [PhotoRemovePP]);
+
   return (
     <>
       {
@@ -187,10 +202,10 @@ export default function Photos({ id, co, ci, va }) {
               </div>
             ))}
           {photosMapped == null &&
-            router.query.flag == "readMe" &&
+            (router.query.flag == "readMe" || newUser == true) &&
             defaultPhotos.map(item => (
               <div className="img-div" key={item.id}>
-                {router.query.flag == "readMe" && (
+                {(router.query.flag == "readMe" || newUser == true) && (
                   <>
                     <Tooltip
                       title="Add New Photo"
@@ -211,7 +226,8 @@ export default function Photos({ id, co, ci, va }) {
               </div>
             ))}
           {(userPhotos == null || userPhotoPPSignedMessage) &&
-            router.query.flag == "read" &&
+            userClickedProfile &&
+            userClickedProfile.flag == "read" &&
             defaultPhotos.map(item => (
               <div className="img-div" key={item.id}>
                 <div className="img-div-overlay">
@@ -233,7 +249,12 @@ export default function Photos({ id, co, ci, va }) {
         </Carousel>
       }
       {OpenModalSendPP && (
-        <ModalSendPPAccess id={id} co={co} ci={ci} va={va}></ModalSendPPAccess>
+        <ModalSendPPAccess
+          id={userClickedProfile.i}
+          co={userClickedProfile.co}
+          ci={userClickedProfile.ci}
+          va={userClickedProfile.va}
+        ></ModalSendPPAccess>
       )}
       {OpenModalPP && <ModalUploadMPP photoNum={photoIndex}></ModalUploadMPP>}
     </>

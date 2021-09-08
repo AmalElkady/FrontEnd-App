@@ -22,9 +22,10 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: "3px",
+    borderRadius: "1rem",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    // padding: "1rem",
+    position: "relative"
   },
   displayB: {
     display: "block"
@@ -107,6 +108,13 @@ export default function ModalUpload() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+            <div className="logo-form">
+              <img
+                src="../../static/images/Gila_Final_Logo_form.svg"
+                alt="App"
+                title="App"
+              />
+            </div>
             <form className={classes.positionR} noValidate autoComplete="off">
               <Typography variant="h6" gutterBottom>
                 <IntlMessages id="appModule.uploadNewPhotoMessage" />

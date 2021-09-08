@@ -22,6 +22,7 @@ import {
   clickedId
 } from "../../../actions/Interaction";
 import { clickedUserChat } from "../../../actions/Messages";
+import { profileUserClicked } from "../../../actions/Home";
 import { red } from "@material-ui/core/colors";
 import { NotificationManager } from "react-notifications";
 
@@ -185,6 +186,7 @@ export default function UserCard({ user, timeScore }) {
   const [clickLove, setClickLove] = useState(false);
   const locale = useSelector(state => state.settings.locale);
   const searchState = useSelector(state => state.home.searchState);
+
   const LoveMatchRequestSend = useSelector(
     state => state.interaction.sendLoveMatchRequest
   );
@@ -326,7 +328,13 @@ export default function UserCard({ user, timeScore }) {
             className={classes.iconBtn}
             onClick={() => {
               user.timeScore = timeScore;
-              Router.push({ pathname: `/home/profile`, query: user });
+              console.log("clicked user ", user);
+              const sunUser = `${user.i}_${user.co}_${user.ci}_${user.va}`;
+              dispatch(profileUserClicked(user));
+              Router.push({
+                pathname: `/home/profile`,
+                query: { id: sunUser }
+              });
             }}
             aria-label="View Profile"
           >

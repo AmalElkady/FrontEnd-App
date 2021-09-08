@@ -35,6 +35,7 @@ import {
   setTypingTimer,
   resetProfilesOnlineStatus
 } from "../../../actions/Messages";
+import { hideMessage } from "../../../actions/Auth";
 import { requestPhotoRead } from "../../../actions/Home";
 
 function useInterval(callback, delay) {

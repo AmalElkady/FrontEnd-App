@@ -17,11 +17,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import ModalConfirmPassword from "../components/Modals/modalConfirmPassword"
+import Typography from "@material-ui/core/Typography";
 
 import {ARRAY_OF_WORKD} from '../util/data';
 
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+
+import Flag from "react-world-flags";
 
 
 import {
@@ -161,8 +164,13 @@ componentDidMount () {
 						<Grid item xs={12}>
 							<InputLabel id="nationality-label"  style={{ paddingBottom: "7px"}} ><IntlMessages id="inputLabel.nationality"/></InputLabel>
 						</Grid>
-						<Grid item xs={12}>
+						<Grid item xs={3}  className="phone-input">
+						{/* <Typography component="body1">
+				  <IntlMessages
+                      id="nationality.select"/>
+          </Typography> */}
 							<PhoneInput
+							 
 							  countryCodeEditable={false}
 							 disableCountryCode={true}
 							  country={COUNTRY_CODE_TO_NAME_MAP[this.state.nationality] || COUNTRY_CODE_TO_NAME_MAP[country] || COUNTRY_CODE_TO_NAME_MAP["+"+country]}
@@ -173,6 +181,23 @@ componentDidMount () {
 							  onChange={(value, country, e, formattedValue) => {this.setState({ nationality: country.countryCode });}}
 							/>
 						</Grid>
+						{this.state.nationality !=''&&
+						<>
+						<Grid item xs={2}>
+						<div style={{width:"80%"}} >
+                  <Flag code={this.state.nationality} /> 
+				  </div>
+				  </Grid>
+				  <Grid item xs={7}>
+				  <Typography  variant="body1">
+				  <IntlMessages
+                      id={`co.${this.state.nationality}`}/>
+          </Typography>
+		  </Grid>
+				 
+               
+				</>
+							}
 				</Grid>
 				
 

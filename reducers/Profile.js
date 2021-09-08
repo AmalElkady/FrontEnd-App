@@ -23,7 +23,8 @@ import {
   OPEN_MODAL,
   OPEN_MODAL_PP,
   OPEN_MODAL_SEND_PP,
-  SHOW_MESSAGE
+  SHOW_MESSAGE,
+  MODAL_PP_INFO
 } from "../constants/ActionTypes";
 
 const initialProfileState = {
@@ -65,7 +66,8 @@ const initialProfileState = {
   loader: false,
   alertMessage: "",
   mainPhotoUpdated: false,
-  userBlockedMessage: null
+  userBlockedMessage: null,
+  ppInfoModal: false
 };
 
 const Profile = (state = initialProfileState, action) => {
@@ -187,22 +189,27 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PAYMENTS_AND_SUB_SUCCESS: {
-      if (action.payload.dataToSent.payments.length != 0) {
+      console.log(
+        "from reducer read payments and subsriptions ",
+        action.payload
+      );
+      if (action.payload.data.length != 0) {
         state.paymentsStart = state.paymentsEnd;
         state.paymentsEnd += state.paymentLimit;
-        if (action.payload.dataToSent.payments.length < state.paymentLimit) {
+        if (action.payload.data.length < state.paymentLimit) {
           state.endOfResultPaymentsAndSub = true;
         }
-      } else if (action.payload.dataToSent.payments.length == 0) {
+      } else if (action.payload.data.length == 0) {
         state.endOfResultPaymentsAndSub = true;
       }
       return {
         ...state,
-        myPaymentsAndSubCount: action.payload.dataToSent.count,
-        myPaymentsAndSub: [
-          ...state.myPaymentsAndSub,
-          ...action.payload.dataToSent.payments
-        ]
+        myPaymentsAndSubCount: action.payload.data.length,
+        myPaymentsAndSub: action.payload.data
+        //  [
+        //   ...state.myPaymentsAndSub,
+        //   ...action.payload.data
+        // ]
       };
     }
     case CHANGE_MY_PASSWORD_SUCCESS: {
@@ -257,6 +264,12 @@ const Profile = (state = initialProfileState, action) => {
         alertMessage: action.payload,
         showMessage: true,
         loader: false
+      };
+    }
+    case MODAL_PP_INFO: {
+      return {
+        ...state,
+        ppInfoModal: action.payload
       };
     }
     default:

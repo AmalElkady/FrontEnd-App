@@ -48,7 +48,7 @@ import {
   readMyPaymentAndSub,
   readMyPhoneAndPwData
 } from "../../actions/Profile";
-export default function Profile() {
+export default function Settings() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [clickedBtn, setClickedBtn] = React.useState("");
@@ -71,26 +71,28 @@ export default function Profile() {
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
     console.log("myPhoneAndPwData ", myPhoneAndPwData);
-    if (panel == "panel1" && myPaymentsAndSub == null) {
-    } else if (panel == "panel2" && myPhoneAndPwData == null) {
+    // if (panel == "panel1" && myPaymentsAndSub == null) {
+    // } else
+    if (panel == "panel1" && myPhoneAndPwData == null) {
       dispatch(readMyPhoneAndPwData());
     }
   };
 
   useEffect(() => {
-    dispatch(readMyPaymentAndSub(true, paymentsStart, paymentsEnd));
+    //dispatch(readMyPaymentAndSub(true, paymentsStart, paymentsEnd));
+    dispatch(readMyPhoneAndPwData());
   }, []);
   // handle scroll for list of payments
-  const handleScrollPaymentsAndSub = () => {
-    if (!endOfResultPaymentsAndSub) {
-      //  payments (next options)
-      dispatch(readMyPaymentAndSub(false, paymentsStart, paymentsEnd));
-    }
-  };
+  // const handleScrollPaymentsAndSub = () => {
+  //   if (!endOfResultPaymentsAndSub) {
+  //     //  payments (next options)
+  //     dispatch(readMyPaymentAndSub(false, paymentsStart, paymentsEnd));
+  //   }
+  // };
   return (
     <>
       <div className="setting-container">
-        <Accordion
+        {/* <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
           className="setting-tap"
@@ -103,13 +105,13 @@ export default function Profile() {
             <Typography className={classes.heading} variant="h6" gutterBottom>
               <IntlMessages id="settings.payment" />
             </Typography>
-            {/* <Typography className={classes.secondaryHeading}>
+            <Typography className={classes.secondaryHeading}>
               I am an accordion
-            </Typography> */}
+            </Typography>
           </AccordionSummary>
           {myPaymentsAndSub && (
             <AccordionDetails>
-              {/* <Typography>{myPaymentsAndSub.count}</Typography> */}
+              <Typography>{myPaymentsAndSub.count}</Typography>
               <Grid container>
                 <Grid
                   item
@@ -157,25 +159,25 @@ export default function Profile() {
                     next={handleScrollPaymentsAndSub}
                     hasMore={!endOfResultPaymentsAndSub}
                     loader={<CircularProgress />}
-                    // endMessage={
-                    //   <p style={{ textAlign: "center" }}>
-                    //     {myPaymentsAndSub.length != 0 && (
-                    //       <b>Yay! You have seen all payments </b>
-                    //     )}
-                    //     {myPaymentsAndSub.length === 0 && (
-                    //       <b>Yay! You don't have any payments </b>
-                    //     )}
-                    //   </p>
-                    // }
+                    endMessage={
+                      <p style={{ textAlign: "center" }}>
+                        {myPaymentsAndSub.length != 0 && (
+                          <b>Yay! You have seen all payments </b>
+                        )}
+                        {myPaymentsAndSub.length === 0 && (
+                          <b>Yay! You don't have any payments </b>
+                        )}
+                      </p>
+                    }
                   >
                     <Grid container>
                       {myPaymentsAndSub.map((option, index) => (
-                        //option=JSON.parse(option)
-                        // <ListItem key={option.subscriptionend} user={option} />
+                        option=JSON.parse(option)
+                        <ListItem key={option.subscriptionend} user={option} />
                         <>
                           <Grid item xs={5}>
                             <Typography>
-                              {/* {JSON.parse(option).subscriptionend} */}
+                              {JSON.parse(option).subscriptionend}
                               {moment(
                                 JSON.parse(option).subscriptionend
                               ).format("YYYY-MM-DD")}
@@ -198,7 +200,7 @@ export default function Profile() {
                     </Grid>
                   </InfiniteScroll>
                 </Grid>
-                {/* have issue btn */}
+                have issue btn
                 <Grid
                   item
                   xs={12}
@@ -211,8 +213,8 @@ export default function Profile() {
                   <Button
                     variant="contained"
                     onClick={() => {
-                      // setClickedBtn("issue");
-                      // dispatch(openModal(true));
+                      setClickedBtn("issue");
+                      dispatch(openModal(true));
                     }}
                     color="primary"
                     className="linear-g-r"
@@ -223,10 +225,10 @@ export default function Profile() {
               </Grid>
             </AccordionDetails>
           )}
-        </Accordion>
+        </Accordion> */}
         <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
+          expanded={expanded === "panel1"}
+          onChange={handleChange("panel1")}
           className="setting-tap"
         >
           <AccordionSummary
@@ -426,8 +428,8 @@ export default function Profile() {
           </AccordionDetails>
         </Accordion>
         <Accordion
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
+          expanded={expanded === "panel2"}
+          onChange={handleChange("panel2")}
           className="setting-tap"
         >
           <AccordionSummary
@@ -507,6 +509,10 @@ export default function Profile() {
       )}
       {OpenModal && clickedBtn == "delete" && (
         <ModalSettings deleteAcc={true} />
+      )}
+
+      {OpenModal && clickedBtn == "issue" && (
+        <ModalSettings reportIusse={true} />
       )}
       <NotificationContainer />
     </>

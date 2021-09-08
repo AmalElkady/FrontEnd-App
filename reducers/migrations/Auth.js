@@ -4,6 +4,8 @@ export const authMigration = {
     passwordChanged: previousVersionState.passwordChanged,
     initURL: previousVersionState.initURL,
     authUser: previousVersionState.authUser,
+    jnt: previousVersionState.jnt,
+    sub: previousVersionState.sub,
     stepFlag: previousVersionState.stepFlag,
     phone: previousVersionState.phone,
     country: previousVersionState.country,
@@ -14,6 +16,7 @@ export const authMigration = {
     martial: previousVersionState.martial,
     gender: previousVersionState.gender,
     mpUploadFlag: previousVersionState.mpUploadFlag,
+    noteFlag: previousVersionState.noteFlag,
     //  haveConnection: previousVersionState.haveConnection
     //haveConnectionPusher: previousVersionState.haveConnectionPusher,
     haveConnectionChannel: previousVersionState.haveConnectionChannel

@@ -18,7 +18,9 @@ import {
   RESET_COUNT,
   UPDATE_LIST,
   INCREASE_COUNT,
-  ERROR_JWT_8
+  ERROR_JWT_8,
+  ADD_USER_ONLINE_OFFLINE_SUCCESS,
+  REPORT_USER_SUCCESS
 } from "../constants/ActionTypes";
 import { calcValueOfSlAndOffset } from "../helpers/calcValueOfSlAndOffset";
 import { map2ArrTo1Arr } from "../helpers/map2ArrTo1Arr";
@@ -115,6 +117,10 @@ const initialProfileState = {
   OffsetNotificationLove: 0,
 
   cleanNotification: false,
+
+  addUserOnlineOfflineResponse: false,
+
+  userReported: false,
 
   clicked_id: null,
   loveSelectedIcon: null,
@@ -493,6 +499,13 @@ const Interaction = (state = initialProfileState, action) => {
         cleanNotification: action.payload
       };
     }
+    case REPORT_USER_SUCCESS: {
+      console.log("form reducer report user ", action.payload);
+      return {
+        ...state,
+        userReported: action.payload
+      };
+    }
     case UPDATE_LIST: {
       if (action.payload == "LNA") {
         const { list1, list2 } = removeUserFromList(
@@ -543,6 +556,13 @@ const Interaction = (state = initialProfileState, action) => {
         ...state,
         loveSelectedIcon: action.payload
       };
+    case ADD_USER_ONLINE_OFFLINE_SUCCESS: {
+      return {
+        ...state,
+        addUserOnlineOfflineResponse: action.payload
+      };
+    }
+
     case SELECTED_PRIVATE_ICON:
       return {
         ...state,
@@ -561,6 +581,7 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case ERROR_JWT_8: {
+      console.log("from reducer ERROR_JWT_8 ", action.payload);
       return {
         ...state,
         errorJwt8Flag: action.payload
