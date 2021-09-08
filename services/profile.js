@@ -766,13 +766,13 @@ profile.updateMainPhoto = function(file) {
   });
 };
 
-profile.deleteMyAccount = function(password) {
-  console.log("from service deleteMyAccount ", password);
+profile.deleteMyAccount = function(password, score, key) {
+  console.log("from service deleteMyAccount ", password, score, key);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
       const options = {
-        // url: `/requestpermissionppreadaddremove?action=${action}`,
+        url: `/deleteaccount`,
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -780,7 +780,9 @@ profile.deleteMyAccount = function(password) {
           Authorization: "Bearer " + tokenValue
         },
         data: {
-          password
+          password,
+          score,
+          key
         }
       };
 

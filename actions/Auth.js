@@ -138,10 +138,10 @@ export const changePassword = resetTokenData => {
   };
 };
 
-export const userSignUp = user => {
+export const userSignUp = (user, score, key) => {
   return {
     type: SIGNUP_USER,
-    payload: user
+    payload: { user, score, key }
   };
 };
 

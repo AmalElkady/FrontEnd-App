@@ -182,8 +182,11 @@ export default function ModalSettings({
   const [passForDel, setPassForDel] = useState(null);
   const [openDelPass, setOpenDelPass] = useState(false);
 
+  const [captchaValue, setCaptchaValue] = useState(null);
+
   const OpenModal = useSelector(state => state.profile.openModal);
   const countryiso2 = useSelector(state => state.auth.countryiso2);
+  const userGender = useSelector(state => state.auth.gender);
   const loader = useSelector(state => state.auth.loader);
   const loginPhoneChanged = useSelector(
     state => state.profile.loginPhoneChanged
@@ -348,6 +351,7 @@ export default function ModalSettings({
 
   const onChangeReCaptcha = value => {
     console.log("Captcha value:", value);
+    setCaptchaValue(value);
   };
 
   const StyledFormControl = styled(FormControl)({
@@ -389,9 +393,7 @@ export default function ModalSettings({
             {/* <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"> */}
             <div
               className={
-                deleteAcc && openDelPass == false
-                  ? " confirm-del"
-                  : ""
+                deleteAcc && openDelPass == false ? " confirm-del" : ""
               }
             >
               <div
@@ -413,9 +415,9 @@ export default function ModalSettings({
                       <IntlMessages id="settings.report" />
                     )}
 
-                    {reportIusse && openDelPass == false && (
+                    {/* {reportIusse && openDelPass == false && (
                       <IntlMessages id="settings.iusse" />
-                    )}
+                    )} */}
                     {confirmTerms && openDelPass == false && (
                       <IntlMessages id="signUp.terms" />
                     )}
@@ -456,15 +458,10 @@ export default function ModalSettings({
                   <>
                     <div>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Pellentesque bibendum fermentum purus gravida elementum.
-                        Duis blandit nisi ut mi pellentesque pretium. Donec
-                        bibendum volutpat est, id varius sem. Integer nisl ex,
-                        ultricies et molestie quis, imperdiet sed augue.
-                        Maecenas eget dignissim mauris. Sed egestas enim turpis.
-                        Quisque ante erat, tristique eu elementum feugiat,
-                        vehicula eu ante. Mauris nec lectus volutpat, facilisis
-                        risus sed, vulputate velit.
+                        <IntlMessages id="settings.deletePoint1" />
+                      </Typography>
+                      <Typography>
+                        <IntlMessages id="settings.deletePoint2" />
                       </Typography>
                     </div>
 
@@ -593,7 +590,7 @@ export default function ModalSettings({
                       >
                         <IntlMessages id="appModule.back" />
                       </Button>
-                      {agreeVal == "agree" && (
+                      {agreeVal == "agree" && captchaValue != null && (
                         <Button
                           variant="contained"
                           onClick={() => {
@@ -601,7 +598,8 @@ export default function ModalSettings({
                             dispatch(showAuthLoader());
                             handleClose();
                             // dispatch(userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}));
-                            dispatch(userSignUp(user));
+                            dispatch(userSignUp(user, "", ""));
+                            setCaptchaValue(null);
                           }}
                           color="primary"
                           className="linear-g-r"
@@ -847,6 +845,13 @@ export default function ModalSettings({
                             required
                           />
                         </Grid>
+                        <Grid item xs={12}>
+                          <ReCAPTCHA
+                            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                            onChange={onChangeReCaptcha}
+                            className="not-robot"
+                          />
+                        </Grid>
                         <Grid item xs={6}>
                           <Button
                             variant="contained"
@@ -859,21 +864,24 @@ export default function ModalSettings({
                             <IntlMessages id="appModule.cancel" />
                           </Button>
                         </Grid>
-                        {passForDel && (
-                          <Grid item xs={6} style={{ textAlign: "end" }}>
-                            <Button
-                              variant="contained"
-                              onClick={() => {
-                                console.log("pass ", passForDel);
+                        {passForDel && captchaValue != null && (
+                          <>
+                            <Grid item xs={6} style={{ textAlign: "end" }}>
+                              <Button
+                                variant="contained"
+                                onClick={() => {
+                                  console.log("pass ", passForDel);
 
-                                dispatch(deleteMyAccount(passForDel));
-                              }}
-                              color="primary"
-                              className="linear-g-r"
-                            >
-                              <IntlMessages id="appModule.submit" />
-                            </Button>
-                          </Grid>
+                                  // dispatch(deleteMyAccount(passForDel,score,key));
+                                  setCaptchaValue(null);
+                                }}
+                                color="primary"
+                                className="linear-g-r"
+                              >
+                                <IntlMessages id="appModule.submit" />
+                              </Button>
+                            </Grid>
+                          </>
                         )}
                       </Grid>
                     </form>
@@ -898,7 +906,13 @@ export default function ModalSettings({
                                         name={i + 1}
                                       />
                                     }
-                                    label={value}
+                                    label={
+                                      i == 1 && userGender == "1" ? (
+                                        <IntlMessages id="reason.9" />
+                                      ) : (
+                                        value
+                                      )
+                                    }
                                   />
                                 ) : (
                                   <FormControlLabel
@@ -1124,10 +1138,14 @@ export default function ModalSettings({
                       <form method="post">
                         <Grid container>
                           <Grid item xs={12}>
-                            <InputLabel id="reason-label">
-                              <IntlMessages id="report.reason" />
-                            </InputLabel>
-                            <FormGroup>
+                            <Typography
+                              variant="h6"
+                              style={{ marginBottom: "1rem" }}
+                            >
+                              {/* <IntlMessages id="report.reason" /> */}
+                              <IntlMessages id="report.haveIssue" />
+                            </Typography>
+                            {/* <FormGroup>
                               {ARRAYS_OF_REASONS_IUSSE.map((value, i) => (
                                 <FormControlLabel
                                   control={
@@ -1140,9 +1158,9 @@ export default function ModalSettings({
                                   label={value}
                                 />
                               ))}
-                            </FormGroup>
+                            </FormGroup> */}
                           </Grid>
-                          <Grid item xs={12}>
+                          {/* <Grid item xs={12}>
                             <InputLabel
                               id="comment-label"
                               style={{ marginBottom: ".5rem" }}
@@ -1160,7 +1178,7 @@ export default function ModalSettings({
                               style={{ width: "100%" }}
                               required
                             />
-                          </Grid>
+                          </Grid> */}
                           {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
                           <Grid item xs={6}>
                             <Button
@@ -1175,7 +1193,7 @@ export default function ModalSettings({
                               <IntlMessages id="appModule.cancel" />
                             </Button>
                           </Grid>
-                          {comment != "" && checkReasonIusseValues() && (
+                          {/* {comment != "" && checkReasonIusseValues() && (
                             <Grid item xs={6} style={{ textAlign: "end" }}>
                               <Button
                                 variant="contained"
@@ -1194,7 +1212,7 @@ export default function ModalSettings({
                                 <IntlMessages id="report.submit" />
                               </Button>
                             </Grid>
-                          )}
+                          )} */}
                           {/* </div> */}
                         </Grid>
                       </form>

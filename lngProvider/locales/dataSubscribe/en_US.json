@@ -15,5 +15,6 @@
   "subscription.trial3": "20 Days Trial Pack",
   "subscription.2PackCost": "9.99 $",
   "subscription.3PackCost": "19.99 $",
-  "subscription.pending": "pending for subscription"
+  "subscription.pending": "pending for subscription",
+  "report.haveIssue": "You can send your issue with all the details to our support email support@gila.com"
 }

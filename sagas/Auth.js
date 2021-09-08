@@ -72,7 +72,9 @@ const createUserWithPhonePasswordRequest = async (
   month,
   day,
   city,
-  martial
+  martial,
+  score,
+  key
 ) =>
   await auth
     .createUserWithPhoneAndPassword(
@@ -87,7 +89,9 @@ const createUserWithPhonePasswordRequest = async (
       month,
       day,
       city,
-      martial
+      martial,
+      score,
+      key
     )
     .then(authUser => authUser)
     .catch(error => error);
@@ -141,15 +145,21 @@ const addProfileLayer2Request = async (
     .then(authUser => authUser)
     .catch(error => error);
 
-const addSubRequest = async (subscribePack,sessionId) =>
+const addSubRequest = async (subscribePack, sessionId) =>
   await auth
-    .subscribe(subscribePack,sessionId)
+    .subscribe(subscribePack, sessionId)
     .then(authUser => authUser)
     .catch(error => error);
 
-const signInUserWithPhonePasswordRequest = async (phone, password, country) =>
+const signInUserWithPhonePasswordRequest = async (
+  phone,
+  password,
+  country,
+  score,
+  key
+) =>
   await auth
-    .signInWithPhoneAndPassword(phone, password, country)
+    .signInWithPhoneAndPassword(phone, password, country, score, key)
     .then(authUser => authUser)
     .catch(error => error);
 
@@ -226,6 +236,7 @@ const createCheckOutSessionRequest = async pack =>
 //        .catch(error => error);
 
 function* createUserWithPhonePassword({ payload }) {
+  const { user, score, key } = payload;
   const {
     phone,
     password,
@@ -239,7 +250,7 @@ function* createUserWithPhonePassword({ payload }) {
     day,
     city,
     martial
-  } = payload;
+  } = user;
 
   try {
     const signUpUser = yield call(
@@ -255,7 +266,9 @@ function* createUserWithPhonePassword({ payload }) {
       month,
       day,
       city,
-      martial
+      martial,
+      score,
+      key
     );
 
     if (signUpUser.message) {
@@ -554,13 +567,15 @@ function* requestCreateCheckOutSession({ payload }) {
 //}
 
 function* signInUserWithPhonePassword({ payload }) {
-  const { phone, password, country } = payload;
+  const { phone, password, country, score, key } = payload;
   try {
     const signInUser = yield call(
       signInUserWithPhonePasswordRequest,
       phone,
       password,
-      country
+      country,
+      score,
+      key
     );
     if (signInUser.message) {
       yield put(showAuthMessage(signInUser.message));

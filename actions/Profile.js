@@ -301,10 +301,10 @@ export const ppPhotoSelected = photo => {
   };
 };
 
-export const deleteMyAccount = password => {
+export const deleteMyAccount = (password, score, key) => {
   return {
     type: DELETE_MY_ACCOUNT,
-    payload: password
+    payload: { password, score, key }
   };
 };
 

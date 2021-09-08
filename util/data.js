@@ -42,6 +42,8 @@ export const ARRAYS_OF_REASONS_CONV = [
   <IntlMessages id="reasonConv.1" />,
   <IntlMessages id="reasonConv.2" />,
   <IntlMessages id="reasonConv.3" />,
+  <IntlMessages id="reasonConv.4" />,
+  <IntlMessages id="reasonConv.5" />,
   <IntlMessages id="reason.8" />
 ];
 

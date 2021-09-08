@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Resizer from "react-image-file-resizer";
 import ReactCrop from "react-image-crop";
@@ -26,7 +27,7 @@ export default function Timer() {
   const timeVal = useSelector(state => state.auth.timeReturnedVal);
   const timeflag = useSelector(state => state.auth.timeReturned);
   const dispatch = useDispatch();
-  const [seconds, setSeconds] = useState(0);
+  const [seconds2, setSeconds] = useState(null);
   const [minutes, setMinutes] = useState(timeVal);
 
   const sub = useSelector(state => state.auth.sub);
@@ -81,15 +82,105 @@ export default function Timer() {
     } else {
       // Render a countdown
       return (
-        <Typography variant="h6" gutterBottom style={{ color: "#6c757d" }}>
-          <IntlMessages id="settings.expireAfter" />
-          <span className="timer">
-            {days}:{hours}:{minutes}:{seconds}
-            <ScheduleIcon fontSize="large" />
-            {/* <NotificationImportantIcon fontSize="large" /> */}
-          </span>
-        </Typography>
+        <>
+          <Typography
+            variant="h6"
+            gutterBottom
+            style={{
+              color: "#6c757d",
+              fontWeight: "bold",
+              textAlign: "center"
+            }}
+          >
+            <IntlMessages id="settings.expireAfter" />
+          </Typography>
+          <Grid container>
+            <Grid item xs={3}>
+              <div className="timer-container">
+                <span className={hours == 0 ? "span-minute" : ""}>{days}</span>
+              </div>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className="timer-head"
+                // style={{
+                //   color: "#6c757d",
+                //   fontWeight: "bold",
+                //   textAlign: "center"
+                // }}
+              >
+                <IntlMessages id="timer.days" />
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="timer-container">
+                {" "}
+                <span className={minutes == 0 ? "span-minute" : ""}>
+                  {hours}
+                </span>
+              </div>
+              <Typography
+                variant="h6"
+                gutterBottom
+                // style={{
+                //   color: "#6c757d",
+                //   fontWeight: "bold",
+                //   textAlign: "center"
+                // }}
+                className="timer-head"
+              >
+                <IntlMessages id="timer.hours" />
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="timer-container">
+                <span className={seconds == 0 ? "span-minute" : ""}>
+                  {minutes}
+                </span>
+              </div>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className="timer-head"
+                // style={{
+                //   color: "#6c757d",
+                //   fontWeight: "bold",
+                //   textAlign: "center"
+                // }}
+              >
+                <IntlMessages id="timer.minutes" />
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <div className="timer-container">
+                <span className="span-second">{seconds}</span>
+              </div>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className="timer-head"
+                // style={{
+                //   color: "#6c757d",
+                //   fontWeight: "bold",
+                //   textAlign: "center"
+                // }}
+              >
+                <IntlMessages id="timer.seconds" />
+              </Typography>
+            </Grid>
+          </Grid>
+          {/* <span className="timer">
+
+           :{hours}:{minutes}:{seconds}
+          </span> */}
+        </>
       );
+      {
+        /* <ScheduleIcon fontSize="large" /> */
+      }
+      {
+        /* <NotificationImportantIcon fontSize="large" /> */
+      }
     }
   };
 

@@ -32,7 +32,8 @@ class SignIn extends React.Component {
       phoneSign: "",
       password: "",
       countrySign: "",
-      viewPhone: ""
+      viewPhone: "",
+      rcaptchaValue: null
     };
   }
 
@@ -61,13 +62,14 @@ class SignIn extends React.Component {
       });
     }
   }
-
-  onChange(value) {
-    console.log("Captcha value:", value);
-  }
-
   render() {
-    const { phoneSign, password, countrySign, viewPhone } = this.state;
+    const {
+      phoneSign,
+      password,
+      countrySign,
+      viewPhone,
+      rcaptchaValue
+    } = this.state;
     const { showMessage, loader, alertMessage, phone, country } = this.props;
     return (
       <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
@@ -209,11 +211,14 @@ class SignIn extends React.Component {
                   />
 
                   {/* <div className="mb-3 d-flex align-items-center justify-content-between"> */}
-                  <Grid container spacing={12}>
+                  <Grid container>
                     <Grid item xs={12}>
                       <ReCAPTCHA
                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                        onChange={this.onChange}
+                        onChange={value => {
+                          console.log("Captcha value2:", value);
+                          this.setState({ rcaptchaValue: value });
+                        }}
                         className="not-robot"
                       />
                     </Grid>
@@ -224,14 +229,20 @@ class SignIn extends React.Component {
                           this.props.userSignIn({
                             phone: phoneSign,
                             password,
-                            country: countrySign
+                            country: countrySign,
+                            score: "",
+                            key: ""
                           });
                           this.props.toggleCollapsedNav(false);
+                          this.setState({
+                            ["RcaptchaValue"]: null
+                          });
                         }}
                         variant="contained"
                         color="primary"
                         style={{ width: "100%" }}
                         className="linear-g-r"
+                        disabled={rcaptchaValue === null ? true : false}
                       >
                         <IntlMessages id="appModule.signIn" />
                       </Button>
@@ -268,18 +279,21 @@ class SignIn extends React.Component {
           </div>
         </div>
 
-        {/* {loader && ( */}
-          {/* //  <div className="loader-view"> */}
-          <img
-            src="../static/images/Gila_Final_Logo_form.svg"
-            alt="App"
-            title="App"
-            className="rotate-image loader-img"
-          />
-          {/* // <div className="loader2"></div>
+        {loader && (
+          //  <div className="loader-view">
+          <div className="loading-border loading--full-height">
+            <img
+              src="../static/images/Gila_Final_Logo_form.svg"
+              alt="App"
+              title="App"
+              className="rotate-image loader-img"
+            />
+          </div>
+
+          // <div className="loader2"></div>
           // <CircularProgress />
-          // </div> */}
-        {/* )} */}
+          // </div>
+        )}
 
         {showMessage && NotificationManager.error(alertMessage)}
         <NotificationContainer />

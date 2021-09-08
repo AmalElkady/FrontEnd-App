@@ -150,7 +150,7 @@ let callAxios = (options) => {
 // "bio": "Here I Am, Nice To Meet You"
 //}http://localhost:3001/api/addupdateprofile
 
-auth.signInWithPhoneAndPassword = function (username,password,country) {
+auth.signInWithPhoneAndPassword = function (username,password,country,score,key) {
 	
 		      return new Promise(  async (resolve, reject) => {				
 
@@ -170,6 +170,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 										     "phonecountrycode": country,
 											"phone" : username,
 											"password" : password
+											,score,key
 										  }
 										};
 
@@ -246,7 +247,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country) {
 }
 
 
-auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country,countryiso2, gender, year, month, day, city, martial) {
+auth.createUserWithPhoneAndPassword = function (username,password,firstName,lastName,country,countryiso2, gender, year, month, day, city, martial,score, key) {
 
 			let newUser = {
 								"name" : firstName + " " + lastName,
@@ -259,7 +260,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								 month,
 								 day,
 								 city,
-								 martial
+								 martial,score, key
 							}
 
 

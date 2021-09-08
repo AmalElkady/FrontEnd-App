@@ -113,9 +113,9 @@ const photoRemovePP = async photoNum =>
     .then(returnedData => returnedData)
     .catch(error => error);
 
-const deleteMyAccount = async password =>
+const deleteMyAccount = async (password, score, key) =>
   await profile
-    .deleteMyAccount(password)
+    .deleteMyAccount(password, score, key)
     .then(returnedData => returnedData)
     .catch(error => error);
 
@@ -377,8 +377,9 @@ function* updateMainPhotoRequest({ payload }) {
 
 function* deleteMyAccountRequest({ payload }) {
   console.log("delete account from saga ", payload);
+  const { password, score, key } = payload;
   try {
-    const returnedData = yield call(deleteMyAccount, payload);
+    const returnedData = yield call(deleteMyAccount, password, score, key);
     if (returnedData.message) {
       yield put(deleteMyAccountSuccess(false));
     } else {

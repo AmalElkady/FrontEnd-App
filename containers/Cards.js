@@ -245,13 +245,13 @@ export default function Cards() {
   useEffect(() => {
     if (authUser != null) {
       console.log("sub from home %%%%%%12345 ", authUser, sub, diffSub);
-      if (diffSub >= 0 && diffSub <= 202) setPopSub(true);
+      if (diffSub >= 0 && diffSub <= 48) setPopSub(true);
     }
   }, [sub]);
 
   useEffect(() => {
     if (popSub) {
-      if (diffSub >= 0 && diffSub <= 202) dispatch(modalPPInfo(true));
+      if (diffSub >= 0 && diffSub <= 48) dispatch(modalPPInfo(true));
     }
   }, [popSub]);
 

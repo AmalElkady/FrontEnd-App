@@ -8,8 +8,12 @@
   "message.placeholder": "Type a message",
   "mgs.seen": "seen",
   "mgs.typing": "typing...",
-  "reasonConv.1": "Reason 1",
-  "reasonConv.2": "Reason 2",
-  "reasonConv.3": "Reason 3",
+
+  "reasonConv.1": "The user is a scammer asking for money",
+  "reasonConv.2": "The user is harassing me",
+  "reasonConv.3": "The user is asking for sex, nudity photos, etc..",
+  "reasonConv.4": "The user is texting me inappropriate messages",
+  "reasonConv.5": "The user is advertising his/others business",
+
   "error.clearConv": "Cannot clear reported conversation"
 }

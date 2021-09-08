@@ -15,5 +15,6 @@
   "subscription.trial3": "حزمة تجريبية لمدة عشرين أيام ",
   "subscription.2PackCost": "9.99 $",
   "subscription.3PackCost": "19.99 $",
-  "subscription.pending": "في انتظار الاشتراك "
+  "subscription.pending": "في انتظار الاشتراك ",
+  "report.haveIssue": "يمكنك إرسال مشكلتك بكل التفاصيل إلى البريد الإلكتروني الخاص بالدعم support@gila.com "
 }
