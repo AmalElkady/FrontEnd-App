@@ -66,11 +66,8 @@ export default function UsersOnline() {
   const classes = useStyles();
 
   useEffect(() => {
-    // let isocon = "SG";
-    // console.log(
-    //   "test get country cities states  ",
-    //   State.getStatesOfCountry(isocon)
-    // );
+    // let isocon = "SN";
+    // console.log("test get country states  ", State.getStatesOfCountry(isocon));
     // for (
     //   let index = 0;
     //   index < State.getStatesOfCountry(isocon).length;
@@ -82,6 +79,7 @@ export default function UsersOnline() {
     //     }",`
     //   );
     // }
+    // console.log("test get country cities  ", City.getCitiesOfCountry(isocon));
     // for (
     //   let index = 0;
     //   index < City.getCitiesOfCountry(isocon).length;
@@ -93,7 +91,6 @@ export default function UsersOnline() {
     //     }",`
     //   );
     // }
-    // console.log("test get country cities  ", City.getCitiesOfCountry(isocon));
   }, []);
 
   useEffect(() => {
@@ -208,12 +205,21 @@ export default function UsersOnline() {
           height={350}
           next={handleScroll}
           hasMore={!endOfResult}
-          loader={<CircularProgress />}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen all online Users </b>
-            </p>
+          loader={
+            <div className="loading-border loading--full-height">
+              <img
+                src="../static/images/Gila_Final_Logo_form.svg"
+                alt="App"
+                title="App"
+                className="rotate-image loader-img"
+              />
+            </div>
           }
+          // endMessage={
+          //   <p style={{ textAlign: "center" }}>
+          //     <b>Yay! You have seen all online Users </b>
+          //   </p>
+          // }
         >
           <div className={classes.displayF}>
             {newUsers.map((option, index) => (
@@ -227,8 +233,16 @@ export default function UsersOnline() {
         </InfiniteScroll>
       )}
       {loader && (
-        <div className="loader-view">
-          <CircularProgress />
+        // <div className="loader-view">
+        //   <CircularProgress />
+        // </div>
+        <div className="loading-border loading--full-height">
+          <img
+            src="../static/images/Gila_Final_Logo_form.svg"
+            alt="App"
+            title="App"
+            className="rotate-image loader-img"
+          />
         </div>
       )}
       {/* {showMessage && NotificationManager.error(alertMessage)}

@@ -393,10 +393,18 @@ const urlPath=window.location.pathname
 </Typography>
 
 {loader && (
-          <div className="loader-view">
-            <div className="loader2"></div>
-            {/* <CircularProgress /> */}
-          </div>
+          // <div className="loader-view">
+          //   <div className="loader2"></div>
+          //   {/* <CircularProgress /> */}
+          // </div>
+          <div className="loading-border loading--full-height">
+          <img
+            src="../static/images/Gila_Final_Logo_form.svg"
+            alt="App"
+            title="App"
+            className="rotate-image loader-img"
+          />
+        </div>
         )}
 </div>
 </>

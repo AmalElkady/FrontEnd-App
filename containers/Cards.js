@@ -877,12 +877,21 @@ export default function Cards() {
             next={handleScrollAgerange}
             height={500}
             hasMore={!endOfResult}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it agerange all countries users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen it agerange all countries users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newSelectedOnlineUsers.map((option, index) => (
@@ -908,12 +917,21 @@ export default function Cards() {
             next={handleScrollCountry}
             height={500}
             hasMore={!endOfResult}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen country selected users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen country selected users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newSelectedOnlineUsers.map((option, index) => (
@@ -939,12 +957,22 @@ export default function Cards() {
             next={handleScrollCountryCity}
             height={400}
             hasMore={!endOfResult}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen country city selected users</b>
-              </p>
+            loader={
+              // <CircularProgress />
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen country city selected users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newSelectedOnlineUsers.map((option, index) => (
@@ -970,12 +998,21 @@ export default function Cards() {
             next={handleScrollCountryAgerange}
             height={500}
             hasMore={!endOfResult}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen country cities agerange selected users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen country cities agerange selected users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newSelectedOnlineUsers.map((option, index) => (
@@ -1001,12 +1038,21 @@ export default function Cards() {
             next={handleScrollCountryCityAgerange}
             height={350}
             hasMore={!endOfResult}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen country city agerange selected users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen country city agerange selected users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newSelectedOnlineUsers.map((option, index) => (
@@ -1038,12 +1084,21 @@ export default function Cards() {
             next={onScrollCountryRecentUsers}
             height={500}
             hasMore={!endOfResultUsersOfS}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all country users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen it all country users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newCountryRecentActiveUsers.map((option, index) => (
@@ -1063,12 +1118,21 @@ export default function Cards() {
             next={onScrollCountryCityRecentUsers}
             height={350}
             hasMore={!endOfResultUsersOfS}
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all country and cities users</b>
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     <b>Yay! You have seen it all country and cities users</b>
+            //   </p>
+            // }
           >
             <div className={classes.displayF}>
               {newCountryCityRecentActiveUsers.map((option, index) => (

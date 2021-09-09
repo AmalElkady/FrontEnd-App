@@ -97,17 +97,28 @@ export default function BlockedUsers() {
             height={300}
             next={handleScrollGetBlockedUsers}
             hasMore={!endOfResultBlockedUsers}
-            loader={<CircularProgress />}
-            // endMessage={
-            //   <p style={{ textAlign: "center" }}>
-            //     {blockedUsersProfiles.length != 0 && (
-            //       <b>Yay! You have seen All blocked Users </b>
-            //     )}
-            //     {blockedUsersProfiles.length === 0 && (
-            //       <b>Yay! You don't have blocked Users </b>
-            //     )}
-            //   </p>
-            // }
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                {/* {blockedUsersProfiles.length != 0 && (
+                  <b>Yay! You have seen All blocked Users </b>
+                )} */}
+                {blockedUsersProfiles.length === 0 && (
+                  <Typography variant="h6">
+                    <IntlMessages id="blocked.dontHave" />
+                  </Typography>
+                )}
+              </p>
+            }
           >
             {blockedUsersProfiles.length != 0 && (
               <Grid item xs={12} className="items-container ">

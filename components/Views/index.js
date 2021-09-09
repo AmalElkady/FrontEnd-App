@@ -94,14 +94,25 @@ export default function Views() {
             height={300}
             next={handleScrollGetProfileViews}
             hasMore={!endOfResultUserViews}
-            loader={<CircularProgress />}
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            }
             endMessage={
               <p style={{ textAlign: "center" }}>
                 {/* {userViewsProfiles.length != 0 && (
                   <b>Yay! You have seen All profile Views </b>
                 )} */}
                 {userViewsProfiles.length === 0 && (
-                  <b>Yay! You don't have profile Views </b>
+                  <Typography variant="h6">
+                    <IntlMessages id="view.dontHave" />
+                  </Typography>
                 )}
               </p>
             }

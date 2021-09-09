@@ -213,14 +213,25 @@ export default function Love() {
             height={300}
             next={handleScrollSentLoveRequests}
             hasMore={!endOfResultLoveSentRequests}
-            loader={<CircularProgress />}
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            }
             endMessage={
               <p style={{ textAlign: "center" }}>
                 {/* {LoveSentRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen sent love requests </b>
                 )} */}
                 {LoveSentRequestsProfiles.length === 0 && (
-                  <b>Yay! You don't have sent love requests </b>
+                  <Typography variant="h6">
+                    <IntlMessages id="love.dontHaveSent" />
+                  </Typography>
                 )}
               </p>
             }
@@ -241,14 +252,25 @@ export default function Love() {
             dataLength={LoveMatchedRequestsProfiles.length}
             next={handleScrollMatchedLoveRequests}
             hasMore={!endOfResultLoveMatchedRequests}
-            loader={<CircularProgress />}
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            }
             endMessage={
               <p style={{ textAlign: "center" }}>
                 {/* {LoveMatchedRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen Matched love requests </b>
                 )} */}
                 {LoveMatchedRequestsProfiles.length === 0 && (
-                  <b>Yay! You don't have Matched love requests </b>
+                  <Typography variant="h6">
+                    <IntlMessages id="love.dontHaveMatch" />
+                  </Typography>
                 )}
               </p>
             }
@@ -269,14 +291,25 @@ export default function Love() {
             height={300}
             next={handleScrollReceivedLoveRequests}
             hasMore={!endOfResultLoveReceivedRequests}
-            loader={<CircularProgress />}
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            }
             endMessage={
               <p style={{ textAlign: "center" }}>
                 {/* {LoveReceivedRequestsProfiles.length != 0 && (
                   <b>Yay! You have seen received love requests </b>
                 )} */}
                 {LoveReceivedRequestsProfiles.length === 0 && (
-                  <b>Yay! You don't have received love requests </b>
+                  <Typography variant="h6">
+                    <IntlMessages id="love.dontHaveReceived" />
+                  </Typography>
                 )}
               </p>
             }

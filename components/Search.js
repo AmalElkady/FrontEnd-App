@@ -36,7 +36,7 @@ import { showAuthLoader } from "../actions/Auth";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import {  COUNTRY_MAP,COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE } from "../util/data";
+import {  COUNTRY_MAP,COUNTRY_CITY_MAP, ARRAY_OF_AGE_RANGE,ARRAY_OF_COUNTRIES_WITH_CITIES,ARRAY_OF_COUNTRIES_WITH_STATES } from "../util/data";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import Radio from "@material-ui/core/Radio";
@@ -1628,7 +1628,13 @@ export default function Search() {
                   onClick={handleClickListItemCit}
                 >
                   <ListItemText
-                    primary={<IntlMessages id="search.city" />}
+                    primary={ARRAY_OF_COUNTRIES_WITH_STATES.includes(AgerangeCountriesOptionsOnline.length == 0?
+                      CountriesOptionsOnline[
+                        selectedIndexC
+                      ]:AgerangeCountriesOptionsOnline[
+                        selectedIndexC
+                      ]
+                    )?<IntlMessages id="search.state" />: <IntlMessages id="search.city" />}
                     secondary={
                       selectedIndex == -1
                         ? CountryCitiesOptionsOnline.length != 0
@@ -1637,7 +1643,13 @@ export default function Search() {
                           variant="body1"
                           className="select-search"
                           gutterBottom
-                        ><IntlMessages id="search.citySelect" />
+                        >
+                          
+                          {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                      CountriesOptionsOnline[
+                        selectedIndexC
+                      ]
+                    )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                          <div className="search-arrow">
                              <img  src="../static/images/icons/search_Arraw_icon.svg"
                                alt="App" title="App"/>
@@ -1663,7 +1675,11 @@ export default function Search() {
                           variant="body1"
                           className="select-search"
                           gutterBottom
-                        ><IntlMessages id="search.citySelect" />
+                        >   {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                          CountriesOptionsOnline[
+                            selectedIndexC
+                          ]
+                        )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                          <div className="search-arrow">
                              <img  src="../static/images/icons/search_Arraw_icon.svg"
                                alt="App" title="App"/>
@@ -1677,7 +1693,11 @@ export default function Search() {
                                                 variant="body1"
                                                 className="select-search"
                                                 gutterBottom
-                                              ><IntlMessages id="search.citySelect" />
+                                              >   {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                                                CountriesOptionsOnline[
+                                                  selectedIndexC
+                                                ]
+                                              )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                                               <div className="search-arrow">
                                                   <img  src="../static/images/icons/search_Arraw_icon.svg"
                                                     alt="App" title="App"/>
@@ -1709,7 +1729,11 @@ export default function Search() {
                                                           variant="body1"
                                                           className="select-search"
                                                           gutterBottom
-                                                          ><IntlMessages id="search.citySelect" />
+                                                          >   {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                                                            AgerangeCountriesOptionsOnline[
+                                                              selectedIndexC
+                                                            ]
+                                                          )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                                                           <div className="search-arrow">
                                                             <img  src="../static/images/icons/search_Arraw_icon.svg"
                                                               alt="App" title="App"/>
@@ -1740,7 +1764,11 @@ export default function Search() {
                           variant="body1"
                           className="select-search"
                           gutterBottom
-                        ><IntlMessages id="search.citySelect" />
+                        >   {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                          CountriesOptionsOnline[
+                            selectedIndexC
+                          ]
+                        )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                          <div className="search-arrow">
                              <img  src="../static/images/icons/search_Arraw_icon.svg"
                                alt="App" title="App"/>
@@ -1977,7 +2005,11 @@ export default function Search() {
                     onClick={handleClickListItemCit}
                   >
                     <ListItemText
-                      primary={<IntlMessages id="search.city" />}
+                      primary={ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                        CountriesOptionsOffline[
+                          selectedIndexC
+                        ]
+                      )?<IntlMessages id="search.state" />: <IntlMessages id="search.city" />}
                       secondary={
                         CountryCitiesOptionsOffline
                           ? selectedIndexCit == -1
@@ -1985,7 +2017,11 @@ export default function Search() {
                           variant="body1"
                           className="select-search"
                           gutterBottom
-                        ><IntlMessages id="search.citySelect" />
+                        > {ARRAY_OF_COUNTRIES_WITH_STATES.includes(
+                          CountriesOptionsOffline[
+                            selectedIndexC
+                          ]
+                        )?<IntlMessages id="search.stateSelect" />:<IntlMessages id="search.citySelect" />}
                          <div className="search-arrow">
                              <img  src="../static/images/icons/search_Arraw_icon.svg"
                                alt="App" title="App"/>

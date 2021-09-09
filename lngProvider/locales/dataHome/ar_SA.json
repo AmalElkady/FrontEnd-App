@@ -12,12 +12,19 @@
   "search.city": "المدينة",
   "search.citySelect": "اختر المدينة",
 
+  "search.state": "الولاية",
+  "search.stateSelect": "اختر ولايه ",
+
   "loveList.match": "أنت الآن تتطابق مع",
   "loveList.matchTitle": "مستخدمون يتطابقون معك ",
   "loveList.sent": "كنت قد أرسلت اعجاب إلى  ",
   "loveList.sentTitle": "المستخدمين الذين أرسلت لهم اعجاب ",
   "loveList.received": " أرسل لك اعجاب ",
   "loveList.receivedTitle": "المستخدمين الذين أرسلوا اعجاب لك ",
+
+  "love.dontHaveReceived": "ليس لديك اي طلبات إعجاب",
+  "love.dontHaveSent": "لم ترسل أي طلبات إعجاب",
+  "love.dontHaveMatch": " ليس لديك طلبات إعجاب متطابقة ",
 
   "Love.notificationTitle": " الإشعارات الاخيره للاعجاب",
   "Love.notification": "أرسل اعجاب لك في",
@@ -33,6 +40,7 @@
 
   "viewList.view": " رأى ملفك الشخصي في",
   "viewList.viewTitle": "المستخدمون الذين شاهدوا ملفك الشخصي ",
+  "view.dontHave": "ليس لديك مشاهدات للملف الشخصي ",
 
   "ppList.outgoing": "تمت الموافقة على طلبك من  ",
   "ppList.outgoingTitle": "طلباتك الصادرة للصور الخاصة",
@@ -49,6 +57,8 @@
   "blockedList.on": " في ",
   "blockedList.blockedTitle": "المستخدمين المحجوبين ",
   "blockedList.iconTitle": "رفع الحظر ",
+
+  "blocked.dontHave": "لم تقم بحظر أي مستخدم",
 
   "notif.loveReq": " أرسل إعجاب لك",
   "notif.loveMatch": " تبادل مع الإعجاب",

@@ -225,6 +225,88 @@ export const ARRAY_OF_YEARS = [
 //COUNTRY_CITY_MAP = new Map();
 //COUNTRY_CITY_MAP['EG'] = [<IntlMessages id="eg.1" />,<IntlMessages id="eg.2" />];
 
+export const ARRAY_OF_COUNTRIES_WITH_CITIES = [
+  "EG",
+  "DZ",
+  "MA",
+  "SA",
+  "KW",
+  "AR",
+  "SG",
+  "AL",
+  "BA",
+  "BF",
+  "BH",
+  "BJ",
+  "CI",
+  "DJ",
+  "GM",
+  "IQ",
+  "JO",
+  "KG",
+  "KM",
+  "LB",
+  "LR",
+  "ME",
+  "MG",
+  "MR",
+  "NE",
+  "OM",
+  "PS",
+  "QA",
+  "SD",
+  "SL",
+  "TJ",
+  "TM",
+  "UG"
+];
+
+export const ARRAY_OF_COUNTRIES_WITH_STATES = [
+  "US",
+  "CA",
+  "UA",
+  "SN",
+  "SO",
+  "SY",
+  "TD",
+  "TG",
+  "TH",
+  "TN",
+  "TR",
+  "TZ",
+  "UZ",
+  "YE",
+  "PT",
+  "AF",
+  "AZ",
+  "BD",
+  "CM",
+  "CN",
+  "DE",
+  "ES",
+  "FR",
+  "GB",
+  "GH",
+  "GN",
+  "GW",
+  "ID",
+  "IN",
+  "IR",
+  "IT",
+  "KE",
+  "LY",
+  "MK",
+  "ML",
+  "MM",
+  "MV",
+  "MW",
+  "MY",
+  "NG",
+  "PH",
+  "PK",
+  "RU"
+];
+
 export const COUNTRY_MAP = new Map();
 COUNTRY_MAP["EG"] = <IntlMessages id="co.1" />;
 
@@ -259,12 +341,7 @@ COUNTRY_CITY_MAP["eg"] = [
   <IntlMessages id="eg.27" />
 ];
 
-COUNTRY_CITY_MAP["gb"] = [
-  <IntlMessages id="gb.1" />,
-  <IntlMessages id="gb.2" />
-];
-
-COUNTRY_MAP["DZA"] = "co.2";
+COUNTRY_MAP["DZ"] = <IntlMessages id="co.2" />;
 COUNTRY_CITY_MAP["dz"] = [
   <IntlMessages id="DZA.1" />,
   <IntlMessages id="DZA.2" />,
@@ -325,7 +402,7 @@ COUNTRY_CITY_MAP["dz"] = [
   <IntlMessages id="DZA.58" />
 ];
 
-COUNTRY_MAP["MAR"] = "co.3";
+COUNTRY_MAP["MA"] = <IntlMessages id="co.3" />;
 COUNTRY_CITY_MAP["ma"] = [
   <IntlMessages id="MAR.1" />,
   <IntlMessages id="MAR.2" />,
@@ -340,7 +417,7 @@ COUNTRY_CITY_MAP["ma"] = [
   <IntlMessages id="MAR.12" />
 ];
 
-COUNTRY_MAP["SAU"] = "co.4";
+COUNTRY_MAP["SA"] = <IntlMessages id="co.4" />;
 COUNTRY_CITY_MAP["sa"] = [
   <IntlMessages id="SAU.1" />,
   <IntlMessages id="SAU.2" />,
@@ -356,7 +433,7 @@ COUNTRY_CITY_MAP["sa"] = [
   <IntlMessages id="SAU.13" />
 ];
 
-COUNTRY_MAP["KWT"] = "co.5";
+COUNTRY_MAP["KW"] = <IntlMessages id="co.5" />;
 COUNTRY_CITY_MAP["kw"] = [
   <IntlMessages id="KWT.1" />,
   <IntlMessages id="KWT.2" />,
@@ -365,7 +442,7 @@ COUNTRY_CITY_MAP["kw"] = [
   <IntlMessages id="KWT.5" />,
   <IntlMessages id="KWT.6" />
 ];
-COUNTRY_MAP["ARE"] = "co.6";
+COUNTRY_MAP["AR"] = <IntlMessages id="co.6" />;
 COUNTRY_CITY_MAP["ar"] = [
   <IntlMessages id="ARE.1" />,
   <IntlMessages id="ARE.2" />,
@@ -375,7 +452,7 @@ COUNTRY_CITY_MAP["ar"] = [
   <IntlMessages id="ARE.6" />
 ];
 
-COUNTRY_MAP["US"] = "co.7";
+COUNTRY_MAP["US"] = <IntlMessages id="co.7" />;
 COUNTRY_CITY_MAP["us"] = [
   <IntlMessages id="US.1" />,
   <IntlMessages id="US.2" />,
@@ -430,7 +507,7 @@ COUNTRY_CITY_MAP["us"] = [
   <IntlMessages id="US.51" />
 ];
 
-COUNTRY_MAP["CA"] = "co.8";
+COUNTRY_MAP["CA"] = <IntlMessages id="co.8" />;
 COUNTRY_CITY_MAP["ca"] = [
   <IntlMessages id="CA.1" />,
   <IntlMessages id="CA.2" />,
@@ -447,7 +524,7 @@ COUNTRY_CITY_MAP["ca"] = [
   <IntlMessages id="CA.13" />
 ];
 
-COUNTRY_MAP["SG"] = "co.9";
+COUNTRY_MAP["SG"] = <IntlMessages id="co.9" />;
 COUNTRY_CITY_MAP["sg"] = [
   <IntlMessages id="SG.1" />,
   <IntlMessages id="SG.2" />,
@@ -527,7 +604,7 @@ COUNTRY_CITY_MAP["sg"] = [
   <IntlMessages id="SG.76" />
 ];
 
-COUNTRY_MAP["UA"] = "co.10";
+COUNTRY_MAP["UA"] = <IntlMessages id="co.10" />;
 COUNTRY_CITY_MAP["ua"] = [
   <IntlMessages id="UA.1" />,
   <IntlMessages id="UA.2" />,
@@ -555,7 +632,7 @@ COUNTRY_CITY_MAP["ua"] = [
   <IntlMessages id="UA.24" />
 ];
 
-COUNTRY_MAP["PT"] = "co.11";
+COUNTRY_MAP["PT"] = <IntlMessages id="co.11" />;
 COUNTRY_CITY_MAP["pt"] = [
   <IntlMessages id="PT.1" />,
   <IntlMessages id="PT.2" />,
@@ -614,7 +691,7 @@ COUNTRY_CITY_MAP["pt"] = [
   <IntlMessages id="PT.55" />
 ];
 
-COUNTRY_MAP["AF"] = "co.12";
+COUNTRY_MAP["AF"] = <IntlMessages id="co.12" />;
 COUNTRY_CITY_MAP["af"] = [
   <IntlMessages id="AF.1" />,
   <IntlMessages id="AF.2" />,
@@ -636,7 +713,7 @@ COUNTRY_CITY_MAP["af"] = [
   <IntlMessages id="AF.18" />
 ];
 
-COUNTRY_MAP["AL"] = "co.13";
+COUNTRY_MAP["AL"] = <IntlMessages id="co.13" />;
 COUNTRY_CITY_MAP["al"] = [
   <IntlMessages id="AL.1" />,
   <IntlMessages id="AL.2" />,
@@ -715,7 +792,7 @@ COUNTRY_CITY_MAP["al"] = [
   <IntlMessages id="AL.75" />
 ];
 
-COUNTRY_MAP["AZ"] = "co.14";
+COUNTRY_MAP["AZ"] = <IntlMessages id="co.14" />;
 COUNTRY_CITY_MAP["az"] = [
   <IntlMessages id="AZ.1" />,
   <IntlMessages id="AZ.2" />,
@@ -784,7 +861,7 @@ COUNTRY_CITY_MAP["az"] = [
   <IntlMessages id="AZ.65" />
 ];
 
-COUNTRY_MAP["BA"] = "co.15";
+COUNTRY_MAP["BA"] = <IntlMessages id="co.15" />;
 COUNTRY_CITY_MAP["ba"] = [
   <IntlMessages id="BA.1" />,
   <IntlMessages id="BA.2" />,
@@ -813,7 +890,7 @@ COUNTRY_CITY_MAP["ba"] = [
   <IntlMessages id="BA.25" />
 ];
 
-COUNTRY_MAP["BD"] = "co.16";
+COUNTRY_MAP["BD"] = <IntlMessages id="co.16" />;
 COUNTRY_CITY_MAP["bd"] = [
   <IntlMessages id="BD.1" />,
   <IntlMessages id="BD.2" />,
@@ -828,7 +905,7 @@ COUNTRY_CITY_MAP["bd"] = [
   <IntlMessages id="BD.11" />
 ];
 
-COUNTRY_MAP["BF"] = "co.17";
+COUNTRY_MAP["BF"] = <IntlMessages id="co.17" />;
 COUNTRY_CITY_MAP["bf"] = [
   <IntlMessages id="BF.1" />,
   <IntlMessages id="BF.2" />,
@@ -897,7 +974,7 @@ COUNTRY_CITY_MAP["bf"] = [
   <IntlMessages id="BF.65" />
 ];
 
-COUNTRY_MAP["BG"] = "co.18";
+COUNTRY_MAP["BG"] = <IntlMessages id="co.18" />;
 COUNTRY_CITY_MAP["bg"] = [
   <IntlMessages id="BG.1" />,
   <IntlMessages id="BG.2" />,
@@ -929,7 +1006,7 @@ COUNTRY_CITY_MAP["bg"] = [
   <IntlMessages id="BG.28" />
 ];
 
-COUNTRY_MAP["BH"] = "co.19";
+COUNTRY_MAP["BH"] = <IntlMessages id="co.19" />;
 COUNTRY_CITY_MAP["bh"] = [
   <IntlMessages id="BH.1" />,
   <IntlMessages id="BH.2" />,
@@ -943,7 +1020,7 @@ COUNTRY_CITY_MAP["bh"] = [
   <IntlMessages id="BH.10" />
 ];
 
-COUNTRY_MAP["BJ"] = "co.20";
+COUNTRY_MAP["BJ"] = <IntlMessages id="co.20" />;
 COUNTRY_CITY_MAP["bj"] = [
   <IntlMessages id="BJ.1" />,
   <IntlMessages id="BJ.2" />,
@@ -986,7 +1063,7 @@ COUNTRY_CITY_MAP["bj"] = [
   <IntlMessages id="BJ.39" />
 ];
 
-COUNTRY_MAP["CI"] = "co.21";
+COUNTRY_MAP["CI"] = <IntlMessages id="co.21" />;
 COUNTRY_CITY_MAP["ci"] = [
   <IntlMessages id="CI.1" />,
   <IntlMessages id="CI.2" />,
@@ -1030,7 +1107,7 @@ COUNTRY_CITY_MAP["ci"] = [
   <IntlMessages id="CI.40" />
 ];
 
-COUNTRY_MAP["CM"] = "co.22";
+COUNTRY_MAP["CM"] = <IntlMessages id="co.22" />;
 COUNTRY_CITY_MAP["cm"] = [
   <IntlMessages id="CM.1" />,
   <IntlMessages id="CM.2" />,
@@ -1044,7 +1121,7 @@ COUNTRY_CITY_MAP["cm"] = [
   <IntlMessages id="CM.10" />
 ];
 
-COUNTRY_MAP["CN"] = "co.23";
+COUNTRY_MAP["CN"] = <IntlMessages id="co.23" />;
 COUNTRY_CITY_MAP["cn"] = [
   <IntlMessages id="CN.1" />,
   <IntlMessages id="CN.2" />,
@@ -1080,7 +1157,7 @@ COUNTRY_CITY_MAP["cn"] = [
   <IntlMessages id="CN.33" />
 ];
 
-COUNTRY_MAP["DE"] = "co.24";
+COUNTRY_MAP["DE"] = <IntlMessages id="co.24" />;
 COUNTRY_CITY_MAP["de"] = [
   <IntlMessages id="DE.1" />,
   <IntlMessages id="DE.2" />,
@@ -1101,7 +1178,7 @@ COUNTRY_CITY_MAP["de"] = [
   <IntlMessages id="DE.17" />
 ];
 
-COUNTRY_MAP["DJ"] = "co.25";
+COUNTRY_MAP["DJ"] = <IntlMessages id="co.25" />;
 COUNTRY_CITY_MAP["dj"] = [
   <IntlMessages id="DJ.1" />,
   <IntlMessages id="DJ.2" />,
@@ -1125,7 +1202,7 @@ COUNTRY_CITY_MAP["dj"] = [
   <IntlMessages id="DJ.20" />
 ];
 
-COUNTRY_MAP["ES"] = "co.26";
+COUNTRY_MAP["ES"] = <IntlMessages id="co.26" />;
 COUNTRY_CITY_MAP["es"] = [
   <IntlMessages id="ES.1" />,
   <IntlMessages id="ES.2" />,
@@ -1178,7 +1255,7 @@ COUNTRY_CITY_MAP["es"] = [
   <IntlMessages id="ES.49" />
 ];
 
-COUNTRY_MAP["FR"] = "co.27";
+COUNTRY_MAP["FR"] = <IntlMessages id="co.27" />;
 COUNTRY_CITY_MAP["fr"] = [
   <IntlMessages id="FR.1" />,
   <IntlMessages id="FR.2" />,
@@ -1224,7 +1301,7 @@ COUNTRY_CITY_MAP["fr"] = [
   <IntlMessages id="FR.42" />
 ];
 
-COUNTRY_MAP["GB"] = "co.28";
+COUNTRY_MAP["GB"] = <IntlMessages id="co.28" />;
 COUNTRY_CITY_MAP["gb"] = [
   <IntlMessages id="GB.1" />,
   <IntlMessages id="GB.2" />,
@@ -1477,7 +1554,7 @@ COUNTRY_CITY_MAP["gb"] = [
   <IntlMessages id="GB.249" />
 ];
 
-COUNTRY_MAP["GH"] = "co.29";
+COUNTRY_MAP["GH"] = <IntlMessages id="co.29" />;
 COUNTRY_CITY_MAP["gh"] = [
   <IntlMessages id="GH.1" />,
   <IntlMessages id="GH.2" />,
@@ -1491,7 +1568,7 @@ COUNTRY_CITY_MAP["gh"] = [
   <IntlMessages id="GH.10" />
 ];
 
-COUNTRY_MAP["GM"] = "co.30";
+COUNTRY_MAP["GM"] = <IntlMessages id="co.30" />;
 COUNTRY_CITY_MAP["gm"] = [
   <IntlMessages id="GM.1" />,
   <IntlMessages id="GM.2" />,
@@ -1599,7 +1676,7 @@ COUNTRY_CITY_MAP["gm"] = [
   <IntlMessages id="GM.104" />
 ];
 
-COUNTRY_MAP["GN"] = "co.31";
+COUNTRY_MAP["GN"] = <IntlMessages id="co.31" />;
 COUNTRY_CITY_MAP["gn"] = [
   <IntlMessages id="GN.1" />,
   <IntlMessages id="GN.2" />,
@@ -1643,7 +1720,7 @@ COUNTRY_CITY_MAP["gn"] = [
   <IntlMessages id="GN.40" />
 ];
 
-COUNTRY_MAP["GW"] = "co.32";
+COUNTRY_MAP["GW"] = <IntlMessages id="co.32" />;
 COUNTRY_CITY_MAP["gw"] = [
   <IntlMessages id="GW.1" />,
   <IntlMessages id="GW.2" />,
@@ -1658,7 +1735,7 @@ COUNTRY_CITY_MAP["gw"] = [
   <IntlMessages id="GW.11" />
 ];
 
-COUNTRY_MAP["ID"] = "co.33";
+COUNTRY_MAP["ID"] = <IntlMessages id="co.33" />;
 COUNTRY_CITY_MAP["id"] = [
   <IntlMessages id="ID.1" />,
   <IntlMessages id="ID.2" />,
@@ -1700,7 +1777,7 @@ COUNTRY_CITY_MAP["id"] = [
   <IntlMessages id="ID.38" />
 ];
 
-COUNTRY_MAP["IN"] = "co.34";
+COUNTRY_MAP["IN"] = <IntlMessages id="co.34" />;
 COUNTRY_CITY_MAP["in"] = [
   <IntlMessages id="IN.1" />,
   <IntlMessages id="IN.2" />,
@@ -1740,7 +1817,7 @@ COUNTRY_CITY_MAP["in"] = [
   <IntlMessages id="IN.36" />
 ];
 
-COUNTRY_MAP["IQ"] = "co.35";
+COUNTRY_MAP["IQ"] = <IntlMessages id="co.35" />;
 COUNTRY_CITY_MAP["iq"] = [
   <IntlMessages id="IQ.1" />,
   <IntlMessages id="IQ.2" />,
@@ -1826,7 +1903,7 @@ COUNTRY_CITY_MAP["iq"] = [
   <IntlMessages id="IQ.82" />
 ];
 
-COUNTRY_MAP["IR"] = "co.36";
+COUNTRY_MAP["IR"] = <IntlMessages id="co.36" />;
 COUNTRY_CITY_MAP["ir"] = [
   <IntlMessages id="IR.1" />,
   <IntlMessages id="IR.2" />,
@@ -1861,7 +1938,7 @@ COUNTRY_CITY_MAP["ir"] = [
   <IntlMessages id="IR.31" />
 ];
 
-COUNTRY_MAP["IT"] = "co.37";
+COUNTRY_MAP["IT"] = <IntlMessages id="co.37" />;
 COUNTRY_CITY_MAP["it"] = [
   <IntlMessages id="IT.1" />,
   <IntlMessages id="IT.2" />,
@@ -1993,7 +2070,7 @@ COUNTRY_CITY_MAP["it"] = [
   <IntlMessages id="IT.128" />
 ];
 
-COUNTRY_MAP["JO"] = "co.38";
+COUNTRY_MAP["JO"] = <IntlMessages id="co.38" />;
 COUNTRY_CITY_MAP["jo"] = [
   <IntlMessages id="JO.1" />,
   <IntlMessages id="JO.2" />,
@@ -2079,7 +2156,7 @@ COUNTRY_CITY_MAP["jo"] = [
   <IntlMessages id="JO.82" />
 ];
 
-COUNTRY_MAP["KE"] = "co.39";
+COUNTRY_MAP["KE"] = <IntlMessages id="co.39" />;
 COUNTRY_CITY_MAP["ke"] = [
   <IntlMessages id="KE.1" />,
   <IntlMessages id="KE.2" />,
@@ -2137,7 +2214,7 @@ COUNTRY_CITY_MAP["ke"] = [
   <IntlMessages id="KE.54" />
 ];
 
-COUNTRY_MAP["KG"] = "co.40";
+COUNTRY_MAP["KG"] = <IntlMessages id="co.40" />;
 COUNTRY_CITY_MAP["kg"] = [
   <IntlMessages id="KG.1" />,
   <IntlMessages id="KG.2" />,
@@ -2194,7 +2271,7 @@ COUNTRY_CITY_MAP["kg"] = [
   <IntlMessages id="KG.53" />
 ];
 
-COUNTRY_MAP["KM"] = "co.41";
+COUNTRY_MAP["KM"] = <IntlMessages id="co.41" />;
 COUNTRY_CITY_MAP["km"] = [
   <IntlMessages id="KM.1" />,
   <IntlMessages id="KM.2" />,
@@ -2280,7 +2357,7 @@ COUNTRY_CITY_MAP["km"] = [
   <IntlMessages id="KM.82" />
 ];
 
-COUNTRY_MAP["LB"] = "co.42";
+COUNTRY_MAP["LB"] = <IntlMessages id="co.42" />;
 COUNTRY_CITY_MAP["lb"] = [
   <IntlMessages id="LB.1" />,
   <IntlMessages id="LB.2" />,
@@ -2310,7 +2387,7 @@ COUNTRY_CITY_MAP["lb"] = [
   <IntlMessages id="LB.26" />
 ];
 
-COUNTRY_MAP["LR"] = "co.43";
+COUNTRY_MAP["LR"] = <IntlMessages id="co.43" />;
 COUNTRY_CITY_MAP["lr"] = [
   <IntlMessages id="LR.1" />,
   <IntlMessages id="LR.2" />,
@@ -2332,7 +2409,7 @@ COUNTRY_CITY_MAP["lr"] = [
   <IntlMessages id="LR.18" />
 ];
 
-COUNTRY_MAP["LY"] = "co.44";
+COUNTRY_MAP["LY"] = <IntlMessages id="co.44" />;
 COUNTRY_CITY_MAP["ly"] = [
   <IntlMessages id="LY.1" />,
   <IntlMessages id="LY.2" />,
@@ -2356,7 +2433,7 @@ COUNTRY_CITY_MAP["ly"] = [
   <IntlMessages id="LY.20" />
 ];
 
-COUNTRY_MAP["ME"] = "co.45";
+COUNTRY_MAP["ME"] = <IntlMessages id="co.45" />;
 COUNTRY_CITY_MAP["me"] = [
   <IntlMessages id="ME.1" />,
   <IntlMessages id="ME.2" />,
@@ -2394,7 +2471,7 @@ COUNTRY_CITY_MAP["me"] = [
   <IntlMessages id="ME.34" />
 ];
 
-COUNTRY_MAP["MG"] = "co.46";
+COUNTRY_MAP["MG"] = <IntlMessages id="co.46" />;
 COUNTRY_CITY_MAP["mg"] = [
   <IntlMessages id="MG.1" />,
   <IntlMessages id="MG.2" />,
@@ -2407,7 +2484,7 @@ COUNTRY_CITY_MAP["mg"] = [
   <IntlMessages id="MG.9" />
 ];
 
-COUNTRY_MAP["MK"] = "co.47";
+COUNTRY_MAP["MK"] = <IntlMessages id="co.47" />;
 COUNTRY_CITY_MAP["mk"] = [
   <IntlMessages id="MK.1" />,
   <IntlMessages id="MK.2" />,
@@ -2495,7 +2572,7 @@ COUNTRY_CITY_MAP["mk"] = [
   <IntlMessages id="MK.84" />
 ];
 
-COUNTRY_MAP["ML"] = "co.48";
+COUNTRY_MAP["ML"] = <IntlMessages id="co.48" />;
 COUNTRY_CITY_MAP["ml"] = [
   <IntlMessages id="ML.1" />,
   <IntlMessages id="ML.2" />,
@@ -2510,7 +2587,7 @@ COUNTRY_CITY_MAP["ml"] = [
   <IntlMessages id="ML.11" />
 ];
 
-COUNTRY_MAP["MM"] = "co.49";
+COUNTRY_MAP["MM"] = <IntlMessages id="co.49" />;
 COUNTRY_CITY_MAP["mm"] = [
   <IntlMessages id="MM.1" />,
   <IntlMessages id="MM.2" />,
@@ -2529,7 +2606,7 @@ COUNTRY_CITY_MAP["mm"] = [
   <IntlMessages id="MM.15" />
 ];
 
-COUNTRY_MAP["MR"] = "co.50";
+COUNTRY_MAP["MR"] = <IntlMessages id="co.50" />;
 COUNTRY_CITY_MAP["mr"] = [
   <IntlMessages id="MR.1" />,
   <IntlMessages id="MR.2" />,
@@ -2555,7 +2632,7 @@ COUNTRY_CITY_MAP["mr"] = [
   <IntlMessages id="MR.22" />,
   <IntlMessages id="MR.23" />
 ];
-COUNTRY_MAP["MV"] = "co.51";
+COUNTRY_MAP["MV"] = <IntlMessages id="co.51" />;
 COUNTRY_CITY_MAP["mv"] = [
   <IntlMessages id="MV.1" />,
   <IntlMessages id="MV.2" />,
@@ -2584,7 +2661,7 @@ COUNTRY_CITY_MAP["mv"] = [
   <IntlMessages id="MV.25" />,
   <IntlMessages id="MV.26" />
 ];
-COUNTRY_MAP["MW"] = "co.52";
+COUNTRY_MAP["MW"] = <IntlMessages id="co.52" />;
 COUNTRY_CITY_MAP["mw"] = [
   <IntlMessages id="MW.1" />,
   <IntlMessages id="MW.2" />,
@@ -2617,7 +2694,7 @@ COUNTRY_CITY_MAP["mw"] = [
   <IntlMessages id="MW.29" />,
   <IntlMessages id="MW.30" />
 ];
-COUNTRY_MAP["MY"] = "co.53";
+COUNTRY_MAP["MY"] = <IntlMessages id="co.53" />;
 COUNTRY_CITY_MAP["my"] = [
   <IntlMessages id="MY.1" />,
   <IntlMessages id="MY.2" />,
@@ -2636,7 +2713,7 @@ COUNTRY_CITY_MAP["my"] = [
   <IntlMessages id="MY.15" />,
   <IntlMessages id="MY.16" />
 ];
-COUNTRY_MAP["NE"] = "co.54";
+COUNTRY_MAP["NE"] = <IntlMessages id="co.54" />;
 COUNTRY_CITY_MAP["ne"] = [
   <IntlMessages id="NE.1" />,
   <IntlMessages id="NE.2" />,
@@ -2709,7 +2786,7 @@ COUNTRY_CITY_MAP["ne"] = [
   <IntlMessages id="NE.69" />,
   <IntlMessages id="NE.70" />
 ];
-COUNTRY_MAP["NG"] = "co.55";
+COUNTRY_MAP["NG"] = <IntlMessages id="co.55" />;
 COUNTRY_CITY_MAP["ng"] = [
   <IntlMessages id="NG.1" />,
   <IntlMessages id="NG.2" />,
@@ -2748,7 +2825,7 @@ COUNTRY_CITY_MAP["ng"] = [
   <IntlMessages id="NG.35" />,
   <IntlMessages id="NG.36" />
 ];
-COUNTRY_MAP["OM"] = "co.56";
+COUNTRY_MAP["OM"] = <IntlMessages id="co.56" />;
 COUNTRY_CITY_MAP["om"] = [
   <IntlMessages id="OM.1" />,
   <IntlMessages id="OM.2" />,
@@ -2779,7 +2856,7 @@ COUNTRY_CITY_MAP["om"] = [
   <IntlMessages id="OM.27" />,
   <IntlMessages id="OM.28" />
 ];
-COUNTRY_MAP["PH"] = "co.57";
+COUNTRY_MAP["PH"] = <IntlMessages id="co.57" />;
 COUNTRY_CITY_MAP["ph"] = [
   <IntlMessages id="PH.1" />,
   <IntlMessages id="PH.2" />,
@@ -2879,7 +2956,7 @@ COUNTRY_CITY_MAP["ph"] = [
   <IntlMessages id="PH.96" />,
   <IntlMessages id="PH.97" />
 ];
-COUNTRY_MAP["PK"] = "co.58";
+COUNTRY_MAP["PK"] = <IntlMessages id="co.58" />;
 COUNTRY_CITY_MAP["pk"] = [
   <IntlMessages id="PK.1" />,
   <IntlMessages id="PK.2" />,
@@ -2890,7 +2967,7 @@ COUNTRY_CITY_MAP["pk"] = [
   <IntlMessages id="PK.7" />,
   <IntlMessages id="PK.8" />
 ];
-COUNTRY_MAP["PS"] = "co.59";
+COUNTRY_MAP["PS"] = <IntlMessages id="co.59" />;
 COUNTRY_CITY_MAP["ps"] = [
   <IntlMessages id="PS.1" />,
   <IntlMessages id="PS.2" />,
@@ -2930,7 +3007,7 @@ COUNTRY_CITY_MAP["ps"] = [
   <IntlMessages id="PS.36" />,
   <IntlMessages id="PS.37" />
 ];
-COUNTRY_MAP["QA"] = "co.60";
+COUNTRY_MAP["QA"] = <IntlMessages id="co.60" />;
 COUNTRY_CITY_MAP["qa"] = [
   <IntlMessages id="QA.1" />,
   <IntlMessages id="QA.2" />,
@@ -2949,7 +3026,7 @@ COUNTRY_CITY_MAP["qa"] = [
   <IntlMessages id="QA.15" />
 ];
 
-COUNTRY_MAP["RU"] = "co.61";
+COUNTRY_MAP["RU"] = <IntlMessages id="co.61" />;
 COUNTRY_CITY_MAP["ru"] = [
   <IntlMessages id="RU.1" />,
   <IntlMessages id="RU.2" />,
@@ -3036,7 +3113,7 @@ COUNTRY_CITY_MAP["ru"] = [
   <IntlMessages id="RU.83" />,
   <IntlMessages id="RU.84" />
 ];
-COUNTRY_MAP["SD"] = "co.62";
+COUNTRY_MAP["SD"] = <IntlMessages id="co.62" />;
 COUNTRY_CITY_MAP["sd"] = [
   <IntlMessages id="SD.1" />,
   <IntlMessages id="SD.2" />,
@@ -3049,7 +3126,7 @@ COUNTRY_CITY_MAP["sd"] = [
   <IntlMessages id="SD.9" />,
   <IntlMessages id="SD.10" />
 ];
-COUNTRY_MAP["SL"] = "co.63";
+COUNTRY_MAP["SL"] = <IntlMessages id="co.63" />;
 COUNTRY_CITY_MAP["sl"] = [
   <IntlMessages id="SL.1" />,
   <IntlMessages id="SL.2" />,
@@ -3142,7 +3219,7 @@ COUNTRY_CITY_MAP["sl"] = [
   <IntlMessages id="SL.89" />,
   <IntlMessages id="SL.90" />
 ];
-COUNTRY_MAP["SN"] = "co.64";
+COUNTRY_MAP["SN"] = <IntlMessages id="co.64" />;
 COUNTRY_CITY_MAP["sn"] = [
   <IntlMessages id="SN.1" />,
   <IntlMessages id="SN.2" />,
@@ -3159,7 +3236,7 @@ COUNTRY_CITY_MAP["sn"] = [
   <IntlMessages id="SN.13" />,
   <IntlMessages id="SN.14" />
 ];
-COUNTRY_MAP["SO"] = "co.65";
+COUNTRY_MAP["SO"] = <IntlMessages id="co.65" />;
 COUNTRY_CITY_MAP["so"] = [
   <IntlMessages id="SO.1" />,
   <IntlMessages id="SO.2" />,
@@ -3178,7 +3255,7 @@ COUNTRY_CITY_MAP["so"] = [
   <IntlMessages id="SO.15" />,
   <IntlMessages id="SO.16" />
 ];
-COUNTRY_MAP["SY"] = "co.66";
+COUNTRY_MAP["SY"] = <IntlMessages id="co.66" />;
 COUNTRY_CITY_MAP["sy"] = [
   <IntlMessages id="SY.1" />,
   <IntlMessages id="SY.2" />,
@@ -3195,7 +3272,7 @@ COUNTRY_CITY_MAP["sy"] = [
   <IntlMessages id="SY.13" />,
   <IntlMessages id="SY.14" />
 ];
-COUNTRY_MAP["TD"] = "co.67";
+COUNTRY_MAP["TD"] = <IntlMessages id="co.67" />;
 COUNTRY_CITY_MAP["td"] = [
   <IntlMessages id="TD.1" />,
   <IntlMessages id="TD.2" />,
@@ -3222,7 +3299,7 @@ COUNTRY_CITY_MAP["td"] = [
   <IntlMessages id="TD.23" />
 ];
 
-COUNTRY_MAP["TG"] = "co.68";
+COUNTRY_MAP["TG"] = <IntlMessages id="co.68" />;
 COUNTRY_CITY_MAP["tg"] = [
   <IntlMessages id="TG.1" />,
   <IntlMessages id="TG.2" />,
@@ -3248,7 +3325,7 @@ COUNTRY_CITY_MAP["tg"] = [
   <IntlMessages id="TG.22" />
 ];
 
-COUNTRY_MAP["TH"] = "co.69";
+COUNTRY_MAP["TH"] = <IntlMessages id="co.69" />;
 COUNTRY_CITY_MAP["th"] = [
   <IntlMessages id="TH.1" />,
   <IntlMessages id="TH.2" />,
@@ -3328,7 +3405,7 @@ COUNTRY_CITY_MAP["th"] = [
   <IntlMessages id="TH.76" />,
   <IntlMessages id="TH.77" />
 ];
-COUNTRY_MAP["TJ"] = "co.70";
+COUNTRY_MAP["TJ"] = <IntlMessages id="co.70" />;
 COUNTRY_CITY_MAP["tj"] = [
   <IntlMessages id="TJ.1" />,
   <IntlMessages id="TJ.2" />,
@@ -3401,7 +3478,7 @@ COUNTRY_CITY_MAP["tj"] = [
   <IntlMessages id="TJ.69" />,
   <IntlMessages id="TJ.70" />
 ];
-COUNTRY_MAP["TM"] = "co.71";
+COUNTRY_MAP["TM"] = <IntlMessages id="co.71" />;
 COUNTRY_CITY_MAP["tm"] = [
   <IntlMessages id="TM.1" />,
   <IntlMessages id="TM.2" />,
@@ -3435,7 +3512,7 @@ COUNTRY_CITY_MAP["tm"] = [
   <IntlMessages id="TM.30" />
 ];
 
-COUNTRY_MAP["TN"] = "co.72";
+COUNTRY_MAP["TN"] = <IntlMessages id="co.72" />;
 COUNTRY_CITY_MAP["tn"] = [
   <IntlMessages id="TN.1" />,
   <IntlMessages id="TN.2" />,
@@ -3461,9 +3538,9 @@ COUNTRY_CITY_MAP["tn"] = [
   <IntlMessages id="TN.22" />,
   <IntlMessages id="TN.23" />
 ];
-COUNTRY_MAP["TR"] = "co.73";
+COUNTRY_MAP["TR"] = <IntlMessages id="co.73" />;
 COUNTRY_CITY_MAP["tr"] = [
-<IntlMessages id="TR.1" />,
+  <IntlMessages id="TR.1" />,
   <IntlMessages id="TR.2" />,
   <IntlMessages id="TR.3" />,
   <IntlMessages id="TR.4" />,
@@ -3545,9 +3622,9 @@ COUNTRY_CITY_MAP["tr"] = [
   <IntlMessages id="TR.80" />,
   <IntlMessages id="TR.81" />
 ];
-COUNTRY_MAP["TZ"] = "co.74";
+COUNTRY_MAP["TZ"] = <IntlMessages id="co.74" />;
 COUNTRY_CITY_MAP["tz"] = [
-<IntlMessages id="TZ.1" />,
+  <IntlMessages id="TZ.1" />,
   <IntlMessages id="TZ.2" />,
   <IntlMessages id="TZ.3" />,
   <IntlMessages id="TZ.4" />,
@@ -3577,9 +3654,9 @@ COUNTRY_CITY_MAP["tz"] = [
   <IntlMessages id="TZ.28" />,
   <IntlMessages id="TZ.29" />
 ];
-COUNTRY_MAP["UG"] = "co.75";
+COUNTRY_MAP["UG"] = <IntlMessages id="co.75" />;
 COUNTRY_CITY_MAP["ug"] = [
-<IntlMessages id="UG.1" />,
+  <IntlMessages id="UG.1" />,
   <IntlMessages id="UG.2" />,
   <IntlMessages id="UG.3" />,
   <IntlMessages id="UG.4" />,
@@ -3671,7 +3748,7 @@ COUNTRY_CITY_MAP["ug"] = [
   <IntlMessages id="UG.90" />,
   <IntlMessages id="UG.91" />
 ];
-COUNTRY_MAP["UZ"] = "co.76";
+COUNTRY_MAP["UZ"] = <IntlMessages id="co.76" />;
 COUNTRY_CITY_MAP["uz"] = [
   <IntlMessages id="UZ.1" />,
   <IntlMessages id="UZ.2" />,
@@ -3689,10 +3766,9 @@ COUNTRY_CITY_MAP["uz"] = [
   <IntlMessages id="UZ.14" />
 ];
 
-
-COUNTRY_MAP["YE"] = "co.77";
+COUNTRY_MAP["YE"] = <IntlMessages id="co.77" />;
 COUNTRY_CITY_MAP["ye"] = [
-<IntlMessages id="YE.1" />,
+  <IntlMessages id="YE.1" />,
   <IntlMessages id="YE.2" />,
   <IntlMessages id="YE.3" />,
   <IntlMessages id="YE.4" />,
@@ -3714,8 +3790,6 @@ COUNTRY_CITY_MAP["ye"] = [
   <IntlMessages id="YE.20" />,
   <IntlMessages id="YE.21" />
 ];
-
-
 
 export const COUNTRY_CITY_MAP_VALUE = new Map();
 COUNTRY_CITY_MAP_VALUE["dz"] = [
@@ -3865,8 +3939,9 @@ COUNTRY_CITY_MAP_VALUE["us"] = [
   51
 ];
 
+COUNTRY_CITY_MAP_VALUE["ca"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
-COUNTRY_CITY_MAP_VALUE["ca"] = [
+COUNTRY_CITY_MAP_VALUE["sg"] = [
   1,
   2,
   3,
@@ -3879,1019 +3954,73 @@ COUNTRY_CITY_MAP_VALUE["ca"] = [
   10,
   11,
   12,
-  13
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75,
+  76
 ];
 
-
-COUNTRY_CITY_MAP_VALUE["sg"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31,
-   32,
-   33,
-   34,
-   35,
-   36,
-   37,
-   38,
-   39,
-   40,
-   41,
-   42,
-   43,
-   44,
-   45,
-   46,
-   47,
-   48,
-   49,
-   50,
-   51,
-   52,
-   53,
-   54,
-   55,
-   56,
-   57,
-   58,
-   59,
-   60,
-   61,
-   62,
-   63,
-   64,
-   65,
-   66,
-   67,
-   68,
-   69,
-   70,
-   71,
-   72,
-   73,
-   74,
-   75,
-   76
-
-]
-
-
 COUNTRY_CITY_MAP_VALUE["ua"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24
-
-]
-
-COUNTRY_CITY_MAP_VALUE["pt"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31,
-   32,
-   33,
-   34,
-   35,
-   36,
-   37,
-   38,
-   39,
-   40,
-   41,
-   42,
-   43,
-   44,
-   45,
-   46,
-   47,
-   48,
-   49,
-   50,
-   51,
-   52,
-   53,
-   54,
-   55]
-
-
-COUNTRY_CITY_MAP_VALUE["af"] = [
-    1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14,
-     15,
-     16,
-     17,
-     18]
-
-
-COUNTRY_CITY_MAP_VALUE["al"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10,
-       11,
-       12,
-       13,
-       14,
-       15,
-       16,
-       17,
-       18,
-       19,
-       20,
-       21,
-       22,
-       23,
-       24,
-       25,
-       26,
-       27,
-       28,
-       29,
-       30,
-       31,
-       32,
-       33,
-       34,
-       35,
-       36,
-       37,
-       38,
-       39,
-       40,
-       41,
-       42,
-       43,
-       44,
-       45,
-       46,
-       47,
-       48,
-       49,
-       50,
-       51,
-       52,
-       53,
-       54,
-       55,
-       56,
-       57,
-       58,
-       59,
-       60,
-       61,
-       62,
-       63,
-       64,
-       65,
-       66,
-       67,
-       68,
-       69,
-       70,
-       71,
-       72,
-       73,
-       74,
-       75
-    
-    ]
-    
-   
-COUNTRY_CITY_MAP_VALUE["az"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31,
-   32,
-   33,
-   34,
-   35,
-   36,
-   37,
-   38,
-   39,
-   40,
-   41,
-   42,
-   43,
-   44,
-   45,
-   46,
-   47,
-   48,
-   49,
-   50,
-   51,
-   52,
-   53,
-   54,
-   55,
-   56,
-   57,
-   58,
-   59,
-   60,
-   61,
-   62,
-   63,
-   64,
-   65
-
-]
-
-COUNTRY_CITY_MAP_VALUE["ba"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25] 
-
-
-COUNTRY_CITY_MAP_VALUE["bd"] = [
-    1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11] 
-  
-COUNTRY_CITY_MAP_VALUE["bf"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10,
-       11,
-       12,
-       13,
-       14,
-       15,
-       16,
-       17,
-       18,
-       19,
-       20,
-       21,
-       22,
-       23,
-       24,
-       25,
-       26,
-       27,
-       28,
-       29,
-       30,
-       31,
-       32,
-       33,
-       34,
-       35,
-       36,
-       37,
-       38,
-       39,
-       40,
-       41,
-       42,
-       43,
-       44,
-       45,
-       46,
-       47,
-       48,
-       49,
-       50,
-       51,
-       52,
-       53,
-       54,
-       55,
-       56,
-       57,
-       58,
-       59,
-       60,
-       61,
-       62,
-       63,
-       64,
-       65
-    
-    ]
- 
-
-COUNTRY_CITY_MAP_VALUE["bg"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10,
-       11,
-       12,
-       13,
-       14,
-       15,
-       16,
-       17,
-       18,
-       19,
-       20,
-       21,
-       22,
-       23,
-       24,
-       25,
-       26,
-       27,
-       28
-    
-    ]
- 
-COUNTRY_CITY_MAP_VALUE["bh"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10
-    
-    ]
- 
-COUNTRY_CITY_MAP_VALUE["bj"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10,
-       11,
-       12,
-       13,
-       14,
-       15,
-       16,
-       17,
-       18,
-       19,
-       20,
-       21,
-       22,
-       23,
-       24,
-       25,
-       26,
-       27,
-       28,
-       29,
-       30,
-       31,
-       32,
-       33,
-       34,
-       35,
-       36,
-       37,
-       38,
-       39]
-
-COUNTRY_CITY_MAP_VALUE["ci"] = [
-        1,
-         2,
-         3,
-         4,
-         5,
-         6,
-         7,
-         8,
-         9,
-         10,
-         11,
-         12,
-         13,
-         14,
-         15,
-         16,
-         17,
-         18,
-         19,
-         20,
-         21,
-         22,
-         23,
-         24,
-         25,
-         26,
-         27,
-         28,
-         29,
-         30,
-         31,
-         32,
-         33,
-         34,
-         35,
-         36,
-         37,
-         38,
-         39,40]
-  
-COUNTRY_CITY_MAP_VALUE["cm"] = [
-          1,
-           2,
-           3,
-           4,
-           5,
-           6,
-           7,
-           8,
-           9,
-           10]
-    
- 
-COUNTRY_CITY_MAP_VALUE["cn"] = [
-  1,
-   2,
-   3,
-   4,
-   5,
-   6,
-   7,
-   8,
-   9,
-   10,
-   11,
-   12,
-   13,
-   14,
-   15,
-   16,
-   17,
-   18,
-   19,
-   20,
-   21,
-   22,
-   23,
-   24,
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31,
-   32,
-   33]
-
-COUNTRY_CITY_MAP_VALUE["de"] = [
-    1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14,
-     15,
-     16,
-     17]
-  
-COUNTRY_CITY_MAP_VALUE["dj"] = [
-      1,
-       2,
-       3,
-       4,
-       5,
-       6,
-       7,
-       8,
-       9,
-       10,
-       11,
-       12,
-       13,
-       14,
-       15,
-       16,
-       17,
-       18,
-       19,
-       20]
- 
-COUNTRY_CITY_MAP_VALUE["es"] = [
-        1,
-         2,
-         3,
-         4,
-         5,
-         6,
-         7,
-         8,
-         9,
-         10,
-         11,
-         12,
-         13,
-         14,
-         15,
-         16,
-         17,
-         18,
-         19,
-         20,
-         21,
-         22,
-         23,
-         24,
-         25,
-         26,
-         27,
-         28,
-         29,
-         30,
-         31,
-         32,
-         33,
-         34,
-         35,
-         36,
-         37,
-         38,
-         39,
-         40,
-         41,
-         42,
-         43,
-         44,
-         45,
-         46,
-         47,
-         48,
-         49]       
- COUNTRY_CITY_MAP_VALUE["fr"] = [
-          1,
-           2,
-           3,
-           4,
-           5,
-           6,
-           7,
-           8,
-           9,
-           10,
-           11,
-           12,
-           13,
-           14,
-           15,
-           16,
-           17,
-           18,
-           19,
-           20,
-           21,
-           22,
-           23,
-           24,
-           25,
-           26,
-           27,
-           28,
-           29,
-           30,
-           31,
-           32,
-           33,
-           34,
-           35,
-           36,
-           37,
-           38,
-           39,
-           40,
-           41,
-           42]       
-  
-COUNTRY_CITY_MAP_VALUE["gb"] = [
-  1,
- 2,
- 3,
- 4,
- 5,
- 6,
- 7,
- 8,
- 9,
- 10,
- 11,
- 12,
- 13,
- 14,
- 15,
- 16,
- 17,
- 18,
- 19,
- 20,
- 21,
- 22,
- 23,
- 24,
- 25,
- 26,
- 27,
- 28,
- 29,
- 30,
- 31,
- 32,
- 33,
- 34,
- 35,
- 36,
- 37,
- 38,
- 39,
- 40,
- 41,
- 42,
- 43,
- 44,
- 45,
- 46,
- 47,
- 48,
- 49,
- 50,
- 51,
- 52,
- 53,
- 54,
- 55,
- 56,
- 57,
- 58,
- 59,
- 60,
- 61,
- 62,
- 63,
- 64,
- 65,
- 66,
- 67,
- 68,
- 69,
- 70,
- 71,
- 72,
- 73,
- 74,
- 75,
- 76,
- 77,
- 78,
- 79,
- 80,
- 81,
- 82,
- 83,
- 84,
- 85,
- 86,
- 87,
- 88,
- 89,
- 90,
- 91,
- 92,
- 93,
- 94,
- 95,
- 96,
- 97,
- 98,
- 99,
- 100,
- 101,
- 102,
- 103,
- 104,
- 105,
- 106,
- 107,
- 108,
- 109,
- 110,
- 111,
- 112,
- 113,
- 114,
- 115,
- 116,
- 117,
- 118,
- 119,
- 120,
- 121,
- 122,
- 123,
- 124,
- 125,
- 126,
- 127,
- 128,
- 129,
- 130,
- 131,
- 132,
- 133,
- 134,
- 135,
- 136,
- 137,
- 138,
- 139,
- 140,
- 141,
- 142,
- 143,
- 144,
- 145,
- 146,
- 147,
- 148,
- 149,
- 150,
- 151,
- 152,
- 153,
- 154,
- 155,
- 156,
- 157,
- 158,
- 159,
- 160,
- 161,
- 162,
- 163,
- 164,
- 165,
- 166,
- 167,
- 168,
- 169,
- 170,
- 171,
- 172,
- 173,
- 174,
- 175,
- 176,
- 177,
- 178,
- 179,
- 180,
- 181,
- 182,
- 183,
- 184,
- 185,
- 186,
- 187,
- 188,
- 189,
- 190,
- 191,
- 192,
- 193,
- 194,
- 195,
- 196,
- 197,
- 198,
- 199,
- 200,
- 201,
- 202,
- 203,
- 204,
- 205,
- 206,
- 207,
- 208,
- 209,
- 210,
- 211,
- 212,
- 213,
- 214,
- 215,
- 216,
- 217,
- 218,
- 219,
- 220,
- 221,
- 222,
- 223,
- 224,
- 225,
- 226,
- 227,
- 228,
- 229,
- 230,
- 231,
- 232,
- 233,
- 234,
- 235,
- 236,
- 237,
- 238,
- 239,
- 240,
- 241,
- 242,
- 243,
- 244,
- 245,
- 246,
- 247,
- ]       
-COUNTRY_CITY_MAP_VALUE["gh"] = [
   1,
   2,
   3,
@@ -4901,8 +4030,891 @@ COUNTRY_CITY_MAP_VALUE["gh"] = [
   7,
   8,
   9,
-  10
-]  
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24
+];
+
+COUNTRY_CITY_MAP_VALUE["pt"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55
+];
+
+COUNTRY_CITY_MAP_VALUE["af"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18
+];
+
+COUNTRY_CITY_MAP_VALUE["al"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75
+];
+
+COUNTRY_CITY_MAP_VALUE["az"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65
+];
+
+COUNTRY_CITY_MAP_VALUE["ba"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25
+];
+
+COUNTRY_CITY_MAP_VALUE["bd"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+COUNTRY_CITY_MAP_VALUE["bf"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65
+];
+
+COUNTRY_CITY_MAP_VALUE["bg"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28
+];
+
+COUNTRY_CITY_MAP_VALUE["bh"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+COUNTRY_CITY_MAP_VALUE["bj"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39
+];
+
+COUNTRY_CITY_MAP_VALUE["ci"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40
+];
+
+COUNTRY_CITY_MAP_VALUE["cm"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+COUNTRY_CITY_MAP_VALUE["cn"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33
+];
+
+COUNTRY_CITY_MAP_VALUE["de"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17
+];
+
+COUNTRY_CITY_MAP_VALUE["dj"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+];
+
+COUNTRY_CITY_MAP_VALUE["es"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49
+];
+COUNTRY_CITY_MAP_VALUE["fr"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42
+];
+
+COUNTRY_CITY_MAP_VALUE["gb"] = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75,
+  76,
+  77,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91,
+  92,
+  93,
+  94,
+  95,
+  96,
+  97,
+  98,
+  99,
+  100,
+  101,
+  102,
+  103,
+  104,
+  105,
+  106,
+  107,
+  108,
+  109,
+  110,
+  111,
+  112,
+  113,
+  114,
+  115,
+  116,
+  117,
+  118,
+  119,
+  120,
+  121,
+  122,
+  123,
+  124,
+  125,
+  126,
+  127,
+  128,
+  129,
+  130,
+  131,
+  132,
+  133,
+  134,
+  135,
+  136,
+  137,
+  138,
+  139,
+  140,
+  141,
+  142,
+  143,
+  144,
+  145,
+  146,
+  147,
+  148,
+  149,
+  150,
+  151,
+  152,
+  153,
+  154,
+  155,
+  156,
+  157,
+  158,
+  159,
+  160,
+  161,
+  162,
+  163,
+  164,
+  165,
+  166,
+  167,
+  168,
+  169,
+  170,
+  171,
+  172,
+  173,
+  174,
+  175,
+  176,
+  177,
+  178,
+  179,
+  180,
+  181,
+  182,
+  183,
+  184,
+  185,
+  186,
+  187,
+  188,
+  189,
+  190,
+  191,
+  192,
+  193,
+  194,
+  195,
+  196,
+  197,
+  198,
+  199,
+  200,
+  201,
+  202,
+  203,
+  204,
+  205,
+  206,
+  207,
+  208,
+  209,
+  210,
+  211,
+  212,
+  213,
+  214,
+  215,
+  216,
+  217,
+  218,
+  219,
+  220,
+  221,
+  222,
+  223,
+  224,
+  225,
+  226,
+  227,
+  228,
+  229,
+  230,
+  231,
+  232,
+  233,
+  234,
+  235,
+  236,
+  237,
+  238,
+  239,
+  240,
+  241,
+  242,
+  243,
+  244,
+  245,
+  246,
+  247
+];
+COUNTRY_CITY_MAP_VALUE["gh"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 COUNTRY_CITY_MAP_VALUE["gm"] = [
   1,
@@ -5009,7 +5021,7 @@ COUNTRY_CITY_MAP_VALUE["gm"] = [
   102,
   103,
   104
-]  
+];
 COUNTRY_CITY_MAP_VALUE["gn"] = [
   1,
   2,
@@ -5051,24 +5063,10 @@ COUNTRY_CITY_MAP_VALUE["gn"] = [
   38,
   39,
   40
-]  
-COUNTRY_CITY_MAP_VALUE["gw"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11
-]  
-
+];
+COUNTRY_CITY_MAP_VALUE["gw"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 COUNTRY_CITY_MAP_VALUE["id"] = [
-
   1,
   2,
   3,
@@ -5107,9 +5105,7 @@ COUNTRY_CITY_MAP_VALUE["id"] = [
   36,
   37,
   38
-
-
-]  
+];
 COUNTRY_CITY_MAP_VALUE["in"] = [
   1,
   2,
@@ -5147,7 +5143,7 @@ COUNTRY_CITY_MAP_VALUE["in"] = [
   34,
   35,
   36
-]  
+];
 COUNTRY_CITY_MAP_VALUE["iq"] = [
   1,
   2,
@@ -5231,8 +5227,7 @@ COUNTRY_CITY_MAP_VALUE["iq"] = [
   80,
   81,
   82
-
-]  
+];
 COUNTRY_CITY_MAP_VALUE["ir"] = [
   1,
   2,
@@ -5265,7 +5260,7 @@ COUNTRY_CITY_MAP_VALUE["ir"] = [
   29,
   30,
   31
-]  
+];
 COUNTRY_CITY_MAP_VALUE["it"] = [
   1,
   2,
@@ -5395,7 +5390,7 @@ COUNTRY_CITY_MAP_VALUE["it"] = [
   126,
   127,
   128
-]  
+];
 COUNTRY_CITY_MAP_VALUE["jo"] = [
   1,
   2,
@@ -5479,7 +5474,7 @@ COUNTRY_CITY_MAP_VALUE["jo"] = [
   80,
   81,
   82
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["ke"] = [
   1,
@@ -5536,7 +5531,7 @@ COUNTRY_CITY_MAP_VALUE["ke"] = [
   52,
   53,
   54
-]  
+];
 COUNTRY_CITY_MAP_VALUE["kg"] = [
   1,
   2,
@@ -5591,8 +5586,7 @@ COUNTRY_CITY_MAP_VALUE["kg"] = [
   51,
   52,
   53
-
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["km"] = [
   1,
@@ -5683,7 +5677,7 @@ COUNTRY_CITY_MAP_VALUE["km"] = [
   86,
   87,
   88
-]  
+];
 COUNTRY_CITY_MAP_VALUE["lb"] = [
   1,
   2,
@@ -5711,7 +5705,7 @@ COUNTRY_CITY_MAP_VALUE["lb"] = [
   24,
   25,
   26
-]  
+];
 COUNTRY_CITY_MAP_VALUE["lr"] = [
   1,
   2,
@@ -5731,7 +5725,7 @@ COUNTRY_CITY_MAP_VALUE["lr"] = [
   16,
   17,
   18
-]  
+];
 COUNTRY_CITY_MAP_VALUE["ly"] = [
   1,
   2,
@@ -5753,9 +5747,7 @@ COUNTRY_CITY_MAP_VALUE["ly"] = [
   18,
   19,
   20
-]  
-
-
+];
 
 COUNTRY_CITY_MAP_VALUE["me"] = [
   1,
@@ -5792,18 +5784,8 @@ COUNTRY_CITY_MAP_VALUE["me"] = [
   32,
   33,
   34
-]  
-COUNTRY_CITY_MAP_VALUE["mg"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9
-]  
+];
+COUNTRY_CITY_MAP_VALUE["mg"] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 COUNTRY_CITY_MAP_VALUE["mk"] = [
   1,
   2,
@@ -5889,20 +5871,8 @@ COUNTRY_CITY_MAP_VALUE["mk"] = [
   82,
   83,
   84
-]  
-COUNTRY_CITY_MAP_VALUE["ml"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11
-]  
+];
+COUNTRY_CITY_MAP_VALUE["ml"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 COUNTRY_CITY_MAP_VALUE["mm"] = [
   1,
   2,
@@ -5916,9 +5886,10 @@ COUNTRY_CITY_MAP_VALUE["mm"] = [
   10,
   11,
   12,
-  13,14,15
-]  
-
+  13,
+  14,
+  15
+];
 
 COUNTRY_CITY_MAP_VALUE["mr"] = [
   1,
@@ -5944,7 +5915,7 @@ COUNTRY_CITY_MAP_VALUE["mr"] = [
   21,
   22,
   23
-]  
+];
 COUNTRY_CITY_MAP_VALUE["mv"] = [
   1,
   2,
@@ -5972,7 +5943,7 @@ COUNTRY_CITY_MAP_VALUE["mv"] = [
   24,
   25,
   26
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["mw"] = [
   1,
@@ -6005,7 +5976,7 @@ COUNTRY_CITY_MAP_VALUE["mw"] = [
   28,
   29,
   30
-]  
+];
 COUNTRY_CITY_MAP_VALUE["my"] = [
   1,
   2,
@@ -6019,8 +5990,11 @@ COUNTRY_CITY_MAP_VALUE["my"] = [
   10,
   11,
   12,
-  13,14,15,16
-]  
+  13,
+  14,
+  15,
+  16
+];
 
 COUNTRY_CITY_MAP_VALUE["ne"] = [
   1,
@@ -6093,7 +6067,7 @@ COUNTRY_CITY_MAP_VALUE["ne"] = [
   68,
   69,
   70
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["ng"] = [
   1,
@@ -6132,7 +6106,7 @@ COUNTRY_CITY_MAP_VALUE["ng"] = [
   34,
   35,
   36
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["om"] = [
   1,
@@ -6163,7 +6137,7 @@ COUNTRY_CITY_MAP_VALUE["om"] = [
   26,
   27,
   28
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["ph"] = [
   1,
@@ -6263,18 +6237,9 @@ COUNTRY_CITY_MAP_VALUE["ph"] = [
   95,
   96,
   97
-]  
+];
 
-COUNTRY_CITY_MAP_VALUE["pk"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8
-]  
+COUNTRY_CITY_MAP_VALUE["pk"] = [1, 2, 3, 4, 5, 6, 7, 8];
 
 COUNTRY_CITY_MAP_VALUE["ps"] = [
   1,
@@ -6314,7 +6279,7 @@ COUNTRY_CITY_MAP_VALUE["ps"] = [
   35,
   36,
   37
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["qa"] = [
   1,
@@ -6332,7 +6297,7 @@ COUNTRY_CITY_MAP_VALUE["qa"] = [
   13,
   14,
   15
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["ru"] = [
   1,
@@ -6419,20 +6384,9 @@ COUNTRY_CITY_MAP_VALUE["ru"] = [
   82,
   83,
   84
-]  
+];
 
-COUNTRY_CITY_MAP_VALUE["sd"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10
-]  
+COUNTRY_CITY_MAP_VALUE["sd"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 COUNTRY_CITY_MAP_VALUE["sl"] = [
   1,
@@ -6525,24 +6479,9 @@ COUNTRY_CITY_MAP_VALUE["sl"] = [
   88,
   89,
   90
-]  
+];
 
-COUNTRY_CITY_MAP_VALUE["sn"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14
-]  
+COUNTRY_CITY_MAP_VALUE["sn"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 COUNTRY_CITY_MAP_VALUE["so"] = [
   1,
@@ -6561,23 +6500,8 @@ COUNTRY_CITY_MAP_VALUE["so"] = [
   14,
   15,
   16
-]  
-COUNTRY_CITY_MAP_VALUE["sy"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14
-]  
+];
+COUNTRY_CITY_MAP_VALUE["sy"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 COUNTRY_CITY_MAP_VALUE["td"] = [
   1,
   2,
@@ -6602,7 +6526,7 @@ COUNTRY_CITY_MAP_VALUE["td"] = [
   21,
   22,
   23
-]  
+];
 COUNTRY_CITY_MAP_VALUE["tg"] = [
   1,
   2,
@@ -6626,7 +6550,7 @@ COUNTRY_CITY_MAP_VALUE["tg"] = [
   20,
   21,
   22
-]  
+];
 COUNTRY_CITY_MAP_VALUE["th"] = [
   1,
   2,
@@ -6705,7 +6629,7 @@ COUNTRY_CITY_MAP_VALUE["th"] = [
   75,
   76,
   77
-]  
+];
 COUNTRY_CITY_MAP_VALUE["tj"] = [
   1,
   2,
@@ -6777,7 +6701,7 @@ COUNTRY_CITY_MAP_VALUE["tj"] = [
   68,
   69,
   70
-]  
+];
 COUNTRY_CITY_MAP_VALUE["tm"] = [
   1,
   2,
@@ -6809,7 +6733,7 @@ COUNTRY_CITY_MAP_VALUE["tm"] = [
   28,
   29,
   30
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["tn"] = [
   1,
@@ -6835,7 +6759,7 @@ COUNTRY_CITY_MAP_VALUE["tn"] = [
   21,
   22,
   23
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["tr"] = [
   1,
@@ -6919,7 +6843,7 @@ COUNTRY_CITY_MAP_VALUE["tr"] = [
   79,
   80,
   81
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["tz"] = [
   1,
@@ -6951,7 +6875,7 @@ COUNTRY_CITY_MAP_VALUE["tz"] = [
   27,
   28,
   29
-]  
+];
 
 COUNTRY_CITY_MAP_VALUE["ug"] = [
   1,
@@ -7045,24 +6969,9 @@ COUNTRY_CITY_MAP_VALUE["ug"] = [
   89,
   90,
   91
-]  
+];
 
-COUNTRY_CITY_MAP_VALUE["uz"] = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14
-]  
+COUNTRY_CITY_MAP_VALUE["uz"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 COUNTRY_CITY_MAP_VALUE["ye"] = [
   1,
@@ -7086,8 +6995,7 @@ COUNTRY_CITY_MAP_VALUE["ye"] = [
   19,
   20,
   21
-]  
-
+];
 
 export const ARRAY_OF_SUB_PACK = [
   <IntlMessages id="pack.0" />,

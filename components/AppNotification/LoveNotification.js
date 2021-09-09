@@ -467,17 +467,26 @@ export default function LoveNotifications() {
                 ? !endOfResultNotificationPP
                 : ""
             }
-            loader={<CircularProgress />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                {notificationLoveUnread.length != 0 && (
-                  <b>Yay! You have seen all love notifications </b>
-                )}
-                {notificationLoveUnread.length === 0 && (
-                  <b>Yay! You don't have love notifications </b>
-                )}
-              </p>
+            loader={
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
             }
+            // endMessage={
+            //   <p style={{ textAlign: "center" }}>
+            //     {notificationLoveUnread.length != 0 && (
+            //       <b>Yay! You have seen all love notifications </b>
+            //     )}
+            //     {notificationLoveUnread.length === 0 && (
+            //       <b>Yay! You don't have love notifications </b>
+            //     )}
+            //   </p>
+            // }
           >
             {headerSelectedIcon == "love" &&
               notificationLoveUnread.length != 0 && (

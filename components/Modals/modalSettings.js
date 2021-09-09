@@ -1225,11 +1225,16 @@ export default function ModalSettings({
 
             {/* </form> */}
 
-            {/* {loader && (
-            <div className="loader-view">
-              <CircularProgress />
-            </div>
-          )} */}
+            {loader && (
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
+              </div>
+            )}
           </div>
         </Fade>
       </Modal>

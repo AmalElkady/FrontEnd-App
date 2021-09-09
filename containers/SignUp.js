@@ -479,9 +479,17 @@ class SignUp extends React.Component {
 
         {
           loader &&
-          <div className="loader-view">
-            <CircularProgress/>
-          </div>
+        //   <div className="loader-view">
+        //     <CircularProgress/>
+		//   </div>
+		<div className="loading-border loading--full-height">
+		<img
+		  src="../static/images/Gila_Final_Logo_form.svg"
+		  alt="App"
+		  title="App"
+		  className="rotate-image loader-img"
+		/>
+	  </div>
 		}
 		{this.props.OpenModal &&(
         <ModalSettings confirmTerms={true} user={{phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}} />

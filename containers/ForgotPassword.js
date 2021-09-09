@@ -372,8 +372,16 @@ class ForgotPassword extends React.Component {
               </Grid>
             </Grid>
             {loader && (
-              <div className="loader-view">
-                <CircularProgress />
+              // <div className="loader-view">
+              //   <CircularProgress />
+              // </div>
+              <div className="loading-border loading--full-height">
+                <img
+                  src="../static/images/Gila_Final_Logo_form.svg"
+                  alt="App"
+                  title="App"
+                  className="rotate-image loader-img"
+                />
               </div>
             )}
             {showMessage && NotificationManager.error(alertMessage)}

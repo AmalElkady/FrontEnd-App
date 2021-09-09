@@ -161,14 +161,14 @@ img {
 
 .loading--full-height {
   align-items: center;
-  height: 100%;
+  height: auto;
   position: absolute;
 }
 
 .loading-border::after {
   content: "";
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
   border: 8px solid $secondary;
   border-top-color: transparent;
   border-radius: 50%;
@@ -210,6 +210,6 @@ img {
 }
 
 .loader-img {
-  width: 100px;
+  width: 80px;
   position: absolute;
 }
