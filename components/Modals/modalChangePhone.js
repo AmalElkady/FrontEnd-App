@@ -116,8 +116,6 @@ export default function ModalChangePhone({
   );
 
   useEffect(() => {
-    console.log("first dataaaaa ", phone, country, countryiso2);
-    console.log("first dataaaaa countryiso2", countryiso2, city);
     setCity(city);
     setPhone(phone);
   }, []);
@@ -148,7 +146,6 @@ export default function ModalChangePhone({
   };
 
   const handleChangeCity = event => {
-    console.log("");
     setCity(event.target.value);
   };
 
@@ -194,43 +191,43 @@ export default function ModalChangePhone({
             </div>
             {/* <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3"> */}
             {/* <div className="app-login-main-content"> */}
-              <div className="app-login-content-2">
-                <div className="app-login-header">
-                  <h2>
-                    <IntlMessages id="appModule.changeYourPhone" />
-                  </h2>
-                  <h2>
-                    {" "}
-                    {`+${country} ${phone}`}
-                    <IconButton
-                      aria-label="Edit"
-                      onClick={handleOpenEdit}
-                      className="edit-icon-2 linear-g-r"
-                    >
-                      <EditIcon fontSize="small"></EditIcon>
-                    </IconButton>
-                  </h2>
-                </div>
+            <div className="app-login-content-2">
+              <div className="app-login-header">
+                <h2>
+                  <IntlMessages id="appModule.changeYourPhone" />
+                </h2>
+                <h2>
+                  {" "}
+                  {`+${country} ${phone}`}
+                  <IconButton
+                    aria-label="Edit"
+                    onClick={handleOpenEdit}
+                    className="edit-icon-2 linear-g-r"
+                  >
+                    <EditIcon fontSize="small"></EditIcon>
+                  </IconButton>
+                </h2>
+              </div>
 
-                <div className="app-login-form">
-                  {openEdit && (
-                    <form method="post" className={classes.positionR}>
-                      {/* old phone */}
-                      <Grid
-                        container
-                        spacing={12}
-                        style={{ minWidth: "149px", paddingBottom: "9px" }}
-                      >
-                        <Grid item xs={12}>
-                          <InputLabel
-                            id="phone-label"
-                            style={{ paddingBottom: "7px" }}
-                          >
-                            <IntlMessages id="inputLabel.changePhone" />
-                          </InputLabel>
-                        </Grid>
-                        <Grid item xs={12}>
-                          {/* <PhoneInput
+              <div className="app-login-form">
+                {openEdit && (
+                  <form method="post" className={classes.positionR}>
+                    {/* old phone */}
+                    <Grid
+                      container
+                      spacing={12}
+                      style={{ minWidth: "149px", paddingBottom: "9px" }}
+                    >
+                      <Grid item xs={12}>
+                        <InputLabel
+                          id="phone-label"
+                          style={{ paddingBottom: "7px" }}
+                        >
+                          <IntlMessages id="inputLabel.changePhone" />
+                        </InputLabel>
+                      </Grid>
+                      <Grid item xs={12}>
+                        {/* <PhoneInput
                         countryCodeEditable={false}
                         disableCountryCode={true}
                         // country={
@@ -245,171 +242,165 @@ export default function ModalChangePhone({
                         //  // setNationality(country.countryCode);
                         // }}
                       /> */}
-                          <PhoneInput
-                            onlyCountries={[
-                              "us",
-                              "fr",
-                              "eg",
-                              "ma",
-                              "sa",
-                              "dz",
-                              "kw",
-                              "ar",
-                              "ca",
-                              "sg",
-                              "ua",
-                              "pt",
-                              "af",
-                              "al",
-                              "az",
-                              "ba",
-                              "bd",
-                              "bf",
-                              "bg",
-                              "bh",
-                              "bj",
-                              "ci",
-                              "cm",
-                              "cn",
-                              "de",
-                              "dj",
-                              "es",
-                              "gb",
-                              "gm",
-                              "gn",
-                              "gw",
-                              "id",
-                              "in",
-                              "iq",
-                              "ir",
-                              "it",
-                              "jo",
-                              "ke",
-                              "kg",
-                              "km",
-                              "lb",
-                              "lr",
-                              "ly",
-                              "me",
-                              "mg",
-                              "mk",
-                              "ml",
-                              "mm",
-                              "mr",
-                              "mv",
-                              "mw",
-                              "my",
-                              "ne",
-                              "ng",
-                              "om",
-                              "ph",
-                              "pk",
-                              "ps",
-                              "qa",
-                              "ru",
-                              "sd",
-                              "sl",
-                              "sn",
-                              "so",
-                              "sy",
-                              "td",
-                              "tg",
-                              "th",
-                              "tj",
-                              "tm",
-                              "tn",
-                              "tr",
-                              "tz",
-                              "ug",
-                              "uz",
-                              "ye"
-                            ]}
-                            countryCodeEditable={true}
-                            disableCountryCode={true}
-                            country={countryiso2}
-                            value={Phone}
-                            placeholder={""}
-                            onChange={(value, country, e, formattedValue) => {
-                              //   this.setState({ countrySign: country.dialCode });
-                              //   this.setState({
-                              //     phoneSign: value.slice(country.dialCode.length)
-                              //   });
-                              console.log("valueee ", value);
-                              handleChangePhone(value);
-                            }}
-                          />
-                        </Grid>
-                        <Grid
-                          item
-                          xs={12}
-                          style={{ minWidth: "90px", paddingRight: "18px" }}
-                        >
-                          <StyledFormControl style={{ minWidth: "90px" }}>
-                            <InputLabel id="city-label">
-                              <IntlMessages id="inputLabel.city" />
-                            </InputLabel>
-                            <Select
-                              labelId="city-label"
-                              id="city"
-                              value={City}
-                              onChange={handleChangeCity}
-                              name="city"
-                            >
-                              {COUNTRY_CITY_MAP[countryiso2].map((value, i) => (
-                                <MenuItem
-                                  key={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
-                                  value={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
-                                  control={<Radio />}
-                                  label={value}
-                                >
-                                  {value}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </StyledFormControl>
-                        </Grid>
+                        <PhoneInput
+                          onlyCountries={[
+                            "us",
+                            "fr",
+                            "eg",
+                            "ma",
+                            "sa",
+                            "dz",
+                            "kw",
+                            "ar",
+                            "ca",
+                            "sg",
+                            "ua",
+                            "pt",
+                            "af",
+                            "al",
+                            "az",
+                            "ba",
+                            "bd",
+                            "bf",
+                            "bg",
+                            "bh",
+                            "bj",
+                            "ci",
+                            "cm",
+                            "cn",
+                            "de",
+                            "dj",
+                            "es",
+                            "gb",
+                            "gm",
+                            "gn",
+                            "gw",
+                            "id",
+                            "in",
+                            "iq",
+                            "ir",
+                            "it",
+                            "jo",
+                            "ke",
+                            "kg",
+                            "km",
+                            "lb",
+                            "lr",
+                            "ly",
+                            "me",
+                            "mg",
+                            "mk",
+                            "ml",
+                            "mm",
+                            "mr",
+                            "mv",
+                            "mw",
+                            "my",
+                            "ne",
+                            "ng",
+                            "om",
+                            "ph",
+                            "pk",
+                            "ps",
+                            "qa",
+                            "ru",
+                            "sd",
+                            "sl",
+                            "sn",
+                            "so",
+                            "sy",
+                            "td",
+                            "tg",
+                            "th",
+                            "tj",
+                            "tm",
+                            "tn",
+                            "tr",
+                            "tz",
+                            "ug",
+                            "uz",
+                            "ye"
+                          ]}
+                          countryCodeEditable={true}
+                          disableCountryCode={true}
+                          country={countryiso2}
+                          value={Phone}
+                          placeholder={""}
+                          onChange={(value, country, e, formattedValue) => {
+                            //   this.setState({ countrySign: country.dialCode });
+                            //   this.setState({
+                            //     phoneSign: value.slice(country.dialCode.length)
+                            //   });
+
+                            handleChangePhone(value);
+                          }}
+                        />
                       </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{ minWidth: "90px", paddingRight: "18px" }}
+                      >
+                        <StyledFormControl style={{ minWidth: "90px" }}>
+                          <InputLabel id="city-label">
+                            <IntlMessages id="inputLabel.city" />
+                          </InputLabel>
+                          <Select
+                            labelId="city-label"
+                            id="city"
+                            value={City}
+                            onChange={handleChangeCity}
+                            name="city"
+                          >
+                            {COUNTRY_CITY_MAP[countryiso2].map((value, i) => (
+                              <MenuItem
+                                key={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
+                                value={COUNTRY_CITY_MAP_VALUE[countryiso2][i]}
+                                control={<Radio />}
+                                label={value}
+                              >
+                                {value}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </StyledFormControl>
+                      </Grid>
+                    </Grid>
 
-                      <div className="mb-3 d-flex align-items-center justify-content-between">
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            setOpenEdit(false);
-                            handleClose();
-                          }}
-                          color="primary"
-                          className="linear-g-r"
-                        >
-                          <IntlMessages id="appModule.cancel" />
-                        </Button>
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            console.log("change phone");
-                            console.log("city ", City);
-                            console.log("phone ", Phone);
-                            console.log("country ", country);
-                            console.log("countryiso2 ", countryiso2);
-
-                            dispatch(
-                              changeUserPhoneBeforeVerif(
-                                Phone,
-                                country,
-                                countryiso2.toUpperCase(),
-                                City
-                              )
-                            );
-                          }}
-                          color="primary"
-                          className="linear-g-r"
-                        >
-                          <IntlMessages id="appModule.change" />
-                        </Button>
-                      </div>
-                    </form>
-                  )}
-                </div>
+                    <div className="mb-3 d-flex align-items-center justify-content-between">
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setOpenEdit(false);
+                          handleClose();
+                        }}
+                        color="primary"
+                        className="linear-g-r"
+                      >
+                        <IntlMessages id="appModule.cancel" />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          dispatch(
+                            changeUserPhoneBeforeVerif(
+                              Phone,
+                              country,
+                              countryiso2.toUpperCase(),
+                              City
+                            )
+                          );
+                        }}
+                        color="primary"
+                        className="linear-g-r"
+                      >
+                        <IntlMessages id="appModule.change" />
+                      </Button>
+                    </div>
+                  </form>
+                )}
               </div>
+            </div>
             {/* </div> */}
             {/* </div> */}
 

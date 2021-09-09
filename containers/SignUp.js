@@ -84,7 +84,6 @@ class SignUp extends React.Component {
 		setTimeout(() => {
 		   this.props.hideAuthLoader();
 		    //Router.replace('/signin');
-			console.log("login direct")
 		   this.props.userSignIn({
                           phone: this.state.phone,
                           password:this.state.password,
@@ -153,12 +152,6 @@ class SignUp extends React.Component {
   };
 
   const handleChangeTerms = event => {
-    console.log(
-      "clicked terms ",
-      event.target.name,
-      event.target.checked,
-      terms
-    );
 //	setReason({ ...reason, [event.target.name]: event.target.checked });
 	this.setState({terms:{ ...terms, [event.target.name]: event.target.checked }})
   };
@@ -345,7 +338,7 @@ class SignUp extends React.Component {
 												  onChange={handleChange}
 												  name="city"
 												>
-													{console.log("this.state.countryiso2 ",this.state.countryiso2)}
+												
 												
 														{COUNTRY_CITY_MAP[this.state.countryiso2].map((value,i) => (
 																  <MenuItem

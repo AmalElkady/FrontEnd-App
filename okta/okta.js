@@ -55,30 +55,22 @@ let callAxios = (options) => {
 		return new Promise(  async (resolve, reject) => {			
 				try{
 				let response = await axiosRequest(options);
-				console.log("**********data*********");
-				console.log(response);
-				console.log("**********data*********");
 				
 				if(!response.data){
 				resolve({"data" : {"message":"error"}});
 				} else {
-					console.log(
-						"********** new token  response.data.token ",
-						response.data.token
-					  );
+					
 					
 						if(response.data.token && (response.data.status != "ACTIVE"||response.data.status == null)) {
 							// && response.data.status != "ACTIVE"
 								setCookie("access_token",response.data.token);
-								
-								console.log("update access_token &&&&&&&& trueeeeee",response.data.token,getCookie("access_token",false))
 															
 								if(response.data.verify) {
 									resolve({"data" : {"response":"ok"}})
 								} else if(response.data.signedRequest){
 									 resolve({"data" : {"signedRequest":response.data.signedRequest}});
 								}else if(response.data.responseMP){
-									console.log("true check responseMP ")
+								
 									resolve(response);
 							   }else {
 									options.headers.Authorization = "Bearer " + response.data.token;
@@ -89,11 +81,11 @@ let callAxios = (options) => {
 							} else if(response.data.message) {
 								
 								if(response.data.message == "unauthorized") {
-									console.log("**********Authorization*********");
+									
 									removeCookie("access_token");
 									resolve({"data" : {"code":"unauthorized","message":"unauthorized"}})
 								}else if(response.data.code=="JWT_8"||response.data.code=="JWT_7"){
-									console.log("**********wrong token*********");
+									
 									//removeCookie("access_token");
 									//auth.signOut();
 								//	Router.replace('/');
@@ -123,7 +115,7 @@ let callAxios = (options) => {
 					}
 				
 				} catch (error) {
-					console.log(error);
+				
 					resolve({"data" : {"message":"error"}});
 				}
 		}).catch((err) => {console.log(err)});
@@ -180,28 +172,26 @@ auth.signInWithPhoneAndPassword = function (username,password,country,score,key)
 													
 													let res = resX.data;
 													
-													console.log("RES FROM LOGIN 1",res);
-											
+													
 													if(res.response && res.status == "ACTIVE" && res.token){
-														console.log("1")
+														
 											
 															 let tokenUserData = JSON.parse(base64url.decode(`${res.token}`.split(".")[1]));	
-															 console.log("tokenUserData from login ###### ",tokenUserData)														 
-						
+															
 															 
 															tokenManagerOperations.setTokenAndValidate("access_token",res.token);
 															if(res.L1){
-																console.log("2")
+																
 																resolve({"accessToken": "access_token", "n": res.L1.n, "m": res.L1.m, "b": res.L1.b, "gender":tokenUserData.gd,"sub":tokenUserData.sub,"jnt":tokenUserData.jnt});
 															}
 															else{
-																console.log("3")
+															
 																resolve({"message": "profile not available"});	
 															}
 															
 													
 													}else if(res.message.code=="ADDINGUSERONLINE_9"){
-														console.log("auth.signInWithPhoneAndPassword 2 ")
+													
 														await new Promise(resolve => setTimeout(resolve, 5000));
 														//auth.signInWithPhoneAndPassword(username,password,country)
 														resolve({"loginAgain":true});	
@@ -219,7 +209,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country,score,key)
 															resolve({"message": <IntlMessages id="error.userSuspended" />});
 														}
 														else if(res.code=="ADDINGUSERONLINE_9"){
-															console.log("auth.signInWithPhoneAndPassword ")
+														
 															auth.signInWithPhoneAndPassword(username,password,country)
 
 														}
@@ -267,9 +257,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 
 			      return new Promise(  async (resolve, reject) => {				
 						
-						
-						console.log("newUser", newUser);
-						
+					
 						if( (`${username}`.trim() !== '') && (`${password}`.trim() !== '') && (`${firstName}`.trim() !== '') && (`${lastName}`.trim() !== '') && (parseInt(gender) == 0 || parseInt(gender) == 1)&& martial!==''&& month!==''&& year!==''&& day!=='' && city!=='' ) {
 
 							try {
@@ -288,7 +276,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 								let response =	responseX.data;
 								
 											if(response.response == "ok") {
-												console.log("response.token ",newUser.phone,password,newUser.phonecountrycode)
+											
 												//let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));	
 												//	await tokenManagerOperations.setTokenAndValidate("access_token",response.token);
 												// login API
@@ -316,7 +304,7 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 
 
 							}catch(err) {
-								console.log(err);
+								
 								resolve({"message": err});
 							}									
 				  } else {
@@ -361,7 +349,6 @@ auth.createUserWithPhoneAndPassword = function (username,password,firstName,last
 }
 
 auth.uploadMainProfilePhoto = function (file) {
-	console.log("upload imag from service ",file);
 			      return new Promise(  async (resolve, reject) => {				
 					  
 						if(file) {
@@ -388,7 +375,7 @@ auth.uploadMainProfilePhoto = function (file) {
 
 								let checkMPUploadResponse = await callAxios(optionsCheck);
 								
-								console.log("DATA TO CHECK3",checkMPUploadResponse.data);//IF APPROVED RETURN WITH SUCCESS 
+								//IF APPROVED RETURN WITH SUCCESS 
 								//IF MESSAGE RETURN ERORR
 								//ELSE CONTINUE AND REQUEST PHOTO UPLOAD then USE RETURNED S3 SIGNED REQUEST TO UPLOAD PHOTO
 									//IF UPLOADED --- > CALL (CHECK MP UPLOAD) RETURN SUCCESS
@@ -402,7 +389,6 @@ auth.uploadMainProfilePhoto = function (file) {
 									
 								    let checkUploadRequestResponse = await callAxios(optionsCheck);
 								    
-									console.log("checkUploadRequestResponse.data **",checkUploadRequestResponse.data);
 									
 								    		if(checkUploadRequestResponse.data.code) {
 								    			resolve({"message": checkUploadRequestResponse.data.code});
@@ -458,25 +444,25 @@ auth.uploadMainProfilePhoto = function (file) {
     xhr.send(formData);
     xhr.onload = async function() {
      if(this.status === 204 ){
-		 console.log("trueeeeeeee 204");
+	
 			optionsCheck.url = "/checkmpupload";
 			let checkUploadRequestResponseNew = await callAxios(optionsCheck);
-			console.log("checkUploadRequestResponseNew ",checkUploadRequestResponseNew)
+		
 														//await callAxios(optionsCheck);
 														if(checkUploadRequestResponseNew.data.token != 0 && checkUploadRequestResponseNew.data.token){
-															console.log("if 1")
+															
 															setCookie("access_token",checkUploadRequestResponseNew.data.token);
 															resolve(true);
 														}
 														else if(checkUploadRequestResponseNew.data.token==0){
-															console.log("if 2")
+														
 															resolve({"token0": true});
 														}
 														else if(checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_6"){
 															resolve(true);
 														}
 														else if(checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_11"||checkUploadRequestResponseNew.data.code== "CHECKMPUPLOAD_12"){
-															console.log("error checkmp_11 ,12");
+														
 															checkUploadRequestResponseNew = await callAxios(optionsCheck);
 															if(checkUploadRequestResponseNew.data.token!=0){
 																setCookie("access_token",checkUploadRequestResponseNew.data.token);
@@ -520,7 +506,7 @@ auth.uploadMainProfilePhoto = function (file) {
 								
 				
 							}catch(err) {
-								console.log(err);
+								
 								resolve({"message": err});
 							}									
 				  } else {
@@ -551,8 +537,7 @@ auth.checkMPUploadphoto=function(){
 
 				let checkMPUploadResponse = await callAxios(optionsCheck);
 				
-				console.log("DATA TO CHECK",checkMPUploadResponse.data);
-				console.log("DATA TO CHECK 2",checkMPUploadResponse.data.code);
+			
 				if(checkMPUploadResponse.data.code == "CHECKMPUPLOAD_4" || checkMPUploadResponse.data.code == "CHECKMPUPLOAD_9") {
 					
 					resolve(false);
@@ -562,7 +547,7 @@ auth.checkMPUploadphoto=function(){
 				
 
 			}catch(err) {
-				console.log(err);
+			
 				resolve({"message": err});
 			}									
  
@@ -577,10 +562,6 @@ auth.changeUserPhoneBeforeVerif = function (newPhone,
 	phonecountrycode,
 	countryiso2,
 	newCity) {
-     console.log("from okta",newPhone,
-	phonecountrycode,
-	countryiso2,
-	newCity)
 
 		  return new Promise(  async (resolve, reject) => {				
 					try {
@@ -603,7 +584,7 @@ auth.changeUserPhoneBeforeVerif = function (newPhone,
 						let responseX = await callAxios(options);
 						let response =	responseX.data;
 						
-										console.log("response of change phone ",response);
+									
 										if(response.response && response.token){
 											
 															 let tokenUserData = JSON.parse(base64url.decode(`${response.token}`.split(".")[1]));															 
@@ -622,7 +603,7 @@ auth.changeUserPhoneBeforeVerif = function (newPhone,
 
 
 					}catch(err) {
-						console.log(err);
+					
 						resolve({"message": err});
 					}									
 		  
@@ -647,7 +628,7 @@ auth.addUpdateProfileLayer2 = function (addUpdateFlag,nationality,tpercent,workd
 	
 			      return new Promise(  async (resolve, reject) => {				
 					
-						console.log(profileL2);
+					
 						
 						if( (`${nationality}`.trim() !== '') && (parseInt(tpercent) > 0) && (`${title}`.trim() !== '') && (parseInt(workd) > 0) && (parseInt(education) > 0) && (`${bio}`.trim() !== '')) {
 
@@ -681,11 +662,11 @@ auth.addUpdateProfileLayer2 = function (addUpdateFlag,nationality,tpercent,workd
 
 
 							}catch(err) {
-								console.log(err);
+								
 								resolve({"message": err});
 							}									
 				  } else {
-					  console.log("tpercent*** ",tpercent,education,workd)
+					
 					if((`${nationality}`.trim() === '')){
 						resolve({"message": <IntlMessages id="error.emptyNationality" />});
 					}
@@ -736,7 +717,6 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 													let responseX = await callAxios(options);
 													let response = responseX.data;
 										 
-											       console.log("verify respons ",response);
 												   if(response){
 														
 														 if(response.response == "ok"){
@@ -770,7 +750,7 @@ auth.sendVerificationCodeForUserPhone = function (verificationCode) {
 
 
 auth.subscribe = function (subscribePack,sessionId) {
-	console.log("from service ",subscribePack,sessionId)
+	
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);
@@ -789,7 +769,7 @@ auth.subscribe = function (subscribePack,sessionId) {
 						
 									  let responseX = await callAxios(options);
 									  let response = responseX.data;
-									  console.log("response ",response)
+									 
 									 if(response){
 										  
 										   if(response.token){
@@ -813,7 +793,7 @@ auth.subscribe = function (subscribePack,sessionId) {
 ///////
 
 auth.addPayingCustomer = function () {
-	console.log("from service addPayingCustomer")
+
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);
@@ -829,7 +809,7 @@ auth.addPayingCustomer = function () {
 				  
 									  let responseX = await callAxios(options);
 									  let response = responseX.data;
-									  console.log("from service addPayingCustomer response ",response)
+									
 									 if(response){
 										   if(response.stripe_id){
 											  resolve(response.stripe_id);
@@ -851,7 +831,7 @@ auth.addPayingCustomer = function () {
 
 
 auth.createCheckOutSession = function (pack) {
-	console.log("from service createCheckOutSession ",pack)
+
 	return new Promise(  async (resolve, reject) => {				
 	
 				  const tokenValue = getCookie("access_token",false);
@@ -870,7 +850,7 @@ auth.createCheckOutSession = function (pack) {
 				  
 									  let responseX = await callAxios(options);
 									  let response = responseX.data;
-									  console.log("from service createCheckOutSession response ",response)
+									
 									 if(response){
 										   if(response.url){
 											  resolve(response);
@@ -916,7 +896,7 @@ auth.resendVerificationToUserPhone = function () {
 													
 													let response = responseX.data;
 										 
-											       console.log(response);
+											    
 												   if(response){
 														
 														 if(response.response == "ok"){
@@ -967,7 +947,7 @@ auth.sendResetPasswordTokenForUserPhone = function (username,phonecountrycode,co
 													let responseX = await callAxios(options);
 													let response = responseX.data;
 													//{"response" : "ok", "uid" : hw}
-											       console.log("resp password ",response);
+											    
 												   if(response){
 														
 														 if(response.response == "ok"){
@@ -1068,7 +1048,7 @@ auth.signOut = function () {
 							    				};
 							    
 							    let responseX = await callAxios(options);
-								console.log("token ==== " + tokenValue);		
+										
 								tokenManagerOperations.clearAllTokens("access_token");
 								resolve(undefined);
 								
@@ -1434,7 +1414,7 @@ home.getAllCountriesSelectedOnline = function (SH,offset) {
 																							
 																							if(response){
 																							   if (response.code == "JWT_8") {
-																									console.log("resolve jwt_8");
+																								
 																									resolve({ error_jwt8: "true" });
 																								  } else{
 
@@ -1837,7 +1817,7 @@ home.requestPhotoRead=()=>{
 																							let responseX = await callAxios(options);
 																							let response = responseX.data;
 											
-																							console.log("respo signedRequest from okta: ",response);
+																						
 																							
 																							   if(response){
 																										resolve(response);					 
@@ -2120,8 +2100,7 @@ tokenManagerOperations.clearAllTokens = function (key) {
 tokenManagerOperations.setTokenAndValidate = function (key,value) {
 			      return new Promise(  (resolve, reject) => {				
 										
-										console.log(key);
-										
+								
 										if(!key) {resolve(false);return;};
 										
 										setCookie(key,value);

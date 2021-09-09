@@ -180,13 +180,11 @@ function* readConversationRequest({ payload }) {
       limit
     );
     if (returnedData.message) {
-      console.log("returnedData.message 1");
       yield put(showMessageChat(returnedData.message));
     } else {
       yield put(readConversationSuccess(returnedData));
     }
   } catch (error) {
-    console.log("returnedData.message 2");
     yield put(showMessageChat(error));
   }
 }
@@ -207,7 +205,6 @@ function* readAllMessagesCoversRequest({ payload }) {
 
 function* clearConversationRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
-  console.log("clear Conversation saga ", profileid, country, city, varea);
   try {
     const returnedData = yield call(
       clearConversation,
@@ -217,7 +214,6 @@ function* clearConversationRequest({ payload }) {
       varea
     );
     if (returnedData.message) {
-      console.log("message clear");
       yield put(showMessageChat(returnedData.message));
     } else {
       yield put(clearConversationSuccess(true));
@@ -229,7 +225,7 @@ function* clearConversationRequest({ payload }) {
 
 function* deleteConversationRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
-  console.log("delete Conversation saga ", profileid, country, city, varea);
+
   try {
     const returnedData = yield call(
       deleteConversation,
@@ -249,7 +245,6 @@ function* deleteConversationRequest({ payload }) {
 }
 
 function* getProfilesRequest({ payload }) {
-  console.log("get profiles saga ", payload);
   try {
     const returnedData = yield call(getProfiles, payload);
     if (returnedData.message) {
@@ -264,11 +259,7 @@ function* getProfilesRequest({ payload }) {
 
 function* getProfilesOnlineStatusRequest({ payload }) {
   const { checkProfiles, listForEachProfile } = payload;
-  console.log(
-    "get profiles online status saga ",
-    checkProfiles,
-    listForEachProfile
-  );
+
   try {
     const returnedData = yield call(
       getProfilesOnlineStatus,
@@ -287,14 +278,7 @@ function* getProfilesOnlineStatusRequest({ payload }) {
 
 function* setActiveConversationRequest({ payload }) {
   const { profileid, country, city, varea, activate } = payload;
-  console.log(
-    "set active Conversation saga ",
-    profileid,
-    country,
-    city,
-    varea,
-    activate
-  );
+
   try {
     const returnedData = yield call(
       setActiveConversation,
@@ -316,15 +300,7 @@ function* setActiveConversationRequest({ payload }) {
 
 function* setConversationTypingIndicatorRequest({ payload }) {
   const { profileid, country, city, varea, jnt, activate } = payload;
-  console.log(
-    " Conversation typing indicator saga ",
-    profileid,
-    country,
-    city,
-    varea,
-    jnt,
-    activate
-  );
+
   try {
     const returnedData = yield call(
       setConversationTypingIndicator,
@@ -347,15 +323,7 @@ function* setConversationTypingIndicatorRequest({ payload }) {
 
 function* userReportConversationRequest({ payload }) {
   const { reasonid, profileid, country, city, varea, comment } = payload;
-  console.log(
-    "userReporConversationtRequest saga ",
-    reasonid,
-    profileid,
-    country,
-    city,
-    varea,
-    comment
-  );
+
   try {
     const returnedData = yield call(
       reportUserConversationRequest,

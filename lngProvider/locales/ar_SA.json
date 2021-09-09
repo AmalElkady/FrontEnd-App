@@ -149,14 +149,6 @@
   "appModule.signInDiffAccount": "سجل الدخول باستخدام حساب مختلف",
   "appModule.rememberMe": "تذكرنى",
 
-  "appModule.next": "التالى",
-  "appModule.back": "الى الخلف",
-  "appModule.allStepsCompleted": "جميع الخطوات المكتملة",
-  "appModule.reset": "إعادة تعيين",
-
-  "appModule.hvAccount": "لديك حساب",
-  "appModule.createAccount": "انشئ حساب",
-
   "chart.area": "منطقة الرسم البياني",
   "chart.bar": "شريط الرسم البياني",
   "chart.composed": "الرسم البياني",

@@ -227,9 +227,6 @@ export default function ModalSettings({
     if (phone) {
       setPhone(phone);
     }
-    if (confirmTerms) {
-      console.log("user in popup ", user);
-    }
   }, []);
   useEffect(() => {
     if (OpenModal) {
@@ -285,32 +282,14 @@ export default function ModalSettings({
   };
 
   const handleChangeReason = event => {
-    console.log(
-      "clicked reason ",
-      event.target.name,
-      event.target.checked,
-      reason
-    );
     setReason({ ...reason, [event.target.name]: event.target.checked });
   };
 
   const handleChangeReasonConv = event => {
-    console.log(
-      "clicked reason ",
-      event.target.name,
-      event.target.checked,
-      reasonConv
-    );
     setReasonConv({ ...reasonConv, [event.target.name]: event.target.checked });
   };
 
   const handleChangeReasonIusse = event => {
-    console.log(
-      "clicked reason ",
-      event.target.name,
-      event.target.checked,
-      reasonIusse
-    );
     setReasonIusse({
       ...reasonIusse,
       [event.target.name]: event.target.checked
@@ -319,7 +298,6 @@ export default function ModalSettings({
 
   const checkReasonValues = () => {
     for (var i in reason) {
-      console.log("i reasons ", i);
       if (i == 99 && reason[i] === true && comment == "") {
         //setReason({ ...reason, [99]: false });
         return false;
@@ -350,7 +328,6 @@ export default function ModalSettings({
   };
 
   const onChangeReCaptcha = value => {
-    console.log("Captcha value:", value);
     setCaptchaValue(value);
   };
 
@@ -659,8 +636,6 @@ export default function ModalSettings({
                               <Button
                                 variant="contained"
                                 onClick={() => {
-                                  console.log("change pass ", oldPass, newPass);
-
                                   dispatch(changeMyPassword(oldPass, newPass));
                                 }}
                                 color="primary"
@@ -716,7 +691,6 @@ export default function ModalSettings({
                             value={Phone}
                             placeholder={""}
                             onChange={value => {
-                              console.log("valueee ", value);
                               handleChangePhone(value);
                             }}
                           />
@@ -751,11 +725,6 @@ export default function ModalSettings({
                           <Button
                             variant="contained"
                             onClick={() => {
-                              console.log(
-                                "change phone ",
-                                Phone.slice(1, Phone.length),
-                                oldPass
-                              );
                               dispatch(
                                 changeUserLoginPhone(
                                   Phone.slice(1, Phone.length),
@@ -807,10 +776,6 @@ export default function ModalSettings({
                           <Button
                             variant="contained"
                             onClick={() => {
-                              console.log(
-                                "verificationCode ",
-                                verificationCode
-                              );
                               setVerifyPhone(null);
                               dispatch(
                                 verifyUserLoginPhoneChange(verificationCode)
@@ -870,8 +835,6 @@ export default function ModalSettings({
                               <Button
                                 variant="contained"
                                 onClick={() => {
-                                  console.log("pass ", passForDel);
-
                                   // dispatch(deleteMyAccount(passForDel,score,key));
                                   setCaptchaValue(null);
                                 }}
@@ -983,13 +946,6 @@ export default function ModalSettings({
                                       );
                                     }
                                   }
-                                  console.log(
-                                    "submit report ",
-                                    user,
-                                    comment,
-                                    reason,
-                                    Reasons
-                                  );
 
                                   dispatch(
                                     reportUser(
@@ -1101,13 +1057,6 @@ export default function ModalSettings({
                                   ReasonsConv = ReasonsConv.substring(
                                     0,
                                     ReasonsConv.length - 1
-                                  );
-                                  console.log(
-                                    "submit report ",
-                                    user,
-                                    comment,
-                                    // reasonConv,
-                                    ReasonsConv
                                   );
 
                                   dispatch(

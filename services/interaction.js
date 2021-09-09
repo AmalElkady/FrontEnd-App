@@ -16,26 +16,16 @@ let callAxios = options => {
   return new Promise(async (resolve, reject) => {
     try {
       let response = await axiosRequest(options);
-      console.log("**********data*********");
-      console.log(response);
-      console.log("**********data*********");
 
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        console.log(
-          "********** new token  response.data.token ",
-          response.data.token
-        );
         if (
           response.data.token &&
           (response.data.status != "ACTIVE" || response.data.status == null)
         ) {
           setCookie("access_token", response.data.token);
-          console.log(
-            "********** new token  response.data.token trueeeeeee ",
-            response.data.token
-          );
+
           if (response.data.verify) {
             resolve({ data: { response: "ok" } });
           } else if (response.data.signedRequest) {
@@ -47,7 +37,6 @@ let callAxios = options => {
           }
         } else if (response.data.message) {
           if (response.data.message == "unauthorized") {
-            console.log("**********Authorization*********");
             removeCookie("access_token");
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
@@ -56,7 +45,6 @@ let callAxios = options => {
             response.data.code == "JWT_8" ||
             response.data.code == "JWT_7"
           ) {
-            console.log("**********expired token*********");
             // removeCookie("access_token");
             // auth.signOut();
             // Router.replace("/");
@@ -81,7 +69,6 @@ let callAxios = options => {
         }
       }
     } catch (error) {
-      console.log(error);
       resolve({ data: { message: "error" } });
     }
   }).catch(err => {
@@ -101,14 +88,6 @@ interaction.requestPPAccessApproveRemove = function(
   // "city": "1",
   // "varea": "1"
 
-  console.log(
-    "from service requestPPAccessApproveRemove ",
-    action,
-    profileid,
-    country,
-    city,
-    varea
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -131,7 +110,6 @@ interaction.requestPPAccessApproveRemove = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response requestppaccessapproveremove", response);
       if (response) {
         resolve(response);
       } else {
@@ -152,7 +130,6 @@ interaction.requestGetPhotoPPReadOutgoingRequestsApprovales = function(
   // "scoreH": "",
   // "offset": ""
 
-  console.log("from service outgoing ", scoreH, offset);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -173,7 +150,6 @@ interaction.requestGetPhotoPPReadOutgoingRequestsApprovales = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response outgoing", response);
       if (response) {
         resolve(response);
       } else {
@@ -195,7 +171,6 @@ interaction.requestGetPhotoReadPPIncomingApprovePendingRequests = function(
   // "scoreH": "",
   // "offset": ""
 
-  console.log("from service incoming ", action, scoreH, offset);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -216,7 +191,6 @@ interaction.requestGetPhotoReadPPIncomingApprovePendingRequests = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response incoming", response);
       if (response) {
         resolve(response);
       } else {
@@ -236,13 +210,6 @@ interaction.sendLoveMatchRequest = function(profileid, country, city, varea) {
   // "city": "1",
   // "varea": "1"
 
-  console.log(
-    "from service sendLoveMatchRequest ",
-    profileid,
-    country,
-    city,
-    varea
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -265,7 +232,6 @@ interaction.sendLoveMatchRequest = function(profileid, country, city, varea) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response sendlovematchrequest", response);
       if (response) {
         resolve(response);
       } else {
@@ -283,7 +249,6 @@ interaction.getLoveSentRequests = function(scoreH, offset) {
   // "scoreH": "",
   // "offset": ""
 
-  console.log("from service getLoveSentRequests ", scoreH, offset);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -304,7 +269,6 @@ interaction.getLoveSentRequests = function(scoreH, offset) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response getlovesentrequests", response);
       if (response) {
         resolve(response);
       } else {
@@ -332,12 +296,7 @@ interaction.getLoveMatchedAndReceivedRequests = function(
     scoreL = scoreH;
     scoreH = "";
   }
-  console.log(
-    "from service getLoveMatchedAndReceivedRequests ",
-    scoreH,
-    scoreL,
-    offset
-  );
+
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -359,7 +318,6 @@ interaction.getLoveMatchedAndReceivedRequests = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response getlovematchedandreceivedrequests", response);
       if (response) {
         resolve(response);
       } else {
@@ -377,7 +335,6 @@ interaction.getUserViews = function(start, end) {
   // "scoreH": "",
   // "offset": 0
 
-  console.log("from service getuserviews ", start, end);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -398,7 +355,6 @@ interaction.getUserViews = function(start, end) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response getuserviews", response);
       if (response) {
         resolve(response);
       } else if (response.code) {
@@ -420,7 +376,6 @@ interaction.blockUser = function(profileid, country, city, varea) {
   // "city": "1",
   // "varea": "1"
 
-  console.log("from service blockuser ", profileid, country, city, varea);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -443,7 +398,6 @@ interaction.blockUser = function(profileid, country, city, varea) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response blockuser", response);
       if (response) {
         resolve(response);
       } else {
@@ -463,7 +417,6 @@ interaction.unblockUser = function(profileid, country, city, varea) {
   // "city": "1",
   // "varea": "1"
 
-  console.log("from service unblockuser ", profileid, country, city, varea);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -486,7 +439,6 @@ interaction.unblockUser = function(profileid, country, city, varea) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response unblockuser", response);
       if (response) {
         resolve(response);
       } else {
@@ -504,7 +456,6 @@ interaction.getBlockedUsers = function(scoreH, offset) {
   // "scoreH": "",
   // "offset": ""
 
-  console.log("from service getblockedusers ", scoreH, offset);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -525,7 +476,6 @@ interaction.getBlockedUsers = function(scoreH, offset) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response getblockedusers", response);
       if (response) {
         resolve(response);
       } else {
@@ -551,14 +501,6 @@ interaction.getNotificationViewPPLove = function(
   // "loveScoreHigh": "",
   // "offset": ""
 
-  console.log(
-    "from service getNotificationViewPPLove ",
-    unread,
-    viewScoreHigh,
-    ppScoreHigh,
-    loveScoreHigh,
-    offset
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -581,10 +523,8 @@ interaction.getNotificationViewPPLove = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response getNotificationViewPPLove", response);
       if (response) {
         if (response.code == "JWT_8") {
-          console.log("resolve jwt_8 from getNotificationViewPPLove");
           resolve({ error_jwt8: "true" });
         } else {
           resolve(response);
@@ -616,16 +556,6 @@ interaction.cleanNotificationViewPPLove = function(
   // "loveScoreLow":"",
   // "loveScoreHigh": ""
 
-  console.log(
-    "from service getNotificationViewPPLove ",
-    remove,
-    viewScoreLow,
-    viewScoreHigh,
-    ppScoreLow,
-    ppScoreHigh,
-    loveScoreLow,
-    loveScoreHigh
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -650,7 +580,6 @@ interaction.cleanNotificationViewPPLove = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response cleanNotificationViewPPLove", response);
       if (response) {
         resolve(response);
       } else {
@@ -672,7 +601,6 @@ interaction.addUserOnlineOffline = function(action) {
   // "loveScoreLow":"",
   // "loveScoreHigh": ""
 
-  console.log("from service addUserOnlineOffline ", action);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -692,7 +620,6 @@ interaction.addUserOnlineOffline = function(action) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response adduseronlineoffline", response);
       if (response) {
         resolve(response);
       } else {
@@ -721,15 +648,6 @@ interaction.reportUser = function(
   // "varea": "1"
   //"comment:""
 
-  console.log(
-    "from service reportUser ",
-    reasonid,
-    profileid,
-    country,
-    city,
-    varea,
-    comment
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -754,7 +672,6 @@ interaction.reportUser = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response reasonid", response);
       if (response) {
         resolve(response);
       } else {

@@ -49,10 +49,6 @@ export default ComposedComponent =>
       //  if (!isLoggedIn) {
       //     redirect(context, '/');
       //  }
-      console.log("$$$$$$ CONTEXT $$$$$$");
-      console.log(context.store.getState());
-      console.log("$$$$$$ CONTEXT $$$$$$");
-
       if (
         !token &&
         context.store.getState().auth.country &&
@@ -62,13 +58,11 @@ export default ComposedComponent =>
       } else if (!token) {
         return { isLoggedIn, path: context.pathname, login: false };
       }
-      console.log("----------------------------------");
-      console.log("token ****  ", token);
       const tokenUserData = JSON.parse(
         base64url.decode(`${token}`.split(".")[1])
       );
       // let tokenUserData = JSON.parse(base64url.decode(token.split(".")[1]));
-      console.log("token  ", tokenUserData);
+
       //check tokenUserData.profile (L2|MP|MPA)
       //MPA ===> Call api/checkMPUpload
       //check tokenUserData.pv != 1
@@ -160,8 +154,6 @@ export default ComposedComponent =>
     // }
 
     render() {
-      console.log("props ", { ...this.props });
-
       if (this.props.isLoggedIn == false && !this.props.login) {
         //	 return <div><script>setTimeout(function() {window.location = "http://localhost:3000/"}, 1500)</script></div>
         //return <ComponentVerify {...this.props} />;
@@ -193,7 +185,6 @@ export default ComposedComponent =>
       } else if (this.props.sub === 0) {
         return <ComponentSubscribe {...this.props} />;
       } else {
-        console.log("44444$$$$$$$$$$$");
         return <ComposedComponent {...this.props} />;
       }
     }

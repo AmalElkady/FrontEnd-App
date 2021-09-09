@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Widget from "../../../components/Widget/index";
 import { useRouter } from "next/router";
 
 import Carousel from "react-elastic-carousel";
@@ -153,7 +152,6 @@ export default function Photos({ newUser }) {
                           title="Delete"
                           className="icon-img-delete"
                           onClick={() => {
-                            console.log("remove pp ", item.id + 1);
                             dispatch(ppRemove(item.id + 1));
                           }}
                         >
@@ -166,7 +164,6 @@ export default function Photos({ newUser }) {
                           aria-label="add"
                           className="icon-img-edit"
                           onClick={() => {
-                            console.log("remove pp ", item.id);
                             dispatch(ppRemove(item.id + 1));
                             setPhotoIndex(item.id + 1);
                             dispatch(openModalPP(true));
@@ -234,7 +231,6 @@ export default function Photos({ newUser }) {
                   <Tooltip
                     title="Send request to access photos"
                     onClick={() => {
-                      console.log("open modal");
                       dispatch(openModalSendPP(true));
                     }}
                   >

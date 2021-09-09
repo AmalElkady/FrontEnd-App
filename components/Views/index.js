@@ -50,7 +50,6 @@ export default function Views() {
 
   useEffect(() => {
     if (userViewsProfiles) {
-      console.log("userViewsProfiles ", userViewsProfiles);
       dispatch(requestPhotoRead());
     }
   }, [userViewsProfiles]);

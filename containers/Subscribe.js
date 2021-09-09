@@ -132,7 +132,6 @@ const urlPath=window.location.pathname
 
   useEffect(() => {
     if(urlPath=="/paymentsuccess"){
-      console.log("selectedValue $$$ ",selectedValue,Router.query.sessionId)
  dispatch(showAuthLoader());
  dispatch(userAddSubscribe(selectedValue,Router.query.sessionId));
     }
@@ -140,7 +139,6 @@ const urlPath=window.location.pathname
 
   useEffect(() => {
     if(customerIdPayment!=null){
-      console.log("customerIdPayment from component selectedValue",customerIdPayment ,selectedValue)
       dispatch(createCheckOutSession(selectedValue))
     }
 
@@ -149,7 +147,6 @@ const urlPath=window.location.pathname
   
   useEffect(() => {
     if(checkoutSessionDataUrl!=null){
-      console.log("checkoutSessionDataUrl from component ",checkoutSessionDataUrl)
       window.location.href=checkoutSessionDataUrl;
      // stripe.redirectToCheckout({ sessionId: checkoutSessionId });
 
@@ -160,7 +157,6 @@ const urlPath=window.location.pathname
 
   const onSubscribe = () => {
     showAuthLoader();
-    console.log("onSubscribe ",selectedValue)
     if(selectedValue==1){
     dispatch(userAddSubscribe(selectedValue,""));
     }else if(selectedValue==2||selectedValue==3){

@@ -74,15 +74,7 @@ const SendMessage = () => {
   ////
   ///call each 2s
   useInterval(() => {
-    console.log(
-      "This will run after 2s For  check ",
-      currentString,
-      preString,
-      userTyping
-    );
-
     if (preString == currentString && userTyping == 1) {
-      console.log("stoped typing");
       dispatch(
         setConversationTypingIndicator(
           clickedUserChat.i,
@@ -101,7 +93,6 @@ const SendMessage = () => {
 
   ///call each 1s
   useInterval(() => {
-    console.log("This will run after 1s For pre string  ", currentString);
     setPreString(currentString);
   }, 1000);
 
@@ -146,7 +137,6 @@ const SendMessage = () => {
   useEffect(() => {
     if (messageSent) {
       if (conversationMessages == "") {
-        console.log("first message");
         dispatch(resetMegsCovers());
         dispatch(readAllMessagesCovers("", ""));
       }
@@ -167,33 +157,16 @@ const SendMessage = () => {
   }, [messageSent]);
 
   const handleChange = e => {
-    console.log("e.target.value ", e.target.value);
-    // if (emojiSelected != null) {
-    //   console.log("1");
-    //   setMessageText(`${messageText + e.target.value}`);
-    // } else {
-    //   console.log("2");
-    // setUserWrite(true);
     setMessageText(e.target.value);
-    // }
   };
 
   const addEmoji = e => {
     let emoji = e.native;
-    //setEmojiSelected(emoji);
-    // if (messageText === "") {
-    //   console.log("3");
-    //   setMessageText(emoji);
-    // } else {
-    //   console.log("4");
-    //   setMessageText(`${messageText}${emoji}`);
-    // }
     setMessageText(`${messageText + emoji}`);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    // postMessage(this.state); //send to backend
     setMessageText(""); //reset input field to empty
   };
 
@@ -255,18 +228,10 @@ const SendMessage = () => {
               value={messageText}
               onChange={handleChange}
               onKeyDown={e => {
-                console.log("onKeyDown ", e.key);
                 setCurrentString(`${currentString}${e.key}`);
               }}
               onKeyUp={e => {
-                console.log(
-                  "onKeyUp ",
-                  currentString,
-                  currentString.length,
-                  preString
-                );
                 if (currentString.length > 5) {
-                  console.log("onKeyUp ***************");
                   dispatch(
                     setConversationTypingIndicator(
                       clickedUserChat.i,
@@ -294,11 +259,6 @@ const SendMessage = () => {
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={() => {
-                console.log(
-                  "send message conversationMessages ",
-                  messageText,
-                  conversationMessages
-                );
                 setMessageText("");
 
                 dispatch(

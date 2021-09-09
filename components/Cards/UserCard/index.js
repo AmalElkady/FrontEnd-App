@@ -11,11 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import { calcOfflineTime } from "../../../helpers/calcOfflineTime";
 import { OfflineTimeInArabic } from "../../../helpers/offlineTimeInArabic";
-import {
-  COUNTRY_CITY_MAP,
-  ARRAY_OF_AGE_RANGE,
-  COUNTRY_MAP
-} from "../../../util/data";
+import { COUNTRY_CITY_MAP, COUNTRY_MAP } from "../../../util/data";
 import {
   sendLoveMatchRequest,
   sendLoveMatchRequestSuccess,
@@ -26,12 +22,6 @@ import { profileUserClicked } from "../../../actions/Home";
 import { red } from "@material-ui/core/colors";
 import { NotificationManager } from "react-notifications";
 
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ChatIcon from "../../Icons/ChatIcon";
-import LoveIcon from "../../Icons/LoveIcon";
-import ViewProIcon from "../../Icons/ViewProIcon";
 ///Modal
 import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
@@ -196,16 +186,8 @@ export default function UserCard({ user, timeScore }) {
   ////// modal
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleClickLove = () => {
-    setlickLove(!clickLove);
   };
 
   useEffect(() => {
@@ -316,9 +298,6 @@ export default function UserCard({ user, timeScore }) {
               dispatch(sendLoveMatchRequest(user.i, user.co, user.ci, user.va));
             }}
           >
-            {/* <FavoriteIcon /> */}
-            {/* <LoveIcon /> */}
-            {/* <i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" /> */}
             <img
               src="../../../static/images/icons/standard/Love_Icon_Standard.svg"
               alt="Love Icon"
@@ -328,7 +307,6 @@ export default function UserCard({ user, timeScore }) {
             className={classes.iconBtn}
             onClick={() => {
               user.timeScore = timeScore;
-              console.log("clicked user ", user);
               const sunUser = `${user.i}_${user.co}_${user.ci}_${user.va}`;
               dispatch(profileUserClicked(user));
               Router.push({
@@ -338,8 +316,6 @@ export default function UserCard({ user, timeScore }) {
             }}
             aria-label="View Profile"
           >
-            {/* <VisibilityIcon /> */}
-            {/* <ViewProIcon /> */}
             <img
               src="../../../static/images/icons/Profile_Icon.svg"
               alt="Notifications"
@@ -349,14 +325,11 @@ export default function UserCard({ user, timeScore }) {
           <IconButton
             className={classes.iconBtn}
             aria-label="Send Message"
-            // onClick={handleOpen}
             onClick={() => {
               dispatch(clickedUserChat(user));
               Router.push({ pathname: `/home/messages` });
             }}
           >
-            {/* <ChatBubbleIcon /> */}
-            {/* <ChatIcon /> */}
             <img
               src="../../../static/images/icons/standard/Messages_Icon_Standard.svg"
               alt="Notifications"

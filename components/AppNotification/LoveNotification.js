@@ -139,29 +139,7 @@ export default function LoveNotifications() {
     if (headerSelectedIcon) {
       setFinalUsersProfiles(null);
       //dispatch(requestPhotoRead());
-      if (
-        headerSelectedIcon == "love"
-        // &&
-        // notificationLoveCount < limitReturnedItems
-      ) {
-        // clean read notifications
-        // dispatch(resetCount("L"));
-        // console.log(
-        //   "items to cleaned ",
-        //   scoreLCleanNotificationLove,
-        //   scoreHCleanNotificationLove
-        // );
-        // dispatch(
-        //   cleanNotificationViewPPLove(
-        //     "L",
-        //     "",
-        //     "",
-        //     "",
-        //     "",
-        //     scoreLCleanNotificationLove,
-        //     scoreHCleanNotificationLove
-        //   )
-        // );
+      if (headerSelectedIcon == "love") {
         dispatch(
           getNotificationViewPPLove(
             "CL",
@@ -189,7 +167,6 @@ export default function LoveNotifications() {
         //     ""
         //   )
         // );
-        console.log("call from view condition");
         dispatch(
           getNotificationViewPPLove(
             "CV",
@@ -199,29 +176,7 @@ export default function LoveNotifications() {
             OffsetNotificationView
           )
         );
-      } else if (
-        headerSelectedIcon == "private"
-        // &&
-        // notificationPPCount < limitReturnedItems
-      ) {
-        // clean read notifications
-        // dispatch(resetCount("P"));
-        // console.log(
-        //   "items to cleaned ",
-        //   scoreLCleanNotificationLove,
-        //   scoreHCleanNotificationLove
-        // );
-        // dispatch(
-        //   cleanNotificationViewPPLove(
-        //     "P",
-        //     "",
-        //     "",
-        //     scoreLCleanNotificationPP,
-        //     scoreHCleanNotificationPP,
-        //     "",
-        //     ""
-        //   )
-        // );
+      } else if (headerSelectedIcon == "private") {
         dispatch(
           getNotificationViewPPLove(
             "CP",
@@ -253,10 +208,6 @@ export default function LoveNotifications() {
   }, [notificationLoveUnread]);
 
   useEffect(() => {
-    console.log(
-      "call from view notificationViewUnread **",
-      notificationViewUnread
-    );
     if (headerSelectedIcon == "views" && notificationViewUnread.length != 0) {
       dispatch(resetCount("V"));
       dispatch(
@@ -305,16 +256,11 @@ export default function LoveNotifications() {
           setFinalUsersProfiles(finalProfiles);
         }
       } else if (headerSelectedIcon == "views") {
-        console.log(
-          "call from view notificationViewUnread photoReadSignedRequest **",
-          notificationViewUnread
-        );
         if (notificationViewUnread.length != 0) {
           finalProfiles = mapSmallUserPhotoUrl(
             notificationViewUnread,
             photoReadSignedRequest.signedRequest
           );
-          console.log("finalProfiles **", finalProfiles);
           setFinalUsersProfiles(finalProfiles);
         }
       } else if (headerSelectedIcon == "private") {
@@ -333,11 +279,6 @@ export default function LoveNotifications() {
   const handleScrollGetLoveNotifications = () => {
     if (!endOfResultNotificationLove) {
       // clean read notifications
-      console.log(
-        "items to cleaned ",
-        scoreLCleanNotificationLove,
-        scoreHCleanNotificationLove
-      );
       dispatch(
         cleanNotificationViewPPLove(
           "L",

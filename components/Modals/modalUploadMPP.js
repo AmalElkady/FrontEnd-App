@@ -124,9 +124,6 @@ export default function ModalUploadMPP({ photoNum }) {
   const token0 = useSelector(state => state.auth.token0);
 
   useEffect(() => {
-    console.log("photoNum ", photoNum);
-  }, []);
-  useEffect(() => {
     if (OpenModalPP) {
       handleOpen();
     }
@@ -134,7 +131,6 @@ export default function ModalUploadMPP({ photoNum }) {
 
   useEffect(() => {
     if (token0) {
-      console.log("token0 from component");
       dispatch(userSignOutSuccess());
       Router.replace("/");
       dispatch(mpUploadToken0Success(false));
@@ -143,7 +139,6 @@ export default function ModalUploadMPP({ photoNum }) {
 
   useEffect(() => {
     if (mpUploadFlag) {
-      console.log("success upload mp");
       dispatch(addUserOnlineOffline("channel_occupied"));
       handleClose();
 
@@ -190,60 +185,54 @@ export default function ModalUploadMPP({ photoNum }) {
             </div>
 
             {/* <div className="app-login-main-content"> */}
-              <div className="app-login-content-2">
-                <div className="app-login-header">
-                  <h2>
-                    {photoNum && <IntlMessages id="profile.uploadPP" />}
-                    {photoNum == null && <IntlMessages id="profile.uploadMP" />}
-                  </h2>
-                </div>
+            <div className="app-login-content-2">
+              <div className="app-login-header">
+                <h2>
+                  {photoNum && <IntlMessages id="profile.uploadPP" />}
+                  {photoNum == null && <IntlMessages id="profile.uploadMP" />}
+                </h2>
+              </div>
 
-                <div className="app-login-form">
-                  <form className={selectedFile ? "drag drag-h" : "drag"}>
-                    <DropzoneArea
-                      acceptedFiles={["image/*"]}
-                      dropzoneText={"Drop Photo"}
-                      filesLimit={1}
-                      maxFileSize={3000000}
-                      // showPreviews={true}
-                      showPreviewsInDropzone={false}
-                      // getFileRemovedMessage={removedFile => {
-                      //   return `File ${removedFile} was removed`;
-                      // }}
-                      //getDropRejectMessage={}
-                      getFileAddedMessage={addedFile => {
-                        return `${addedFile}`;
-                      }}
-                      onChange={files => {
-                        if (files[0]) {
-                          if (photoNum) {
-                            dispatch(ppPhotoSelected(files[0]));
-                          } else {
-                            // dispatch(mpUpdateSelected(files[0]));
-                            console.log(" upload main photo from component ");
-                            dispatch(mainPhotoSelected(files[0]));
-                          }
-                          setSelectedFile(files[0]);
+              <div className="app-login-form">
+                <form className={selectedFile ? "drag drag-h" : "drag"}>
+                  <DropzoneArea
+                    acceptedFiles={["image/*"]}
+                    dropzoneText={"Drop Photo"}
+                    filesLimit={1}
+                    maxFileSize={3000000}
+                    // showPreviews={true}
+                    showPreviewsInDropzone={false}
+                    // getFileRemovedMessage={removedFile => {
+                    //   return `File ${removedFile} was removed`;
+                    // }}
+                    //getDropRejectMessage={}
+                    getFileAddedMessage={addedFile => {
+                      return `${addedFile}`;
+                    }}
+                    onChange={files => {
+                      if (files[0]) {
+                        if (photoNum) {
+                          dispatch(ppPhotoSelected(files[0]));
+                        } else {
+                          dispatch(mainPhotoSelected(files[0]));
                         }
-                      }}
-                    />
-                    <div className="mb-3 d-flex align-items-center justify-content-between">
-                      <Grid
-                        container
-                        style={{ paddingTop: "25px" }}
-                        spacing={12}
-                      >
-                        {selectedFile && <UploadImage photoNum={photoNum} />}
-                      </Grid>
-                    </div>
-                  </form>
-                </div>
+                        setSelectedFile(files[0]);
+                      }
+                    }}
+                  />
+                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                    <Grid container style={{ paddingTop: "25px" }} spacing={12}>
+                      {selectedFile && <UploadImage photoNum={photoNum} />}
+                    </Grid>
+                  </div>
+                </form>
+              </div>
 
-                {/* <div className="app-login-form">
+              {/* <div className="app-login-form">
                 {openEdit
                 )}
               </div> */}
-              </div>
+            </div>
             {/* </div> */}
             {/* </div> */}
 

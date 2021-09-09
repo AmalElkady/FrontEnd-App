@@ -100,12 +100,10 @@ export default function PrivatePhotos() {
   }, [incomingPPApprovedRequestsProfiles]);
 
   useEffect(() => {
-    console.log("1");
     if (
       privateSelectedIcon == "incomingNotApproved" &&
       incomingPPNotApprovedRequestsProfiles.length != 0
     ) {
-      console.log("2");
       dispatch(requestPhotoRead());
     }
   }, [incomingPPNotApprovedRequestsProfiles]);

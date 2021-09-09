@@ -59,7 +59,6 @@ export default function About({ aboutInfo }) {
   const dispatch = useDispatch();
   useEffect(() => {
     setDisData(null);
-    console.log("about page ########## ");
     if (
       aboutInfo == null &&
       userClickedProfile &&
@@ -74,32 +73,26 @@ export default function About({ aboutInfo }) {
         )
       );
     } else if (aboutInfo != null && router.query.flag == "readMe") {
-      console.log("########## ");
       dispatch(readMyProfile("L2"));
     }
   }, [aboutInfo]);
 
   useEffect(() => {
     if (userClickedProfile == null && router.query.flag != "readMe") {
-      console.log("router.query about ==null ", router.query.id);
       const va = router.query.id
         .substring(router.query.id.length, router.query.id.length - 2)
         .replace(/_/, "");
-      console.log("va ** ", va);
       const ci = router.query.id
         .substring(router.query.id.length - 2, router.query.id.length - 4)
         .replace(/_/, "");
-      console.log("ci ** ", ci);
 
       const co = router.query.id
         .substring(router.query.id.length - 4, router.query.id.length - 7)
         .replace(/_/, "");
-      console.log("co ** ", co);
 
       const id = router.query.id
         .substring(router.query.id.length - 7, 0)
         .replace(/_/, "");
-      console.log("id ** ", id);
 
       // let va = 0;
       // ci.length == 1
@@ -132,7 +125,6 @@ export default function About({ aboutInfo }) {
       // userClickedProfile &&
       // userClickedProfile.flag == "read"
     ) {
-      console.log("l2Data ", l2Data);
       setDisData(l2Data);
     }
   }, [l2Data]);

@@ -47,7 +47,6 @@ export default function ListItem({ user }) {
 
   useEffect(() => {
     if (Clicked_id == user.i) {
-      console.log("PpAccessApproveRemove ", PpAccessApproveRemove);
       if (PpAccessApproveRemove == true) {
         // NotificationManager.success(`You give ${user.n} access successfully`, "Success");
         NotificationManager.success("Your request successfully executed");
@@ -63,7 +62,6 @@ export default function ListItem({ user }) {
 
   useEffect(() => {
     if (Clicked_id == user.i) {
-      console.log("permissionReadPP ", permissionReadPP);
       if (permissionReadPP == true) {
         // NotificationManager.success(`You give ${user.n} access successfully`, "Success");
         NotificationManager.success("Your request successfully executed");
@@ -122,7 +120,6 @@ export default function ListItem({ user }) {
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
-                    console.log("user ", user);
                     dispatch(clickedId(user.i));
                     dispatch(updateList("LNA"));
                     dispatch(
@@ -173,7 +170,6 @@ export default function ListItem({ user }) {
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
-                    console.log("user ", user);
                     dispatch(clickedId(user.i));
                     dispatch(updateList("LA"));
                     dispatch(
@@ -203,7 +199,6 @@ export default function ListItem({ user }) {
                 <IconButton
                   // className="item-btn"
                   onClick={() => {
-                    console.log("user ", user);
                     dispatch(clickedId(user.i));
                     dispatch(updateList("LNA"));
                     dispatch(

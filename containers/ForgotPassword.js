@@ -40,7 +40,6 @@ class ForgotPassword extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("forgot");
     if (this.props.showMessage) {
       setTimeout(() => {
         this.props.hideMessage();
@@ -52,7 +51,6 @@ class ForgotPassword extends React.Component {
   }
 
   componentDidMount() {
-    console.log("props from restpassword ", this.props);
     if (this.props.phone && this.props.country) {
       this.setState({ ["phoneRes"]: this.props.phone });
       this.setState({ ["countryRes"]: this.props.country });

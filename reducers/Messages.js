@@ -254,12 +254,6 @@ const Messages = (state = initialProfileState, action) => {
       };
     }
     case SET_MAP_TIMESTAMP: {
-      //state.timestampMap.set(action.payload.key, action.payload.val);
-      console.log(" state.timestampMap from reducer ", state.timestampMap);
-      // let newMap = [...state.timestampMap];
-      // // newMap.set(action.payload.key, action.payload.val);
-      // newMap.push({ id: action.payload.key, time: action.payload.val });
-      // console.log("newMap ", newMap);
       return {
         ...state,
         timestampMap: [
@@ -294,7 +288,6 @@ const Messages = (state = initialProfileState, action) => {
       };
     }
     case REPORT_USER_CONVERSATION_SUCCESS: {
-      console.log("form reducer report user CONVERSATION", action.payload);
       return {
         ...state,
         conversationReported: action.payload

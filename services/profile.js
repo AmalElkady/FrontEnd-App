@@ -16,17 +16,10 @@ let callAxios = options => {
   return new Promise(async (resolve, reject) => {
     try {
       let response = await axiosRequest(options);
-      console.log("**********data*********");
-      console.log(response);
-      console.log("**********data*********");
 
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        console.log(
-          "********** new token  response.data.token ",
-          response.data.token
-        );
         if (
           response.data.token &&
           (response.data.status != "ACTIVE" || response.data.status == null)
@@ -44,7 +37,6 @@ let callAxios = options => {
           }
         } else if (response.data.message) {
           if (response.data.message == "unauthorized") {
-            console.log("**********Authorization*********");
             removeCookie("access_token");
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
@@ -53,12 +45,10 @@ let callAxios = options => {
             // response.data.code == "JWT_7" ||
             response.data.code == "JWT_8"
           ) {
-            console.log("**********expired token*********");
             //removeCookie("access_token");
             //auth.signOut();
             // Router.replace("/");
           } else if (response.data.code == "TIME") {
-            console.log("time");
             resolve({ data: response.data });
           } else {
             resolve(response);
@@ -70,7 +60,6 @@ let callAxios = options => {
         }
       }
     } catch (error) {
-      console.log(error);
       resolve({ data: { message: "error" } });
     }
   }).catch(err => {
@@ -79,8 +68,6 @@ let callAxios = options => {
 };
 
 profile.readPhotosPP = function(id, co, ci, va) {
-  console.log("from profile service readPhotosPP ");
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -102,8 +89,6 @@ profile.readPhotosPP = function(id, co, ci, va) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-
-      console.log("PP from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -118,8 +103,6 @@ profile.readPhotosPP = function(id, co, ci, va) {
 };
 
 profile.readProfileL2 = function(id, co, ci, va) {
-  console.log("from profile service ", id, co, ci, va);
-
   // "profileid": "4bfdec53-7344-42d5-8966-d5d12eae85b2",
   // "country": "EG",
   // "city": "1",
@@ -147,8 +130,6 @@ profile.readProfileL2 = function(id, co, ci, va) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response about data ", response);
-
       if (response) {
         resolve(response);
       } else {
@@ -163,8 +144,6 @@ profile.readProfileL2 = function(id, co, ci, va) {
 };
 
 profile.readMyProfile = function(params) {
-  console.log("from profile service my profile ", params);
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -182,7 +161,6 @@ profile.readMyProfile = function(params) {
       let response = responseX.data;
 
       if (response) {
-        console.log("data of my profile from service ", response);
         if (params == "L1") {
           response.profile.L1 = JSON.parse(response.profile.L1);
         }
@@ -199,8 +177,6 @@ profile.readMyProfile = function(params) {
 };
 
 profile.readMyPhotos = function(params, size) {
-  console.log("from profile service my photo ", params, size);
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -216,7 +192,6 @@ profile.readMyPhotos = function(params, size) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-      console.log("from profile service my photo response ", response);
       if (response) {
         resolve(response);
       } else {
@@ -312,7 +287,7 @@ profile.updateProfileL2 = function(na, tpercent, title, workd, edu, bio) {
 profile.changePassword = function(oldPassword, newPassword) {
   //  "oldPassword" : "{{password}}",
   //     "newPassword" : "NewPassword#123"
-  console.log("from change password service ", oldPassword, newPassword);
+
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -332,7 +307,6 @@ profile.changePassword = function(oldPassword, newPassword) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-      console.log("response of change password ", response);
 
       if (response.response) {
         resolve(response.response);
@@ -350,7 +324,6 @@ profile.changePassword = function(oldPassword, newPassword) {
 profile.changeUserLoginPhone = function(newPhone, password) {
   // "newPhone" : "{{newphone}}",
   // "password" : "{{password}}"
-  console.log("from change phone service ", newPhone, password);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -371,10 +344,7 @@ profile.changeUserLoginPhone = function(newPhone, password) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response of change phone", response);
-
       if (response.response) {
-        console.log("response of change phone ", response);
         resolve(response.response);
       } else {
         resolve({ message: "no response !" });
@@ -389,8 +359,6 @@ profile.changeUserLoginPhone = function(newPhone, password) {
 
 profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
   //"verifyTokenCode" : "742036"
-
-  console.log("from verify change phone service ", verifyTokenCode);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -409,7 +377,6 @@ profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-      console.log("response of verify change phone ", response);
 
       if (response.response) {
         resolve(response.response);
@@ -425,7 +392,6 @@ profile.verifyUserLoginPhoneChange = function(verifyTokenCode) {
 };
 
 profile.readMyPhoneAndMyPwData = function() {
-  console.log("from readMyPhoneAndMyPwData service");
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -442,7 +408,6 @@ profile.readMyPhoneAndMyPwData = function() {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response read my phone and pw data ", response);
       if (response) {
         resolve(response);
       } else {
@@ -460,7 +425,7 @@ profile.readMyPaymentsAndSub = function(count, start, end) {
   // "count": "true",
   // "start": 0,
   // "end": 10
-  console.log("from service read payments ", count, start, end);
+
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -482,7 +447,6 @@ profile.readMyPaymentsAndSub = function(count, start, end) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response read my payments and sub ", response);
       if (response) {
         resolve(response);
       } else {
@@ -498,14 +462,7 @@ profile.readMyPaymentsAndSub = function(count, start, end) {
 
 profile.requestPhotouploadPP = function(file, photoNum) {
   // "filetype" : "/png"
-  console.log(
-    "from service rrequestPhotouploadPP ",
-    file,
-    file.size,
-    file.type,
-    file.type.slice(5),
-    photoNum
-  );
+
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -523,8 +480,7 @@ profile.requestPhotouploadPP = function(file, photoNum) {
         }
       };
       let responseX = await callAxios(options);
-      // let response = responseX.data;
-      console.log("responseX ", responseX);
+
       if (responseX.data.code) {
         resolve({ message: responseX.data.code });
       } else if (responseX.data.signedRequest) {
@@ -539,7 +495,6 @@ profile.requestPhotouploadPP = function(file, photoNum) {
         xhr.send(formData);
         xhr.onload = async function() {
           if (this.status === 204) {
-            console.log("trueeeeeeee 204");
             // optionsCheck.url = "/checkmpupload";
             //           await callAxios(optionsCheck);
             resolve(true);
@@ -583,7 +538,6 @@ profile.requestPhotouploadPP = function(file, photoNum) {
 };
 
 profile.requestRemovePhotoPP = function(photoNum) {
-  console.log("from service requestRemovePhotoPP ", photoNum);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -600,7 +554,6 @@ profile.requestRemovePhotoPP = function(photoNum) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response requestRemovePhotoPP", response);
       if (response) {
         resolve(response);
       } else {
@@ -626,14 +579,6 @@ profile.requestPermissionPPReadRemove = function(
   // "city": "1",
   // "varea": "1"
 
-  console.log(
-    "from service requestPermissionPPRead ",
-    action,
-    profileid,
-    country,
-    city,
-    varea
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -656,7 +601,6 @@ profile.requestPermissionPPReadRemove = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response requestPermissionPPRead", response);
       if (response) {
         resolve(response);
       } else {
@@ -671,7 +615,6 @@ profile.requestPermissionPPReadRemove = function(
 };
 
 profile.updateMainPhoto = function(file) {
-  console.log("from service updateMainPhoto ", file);
   return new Promise(async (resolve, reject) => {
     if (file) {
       try {
@@ -696,11 +639,6 @@ profile.updateMainPhoto = function(file) {
         // optionsCheck.data = {'filetype':`${file.type}`.slice(5), 'filesize': file.size/*file.size*/}
 
         let checkUploadRequestResponse = await callAxios(optionsCheck);
-
-        console.log(
-          "checkUploadRequestResponse.data",
-          checkUploadRequestResponse.data
-        );
 
         if (checkUploadRequestResponse.data.code) {
           resolve({ message: checkUploadRequestResponse.data.code });
@@ -727,7 +665,6 @@ profile.updateMainPhoto = function(file) {
           xhr.send(formData);
           xhr.onload = async function() {
             if (this.status === 204) {
-              console.log("trueeeeeeee 204");
               optionsCheck.url = "/checkmpupload";
               await callAxios(optionsCheck);
               resolve(true);
@@ -755,7 +692,6 @@ profile.updateMainPhoto = function(file) {
           resolve({ message: checkMPUploadResponse.data.code });
         }
       } catch (err) {
-        console.log(err);
         resolve({ message: err });
       }
     } else {
@@ -767,7 +703,6 @@ profile.updateMainPhoto = function(file) {
 };
 
 profile.deleteMyAccount = function(password, score, key) {
-  console.log("from service deleteMyAccount ", password, score, key);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -789,7 +724,6 @@ profile.deleteMyAccount = function(password, score, key) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response deleteMyAccount", response);
       if (response) {
         resolve(response);
       } else {

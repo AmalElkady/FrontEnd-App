@@ -278,21 +278,19 @@ export default function Search() {
   };
 
   const handleMenuItemClick = (event, index) => {
-    console.log("age index ",index)
+
     setSelectedIndex(index);
     setAnchorEl(null);
   };
 
   //for Countries
   const handleMenuItemClickC = (event, index) => {
-    console.log("country index ",index)
     setSelectedIndexC(index);
     setAnchorElC(null);
   };
 
   //for Cities
   const handleMenuItemClickCit = (event, index) => {
-    console.log("city index ",index)
     setSelectedIndexCit(index);
     setAnchorElCit(null);
   };
@@ -325,13 +323,11 @@ export default function Search() {
       //Get all Countries Offline first time
        dispatch(resetEndResUsers());
        dispatch(resetEndRes());
-      console.log("CountriesOptionsOffline ", CountriesOptionsOffline.length)
       CountriesOptionsOffline.length == 0
         ? dispatch(allCountriesOffline("", 0))
         : "";
     } else {
       // Get all Countries Online first time
-      console.log("get all countries online init state ))))))))))", CountriesOptionsOnline.length)
       dispatch(resetStatesListCountryOnline());
       CountriesOptionsOnline.length == 0
         ? dispatch(allCountriesOnline("", 0))
@@ -478,7 +474,6 @@ export default function Search() {
         selectedIndexCit != -1 &&
         selectedIndex == -1
       ) {
-        console.log("$$$$$$$$$$$$$$$")
         dispatch(resetStatesListAgerangeOnline());
         dispatch(
           countryCityAgerangesOnline(

@@ -66,44 +66,10 @@ export default function UsersOnline() {
   const classes = useStyles();
 
   useEffect(() => {
-    // let isocon = "SN";
-    // console.log("test get country states  ", State.getStatesOfCountry(isocon));
-    // for (
-    //   let index = 0;
-    //   index < State.getStatesOfCountry(isocon).length;
-    //   index++
-    // ) {
-    //   console.log(
-    //     `"${isocon}.${index + 1}":"${
-    //       State.getStatesOfCountry(isocon)[index].name
-    //     }",`
-    //   );
-    // }
-    // console.log("test get country cities  ", City.getCitiesOfCountry(isocon));
-    // for (
-    //   let index = 0;
-    //   index < City.getCitiesOfCountry(isocon).length;
-    //   index++
-    // ) {
-    //   console.log(
-    //     `"${isocon}.${index + 1}":"${
-    //       City.getCitiesOfCountry(isocon)[index].name
-    //     }",`
-    //   );
-    // }
-  }, []);
-
-  useEffect(() => {
     if (
       AllCountriesSelectedOnlineUsers &&
       AllCountriesSelectedOnlineUsers.length != 0
     ) {
-      console.log(
-        "allCountriesSelectedOnlineUsers from online users first call ",
-        scoreLOnline,
-        OffsetOnline,
-        AllCountriesSelectedOnlineUsers
-      );
       dispatch(requestPhotoRead());
     }
   }, [AllCountriesSelectedOnlineUsers]);
@@ -127,14 +93,6 @@ export default function UsersOnline() {
   }, [photoReadSignedRequest]);
 
   useEffect(() => {
-    // console.log(
-    //   "get users of next option from online users ",
-    //   endOfResultUsers,
-    //   AllCountriesSelectedOnline,
-    //   currentIndexAllCountriesSelectedOnline,
-    //   scoreLOnlineUsers,
-    //   OffsetOnlineUsers
-    // );
     if (
       endOfResultUsers &&
       AllCountriesSelectedOnline &&
@@ -145,13 +103,6 @@ export default function UsersOnline() {
           AllCountriesSelectedOnline.length)
     ) {
       // get users of next option
-
-      console.log(
-        "get users of next option from online users first call ",
-        endOfResultUsers,
-        AllCountriesSelectedOnline,
-        currentIndexAllCountriesSelectedOnline
-      );
 
       dispatch(
         allCountriesSelectedOnlineUsers(
@@ -172,12 +123,7 @@ export default function UsersOnline() {
         AllCountriesSelectedOnline.length - 1
     ) {
       // Get online users other options
-      console.log(
-        "allCountriesSelectedOnline &&&&&&&&&",
-        currentIndexAllCountriesSelectedOnline,
-        scoreLOnline,
-        OffsetOnline
-      );
+
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
       dispatch(resetEndRes());
     }

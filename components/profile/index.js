@@ -79,10 +79,8 @@ export default function Profile() {
     : "";
 
   useEffect(() => {
-    console.log("userClickedProfile ", userClickedProfile);
     if (userClickedProfile != null && router.query) {
       if (userClickedProfile.flag == "read") {
-        console.log("userClickedProfile !=null ", userClickedProfile);
         setAboutInfo(null);
 
         // setProfileCard({
@@ -118,10 +116,8 @@ export default function Profile() {
   useEffect(() => {
     if (router.query.flag == "readMe") {
       dispatch(profileUserClicked(null));
-      console.log("read my profile *******");
       dispatch(readMyProfile("L1"));
     } else if (userClickedProfile === null && router.query.flag != "readMe") {
-      console.log("router.query card index ==null %%%%% 2", router.query);
       dispatch(getProfiles([`${co}_${ci}_${va}_${id}`]));
     }
   }, [router.query]);
@@ -129,7 +125,6 @@ export default function Profile() {
   useEffect(() => {
     if (returnedProfiles) {
       // dispatch(readMyPhotos(0, ""));
-      console.log("returnedProfiles ", returnedProfiles);
       // const newUser = returnedProfiles[0];
       // newUser.i = id;
       // newUser.co = co;
@@ -145,7 +140,6 @@ export default function Profile() {
 
   useEffect(() => {
     if (mpUploadFlag) {
-      console.log("success upload mp");
       // Read Photo Again
       dispatch(readMyPhotos(0, ""));
       dispatch(mpUploadSuccess(false));
@@ -258,7 +252,6 @@ export default function Profile() {
             {router.query.flag == "readMe" && <Photos />}
             {/* <Photos /> */}
           </Grid>
-          {console.log("aboutInfo ^^^^^^^ ", aboutInfo)}
           <Grid item xs={6} className="profile-Grid-container">
             {// aboutInfo.id &v &
             //  aboutInfo={aboutInfo}

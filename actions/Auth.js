@@ -86,7 +86,6 @@ export const changeUserPhoneBeforeVerif = (
   countryiso2,
   newCity
 ) => {
-  console.log("from action");
   return {
     type: CHANGE_PHONE_BEFORE_VERIF,
     payload: { newPhone, phonecountrycode, countryiso2, newCity }
@@ -166,7 +165,6 @@ export const userAddProfileL2 = data => {
   };
 };
 export const userAddSubscribe = (pack, sessionId) => {
-  console.log("from action ", pack, sessionId);
   return {
     type: SUBSCRIBE,
     payload: { pack, sessionId }
@@ -180,7 +178,6 @@ export const userSignIn = user => {
   };
 };
 export const userSignOut = () => {
-  console.log("logout from action");
   return {
     type: SIGNOUT_USER
   };
@@ -344,7 +341,6 @@ export const confirmPasswordCase = value => {
 };
 
 export const addConnectionFlag = (flag, connValue) => {
-  console.log("flag, connvalue ", flag, connValue);
   return {
     type: ADD_CONNECTION_FLAG,
     payload: { flag, connValue }

@@ -82,7 +82,6 @@ export default Page(() => {
   useEffect(() => {
     if (window.location.href == "http://localhost:3000/") {
       if (formSwitchFlag) {
-        console.log("back done 2", formSwitchFlag);
         history.pushState(null, null, location.href);
         window.onpopstate = function() {
           history.go(1);

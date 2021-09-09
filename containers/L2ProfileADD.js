@@ -71,7 +71,6 @@ class SignUp extends React.Component {
   }
 
 componentDidMount () {
-	 console.log("this.props ",this.props); 
 	document.querySelector('.form-control').style = "width: 150px; pointer-events: none;"
 }
 
@@ -103,8 +102,6 @@ componentDidMount () {
 		});
 
   const handleChange = (event) => {
-	  console.log(event.target.name);
-	  console.log(event.target.value);
     this.setState({[`${event.target.name}`] : `${event.target.value}`})
   };
 
@@ -370,23 +367,16 @@ componentDidMount () {
 				</Grid>
                <div className="mb-3 d-flex align-items-center justify-content-between">
                   <Button variant="contained" onClick={() => {
-					   console.log("this.props.sub ",this.props.sub)
+					  
 					   if(this.props.sub!=0&&this.props.sub!=null){
-						   console.log("1")
+						
 						this.props.confirmPasswordCase(true);
 					}
 					else{
-						console.log("2")
+					
 						this.props.showAuthLoader();
 						this.props.userAddProfileL2({tpercent,nationality,workd,title,education,bio});
 					}
-					 //console.log(country);
-					//   console.log(nationality);
-					//   console.log(tpercent);
-					//   console.log(workd);
-					//   console.log(title);
-					//   console.log(education);
-					//   console.log(bio);
                   }} color="primary" className="linear-g-r">
                     <IntlMessages
                       id="appModule.submit"/>

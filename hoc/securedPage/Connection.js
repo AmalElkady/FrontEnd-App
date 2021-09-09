@@ -66,12 +66,6 @@ export default function Connection() {
   const typingTimer = useSelector(state => state.messages.typingTimer);
 
   useEffect(() => {
-    console.log(
-      "test connectionPusher &&&&&&&&& ",
-      connectionPusher,
-      connectionChannel,
-      actionsStatus
-    );
     const subActionsChanged = actionsStatus.slice(0, 3);
     const subActionsNotChanged = actionsStatus.slice(3, 5);
     if (
@@ -84,7 +78,6 @@ export default function Connection() {
         return action == null;
       })
     ) {
-      console.log("test connectionPusher &&&&&&&&& 1", connectionPusher);
       Pusher.logToConsole = true;
       let authUrl = "http://128.199.32.156/api/requestnotificationconnection";
       const tokenValue = getCookie("access_token", false);
@@ -115,10 +108,8 @@ export default function Connection() {
                 return res.json();
               })
               .then(data => {
-                console.log(data);
                 if (data.code == "JWT_7") {
                   const NewTokenValue = getCookie("access_token", false);
-                  console.log("error from pusher ", tokenValue, NewTokenValue);
                   // fetch(authUrl, {
                   //   method: "POST",
                   //   crossDomain: true,
@@ -180,12 +171,6 @@ export default function Connection() {
   useEffect(() => {
     // const tokenValue = getCookie("access_token", false);
     if (connectionPusher && pusher && connectionChannel == null) {
-      console.log(
-        "test pusher &&&&&&&&& 1",
-        connectionPusher,
-        pusher,
-        connectionChannel
-      );
       const tokenValue = getCookie("access_token", false);
       const tokenUserData = JSON.parse(
         base64url.decode(`${tokenValue}`.split(".")[1])
@@ -203,9 +188,7 @@ export default function Connection() {
 
   useEffect(() => {
     if (connectionChannel != null) {
-      console.log("test connectionChannel &&&&&&&&& 1", connectionChannel);
       connectionChannel.bind("message", function(data) {
-        console.log("data.value router.pathname ", data.value, router.pathname);
         // check if in router.pathname and the opened chat id == coming user'id
         if (router.pathname == "/home/messages") {
           setUserProfile(data.value);
@@ -246,7 +229,6 @@ export default function Connection() {
         }
       });
       connectionChannel.bind("love", function(data) {
-        console.log("data.value***** ", JSON.parse(data.value[0]));
         dispatch(increaseCount("L"));
         //check type
         let user = JSON.parse(data.value[0]);
@@ -263,8 +245,6 @@ export default function Connection() {
         //else if type==M
       });
       connectionChannel.bind("view", function(data) {
-        // fillData('view-container',data.value);
-        console.log("data.value ", data.value);
         let user = JSON.parse(data.value[0]);
         user.cociva = data.cociva;
         setUserProfile(user);
@@ -273,7 +253,6 @@ export default function Connection() {
       });
       connectionChannel.bind("privatephoto", function(data) {
         //  fillData('privatephoto-container',data.value);
-        console.log("data.value ", data.value);
 
         //dispatch(increaseCount("P"));
         //setUserProfile(JSON.parse(data.value[0]));
@@ -291,7 +270,6 @@ export default function Connection() {
       });
 
       connectionChannel.bind("typing", function(data) {
-        console.log("data from typing-----------------------> ", data);
         // if signal comed ---> write Typing
         if (data.data) {
           dispatch(setTypingMark(true));
@@ -317,7 +295,7 @@ export default function Connection() {
 
       connectionChannel.bind("disconnect_signal", function(data) {
         //  fillData('disconnectsignal-container',data.value);
-        console.log("data.value ", data.value);
+
         if (data.value == 1) {
           // const tokenValue = getCookie("access_token", false);
           // const tokenUserData = JSON.parse(
@@ -358,14 +336,12 @@ export default function Connection() {
         userProfile,
         photoReadSignedRequest.signedRequest
       );
-      console.log("finalUserProfile ", finalUserProfile);
       setFinalUserProfile(finalUserProfile);
     }
   }, [photoReadSignedRequest]);
 
   useEffect(() => {
     if (finalUserProfile != null) {
-      console.log("finalUserProfile 2###### ", finalUserProfile);
       if (notifType == "m") {
         // NotificationManager.success(
         //   <>

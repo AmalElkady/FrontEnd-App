@@ -250,7 +250,6 @@ export const reportUserConversation = (
 };
 
 export const reportUserConversationSuccess = data => {
-  console.log("from success reportUserConversationSuccess ", data);
   return {
     type: REPORT_USER_CONVERSATION_SUCCESS,
     payload: data
@@ -285,7 +284,6 @@ export const resetProfilesOnlineStatus = () => {
 };
 
 export const showMessageChat = message => {
-  console.log("returnedData.message 2******** ", message);
   return {
     type: SHOW_MESSAGE_CHAT,
     payload: message

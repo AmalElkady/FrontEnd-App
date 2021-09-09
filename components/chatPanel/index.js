@@ -49,7 +49,6 @@ const ChatPanel = () => {
   }, [MyPhotoSigned]);
 
   useEffect(() => {
-    console.log("showMessageChat ", showMessageChat);
     if (showMessageChat) {
       NotificationManager.error(alertMessageChat);
       dispatch(hideMessageChat());

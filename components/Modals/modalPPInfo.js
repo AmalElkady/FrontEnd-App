@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { resetCheckMpUpload } from "../../actions/Auth";
@@ -96,12 +96,6 @@ export default function ModalPPInfo({ popSub }) {
   let diffJnt = moment().diff(sub, "hours");
   const [openSub, setOpenSub] = useState(false);
 
-
-  useEffect(() => {
-//console.log("moment #####",moment(new Date()).format("M/D/YYYY"),moment().format("M/D/YYYY"))
-  }, []);
-
-
   ////// modal
   const [open, setOpen] = useState(true);
   const [viewPPComponent, seViewPPComponent] = useState(false);
@@ -137,40 +131,37 @@ export default function ModalPPInfo({ popSub }) {
             <form className={classes.positionR} noValidate autoComplete="off">
               {popSub && (
                 <>
-                  
-                  <div style={{textAlign:"center"}}>
-                    {moment().format("M/D/YYYY")==moment(new Date(sub)).format("M/D/YYYY")?
+                  <div style={{ textAlign: "center" }}>
+                    {moment().format("M/D/YYYY") ==
+                    moment(new Date(sub)).format("M/D/YYYY") ? (
                       <>
-                      <Typography variant="h6" gutterBottom>
+                        <Typography variant="h6" gutterBottom>
                           <IntlMessages id="sub.expireToday" />
                         </Typography>
                         <Typography
-                    variant="overline"
-                    style={{ fontSize: "1.5rem" ,fontWeight:"bold"}}
-                    gutterBottom
-                  >
-                       {moment(new Date(sub)).format("h:mma")}
-                       </Typography>
+                          variant="overline"
+                          style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+                          gutterBottom
+                        >
+                          {moment(new Date(sub)).format("h:mma")}
+                        </Typography>
                       </>
-                    :
-                    
-                   <>
-                      <Typography variant="h6" gutterBottom>
-                    <IntlMessages id="sidebar.subMark" />
-                  </Typography>
+                    ) : (
+                      <>
+                        <Typography variant="h6" gutterBottom>
+                          <IntlMessages id="sidebar.subMark" />
+                        </Typography>
 
-                    <Typography
-                variant="overline"
-                style={{ fontSize: "1.5rem" }}
-                gutterBottom
-              >
-                   { moment(new Date(sub)).format("M/D/YYYY")}
-                    
-                    </Typography>
-                    </>
-                    }
-                    </div>
-                 
+                        <Typography
+                          variant="overline"
+                          style={{ fontSize: "1.5rem" }}
+                          gutterBottom
+                        >
+                          {moment(new Date(sub)).format("M/D/YYYY")}
+                        </Typography>
+                      </>
+                    )}
+                  </div>
 
                   <Grid container>
                     <Grid item xs={8}>

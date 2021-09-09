@@ -162,7 +162,7 @@ const reportUserRequest = async (
 
 function* addUserOnlineOfflineRequest({ payload }) {
   const { action } = payload;
-  console.log("addUserOnlineOfflineRequest saga ", action);
+
   try {
     const returnedData = yield call(addUserOnlineOffline, action);
     if (returnedData.message) {
@@ -178,7 +178,7 @@ function* addUserOnlineOfflineRequest({ payload }) {
 
 function* ppAccessApproveRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
-  console.log("access pp read saga ", action, profileid, country, city, varea);
+
   try {
     const returnedData = yield call(
       ppAccessApproveRemove,
@@ -200,7 +200,7 @@ function* ppAccessApproveRemoveRequest({ payload }) {
 
 function* getPhotoPPReadOutgoingRequestsApprovalesRequest({ payload }) {
   const { scoreH, offset } = payload;
-  console.log("Outgoing pp read saga ", scoreH, offset);
+
   try {
     const returnedData = yield call(
       getPhotoReadPPOutgoingRequestsApprovales,
@@ -219,7 +219,7 @@ function* getPhotoPPReadOutgoingRequestsApprovalesRequest({ payload }) {
 
 function* getPhotoPPReadIncomingApprovePendingRequest({ payload }) {
   const { action, scoreH, offset } = payload;
-  console.log("incoming pp read saga ", action, scoreH, offset);
+
   try {
     const returnedData = yield call(
       getPhotoReadPPIncomingApprovePendingRequests,
@@ -241,7 +241,7 @@ function* getPhotoPPReadIncomingApprovePendingRequest({ payload }) {
 
 function* sendLoveMatchRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
-  console.log("love match saga ", profileid, country, city, varea);
+
   try {
     const returnedData = yield call(
       loveMatchSendRequest,
@@ -294,7 +294,7 @@ function* getLoveMatchedAndReceivedRequestsRequest({ payload }) {
 
 function* getUserViewsRequest({ payload }) {
   const { start, end } = payload;
-  console.log("user Views saga ", start, end);
+
   try {
     const returnedData = yield call(userViewsRequest, start, end);
     if (returnedData.message) {
@@ -309,7 +309,6 @@ function* getUserViewsRequest({ payload }) {
 
 function* userBlockRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
-  console.log("user block saga ", profileid, country, city, varea);
   try {
     const returnedData = yield call(
       blockUserRequest,
@@ -329,7 +328,7 @@ function* userBlockRequest({ payload }) {
 }
 function* userUnblockRequest({ payload }) {
   const { profileid, country, city, varea } = payload;
-  console.log("user unblock saga ", profileid, country, city, varea);
+
   try {
     const returnedData = yield call(
       unblockUserRequest,
@@ -350,7 +349,7 @@ function* userUnblockRequest({ payload }) {
 
 function* getBlockedUsersRequest({ payload }) {
   const { scoreH, offset } = payload;
-  console.log("blocked Users saga ", scoreH, offset);
+
   try {
     const returnedData = yield call(getUsersBlocked, scoreH, offset);
     if (returnedData.message) {
@@ -365,14 +364,7 @@ function* getBlockedUsersRequest({ payload }) {
 
 function* getNotificationViewPPLoveRequest({ payload }) {
   const { unread, viewScoreHigh, ppScoreHigh, loveScoreHigh, offset } = payload;
-  console.log(
-    " notification saga ",
-    unread,
-    viewScoreHigh,
-    ppScoreHigh,
-    loveScoreHigh,
-    offset
-  );
+
   try {
     const returnedData = yield call(
       getViewPPLoveNotification,
@@ -404,16 +396,7 @@ function* cleanNotificationViewPPLoveRequest({ payload }) {
     loveScoreLow,
     loveScoreHigh
   } = payload;
-  console.log(
-    " clean notification saga ",
-    remove,
-    viewScoreLow,
-    viewScoreHigh,
-    ppScoreLow,
-    ppScoreHigh,
-    loveScoreLow,
-    loveScoreHigh
-  );
+
   try {
     const returnedData = yield call(
       cleanViewPPLoveNotification,
@@ -437,15 +420,7 @@ function* cleanNotificationViewPPLoveRequest({ payload }) {
 
 function* userReportRequest({ payload }) {
   const { reasonid, profileid, country, city, varea, comment } = payload;
-  console.log(
-    "userReportRequest saga ",
-    reasonid,
-    profileid,
-    country,
-    city,
-    varea,
-    comment
-  );
+
   try {
     const returnedData = yield call(
       reportUserRequest,

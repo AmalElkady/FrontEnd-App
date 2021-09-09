@@ -70,7 +70,6 @@ export default function Settings() {
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-    console.log("myPhoneAndPwData ", myPhoneAndPwData);
     // if (panel == "panel1" && myPaymentsAndSub == null) {
     // } else
     if (panel == "panel1" && myPhoneAndPwData == null) {

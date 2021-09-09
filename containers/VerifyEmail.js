@@ -73,7 +73,6 @@ class VerifyEmail extends React.Component {
       OpenModal
     } = this.props; //phoneVerified
     // const OpenModal = this.props.openModal;
-    //console.log("timeReturned verify ", timeReturned);
 
     return (
       <>

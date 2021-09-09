@@ -8,7 +8,6 @@ const LanguageItem = ({ language, switchLanguage, handleRequestClose }) => {
     <li
       className="pointer"
       onClick={() => {
-        console.log("language from component  ", language.name);
         handleRequestClose();
         dispatch(switchLanguage(language));
       }}

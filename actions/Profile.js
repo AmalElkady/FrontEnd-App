@@ -65,7 +65,6 @@ export const readMyProfile = params => {
 };
 
 export const requestPhotoReadPP = (id, co, ci, va) => {
-  console.log("from action read pp ", id, co, ci, va);
   return {
     type: REQUEST_PHOTO_READ_PP,
     payload: { id, co, ci, va }
@@ -272,7 +271,6 @@ export const permissionPPReadRemove = (
 };
 
 export const permissionPPReadRemoveSuccess = data => {
-  console.log("from action success sent request", data);
   return {
     type: REQUEST_PERMISSION_PP_READ_REMOVE_SUCCESS,
     payload: data
@@ -287,7 +285,6 @@ export const updateMainP = file => {
 };
 
 export const updateMainPSuccess = data => {
-  console.log("from action success update ", data);
   return {
     type: UPDATE_MAIN_PHOTO_SUCCESS,
     payload: data
@@ -309,7 +306,6 @@ export const deleteMyAccount = (password, score, key) => {
 };
 
 export const deleteMyAccountSuccess = data => {
-  console.log("from action success delete account ", data);
   return {
     type: DELETE_MY_ACCOUNT_SUCCESS,
     payload: data

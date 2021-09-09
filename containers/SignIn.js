@@ -44,11 +44,6 @@ class SignIn extends React.Component {
       }, 100);
     }
     if (this.props.authUser != null) {
-      // console.log(
-      //   "jnt from login %%%%%% ",
-      //   this.props.c,
-      //   moment().diff(this.props.jnt, "hours")
-      // );
       Router.replace("/home/content");
     }
   }
@@ -216,7 +211,6 @@ class SignIn extends React.Component {
                       <ReCAPTCHA
                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                         onChange={value => {
-                          console.log("Captcha value2:", value);
                           this.setState({ rcaptchaValue: value });
                         }}
                         className="not-robot"

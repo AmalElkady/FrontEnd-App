@@ -81,12 +81,6 @@ export default function PaymentsSubs() {
   };
 
   useEffect(() => {
-    if (myPaymentsAndSub) {
-      console.log("myPaymentsAndSub ", myPaymentsAndSub);
-    }
-  }, [myPaymentsAndSub]);
-
-  useEffect(() => {
     dispatch(readMyPaymentAndSub(true, paymentsStart, paymentsEnd));
   }, []);
 

@@ -165,25 +165,13 @@ const Conversation = ({ myPhoto }) => {
   useInterval(() => {
     if (clickedUserChat != null) {
       let el = timestampMap.find(element => element.id === clickedUserChat.i);
-      console.log(
-        "This will run after 60s for getProfiles",
-        timestampMap,
-        clickedUserChat,
-        el
-      );
       if (
         // timestampMap.has(clickedUserChat.i)
         el &&
         el.id
       ) {
-        console.log("map has clickedUserChat.i");
         // check if timestamp > 1M ----> call 2 APIs to get updated status
         // let lastTime = timestampMap.get(clickedUserChat.i);
-        console.log(
-          "map has clickedUserChat.i last time ",
-          el.time,
-          moment().diff(el.time, "minutes")
-        );
         if (moment().diff(el.time, "minutes") >= 1) {
           dispatch(
             getProfiles([
@@ -195,7 +183,6 @@ const Conversation = ({ myPhoto }) => {
       //}
       else {
         //add his id and timestamp to Map and call 2 APIs to get status
-        console.log("map hasn't clickedUserChat.i");
         dispatch(setTimestampMap(clickedUserChat.i, Date.now()));
         dispatch(
           getProfiles([
@@ -208,11 +195,6 @@ const Conversation = ({ myPhoto }) => {
 
   useEffect(() => {
     if (clickedUserChat != null) {
-      console.log(
-        "clickedUserChat clickedUserChatUnread",
-        clickedUserChat,
-        clickedUserChatUnread
-      );
       dispatch(resetProfilesOnlineStatus());
 
       // check if have timestamp for clicked user
@@ -297,7 +279,6 @@ const Conversation = ({ myPhoto }) => {
         activeUser == null ||
         (activeUser && activeUser.i != clickedUserChat.i)
       ) {
-        console.log("This will run before for first time *******");
         dispatch(
           setActiveConversation(
             clickedUserChat.i,
@@ -310,7 +291,6 @@ const Conversation = ({ myPhoto }) => {
       }
 
       setInterval(() => {
-        console.log("This will run after 20s For Active Conversation");
         //call it each 20s if closed send activate:false
         dispatch(
           setActiveConversation(
@@ -365,7 +345,6 @@ const Conversation = ({ myPhoto }) => {
   useEffect(() => {
     if (returnedProfiles != null) {
       let age_range = getAgeRange(moment().diff(clickedUserChat.b, "years"));
-      console.log("returnedProfiles age", returnedProfiles, age_range);
       dispatch(
         getProfilesOnlineStatus(returnedProfiles, [
           `${clickedUserChat.co}_${clickedUserChat.ci}_${clickedUserChat.va}_${age_range}`
@@ -380,24 +359,8 @@ const Conversation = ({ myPhoto }) => {
   //   }
   // }, [returnedProfilesOnlineStatus]);
 
-  useEffect(() => {
-    if (respActiveConversation != null) {
-      console.log("respActiveConversation", respActiveConversation);
-    }
-  }, [respActiveConversation]);
-
-  useEffect(() => {
-    if (respConversationTypingIndicator != null) {
-      console.log(
-        "respConversationTypingIndicator",
-        respConversationTypingIndicator
-      );
-    }
-  }, [respConversationTypingIndicator]);
-
   // handle scroll for list of Conversation messages
   const handleScrollConversationMessages = () => {
-    console.log("more scroll top ", endOfConversationMessages);
     if (!endOfConversationMessages) {
       // sent get Conversation messages (next options)
       dispatch(
@@ -454,7 +417,6 @@ const Conversation = ({ myPhoto }) => {
                 scrollableTarget="scrollableDiv"
                 className="scroll-m"
               >
-                {console.log("indexOfLastMsg ", indexOfLastMsg)}
                 {conversationMessages.map((conversation, index) =>
                   conversation.o === 1 ? (
                     <>

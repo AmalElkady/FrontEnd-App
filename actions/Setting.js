@@ -52,7 +52,6 @@ export function setHorizontalMenuPosition(navigationPosition) {
 }
 
 export function switchLanguage(locale) {
-  console.log("from action ", locale);
   return {
     type: SWITCH_LANGUAGE,
     payload: locale

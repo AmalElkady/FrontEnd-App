@@ -1,5 +1,4 @@
 export const mapSmallUserPhotoUrl = (usersArr, signedRequest) => {
-  console.log("usersArr ", usersArr);
   if (Array.isArray(usersArr)) {
     if (signedRequest != null && usersArr.length != 0) {
       const newUsersArr = usersArr.map((e, i) => {
@@ -15,7 +14,6 @@ export const mapSmallUserPhotoUrl = (usersArr, signedRequest) => {
               e._ = editSignedRequest;
             }
           } else {
-            console.log("parse null e", e);
             e._ =
               "https://www.gitstartup.com/site/images/logo/user-placeholder.jpg";
           }
@@ -25,7 +23,6 @@ export const mapSmallUserPhotoUrl = (usersArr, signedRequest) => {
       return newUsersArr;
     }
   } else if (typeof usersArr === "object" && usersArr !== null) {
-    console.log("object to map******");
     if (signedRequest != null) {
       if (!usersArr._.includes("MP/")) {
         usersArr._ = usersArr._.replace(".jpeg", ".jpg");

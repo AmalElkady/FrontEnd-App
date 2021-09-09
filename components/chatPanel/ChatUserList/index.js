@@ -88,11 +88,6 @@ const ChatUserList = () => {
             allMessagesCoversProfiles,
             photoReadSignedRequest.signedRequest
           );
-          console.log(
-            "allMessagesCoversProfiles ",
-            allMessagesCoversProfiles,
-            finalUsersProfiles
-          );
           setUsers(
             finalUsersProfiles.map((e, i) => {
               e = {
@@ -201,9 +196,7 @@ const ChatUserList = () => {
                         dispatch(resetMegsCoversUnreadCount(i));
                       }
 
-                      console.log("before clickedUserChat ", ClickedUserChat);
                       if (ClickedUserChat != null) {
-                        console.log("before clickedUserChat !=null");
                         dispatch(
                           setActiveConversation(
                             ClickedUserChat.i,

@@ -301,16 +301,12 @@ function* createUserWithPhonePassword({ payload }) {
 }
 
 function* uploadMainProfilePhoto({ payload }) {
-  console.log("from saga img payload ", payload);
-  // const { file } = payload;
-
   try {
     const photoUploadS3 = yield call(uploadMainProfilePhotoRequest, payload);
 
     if (photoUploadS3.message) {
       yield put(showAuthMessage(photoUploadS3.message));
     } else if (photoUploadS3.token0) {
-      console.log("token0 from saga ");
       yield put(mpUploadToken0Success(true));
     } else {
       yield put(mpUploadSuccess(true));
@@ -353,7 +349,6 @@ function* addProfileLayer2({ payload }) {
 }
 
 function* addSubscribe({ payload }) {
-  console.log("from saga ", payload);
   const { pack, sessionId } = payload;
   try {
     const subAdded = yield call(addSubRequest, pack, sessionId);
@@ -381,7 +376,6 @@ function* sendResetPasswordTokenForUserPhone({ payload }) {
       yield put(showAuthMessage(resetUser.message));
     } else {
       yield put(userSendResetTokenSuccess(true));
-      console.log(resetUser.hw);
       localStorage.setItem("hw", JSON.stringify(resetUser.hw));
     }
   } catch (error) {
@@ -401,7 +395,6 @@ function* sendVerificationCodeForUserPhone({ payload }) {
       yield put(showAuthMessage(verifyUser.message));
     } else {
       yield put(userSendVerificationCodeSuccess(true));
-      console.log(verifyUser);
     }
   } catch (error) {
     yield put(showAuthMessage(error));
@@ -445,7 +438,6 @@ function* changePasswordWithTokenForUserPhone({ payload }) {
 }
 
 function* changeUserPhoneBeforeVerifRequest({ payload }) {
-  console.log("from saga");
   const { newPhone, phonecountrycode, countryiso2, newCity } = payload;
   try {
     const returnData = yield call(
@@ -455,7 +447,6 @@ function* changeUserPhoneBeforeVerifRequest({ payload }) {
       countryiso2,
       newCity
     );
-    console.log("returnData from data", returnData);
     if (returnData.message) {
       yield put(showAuthMessage(returnData.message));
     } else {
@@ -475,10 +466,9 @@ function* changeUserPhoneBeforeVerifRequest({ payload }) {
 }
 
 function* customerAddPayingRequest() {
-  console.log("from saga add paying customer");
   try {
     const returnData = yield call(addPayingCustomerRequest);
-    console.log("returnData from data", returnData);
+
     if (returnData.message) {
       yield put(showAuthMessage(returnData.message));
     } else {
@@ -490,10 +480,9 @@ function* customerAddPayingRequest() {
 }
 
 function* requestCreateCheckOutSession({ payload }) {
-  console.log("from saga requestCreateCheckOutSession ", payload);
   try {
     const returnData = yield call(createCheckOutSessionRequest, payload);
-    console.log("returnData from data", returnData);
+
     if (returnData.message) {
       yield put(showAuthMessage(returnData.message));
     } else {
@@ -610,7 +599,6 @@ function* signInUserWithPhonePassword({ payload }) {
 }
 
 function* signOut() {
-  console.log("logout from saga");
   try {
     const signOutUser = yield call(signOutRequest);
     if (signOutUser === undefined) {

@@ -35,8 +35,6 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     if (selectedPack != null) {
-      console.log("from component PaymentSuccess ", selectedPack);
-      // dispatch(showAuthLoader());
       dispatch(userAddSubscribe(selectedPack));
     }
   }, []);

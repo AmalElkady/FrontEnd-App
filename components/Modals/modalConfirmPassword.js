@@ -119,19 +119,7 @@ export default function ModalConfirmPassword({
   const OpenModal = useSelector(state => state.profile.openModal);
   //const phoneChangedBefore = useSelector(state => state.auth.phoneChangedBefore);
 
-  useEffect(() => {
-    console.log(
-      "first dataaaaa phone ",
-      phone,
-      country,
-      tpercent,
-      nationality,
-      workd,
-      title,
-      education,
-      bio
-    );
-  }, []);
+  useEffect(() => {}, []);
   useEffect(() => {
     if (OpenModal) {
       handleOpen();
@@ -192,40 +180,40 @@ export default function ModalConfirmPassword({
               />
             </div>
             {/* <div className="app-login-main-content"> */}
-              <div className="app-login-content-2">
-                <div className="app-login-header">
-                  <h2>
-                    <IntlMessages id="appModule.confirmPassword" />
-                  </h2>
-                  <h2> {`+${country} ${phone}`}</h2>
-                </div>
+            <div className="app-login-content-2">
+              <div className="app-login-header">
+                <h2>
+                  <IntlMessages id="appModule.confirmPassword" />
+                </h2>
+                <h2> {`+${country} ${phone}`}</h2>
+              </div>
 
-                <div className="app-login-form">
-                  <form method="post" className={classes.positionR}>
+              <div className="app-login-form">
+                <form method="post" className={classes.positionR}>
+                  <Grid
+                    container
+                    spacing={12}
+                    style={{ minWidth: "149px", paddingBottom: "9px" }}
+                  >
                     <Grid
-                      container
-                      spacing={12}
-                      style={{ minWidth: "149px", paddingBottom: "9px" }}
+                      item
+                      xs={12}
+                      style={{ minWidth: "90px", paddingRight: "18px" }}
                     >
-                      <Grid
-                        item
-                        xs={12}
-                        style={{ minWidth: "90px", paddingRight: "18px" }}
-                      >
-                        <TextField
-                          type="password"
-                          onChange={event => setPassword(event.target.value)}
-                          label={<IntlMessages id="inputLabel.password" />}
-                          fullWidth
-                          defaultValue={password}
-                          margin="normal"
-                          className="mt-0 mb-3 to-right"
-                        />
-                      </Grid>
+                      <TextField
+                        type="password"
+                        onChange={event => setPassword(event.target.value)}
+                        label={<IntlMessages id="inputLabel.password" />}
+                        fullWidth
+                        defaultValue={password}
+                        margin="normal"
+                        className="mt-0 mb-3 to-right"
+                      />
                     </Grid>
+                  </Grid>
 
-                    <div className="mb-3 d-flex align-items-center justify-content-between">
-                      {/* <Button
+                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                    {/* <Button
                         variant="contained"
                         onClick={() => {
                           setOpenEdit(false);
@@ -236,46 +224,41 @@ export default function ModalConfirmPassword({
                       >
                         <IntlMessages id="appModule.cancel" />
                       </Button> */}
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          console.log("confirm password");
-                          console.log("phone ", phone);
-                          console.log("country ", country);
-                          console.log("password ", password);
-
-                          dispatch(showAuthLoader());
-                          dispatch(
-                            userAddProfileL2({
-                              tpercent,
-                              nationality,
-                              workd,
-                              title,
-                              education,
-                              bio
-                            })
-                          );
-                          //*logout
-                          // dispatch(userSignOut());
-                          //* login
-                          // dispatch(
-                          //   userSignIn({
-                          //     phone,
-                          //     password,
-                          //     country
-                          //   })
-                          // );
-                          dispatch(confirmPasswordCase(false));
-                        }}
-                        color="primary"
-                        className="linear-g-r"
-                      >
-                        <IntlMessages id="appModule.confirm" />
-                      </Button>
-                    </div>
-                  </form>
-                </div>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        dispatch(showAuthLoader());
+                        dispatch(
+                          userAddProfileL2({
+                            tpercent,
+                            nationality,
+                            workd,
+                            title,
+                            education,
+                            bio
+                          })
+                        );
+                        //*logout
+                        // dispatch(userSignOut());
+                        //* login
+                        // dispatch(
+                        //   userSignIn({
+                        //     phone,
+                        //     password,
+                        //     country
+                        //   })
+                        // );
+                        dispatch(confirmPasswordCase(false));
+                      }}
+                      color="primary"
+                      className="linear-g-r"
+                    >
+                      <IntlMessages id="appModule.confirm" />
+                    </Button>
+                  </div>
+                </form>
               </div>
+            </div>
             {/* </div> */}
             {/* </div> */}
 

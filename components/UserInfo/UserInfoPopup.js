@@ -29,7 +29,6 @@ class UserInfoPopup extends React.Component {
         <span
           className="jr-link dropdown-item text-muted"
           onClick={() => {
-            console.log("Try to logoput");
             this.props.userSignOut();
           }}
         >
@@ -41,7 +40,4 @@ class UserInfoPopup extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  { userSignOut }
-)(UserInfoPopup);
+export default connect(null, { userSignOut })(UserInfoPopup);

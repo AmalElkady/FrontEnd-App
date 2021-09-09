@@ -147,14 +147,12 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case UPDATE_MAIN_PHOTO_SUCCESS: {
-      console.log("from reducer update ", action.payload);
       return {
         ...state,
         mainPhotoUpdated: action.payload
       };
     }
     case DELETE_MY_ACCOUNT_SUCCESS: {
-      console.log("from reducer delete account ", action.payload);
       return {
         ...state,
         myAccountDeleted: action.payload
@@ -189,10 +187,6 @@ const Profile = (state = initialProfileState, action) => {
       };
     }
     case READ_MY_PAYMENTS_AND_SUB_SUCCESS: {
-      console.log(
-        "from reducer read payments and subsriptions ",
-        action.payload
-      );
       if (action.payload.data.length != 0) {
         state.paymentsStart = state.paymentsEnd;
         state.paymentsEnd += state.paymentLimit;

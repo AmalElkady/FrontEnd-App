@@ -138,7 +138,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS: {
-      console.log("form reducer outgoing ", action.payload);
       const outgoingPPProfiles = map2ArrTo1Arr(
         action.payload.order,
         action.payload.profiles
@@ -167,7 +166,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS: {
-      console.log("form reducer incoming ", action.payload);
       let incomingPPProfiles = [];
       if (state.privateSelectedIcon === "incomingApproved") {
         if (action.payload.order.length != 0) {
@@ -223,7 +221,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case SEND_LOVE_MATCH_REQUEST_SUCCESS: {
-      console.log("form reducer love match request ", action.payload);
       return {
         ...state,
         sendLoveMatchRequest: action.payload
@@ -334,21 +331,18 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case BLOCK_USER_SUCCESS: {
-      console.log("form reducer User block ", action.payload);
       return {
         ...state,
         userBlocked: action.payload
       };
     }
     case UNBLOCK_USER_SUCCESS: {
-      console.log("form reducer User unblock ", action.payload);
       return {
         ...state,
         userUnblocked: action.payload
       };
     }
     case GET_BLOCKED_USERS_SUCCESS: {
-      console.log("form reducer blocked users", action.payload);
       let blockedProfiles = [];
       if (action.payload.profiles.length != 0) {
         blockedProfiles = map2ArrTo1Arr(
@@ -381,7 +375,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
-      console.log("form notification from reducer ", action.payload);
       /// love
       let loveProfiles = [];
       if (action.payload.unread == "C" || action.payload.unread == "CL") {
@@ -493,14 +486,12 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS: {
-      console.log("form reducer clean notification ", action.payload);
       return {
         ...state,
         cleanNotification: action.payload
       };
     }
     case REPORT_USER_SUCCESS: {
-      console.log("form reducer report user ", action.payload);
       return {
         ...state,
         userReported: action.payload
@@ -536,21 +527,6 @@ const Interaction = (state = initialProfileState, action) => {
         ...state
       };
     }
-    // case PUSH_IN_NOTIFICATION_VIEW_PP_LOVE: {
-    //   if (action.payload.t == "NL") {
-    //     console.log("user love reducer", action.payload.user);
-    //     state.notificationLoveUnread.unshift(action.payload.user);
-    //   } else if (action.payload.t == "NV") {
-    //     console.log("user view reducer ", action.payload.user);
-    //     state.notificationViewUnread.unshift(action.payload.user);
-    //   } else if (action.payload.t == "NP") {
-    //     console.log("user pp reducer", action.payload.user);
-    //     state.notificationPPUnread.unshift(action.payload.user);
-    //   }
-    //   return {
-    //     ...state
-    //   };
-    // }
     case SELECTED_LOVE_ICON:
       return {
         ...state,
@@ -581,7 +557,6 @@ const Interaction = (state = initialProfileState, action) => {
       };
     }
     case ERROR_JWT_8: {
-      console.log("from reducer ERROR_JWT_8 ", action.payload);
       return {
         ...state,
         errorJwt8Flag: action.payload

@@ -66,7 +66,6 @@ export const getPhotoPPReadOutgoingRequestsApprovals = (scoreH, offset) => {
 };
 
 export const getPhotoPPReadOutgoingRequestsApprovalsSuccess = data => {
-  console.log("from success outgoing ", data);
   return {
     type: GET_PHOTO_PP_READ_OUTGOING_REQUESTS_APPROVALES_SUCCESS,
     payload: data
@@ -85,7 +84,6 @@ export const getPhotoPPReadIncomingApprovedPendingRequests = (
 };
 
 export const getPhotoPPReadIncomingApprovedPendingRequestsSuccess = data => {
-  console.log("from success incoming ", data);
   return {
     type: GET_PHOTO_PP_READ_INCOMING_APPROVED_PENDING_REQUESTS_SUCCESS,
     payload: data
@@ -142,7 +140,6 @@ export const getUserViews = (start, end) => {
 };
 
 export const getUserViewsSuccess = data => {
-  console.log("from success get user views ", data);
   return {
     type: GET_USER_VIEWS_SUCCESS,
     payload: data
@@ -157,7 +154,6 @@ export const blockUser = (profileid, country, city, varea) => {
 };
 
 export const blockUserSuccess = data => {
-  console.log("from success block user ", data);
   return {
     type: BLOCK_USER_SUCCESS,
     payload: data
@@ -172,7 +168,6 @@ export const unblockUser = (profileid, country, city, varea) => {
 };
 
 export const unblockUserSuccess = data => {
-  console.log("from success unblock user ", data);
   return {
     type: UNBLOCK_USER_SUCCESS,
     payload: data
@@ -187,7 +182,6 @@ export const getBlockedUsers = (scoreH, offset) => {
 };
 
 export const getBlockedUsersSuccess = data => {
-  console.log("from success get getBlockedUsers ", data);
   return {
     type: GET_BLOCKED_USERS_SUCCESS,
     payload: data
@@ -208,7 +202,6 @@ export const getNotificationViewPPLove = (
 };
 
 export const getNotificationViewPPLoveSuccess = (unread, data) => {
-  console.log("from success getNotificationViewPPLoveS ", unread, data);
   return {
     type: GET_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
     payload: { data, unread }
@@ -239,7 +232,6 @@ export const cleanNotificationViewPPLove = (
 };
 
 export const cleanNotificationViewPPLoveSuccess = data => {
-  console.log("from success cleanNotificationViewPPLoveSuccess ", data);
   return {
     type: CLEAN_NOTIFICATION_VIEW_PP_LOVE_SUCCESS,
     payload: data
@@ -268,7 +260,6 @@ export const selectedPrivateIcon = data => {
 };
 
 export const resetCount = type => {
-  console.log("from reset Count action");
   return {
     type: RESET_COUNT,
     payload: type
@@ -276,7 +267,6 @@ export const resetCount = type => {
 };
 
 export const increaseCount = type => {
-  console.log("from increase Count action");
   return {
     type: INCREASE_COUNT,
     payload: type
@@ -284,14 +274,12 @@ export const increaseCount = type => {
 };
 
 export const updateList = type => {
-  console.log("from update list action", type);
   return {
     type: UPDATE_LIST,
     payload: type
   };
 };
 export const errorJwt8Success = data => {
-  console.log("from errorJwt8Success interaction action", data);
   return {
     type: ERROR_JWT_8,
     payload: data
@@ -308,20 +296,11 @@ export const addUserOnlineOffline = action => {
 };
 
 export const addUserOnlineOfflineSuccess = data => {
-  console.log("from success addUserOnlineOfflineSuccess ", data);
   return {
     type: ADD_USER_ONLINE_OFFLINE_SUCCESS,
     payload: data
   };
 };
-
-// export const pushInNotificationViewPPLove = (t, user) => {
-//   console.log("from pushInNotificationViewPPLove action", t, user);
-//   return {
-//     type: PUSH_IN_NOTIFICATION_VIEW_PP_LOVE,
-//     payload: { t, user }
-//   };
-// };
 
 export const reportUser = (
   reasonid,
@@ -345,7 +324,6 @@ export const reportUser = (
 };
 
 export const reportUserSuccess = data => {
-  console.log("from success reportUserSuccess ", data);
   return {
     type: REPORT_USER_SUCCESS,
     payload: data

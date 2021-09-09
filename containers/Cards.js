@@ -230,21 +230,12 @@ export default function Cards() {
   const ppInfoModal = useSelector(state => state.profile.ppInfoModal);
   useEffect(() => {
     if (authUser != null) {
-      console.log(
-        "jnt from home %%%%%% ",
-        authUser,
-        jnt,
-        moment().diff(jnt * 100000, "hours")
-      );
-      //  let diffJnt = moment().diff(jnt * 100000, "hours");
-      //dispatch(readMyProfile("L2"));
       if (diffJnt >= 0 && diffJnt <= 24) dispatch(readMyProfile("L2"));
     }
   }, [jnt]);
 
   useEffect(() => {
     if (authUser != null) {
-      console.log("sub from home %%%%%%12345 ", authUser, sub, diffSub);
       if (diffSub >= 0 && diffSub <= 48) setPopSub(true);
     }
   }, [sub]);
@@ -256,8 +247,6 @@ export default function Cards() {
   }, [popSub]);
 
   useEffect(() => {
-    console.log("from cards see photos $$$$$ ", myPhotos);
-    // let diffJnt = moment().diff(jnt * 100000, "hours");
     if (myPhotos == null && diffJnt >= 0 && diffJnt <= 24) {
       dispatch(modalPPInfo(true));
     }
@@ -279,11 +268,6 @@ export default function Cards() {
           return action == null;
         })
       ) {
-        console.log(
-          "AllCountriesSelectedOnline first call ",
-          scoreLOnline,
-          OffsetOnline
-        );
         dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
       }
     }
@@ -291,8 +275,6 @@ export default function Cards() {
 
   useEffect(() => {
     if (errorJwt8Flag) {
-      console.log("errorJwt8Flag from component cards", errorJwt8Flag);
-
       // removeCookie("access_token");
       // this.props.userSignOut();
       //tokenManagerOperations.clearAllTokens("access_token");
@@ -309,14 +291,6 @@ export default function Cards() {
       AllCountriesSelectedOnlineUsers.length == 0
     ) {
       // Get users of AllCountriesSelectedOnline (first time)
-      console.log(
-        "allCountriesSelectedOnlineUsers first call ",
-        scoreLOnline,
-        OffsetOnline,
-        AllCountriesSelectedOnline,
-        AllCountriesSelectedOnlineUsers,
-        currentIndexAllCountriesSelectedOnline
-      );
       dispatch(
         allCountriesSelectedOnlineUsers(
           AllCountriesSelectedOnline[currentIndexAllCountriesSelectedOnline],
@@ -330,11 +304,6 @@ export default function Cards() {
       AllCountriesSelectedOnlineUsers.length == 0 &&
       searchFlag
     ) {
-      console.log(
-        "allCountriesSelectedOnlineUsers call again first call ************ ",
-        scoreLOnline,
-        OffsetOnline
-      );
       dispatch(allCountriesSelectedOnline(scoreLOnline, OffsetOnline));
       dispatch(resetSearchFlag());
     }

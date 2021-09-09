@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import FrontPage from "./frontPage";
 
-const API_KEY = "5b623d5355373a0a083a";
+//const API_KEY = "5b623d5355373a0a083a";
 
 // const pusher = new Pusher(API_KEY, {
 //   cluster: "eu",

@@ -14,26 +14,16 @@ let callAxios = options => {
   return new Promise(async (resolve, reject) => {
     try {
       let response = await axiosRequest(options);
-      console.log("**********data*********");
-      console.log(response);
-      console.log("**********data*********");
 
       if (!response.data) {
         resolve({ data: { message: "error" } });
       } else {
-        console.log(
-          "********** new token  response.data.token ",
-          response.data.token
-        );
         if (
           response.data.token &&
           (response.data.status != "ACTIVE" || response.data.status == null)
         ) {
           setCookie("access_token", response.data.token);
-          console.log(
-            "********** new token  response.data.token trueeeeeee ",
-            response.data.token
-          );
+
           if (response.data.verify) {
             resolve({ data: { response: "ok" } });
           } else if (response.data.signedRequest) {
@@ -45,7 +35,6 @@ let callAxios = options => {
           }
         } else if (response.data.message) {
           if (response.data.message == "unauthorized") {
-            console.log("**********Authorization*********");
             // removeCookie("access_token");
             resolve({
               data: { code: "unauthorized", message: "unauthorized" }
@@ -54,12 +43,10 @@ let callAxios = options => {
             // response.data.code == "JWT_7" ||
             response.data.code == "JWT_8"
           ) {
-            console.log("**********wrong token*********");
             removeCookie("access_token");
             //auth.signOut();
             //Router.replace("/");
           } else if (response.data.code == "JWT_7") {
-            console.log("**********expired token*********");
             resolve({ code: "JWT_7" });
           } else {
             resolve(response);
@@ -69,7 +56,6 @@ let callAxios = options => {
         }
       }
     } catch (error) {
-      console.log(error);
       resolve({ data: { message: "error" } });
     }
   }).catch(err => {
@@ -78,15 +64,6 @@ let callAxios = options => {
 };
 
 messages.sendMessage = function(profileid, country, city, varea, message) {
-  console.log(
-    "from messages service sendMessage ",
-    profileid,
-    country,
-    city,
-    varea,
-    message
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -110,7 +87,6 @@ messages.sendMessage = function(profileid, country, city, varea, message) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("sendmessage from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -125,8 +101,6 @@ messages.sendMessage = function(profileid, country, city, varea, message) {
 };
 
 messages.getMessagesTotalUrCount = function() {
-  console.log("from messages service readmessagestotalurcount ");
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -143,27 +117,14 @@ messages.getMessagesTotalUrCount = function() {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("readmessagestotalurcount from service ", response);
       if (response) {
         if (response.code == "JWT_7") {
           const tokenValueNew = getCookie("access_token", false);
           if (tokenValue != tokenValueNew) {
-            console.log(
-              "response tokenValue!=tokenValueNew ",
-              tokenValue,
-              tokenValueNew
-            );
             // hole 2s then
             setTimeout(() => {
-              console.log("from  hold 2s message notifi");
               messages.getMessagesTotalUrCount();
             }, 2000);
-          } else {
-            console.log(
-              "response tokenValue==tokenValueNew ",
-              tokenValue,
-              tokenValueNew
-            );
           }
         }
         resolve(response.count);
@@ -187,17 +148,6 @@ messages.readConversation = function(
   offset,
   limit
 ) {
-  console.log(
-    "from messages service readConversation ",
-    profileid,
-    country,
-    city,
-    varea,
-    scoreL,
-    offset,
-    limit
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -223,7 +173,6 @@ messages.readConversation = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("readConversation from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -238,8 +187,6 @@ messages.readConversation = function(
 };
 
 messages.readAllMessagesCovers = function(scoreL, offset) {
-  console.log("from messages service readallmessagescovers ", scoreL, offset);
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -260,7 +207,6 @@ messages.readAllMessagesCovers = function(scoreL, offset) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("readallmessagescovers from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -275,14 +221,6 @@ messages.readAllMessagesCovers = function(scoreL, offset) {
 };
 
 messages.clearConversation = function(profileid, country, city, varea) {
-  console.log(
-    "from messages service clearConversation ",
-    profileid,
-    country,
-    city,
-    varea
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -305,11 +243,9 @@ messages.clearConversation = function(profileid, country, city, varea) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("clearConversation from service ", response);
       if (response.response) {
         resolve(response.response);
       } else if (response.code == "CLEARCONVERSATION_5") {
-        console.log("2");
         resolve({ message: <IntlMessages id="error.clearConv" /> });
       } else {
         resolve({ message: "no response !" });
@@ -323,14 +259,6 @@ messages.clearConversation = function(profileid, country, city, varea) {
 };
 
 messages.deleteConversation = function(profileid, country, city, varea) {
-  console.log(
-    "from messages service deleteconversation ",
-    profileid,
-    country,
-    city,
-    varea
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -353,7 +281,6 @@ messages.deleteConversation = function(profileid, country, city, varea) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("deleteconversation from service ", response);
       if (response.response[1] == 1 && response.response[2] == 1) {
         resolve(true);
       } else {
@@ -368,8 +295,6 @@ messages.deleteConversation = function(profileid, country, city, varea) {
 };
 
 messages.getProfiles = function(profileKeys) {
-  console.log("from messages service getProfiles ", profileKeys);
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -388,8 +313,6 @@ messages.getProfiles = function(profileKeys) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-
-      console.log("getProfiles from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -404,12 +327,6 @@ messages.getProfiles = function(profileKeys) {
 };
 
 messages.getProfilesOnlineStatus = function(checkProfiles, listForEachProfile) {
-  console.log(
-    "from messages service getProfilesOnlineStatus ",
-    checkProfiles,
-    listForEachProfile
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -430,7 +347,6 @@ messages.getProfilesOnlineStatus = function(checkProfiles, listForEachProfile) {
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("getProfilesOnlineStatus from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -451,15 +367,6 @@ messages.setActiveConversation = function(
   varea,
   activate
 ) {
-  console.log(
-    "from messages service setActiveConversation ",
-    profileid,
-    country,
-    city,
-    varea,
-    activate
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -483,7 +390,6 @@ messages.setActiveConversation = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("setActiveConversation from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -505,16 +411,6 @@ messages.setConversationTypingIndicator = function(
   jnt,
   activate
 ) {
-  console.log(
-    "from messages service setConversationTypingIndicator ",
-    profileid,
-    country,
-    city,
-    varea,
-    jnt,
-    activate
-  );
-
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -539,7 +435,6 @@ messages.setConversationTypingIndicator = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("setConversationTypingIndicator from service ", response);
       if (response) {
         resolve(response);
       } else {
@@ -568,15 +463,6 @@ messages.reportUserConversation = function(
   // "varea": "1"
   //"comment:""
 
-  console.log(
-    "from service reportuserconversation ",
-    reasonid,
-    profileid,
-    country,
-    city,
-    varea,
-    comment
-  );
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -601,7 +487,6 @@ messages.reportUserConversation = function(
       let responseX = await callAxios(options);
       let response = responseX.data;
 
-      console.log("response reportuserconversation", response);
       if (response) {
         resolve(response);
       } else {

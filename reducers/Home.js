@@ -319,10 +319,6 @@ const home = (state = initialHomeState, action) => {
       };
     }
     case ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS: {
-      console.log(
-        "from reducer ALL_COUNTRIES_SELECTED_ONLINE_SUCCESS ",
-        action.payload.scoreArr
-      );
       // if (action.payload.scoreArr.length >= state.limitCount) {
       //   const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       //   state.OffsetOnline = offset;
@@ -369,12 +365,7 @@ const home = (state = initialHomeState, action) => {
     case ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS: {
       const { offset, SL } = calcValueOfSlAndOffset(action.payload.scoreArr);
       action.payload.usersArr = addUserGender(action.payload.usersArr);
-      console.log(
-        "from reducer ALL_COUNTRIES_SELECTED_ONLINE_USERS_SUCCESS ",
-        action.payload.scoreArr,
-        state.allCountriesSelectedOnline,
-        state.currentIndexAllCountriesSelectedOnline
-      );
+
       if (
         action.payload.usersArr.length == 0 &&
         state.allCountriesSelectedOnline.length > 1

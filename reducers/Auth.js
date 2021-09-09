@@ -129,7 +129,6 @@ export default (state = INIT_STATE, action) => {
     }
 
     case MP_UPLOAD_SUCCESS: {
-      console.log("from reducer mp uploaded");
       return {
         ...state,
         loader: false,
@@ -137,7 +136,6 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case MP_UPLOAD_TOKEN0_SUCCESS: {
-      console.log("from reducer mp uploaded token0");
       return {
         ...state,
         token0: action.payload
@@ -255,7 +253,6 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case SIGNIN_USER_SUCCESS: {
-      console.log("SIGNIN_USER_SUCCESS ***** ", action.payload);
       return {
         ...state,
         loader: false,
@@ -302,7 +299,6 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case DISCONNECT_CHANNEL: {
-      console.log("disconnect channel reducer ");
       // const tokenValue = getCookie("access_token", false);
       // const tokenUserData = JSON.parse(
       //   base64url.decode(`${tokenValue}`.split(".")[1])
@@ -324,17 +320,12 @@ export default (state = INIT_STATE, action) => {
       };
     }
     case ADD_PAYING_CUSTOMER_SUCCESS: {
-      console.log("ADD_PAYING_CUSTOMER_SUCCESS from reducer ", action.payload);
       return {
         ...state,
         customerIdPayment: action.payload
       };
     }
     case CREATE_CHECK_OUT_SESSION_SUCCESS: {
-      console.log(
-        "CREATE_CHECK_OUT_SESSION_SUCCESS from reducer ",
-        action.payload
-      );
       return {
         ...state,
         checkoutSessionDataUrl: action.payload.data.url,
@@ -360,16 +351,9 @@ export default (state = INIT_STATE, action) => {
     }
 
     case ADD_CONNECTION_FLAG: {
-      console.log(
-        "reducer%%%% ",
-        action.payload.flag,
-        action.payload.connValue
-      );
       if (action.payload.flag == "p") {
-        //console.log("reducer%%%% 1");
         state.haveConnectionPusher = action.payload.connValue;
       } else if (action.payload.flag == "ch") {
-        //console.log("reducer%%%%2");
         state.haveConnectionChannel = action.payload.connValue;
       }
       return {

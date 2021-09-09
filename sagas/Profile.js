@@ -168,7 +168,6 @@ function* readMyProfileRequest({ payload }) {
 function* updateProfileL1Request({ payload }) {
   try {
     const returnedData = yield call(updateL1Profile, payload);
-    console.log("returnedData saga ", returnedData);
     if (returnedData.message) {
       yield put(updateProfileL1Success(false, payload));
     } else {
@@ -217,10 +216,10 @@ function* readMyPhotosRequest({ payload }) {
 
 function* readPhotosPPRequest({ payload }) {
   const { id, co, ci, va } = payload;
-  console.log("from saga read pp ", id, co, ci, va);
+
   try {
     const returnedData = yield call(readPhotosPP, id, co, ci, va);
-    console.log("from saga read pp returnedData ", returnedData);
+
     if (returnedData.message) {
       yield put(requestPhotoReadPPFail(true));
     } else {
@@ -233,7 +232,7 @@ function* readPhotosPPRequest({ payload }) {
 
 function* changeMyPasswordRequest({ payload }) {
   const { oldPassword, newPassword } = payload;
-  console.log("oldPassword,newPassword saga ", oldPassword, newPassword);
+
   try {
     const returnedData = yield call(changePassword, oldPassword, newPassword);
     if (returnedData.message) {
@@ -248,7 +247,7 @@ function* changeMyPasswordRequest({ payload }) {
 
 function* changeUserLoginPhoneRequest({ payload }) {
   const { newPhone, password } = payload;
-  console.log("newPhone ,oldPassword saga ", newPhone, password);
+
   try {
     const returnedData = yield call(changeUserPhone, newPhone, password);
     if (returnedData.message) {
@@ -262,7 +261,6 @@ function* changeUserLoginPhoneRequest({ payload }) {
 }
 
 function* verifyUserLoginPhoneChangeRequest({ payload }) {
-  console.log("verify from saga ", payload);
   try {
     const returnedData = yield call(verifyUserPhoneChange, payload);
     if (returnedData.message) {
@@ -290,7 +288,7 @@ function* readMyPhoneAndPwDataRequest() {
 
 function* readMyPaymentsAndSubRequest({ payload }) {
   const { count, start, end } = payload;
-  console.log("count,start,end saga ", count, start, end);
+
   try {
     const returnedData = yield call(readPaymentsAndSub, count, start, end);
     if (returnedData.message) {
@@ -305,7 +303,7 @@ function* readMyPaymentsAndSubRequest({ payload }) {
 
 function* requestPhotoUploadPPRequest({ payload }) {
   const { file, photoNum } = payload;
-  console.log("pp file saga ", file, photoNum);
+
   try {
     const returnedData = yield call(photoUploadPP, file, photoNum);
     if (returnedData.message) {
@@ -319,7 +317,6 @@ function* requestPhotoUploadPPRequest({ payload }) {
 }
 
 function* requestRemovePhotoPPRequest({ payload }) {
-  console.log("pp remove file saga ", payload);
   try {
     const returnedData = yield call(photoRemovePP, payload);
     if (returnedData.message) {
@@ -334,14 +331,7 @@ function* requestRemovePhotoPPRequest({ payload }) {
 
 function* permissionPPReadRemoveRequest({ payload }) {
   const { action, profileid, country, city, varea } = payload;
-  console.log(
-    "permission pp read saga ",
-    action,
-    profileid,
-    country,
-    city,
-    varea
-  );
+
   try {
     const returnedData = yield call(
       permissionReadRemovePP,
@@ -362,7 +352,6 @@ function* permissionPPReadRemoveRequest({ payload }) {
 }
 
 function* updateMainPhotoRequest({ payload }) {
-  console.log("update main Photo saga ", payload);
   try {
     const returnedData = yield call(updateMainPhoto, payload);
     if (returnedData.message) {
@@ -376,7 +365,6 @@ function* updateMainPhotoRequest({ payload }) {
 }
 
 function* deleteMyAccountRequest({ payload }) {
-  console.log("delete account from saga ", payload);
   const { password, score, key } = payload;
   try {
     const returnedData = yield call(deleteMyAccount, password, score, key);

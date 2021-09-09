@@ -67,7 +67,6 @@ export default function UploadImage({ photoNum }) {
   });
   useEffect(() => {
     if (PPPhotoSelected != null && photoNum != null) {
-      console.log("photo num upload ", photoNum);
       onSelectFile(PPPhotoSelected);
     }
   }, [PPPhotoSelected]);
@@ -86,7 +85,6 @@ export default function UploadImage({ photoNum }) {
 
   useEffect(() => {
     if (MainPhotoSelected != null && photoNum == null) {
-      console.log("main photo num ", photoNum);
       onSelectFile(MainPhotoSelected);
     }
   }, [MainPhotoSelected]);
@@ -204,7 +202,6 @@ export default function UploadImage({ photoNum }) {
         70, // quality
         0, // rotation
         uri => {
-          console.log(uri);
           resolve(uri);
           // You upload logic goes here
         },
@@ -227,7 +224,7 @@ export default function UploadImage({ photoNum }) {
         lastModified: Date.now()
       });
     }
-    console.log("final image after resize", finalFile);
+
     setFinalImg(finalFile);
   };
   return (
@@ -266,13 +263,13 @@ export default function UploadImage({ photoNum }) {
           variant="contained"
           onClick={async () => {
             dispatch(showAuthLoader());
-            console.log("onSubmit ", finalImg, finalImg.size);
+
             if (finalImg.size <= 3500 || finalImg.size >= 32000) {
               NotificationManager.error(<IntlMessages id="upload.error" />);
             } else {
               if (photoNum == null) {
                 //dispatch(updateMainP(finalImg));
-                console.log("update main image from component");
+
                 dispatch(addUserOnlineOffline("channel_vacated"));
                 await new Promise(resolve => setTimeout(resolve, 5000));
                 dispatch(mpUpload(finalImg));
