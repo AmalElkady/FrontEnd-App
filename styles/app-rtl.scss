@@ -1742,3 +1742,21 @@
     }
   }
 }
+
+.rtl .arrow-container {
+  max-width: 16.666667% !important;
+  flex-basis: 16.666667% !important;
+}
+
+.rtl .lang-2 {
+  max-width: 83.333333% !important;
+  flex-basis: 83.333333% !important;
+  text-align: end;
+  & > div {
+    width: 100%;
+    & .dropdown-menu {
+      left: 0 !important;
+      right: unset !important;
+    }
+  }
+}

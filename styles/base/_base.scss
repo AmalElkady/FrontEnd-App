@@ -17,15 +17,15 @@ body {
   height: 100%;
   background-image: url("http://localhost:3000/static/images/backgrounds/main_Background_PC-01.svg");
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-size: cover;
   @media (max-width: 700px) {
     background-image: url("http://localhost:3000/static/images/backgrounds/main_Background_mobile.svg");
   }
 }
 
-span{
-    font-family: $font-family-base !important;
+span {
+  font-family: $font-family-base !important;
 }
 
 body.ios-mobile-view-height {
@@ -786,8 +786,8 @@ a.btn-outline-geekblue {
 }
 
 .a-underLine-none {
-     text-decoration-line: none;
-    font-weight: bold;
-    color:$secondary !important;
-    cursor:pointer;
+  text-decoration-line: none;
+  font-weight: bold;
+  color: $secondary !important;
+  cursor: pointer;
 }

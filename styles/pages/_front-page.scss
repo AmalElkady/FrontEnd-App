@@ -213,3 +213,25 @@ img {
   width: 80px;
   position: absolute;
 }
+
+.text-style {
+  padding: 1rem 1rem 0;
+  font-weight: bold !important;
+  color: gray;
+}
+.text-size {
+  font-size: 1.2rem !important;
+}
+
+.section-margin {
+  margin: 2rem 0;
+  & .title {
+    background-color: $secondary;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    & h6 {
+      font-weight: bold;
+      color: white;
+    }
+  }
+}
