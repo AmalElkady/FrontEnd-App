@@ -155,11 +155,10 @@ const signInUserWithPhonePasswordRequest = async (
   phone,
   password,
   country,
-  score,
   key
 ) =>
   await auth
-    .signInWithPhoneAndPassword(phone, password, country, score, key)
+    .signInWithPhoneAndPassword(phone, password, country, key)
     .then(authUser => authUser)
     .catch(error => error);
 
@@ -556,14 +555,14 @@ function* requestCreateCheckOutSession({ payload }) {
 //}
 
 function* signInUserWithPhonePassword({ payload }) {
-  const { phone, password, country, score, key } = payload;
+  const { user, key } = payload;
+  const { phone, password, country } = user;
   try {
     const signInUser = yield call(
       signInUserWithPhonePasswordRequest,
       phone,
       password,
       country,
-      score,
       key
     );
     if (signInUser.message) {

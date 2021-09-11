@@ -14,7 +14,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import {
   resetPhonechangeFlag,
   showAuthLoader,
-  userSignUp
+  userSignUp,
+  userSignOut
 } from "../../actions/Auth";
 import {
   openModal,
@@ -24,7 +25,8 @@ import {
   changeMyPasswordSuccess,
   verifyUserLoginPhoneChange,
   verifyUserLoginPhoneChangeSuccess,
-  deleteMyAccount
+  deleteMyAccount,
+  deleteMyAccountSuccess
 } from "../../actions/Profile";
 
 import {
@@ -181,6 +183,7 @@ export default function ModalSettings({
   const [agreeVal, setAgreeVal] = useState(null);
   const [passForDel, setPassForDel] = useState(null);
   const [openDelPass, setOpenDelPass] = useState(false);
+  const [accountDeleted, setAccountDeleted] = useState(false);
 
   const [captchaValue, setCaptchaValue] = useState(null);
 
@@ -195,6 +198,8 @@ export default function ModalSettings({
   const verifyLoginPhoneChanged = useSelector(
     state => state.profile.verifyLoginPhoneChanged
   );
+
+  const myAccountDeleted = useSelector(state => state.profile.myAccountDeleted);
   const userReported = useSelector(state => state.interaction.userReported);
   const conversationReported = useSelector(
     state => state.messages.conversationReported
@@ -264,6 +269,16 @@ export default function ModalSettings({
       handleClose();
     }
   }, [passwordChanged]);
+
+  useEffect(() => {
+    if (myAccountDeleted && myAccountDeleted != "error") {
+      setOpenDelPass(false);
+      setAccountDeleted(true);
+    } else if (myAccountDeleted == "error") {
+      NotificationManager.error(<IntlMessages id="error.notCorrectPass" />);
+      dispatch(deleteMyAccountSuccess(false));
+    }
+  }, [myAccountDeleted]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -385,9 +400,11 @@ export default function ModalSettings({
                     {password && <IntlMessages id="settings.changePass" />}
                     {verifyPhone && <IntlMessages id="appModule.verifyPhone" />}
                     {sub && <IntlMessages id="settings.renewSub" />}
-                    {deleteAcc && openDelPass == false && (
-                      <IntlMessages id="settings.preDelete" />
-                    )}
+                    {deleteAcc &&
+                      openDelPass == false &&
+                      accountDeleted == false && (
+                        <IntlMessages id="settings.preDelete" />
+                      )}
                     {(report || reportConv) && openDelPass == false && (
                       <IntlMessages id="settings.report" />
                     )}
@@ -395,9 +412,11 @@ export default function ModalSettings({
                     {/* {reportIusse && openDelPass == false && (
                       <IntlMessages id="settings.iusse" />
                     )} */}
-                    {confirmTerms && openDelPass == false && (
-                      <IntlMessages id="signUp.terms" />
-                    )}
+                    {confirmTerms &&
+                      openDelPass == false &&
+                      accountDeleted == false && (
+                        <IntlMessages id="signUp.terms" />
+                      )}
                   </h2>
                   <h2>
                     {" "}
@@ -431,7 +450,7 @@ export default function ModalSettings({
                   </>
                 )}
 
-                {deleteAcc && openDelPass == false && (
+                {deleteAcc && openDelPass == false && accountDeleted == false && (
                   <>
                     <div>
                       <Typography>
@@ -575,7 +594,7 @@ export default function ModalSettings({
                             dispatch(showAuthLoader());
                             handleClose();
                             // dispatch(userSignUp({phone, password, firstname, lastname, country,countryiso2, gender, year, month, day, city, martial}));
-                            dispatch(userSignUp(user, "", ""));
+                            dispatch(userSignUp(user, "", captchaValue));
                             setCaptchaValue(null);
                           }}
                           color="primary"
@@ -835,8 +854,15 @@ export default function ModalSettings({
                               <Button
                                 variant="contained"
                                 onClick={() => {
-                                  // dispatch(deleteMyAccount(passForDel,score,key));
-                                  setCaptchaValue(null);
+                                  console.log("passForDel", passForDel);
+                                  dispatch(
+                                    deleteMyAccount(
+                                      passForDel,
+                                      "",
+                                      captchaValue
+                                    )
+                                  );
+                                  //setCaptchaValue(null);
                                 }}
                                 color="primary"
                                 className="linear-g-r"
@@ -846,6 +872,48 @@ export default function ModalSettings({
                             </Grid>
                           </>
                         )}
+                      </Grid>
+                    </form>
+                  )}
+
+                  {accountDeleted && (
+                    <form method="post">
+                      <Grid container>
+                        <Grid item xs={12}>
+                          <Typography variant="h6">
+                            <IntlMessages id="profile.delete" />
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              dispatch(userSignOut());
+                              dispatch(deleteMyAccountSuccess(false));
+                              handleClose();
+                            }}
+                            color="primary"
+                            className="linear-g-r"
+                          >
+                            <IntlMessages id="appModule.cancel" />
+                          </Button>
+                        </Grid>
+
+                        <Grid item xs={6} style={{ textAlign: "end" }}>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              dispatch(userSignOut());
+                              dispatch(deleteMyAccountSuccess(false));
+                              handleClose();
+                            }}
+                            color="primary"
+                            className="linear-g-r"
+                          >
+                            <IntlMessages id="appModule.ok" />
+                          </Button>
+                        </Grid>
                       </Grid>
                     </form>
                   )}
@@ -1187,7 +1255,7 @@ export default function ModalSettings({
           </div>
         </Fade>
       </Modal>
-
+      <NotificationContainer />
       {/*  */}
     </>
   );

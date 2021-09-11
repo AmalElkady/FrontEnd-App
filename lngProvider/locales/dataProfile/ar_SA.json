@@ -19,6 +19,7 @@
   "profile.notifMarital": " تم تحديث الحالة الاجتماعية بنجاح ",
   "profile.notifPhoto": " تم تحديث الصورة الرئيسية بنجاح ",
   "profile.report": "أبلغ عن المستخدم ",
+  "profile.delete": "تم حذف حسابك بنجاح",
 
   "inputLabel.birthday": "تاريخ الميلاد",
   "inputLabel.martial": "الحالة الإجتماعية",

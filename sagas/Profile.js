@@ -365,11 +365,13 @@ function* updateMainPhotoRequest({ payload }) {
 }
 
 function* deleteMyAccountRequest({ payload }) {
+  console.log("from saga");
   const { password, score, key } = payload;
   try {
     const returnedData = yield call(deleteMyAccount, password, score, key);
+    console.log("from saga returnedData", returnedData);
     if (returnedData.message) {
-      yield put(deleteMyAccountSuccess(false));
+      yield put(deleteMyAccountSuccess("error"));
     } else {
       yield put(deleteMyAccountSuccess(true));
     }

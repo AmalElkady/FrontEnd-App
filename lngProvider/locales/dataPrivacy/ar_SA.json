@@ -19,6 +19,7 @@
   "appModule.login": "تسجيل الدخول",
   "appModule.forgotPassword": "نسيت رقمك السري؟",
   "appModule.submit": "ارسال",
+  "appModule.ok": "نعم",
   "appModule.changePhone": "تغير رقم الهاتف",
   "appModule.changeYourPhone": "تغير رقم هاتفك",
   "appModule.confirmPassword": "أكد رقمك السري",

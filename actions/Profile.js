@@ -299,6 +299,7 @@ export const ppPhotoSelected = photo => {
 };
 
 export const deleteMyAccount = (password, score, key) => {
+  console.log("from action");
   return {
     type: DELETE_MY_ACCOUNT,
     payload: { password, score, key }

@@ -35,6 +35,7 @@
   "appModule.resetPasswordPageHeader": "Enter your phone & reset your password",
   "appModule.token": "Reset Code",
   "appModule.submit": "Submit",
+  "appModule.ok": "ok",
   "appModule.changePhone": "change phone",
   "appModule.changeYourPhone": "Change your phone",
   "appModule.confirmPassword": "Confirm Your Password",

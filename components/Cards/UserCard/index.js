@@ -216,22 +216,14 @@ export default function UserCard({ user, timeScore }) {
         <CardMedia className={classes.media} image={user._} title="userPhoto">
           <CardContent className={classes.cardContent}>
             {searchState == "most recent" && (
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.fontW}
-              >
+              <Typography variant="body1" className={classes.fontW}>
                 {locale.locale == "ar" &&
                   OfflineTimeInArabic(calcOfflineTime(timeScore))}
                 {locale.locale != "ar" && calcOfflineTime(timeScore)}
               </Typography>
             )}
             <div className={classes.dFlex}>
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.fontW}
-              >
+              <Typography variant="body1" className={classes.fontW}>
                 {searchState == "active" && (
                   <div className={classes.onlineFlag}></div>
                 )}
@@ -254,7 +246,6 @@ export default function UserCard({ user, timeScore }) {
             <div className={classes.dFlex}>
               <Typography
                 variant="body1"
-                component="p"
                 className={classes.rowP + " " + classes.fontW}
               >
                 {user.b ? (
@@ -272,7 +263,6 @@ export default function UserCard({ user, timeScore }) {
               <Typography
                 variant="body1"
                 className={`${classes.rowW} ${classes.rowP} ${classes.fontW} d-flex`}
-                component="p"
               >
                 <div className="profile-icon-flag-2" style={{ width: "12%" }}>
                   <img src="../../../static/images/icons/Location_Icon_2.svg" />

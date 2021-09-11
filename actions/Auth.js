@@ -171,10 +171,10 @@ export const userAddSubscribe = (pack, sessionId) => {
   };
 };
 
-export const userSignIn = user => {
+export const userSignIn = (user, key) => {
   return {
     type: SIGNIN_USER,
-    payload: user
+    payload: { user, key }
   };
 };
 export const userSignOut = () => {

@@ -142,7 +142,7 @@ let callAxios = (options) => {
 // "bio": "Here I Am, Nice To Meet You"
 //}http://localhost:3001/api/addupdateprofile
 
-auth.signInWithPhoneAndPassword = function (username,password,country,score,key) {
+auth.signInWithPhoneAndPassword = function (username,password,country,key) {
 	
 		      return new Promise(  async (resolve, reject) => {				
 
@@ -162,7 +162,7 @@ auth.signInWithPhoneAndPassword = function (username,password,country,score,key)
 										     "phonecountrycode": country,
 											"phone" : username,
 											"password" : password
-											,score,key
+											,key
 										  }
 										};
 

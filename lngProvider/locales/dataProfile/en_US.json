@@ -24,6 +24,7 @@
   "profile.notifMarital": "Marital status updated successfully",
   "profile.notifPhoto": "Main Photo Updated successfully ",
   "profile.report": "Report The User",
+  "profile.delete": "Your account has been successfully deleted ",
   "user.notifReport": "User reported successfully",
   "user.notifReportConv": "Conversation reported successfully",
 

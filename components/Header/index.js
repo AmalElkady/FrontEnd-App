@@ -371,7 +371,7 @@ class Header extends React.Component {
             : ""
         }`}
       >
-        <div class="header-curve-main"></div>
+        <div className="header-curve-main"></div>
         <Toolbar className="app-toolbar" disableGutters={false}>
           {/* {navigationStyle === HORIZONTAL_NAVIGATION ? (
             <div
@@ -471,7 +471,7 @@ class Header extends React.Component {
                 </DropdownMenu>
               </Dropdown>
             </li> */}
-            <div class="header-curve"></div>
+            <div className="header-curve"></div>
 
             {/* love not */}
             <li className="list-inline-item app-tour">

@@ -211,6 +211,7 @@ class SignIn extends React.Component {
                       <ReCAPTCHA
                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                         onChange={value => {
+                          console.log("value ", value);
                           this.setState({ rcaptchaValue: value });
                         }}
                         className="not-robot"
@@ -220,13 +221,16 @@ class SignIn extends React.Component {
                       <Button
                         onClick={() => {
                           this.props.showAuthLoader();
-                          this.props.userSignIn({
-                            phone: phoneSign,
-                            password,
-                            country: countrySign,
-                            score: "",
-                            key: ""
-                          });
+                          this.props.userSignIn(
+                            {
+                              phone: phoneSign,
+                              password,
+                              country: countrySign,
+                              score: "",
+                              key: ""
+                            },
+                            rcaptchaValue
+                          );
                           this.props.toggleCollapsedNav(false);
                           this.setState({
                             ["RcaptchaValue"]: null

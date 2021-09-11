@@ -4,7 +4,7 @@ import { setCookie, removeCookie, getCookie } from "../util/session";
 import base64url from "base64url";
 import Router from "next/router";
 import { auth } from "../okta/okta";
-
+import IntlMessages from "../util/IntlMessages";
 const profile = {};
 
 let axiosRequest = axios.create({
@@ -703,6 +703,7 @@ profile.updateMainPhoto = function(file) {
 };
 
 profile.deleteMyAccount = function(password, score, key) {
+  console.log("from services ", password);
   return new Promise(async (resolve, reject) => {
     try {
       const tokenValue = getCookie("access_token", false);
@@ -723,9 +724,11 @@ profile.deleteMyAccount = function(password, score, key) {
 
       let responseX = await callAxios(options);
       let response = responseX.data;
-
-      if (response) {
-        resolve(response);
+      console.log("response from delete ", response);
+      if (response.response) {
+        resolve(response.response);
+      } else if (response.code === "DELETEACCOUNT_14") {
+        resolve({ message: <IntlMessages id="error.notCorrectPass" /> });
       } else {
         resolve({ message: "no response !" });
       }
