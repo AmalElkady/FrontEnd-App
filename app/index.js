@@ -1,11 +1,11 @@
 import React from "react";
-import Link from "next/link"
-import {withRouter} from "next/router"
-import {connect} from "react-redux";
+import Link from "next/link";
+import { withRouter } from "next/router";
+import { connect } from "react-redux";
 import Header from "../components/Header/index";
 import Sidebar from "../containers/SideNav/index";
 import Footer from "../components/Footer";
-import Tour from "../components/Tour/index";
+//import Tour from "../components/Tour/index";
 import {
   ABOVE_THE_HEADER,
   BELOW_THE_HEADER,
@@ -14,7 +14,7 @@ import {
   HORIZONTAL_NAVIGATION
 } from "constants/ActionTypes";
 import ColorOption from "containers/Customizer/ColorOption";
-import {isIOS, isMobile} from "react-device-detect";
+import { isIOS, isMobile } from "react-device-detect";
 import TopNav from "components/TopNav";
 
 class App extends React.Component {
@@ -28,52 +28,51 @@ class App extends React.Component {
     const drawerStyle = drawerType.includes(FIXED_DRAWER)
       ? "fixed-drawer"
       : drawerType.includes(COLLAPSED_DRAWER)
-        ? "collapsible-drawer"
-        : "mini-drawer";
+      ? "collapsible-drawer"
+      : "mini-drawer";
 
     //set default height and overflow for iOS mobile Safari 10+ support.
-      if (isIOS && isMobile) {
-        document.body.classList.add("ios-mobile-view-height");
-      } else if (document.body.classList.contains("ios-mobile-view-height")) {
-        document.body.classList.remove("ios-mobile-view-height");
-      }
+    if (isIOS && isMobile) {
+      document.body.classList.add("ios-mobile-view-height");
+    } else if (document.body.classList.contains("ios-mobile-view-height")) {
+      document.body.classList.remove("ios-mobile-view-height");
+    }
 
     return (
       <div className={`app-container ${drawerStyle}`}>
-        <Tour/>
+        {/* <Tour/> */}
 
-        <Sidebar/>
+        <Sidebar />
         <div className="app-main-container">
           <div
             className={`app-header ${
               navigationStyle === HORIZONTAL_NAVIGATION
                 ? "app-header-horizontal"
                 : ""
-              }`}
+            }`}
           >
             {navigationStyle === HORIZONTAL_NAVIGATION &&
-            horizontalNavPosition === ABOVE_THE_HEADER && (
-              <TopNav styleName="app-top-header"/>
-            )}
-            <Header/>
+              horizontalNavPosition === ABOVE_THE_HEADER && (
+                <TopNav styleName="app-top-header" />
+              )}
+            <Header />
             {navigationStyle === HORIZONTAL_NAVIGATION &&
-            horizontalNavPosition === BELOW_THE_HEADER && <TopNav/>}
+              horizontalNavPosition === BELOW_THE_HEADER && <TopNav />}
           </div>
 
           <main className="app-main-content-wrapper">
-            <div className="app-main-content">
-            </div>
-            <Footer/>
+            <div className="app-main-content"></div>
+            <Footer />
           </main>
         </div>
-        <ColorOption/>
+        <ColorOption />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({settings}) => {
-  const {drawerType, navigationStyle, horizontalNavPosition} = settings;
-  return {drawerType, navigationStyle, horizontalNavPosition};
+const mapStateToProps = ({ settings }) => {
+  const { drawerType, navigationStyle, horizontalNavPosition } = settings;
+  return { drawerType, navigationStyle, horizontalNavPosition };
 };
 export default withRouter(connect(mapStateToProps)(App));

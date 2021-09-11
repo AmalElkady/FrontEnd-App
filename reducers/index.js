@@ -10,7 +10,7 @@ import { createMigrate } from "redux-persist";
 import Settings from "./Settings";
 import ChatData from "./Chat";
 import Contact from "./Contact";
-import Mail from "./Mail";
+// import Mail from "./Mail";
 import Auth from "./Auth";
 import Home from "./Home";
 import Profile from "./Profile";
@@ -148,7 +148,7 @@ export default history =>
     settings: persist(settingsPersistConfig, Settings),
     chatData: ChatData,
     contacts: Contact,
-    mail: Mail,
+    // mail: Mail,
     home: Home,
     // home: persist(homePersistConfig, Home),
     profile: Profile,
